@@ -56,8 +56,12 @@ class WorkItem {
   num? get storyPoints =>
       fields['Microsoft.VSTS.Scheduling.StoryPoints'] as num? ??
       fields['Microsoft.VSTS.Scheduling.Effort'] as num?;
+  num? get originalEstimate =>
+      fields['Microsoft.VSTS.Scheduling.OriginalEstimate'] as num?;
   num? get remainingWork =>
       fields['Microsoft.VSTS.Scheduling.RemainingWork'] as num?;
+  num? get completedWork =>
+      fields['Microsoft.VSTS.Scheduling.CompletedWork'] as num?;
 
   List<String> get tags {
     final raw = fields['System.Tags'] as String?;

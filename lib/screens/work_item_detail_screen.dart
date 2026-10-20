@@ -202,11 +202,21 @@ class _WorkItemDetailScreenState extends State<WorkItemDetailScreen> {
               _InfoRow(icon: Icons.flag_outlined, label: 'Prioriteit', value: '${item.priority}'),
             if (item.storyPoints != null)
               _InfoRow(icon: Icons.speed, label: 'Inspanning', value: '${item.storyPoints}'),
+            if (item.originalEstimate != null)
+              _InfoRow(
+                  icon: Icons.schedule,
+                  label: 'Oorspronkelijke schatting',
+                  value: '${item.originalEstimate} u'),
             if (item.remainingWork != null)
               _InfoRow(
                   icon: Icons.hourglass_bottom,
                   label: 'Resterend werk',
                   value: '${item.remainingWork} u'),
+            if (item.completedWork != null)
+              _InfoRow(
+                  icon: Icons.task_alt,
+                  label: 'Voltooid werk',
+                  value: '${item.completedWork} u'),
             _InfoRow(icon: Icons.account_tree_outlined, label: 'Area', value: item.areaPath),
             _InfoRow(icon: Icons.event_repeat, label: 'Iteratie', value: item.iterationPath),
             _InfoRow(
