@@ -386,7 +386,12 @@ class _CommentView extends StatelessWidget {
                 ]),
               ),
               const SizedBox(height: 4),
-              SelectableText(htmlToText(comment.text), style: theme.textTheme.bodyMedium),
+              SelectableText.rich(htmlToSpan(
+                comment.text,
+                style: theme.textTheme.bodyMedium,
+                mentionStyle: TextStyle(
+                    color: theme.colorScheme.primary, fontWeight: FontWeight.w600),
+              )),
             ],
           ),
         ),

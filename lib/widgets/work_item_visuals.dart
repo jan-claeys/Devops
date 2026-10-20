@@ -149,3 +149,19 @@ String htmlToText(String? html) {
   text = text.replaceAll(RegExp(r'[ \t]+\n'), '\n').replaceAll(RegExp(r'\n{3,}'), '\n\n');
   return text.trim();
 }
+
+/// Like [htmlToText], but renders @mentions with [mentionStyle].
+TextSpan htmlToSpan(String? html, {TextStyle? style, TextStyle? mentionStyle}) {
+  const start = '\u0001', end = '\u0002';
+  final marked = html?.replaceAllMapped(
+    RegExp(r'<a\b[^>]*data-vss-mention[^>]*>(.*?)</a>', caseSensitive: false, dotAll: true),
+    (m) => '$start${m[1]}$end',
+  );
+  final text = htmlToText(marked);
+  final children = <TextSpan>[];
+  for (final (i, part) in text.split(RegExp('[$start$end]')).indexed) {
+    if (part.isEmpty) continue;
+    children.add(TextSpan(text: part, style: i.isOdd ? mentionStyle : null));
+  }
+  return TextSpan(style: style, children: children);
+}
