@@ -38,9 +38,24 @@ jobs:
             echo "release=true" >> "$GITHUB_OUTPUT"
           fi
 
-  android:
+  test:
     needs: version
     if: needs.version.outputs.release == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+
+      - run: flutter pub get
+      - run: flutter test
+
+  android:
+    needs: [version, test]
     runs-on: ubuntu-latest
     env:
       VERSION: ${{ needs.version.outputs.version }}
@@ -59,7 +74,6 @@ jobs:
           cache: true
 
       - run: flutter pub get
-      - run: flutter test
 
       - name: Set up signing key
         env:
@@ -92,8 +106,7 @@ jobs:
           if-no-files-found: error
 
   windows:
-    needs: version
-    if: needs.version.outputs.release == 'true'
+    needs: [version, test]
     runs-on: windows-latest
     env:
       VERSION: ${{ needs.version.outputs.version }}
