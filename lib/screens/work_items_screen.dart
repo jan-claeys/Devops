@@ -128,11 +128,14 @@ class _WorkItemsScreenState extends State<WorkItemsScreen> {
         body: SafeArea(
           child: Row(
             children: [
-              SizedBox(
-                width: 420,
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.horizontal(right: Radius.circular(24)),
-                  child: list,
+              Padding(
+                padding: const EdgeInsets.fromLTRB(12, 12, 0, 12),
+                child: SizedBox(
+                  width: 420,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(24),
+                    child: list,
+                  ),
                 ),
               ),
               const SizedBox(width: 12),
