@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'devops_api.dart';
 
 /// Holds the connection settings and exposes a configured [DevOpsApi].
 class AppState extends ChangeNotifier {
+  AppState({this.httpClient});
+
+  /// HTTP client for every [DevOpsApi]; null uses a default client.
+  final http.Client? httpClient;
+
   static const _orgKey = 'organization';
   static const _projectKey = 'project';
   static const _themeKey = 'themeMode';
@@ -107,7 +113,7 @@ class AppState extends ChangeNotifier {
     final org = organization;
     final pat = _pat;
     api = (org != null && org.isNotEmpty && pat != null && pat.isNotEmpty)
-        ? DevOpsApi(organization: org, pat: pat)
+        ? DevOpsApi(organization: org, pat: pat, client: httpClient)
         : null;
   }
 }

@@ -46,7 +46,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final pat = _pat.text.trim();
     try {
       // Verify the connection before storing it.
-      await DevOpsApi(organization: org, pat: pat).getProjects();
+      final client = AppScope.read(context).httpClient;
+      await DevOpsApi(organization: org, pat: pat, client: client).getProjects();
       if (!mounted) return;
       await AppScope.read(context).saveConnection(organization: org, pat: pat);
       if (!mounted) return;

@@ -59,6 +59,11 @@ class _WorkItemDetailScreenState extends State<WorkItemDetailScreen> {
     );
   }
 
+  // A block body: setState must not get the Future back from the closure.
+  void _reload() => setState(() {
+        _future = _load();
+      });
+
   void _openLinked(int id) {
     if (widget.onOpenWorkItem != null) {
       widget.onOpenWorkItem!(id);
@@ -93,10 +98,11 @@ class _WorkItemDetailScreenState extends State<WorkItemDetailScreen> {
                 ),
           body: RefreshIndicator(
             onRefresh: () async {
-              setState(() => _future = _load());
+              _reload();
               await _future;
             },
             child: CustomScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
               slivers: [
                 SliverAppBar.medium(
                   automaticallyImplyLeading: !widget.embedded,
@@ -120,7 +126,7 @@ class _WorkItemDetailScreenState extends State<WorkItemDetailScreen> {
                                 textAlign: TextAlign.center),
                             const SizedBox(height: 16),
                             FilledButton.tonal(
-                              onPressed: () => setState(() => _future = _load()),
+                              onPressed: _reload,
                               child: Text(context.l10n.retry),
                             ),
                           ],
