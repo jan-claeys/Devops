@@ -171,6 +171,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             selected: {state.themeMode},
                             onSelectionChanged: (s) => state.setThemeMode(s.first),
                           ),
+                          const SizedBox(height: 12),
+                          SegmentedButton<bool>(
+                            segments: const [
+                              ButtonSegment(
+                                  value: false,
+                                  icon: Icon(Icons.water_drop_outlined),
+                                  label: Text('Azure-blauw')),
+                              ButtonSegment(
+                                  value: true,
+                                  icon: Icon(Icons.palette_outlined),
+                                  label: Text('Systeemkleur')),
+                            ],
+                            selected: {state.useDynamicColor},
+                            onSelectionChanged: (s) => state.setUseDynamicColor(s.first),
+                          ),
                           const SizedBox(height: 32),
                           OutlinedButton.icon(
                             style: OutlinedButton.styleFrom(

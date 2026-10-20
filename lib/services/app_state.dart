@@ -9,6 +9,7 @@ class AppState extends ChangeNotifier {
   static const _orgKey = 'organization';
   static const _projectKey = 'project';
   static const _themeKey = 'themeMode';
+  static const _dynamicColorKey = 'useDynamicColor';
   static const _patKey = 'pat';
 
   final _secure = const FlutterSecureStorage();
@@ -17,6 +18,9 @@ class AppState extends ChangeNotifier {
   String? project;
   String? _pat;
   ThemeMode themeMode = ThemeMode.system;
+
+  /// Follow the system accent colour (Material You) instead of Azure blue.
+  bool useDynamicColor = false;
   DevOpsApi? api;
 
   bool get isConfigured => api != null;
@@ -26,6 +30,7 @@ class AppState extends ChangeNotifier {
     organization = prefs.getString(_orgKey);
     project = prefs.getString(_projectKey);
     themeMode = ThemeMode.values[prefs.getInt(_themeKey) ?? ThemeMode.system.index];
+    useDynamicColor = prefs.getBool(_dynamicColorKey) ?? false;
     try {
       _pat = await _secure.read(key: _patKey);
     } catch (_) {
@@ -59,6 +64,13 @@ class AppState extends ChangeNotifier {
     themeMode = mode;
     final prefs = await SharedPreferences.getInstance();
     await prefs.setInt(_themeKey, mode.index);
+    notifyListeners();
+  }
+
+  Future<void> setUseDynamicColor(bool value) async {
+    useDynamicColor = value;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(_dynamicColorKey, value);
     notifyListeners();
   }
 
