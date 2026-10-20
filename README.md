@@ -70,14 +70,18 @@ flutter gen-l10n
 
 ## Releases
 
-Development happens on `develop`; `main` holds released code. Every push to `main` runs [`.github/workflows/release.yml`](.github/workflows/release.yml), which builds a signed APK and a Windows zip and publishes them as GitHub release `v<version>`, with `<version>` taken from `pubspec.yaml`. If that version is already released, the workflow skips the build.
+Every push to `main` runs [`.github/workflows/release.yml`](.github/workflows/release.yml). It reads the version from `pubspec.yaml` and, if there is no GitHub release `v<version>` yet, runs the tests, builds a signed APK and a Windows zip and publishes them as release `v<version>`. If that version is already released, the workflow does nothing, so regular pushes to `main` are fine.
 
-To release:
+To release a new version:
 
-1. On `develop`, bump `version` in `pubspec.yaml` following [semantic versioning](https://semver.org) (`1.0.0` → `1.0.1` for fixes, `1.1.0` for features, `2.0.0` for breaking changes).
-2. Merge `develop` into `main` and push.
+1. Bump `version` in [`pubspec.yaml`](pubspec.yaml) following [semantic versioning](https://semver.org):
+   - `1.0.0` → `1.0.1` for bug fixes
+   - `1.0.0` → `1.1.0` for new features
+   - `1.0.0` → `2.0.0` for breaking changes
+2. Commit and push to `main`.
+3. Follow the build under *Actions*; when it is done, the APK and Windows zip are on the *Releases* page.
 
-The build number (`+N`) in `pubspec.yaml` is only used for local builds; CI uses the workflow run number, so it always increases.
+The build number (`+N`) in `pubspec.yaml` is only used for local builds; CI uses the workflow run number, so it always increases. A release can also be started manually with *Run workflow* on the *Release* workflow in *Actions*.
 
 ### Signing key
 
