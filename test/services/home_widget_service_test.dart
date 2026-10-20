@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:devops_tickets/models/work_item.dart';
-import 'package:devops_tickets/services/home_widget_service.dart';
+import 'package:devops/models/work_item.dart';
+import 'package:devops/services/home_widget_service.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -40,14 +40,14 @@ void main() {
       .setMockMethodCallHandler(channel, null));
 
   test('workItemIdFromUri reads widget deep links', () {
-    expect(TicketsHomeWidget.workItemIdFromUri(Uri.parse('devopstickets://workitem/123')),
+    expect(TicketsHomeWidget.workItemIdFromUri(Uri.parse('devops://workitem/123')),
         123);
     expect(TicketsHomeWidget.workItemIdFromUri(null), isNull);
-    expect(TicketsHomeWidget.workItemIdFromUri(Uri.parse('devopstickets://workitem')),
+    expect(TicketsHomeWidget.workItemIdFromUri(Uri.parse('devops://workitem')),
         isNull);
-    expect(TicketsHomeWidget.workItemIdFromUri(Uri.parse('devopstickets://other/1')),
+    expect(TicketsHomeWidget.workItemIdFromUri(Uri.parse('devops://other/1')),
         isNull);
-    expect(TicketsHomeWidget.workItemIdFromUri(Uri.parse('devopstickets://workitem/abc')),
+    expect(TicketsHomeWidget.workItemIdFromUri(Uri.parse('devops://workitem/abc')),
         isNull);
   });
 

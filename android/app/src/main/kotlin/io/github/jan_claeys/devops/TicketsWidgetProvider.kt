@@ -29,7 +29,7 @@ class TicketsWidgetProvider : HomeWidgetProvider() {
   ) {
     val refresh = HomeWidgetBackgroundIntent.getBroadcast(context, Uri.parse(REFRESH_URI))
     val openApp = HomeWidgetLaunchIntent.getActivity(context, MainActivity::class.java)
-    // Rows fill in their own devopstickets://workitem/<id> uri, so this one must be mutable.
+    // Rows fill in their own devops://workitem/<id> uri, so this one must be mutable.
     var templateFlags = PendingIntent.FLAG_UPDATE_CURRENT
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) templateFlags = templateFlags or PendingIntent.FLAG_MUTABLE
     val openItem = PendingIntent.getActivity(
@@ -82,7 +82,7 @@ class TicketsWidgetProvider : HomeWidgetProvider() {
   }
 
   companion object {
-    const val REFRESH_URI = "devopstickets://refresh"
+    const val REFRESH_URI = "devops://refresh"
     private const val STALE_AFTER_MS = 25 * 60 * 1000L
   }
 }

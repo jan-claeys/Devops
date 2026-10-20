@@ -19,17 +19,17 @@ Future<void> main() async {
   final state = AppState();
   await state.load();
   unawaited(TicketsHomeWidget.registerBackgroundRefresh());
-  runApp(AppScope(state: state, child: const DevOpsTicketsApp()));
+  runApp(AppScope(state: state, child: const DevOpsApp()));
 }
 
-class DevOpsTicketsApp extends StatefulWidget {
-  const DevOpsTicketsApp({super.key});
+class DevOpsApp extends StatefulWidget {
+  const DevOpsApp({super.key});
 
   @override
-  State<DevOpsTicketsApp> createState() => _DevOpsTicketsAppState();
+  State<DevOpsApp> createState() => _DevOpsAppState();
 }
 
-class _DevOpsTicketsAppState extends State<DevOpsTicketsApp> {
+class _DevOpsAppState extends State<DevOpsApp> {
   static const _seed = Color(0xFF0078D4); // Azure blue
 
   final _navigator = GlobalKey<NavigatorState>();

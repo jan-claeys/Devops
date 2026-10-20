@@ -1,5 +1,5 @@
-import 'package:devops_tickets/l10n/l10n.dart';
-import 'package:devops_tickets/services/devops_api.dart';
+import 'package:devops/l10n/l10n.dart';
+import 'package:devops/services/devops_api.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 

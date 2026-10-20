@@ -19,7 +19,7 @@ class TicketsHomeWidget {
   /// Max number of tickets handed to the widget.
   static const _maxItems = 50;
 
-  /// Opened when a ticket in the widget is tapped, e.g. devopstickets://workitem/123.
+  /// Opened when a ticket in the widget is tapped, e.g. devops://workitem/123.
   static int? workItemIdFromUri(Uri? uri) {
     if (uri == null || uri.host != 'workitem' || uri.pathSegments.isEmpty) return null;
     return int.tryParse(uri.pathSegments.first);

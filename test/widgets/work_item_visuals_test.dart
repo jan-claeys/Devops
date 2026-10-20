@@ -1,5 +1,5 @@
-import 'package:devops_tickets/models/work_item.dart';
-import 'package:devops_tickets/widgets/work_item_visuals.dart';
+import 'package:devops/models/work_item.dart';
+import 'package:devops/widgets/work_item_visuals.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';

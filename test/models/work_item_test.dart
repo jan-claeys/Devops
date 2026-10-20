@@ -1,4 +1,4 @@
-import 'package:devops_tickets/models/work_item.dart';
+import 'package:devops/models/work_item.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../helpers.dart';

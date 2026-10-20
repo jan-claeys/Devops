@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:devops_tickets/models/work_item.dart';
-import 'package:devops_tickets/services/devops_api.dart';
+import 'package:devops/models/work_item.dart';
+import 'package:devops/services/devops_api.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';

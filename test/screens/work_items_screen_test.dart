@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:devops_tickets/screens/settings_screen.dart';
-import 'package:devops_tickets/screens/work_item_detail_screen.dart';
-import 'package:devops_tickets/screens/work_items_screen.dart';
+import 'package:devops/screens/settings_screen.dart';
+import 'package:devops/screens/work_item_detail_screen.dart';
+import 'package:devops/screens/work_items_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';

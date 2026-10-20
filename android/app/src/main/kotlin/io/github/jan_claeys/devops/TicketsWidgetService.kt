@@ -43,7 +43,7 @@ class TicketsWidgetService : RemoteViewsService() {
         setTextViewText(R.id.meta, listOf("#${t.id}", t.type, t.state).filter { it.isNotEmpty() }.joinToString(" · "))
         setTextViewText(R.id.title, t.title)
         setInt(R.id.type_bar, "setColorFilter", typeColor(t.type))
-        setOnClickFillInIntent(R.id.item, Intent().setData(Uri.parse("devopstickets://workitem/${t.id}")))
+        setOnClickFillInIntent(R.id.item, Intent().setData(Uri.parse("devops://workitem/${t.id}")))
       }
     }
 
