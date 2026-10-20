@@ -81,7 +81,7 @@ class _DevOpsTicketsAppState extends State<DevOpsTicketsApp> {
         final useDynamic = state.useDynamicColor;
         return MaterialApp(
           navigatorKey: _navigator,
-          title: 'DevOps Tickets',
+          title: 'DevOps',
           // Without a chosen language Flutter picks the first supported system
           // language, falling back to English (first in supportedLocales).
           locale: state.locale,

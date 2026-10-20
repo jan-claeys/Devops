@@ -1,4 +1,4 @@
-package com.aucxis.devops_tickets
+package io.github.jan_claeys.devops
 
 import io.flutter.embedding.android.FlutterActivity
 

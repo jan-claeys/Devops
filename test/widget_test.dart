@@ -6,11 +6,11 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('normalizeOrganization accepts several formats', () {
-    expect(DevOpsApi.normalizeOrganization('aucxis'), 'https://dev.azure.com/aucxis');
-    expect(DevOpsApi.normalizeOrganization('dev.azure.com/aucxis/'),
-        'https://dev.azure.com/aucxis');
-    expect(DevOpsApi.normalizeOrganization('https://aucxis.visualstudio.com'),
-        'https://aucxis.visualstudio.com');
+    expect(DevOpsApi.normalizeOrganization('contoso'), 'https://dev.azure.com/contoso');
+    expect(DevOpsApi.normalizeOrganization('dev.azure.com/contoso/'),
+        'https://dev.azure.com/contoso');
+    expect(DevOpsApi.normalizeOrganization('https://contoso.visualstudio.com'),
+        'https://contoso.visualstudio.com');
   });
 
   test('htmlToText strips markup', () {

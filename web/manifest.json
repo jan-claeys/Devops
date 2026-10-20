@@ -1,6 +1,6 @@
 {
-    "name": "devops_tickets",
-    "short_name": "devops_tickets",
+    "name": "DevOps",
+    "short_name": "DevOps",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
