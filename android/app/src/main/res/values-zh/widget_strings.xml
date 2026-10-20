@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tickets_widget_label">我的工单</string>
+    <string name="tickets_widget_description">一目了然地查看你未关闭的 Azure DevOps 工单</string>
+    <string name="tickets_widget_refresh">刷新</string>
+    <string name="tickets_widget_not_loaded">打开应用以加载</string>
+    <string name="tickets_widget_empty">没有未关闭的工单</string>
+    <string name="tickets_widget_open_count">%1$d 个未关闭</string>
+</resources>

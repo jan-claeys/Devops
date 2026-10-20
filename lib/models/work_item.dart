@@ -41,7 +41,7 @@ class WorkItem {
             .cast<Map<String, dynamic>>(),
       );
 
-  String get title => fields['System.Title'] as String? ?? '(zonder titel)';
+  String get title => fields['System.Title'] as String? ?? '#$id';
   String get state => fields['System.State'] as String? ?? '';
   String get type => fields['System.WorkItemType'] as String? ?? '';
   String get project => fields['System.TeamProject'] as String? ?? '';

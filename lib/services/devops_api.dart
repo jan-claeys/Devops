@@ -4,14 +4,19 @@ import 'package:http/http.dart' as http;
 
 import '../models/work_item.dart';
 
-class DevOpsException implements Exception {
-  DevOpsException(this.message, [this.statusCode]);
+enum DevOpsError { unauthorized, notFound, http, unexpectedResponse }
 
-  final String message;
+class DevOpsException implements Exception {
+  DevOpsException(this.kind, {this.statusCode, this.serverMessage});
+
+  final DevOpsError kind;
   final int? statusCode;
 
+  /// Error message returned by Azure DevOps, if any.
+  final String? serverMessage;
+
   @override
-  String toString() => message;
+  String toString() => serverMessage ?? 'Azure DevOps error ${kind.name} ($statusCode)';
 }
 
 enum WorkItemScope { assignedToMe, createdByMe, all }
@@ -163,26 +168,24 @@ class DevOpsApi {
   Map<String, dynamic> _decode(http.Response response) {
     final code = response.statusCode;
     if (code == 401 || code == 203 || code == 302) {
-      throw DevOpsException(
-          'Niet geautoriseerd. Controleer je Personal Access Token.', code);
+      throw DevOpsException(DevOpsError.unauthorized, statusCode: code);
     }
     if (code == 404) {
-      throw DevOpsException('Niet gevonden. Controleer de organisatie of het project.', code);
+      throw DevOpsException(DevOpsError.notFound, statusCode: code);
     }
     if (code < 200 || code >= 300) {
-      String message = 'Fout $code van Azure DevOps';
+      String? message;
       try {
         final body = jsonDecode(response.body) as Map<String, dynamic>;
         if (body['message'] is String) message = body['message'] as String;
       } catch (_) {}
-      throw DevOpsException(message, code);
+      throw DevOpsException(DevOpsError.http, statusCode: code, serverMessage: message);
     }
     try {
       return jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>;
     } on FormatException {
       // Azure DevOps answers with an HTML sign-in page when the PAT is invalid.
-      throw DevOpsException(
-          'Onverwacht antwoord. Controleer de organisatie en je token.', code);
+      throw DevOpsException(DevOpsError.unexpectedResponse, statusCode: code);
     }
   }
 }

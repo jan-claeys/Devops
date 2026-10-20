@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tickets_widget_label">Мої тікети</string>
+    <string name="tickets_widget_description">Ваші відкриті тікети Azure DevOps з першого погляду</string>
+    <string name="tickets_widget_refresh">Оновити</string>
+    <string name="tickets_widget_not_loaded">Відкрийте застосунок для завантаження</string>
+    <string name="tickets_widget_empty">Немає відкритих тікетів</string>
+    <string name="tickets_widget_open_count">Відкрито: %1$d</string>
+</resources>

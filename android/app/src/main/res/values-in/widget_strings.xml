@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tickets_widget_label">Tiket saya</string>
+    <string name="tickets_widget_description">Tiket Azure DevOps terbuka Anda sekilas</string>
+    <string name="tickets_widget_refresh">Muat ulang</string>
+    <string name="tickets_widget_not_loaded">Buka aplikasi untuk memuat</string>
+    <string name="tickets_widget_empty">Tidak ada tiket terbuka</string>
+    <string name="tickets_widget_open_count">%1$d terbuka</string>
+</resources>

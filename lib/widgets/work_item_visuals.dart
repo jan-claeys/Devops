@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../l10n/l10n.dart';
 import '../models/work_item.dart';
 
 /// Colors and icons that match the Azure DevOps work item types.
@@ -119,18 +120,18 @@ class PersonAvatar extends StatelessWidget {
   }
 }
 
-String formatRelative(DateTime? date) {
+String formatRelative(AppLocalizations l10n, DateTime? date) {
   if (date == null) return '';
   final diff = DateTime.now().difference(date);
-  if (diff.inMinutes < 1) return 'zojuist';
-  if (diff.inHours < 1) return '${diff.inMinutes} min geleden';
-  if (diff.inDays < 1) return '${diff.inHours} u geleden';
-  if (diff.inDays < 7) return '${diff.inDays} d geleden';
-  return DateFormat('d MMM yyyy', 'nl').format(date);
+  if (diff.inMinutes < 1) return l10n.justNow;
+  if (diff.inHours < 1) return l10n.minutesAgo(diff.inMinutes);
+  if (diff.inDays < 1) return l10n.hoursAgo(diff.inHours);
+  if (diff.inDays < 7) return l10n.daysAgo(diff.inDays);
+  return DateFormat.yMMMd(l10n.localeName).format(date);
 }
 
-String formatDateTime(DateTime? date) =>
-    date == null ? '-' : DateFormat('d MMM yyyy, HH:mm', 'nl').format(date);
+String formatDateTime(AppLocalizations l10n, DateTime? date) =>
+    date == null ? '-' : DateFormat.yMMMd(l10n.localeName).add_Hm().format(date);
 
 /// Converts the HTML that Azure DevOps stores into readable plain text.
 String htmlToText(String? html) {

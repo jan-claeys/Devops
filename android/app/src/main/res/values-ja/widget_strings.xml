@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tickets_widget_label">マイチケット</string>
+    <string name="tickets_widget_description">未完了の Azure DevOps チケットをひと目で確認</string>
+    <string name="tickets_widget_refresh">更新</string>
+    <string name="tickets_widget_not_loaded">アプリを開いて読み込みます</string>
+    <string name="tickets_widget_empty">未完了のチケットはありません</string>
+    <string name="tickets_widget_open_count">未完了 %1$d 件</string>
+</resources>

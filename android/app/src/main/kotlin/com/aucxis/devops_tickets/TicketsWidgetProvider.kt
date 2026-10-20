@@ -47,7 +47,7 @@ class TicketsWidgetProvider : HomeWidgetProvider() {
     val subtitle = when {
       updatedAt == null -> context.getString(R.string.tickets_widget_not_loaded)
       project == null -> ""
-      else -> "$project · $count open · ${DateFormat.getTimeInstance(DateFormat.SHORT).format(Date(updatedAt))}"
+      else -> "$project · ${context.getString(R.string.tickets_widget_open_count, count)} · ${DateFormat.getTimeInstance(DateFormat.SHORT).format(Date(updatedAt))}"
     }
 
     for (id in appWidgetIds) {

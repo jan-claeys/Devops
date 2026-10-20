@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/widgets.dart';
 import 'package:home_widget/home_widget.dart';
 
+import '../l10n/l10n.dart';
 import '../models/work_item.dart';
 import 'app_state.dart';
 import 'devops_api.dart';
@@ -66,8 +67,9 @@ class TicketsHomeWidget {
     }
     final api = state.api;
     final project = state.project;
+    final l10n = lookupAppLocalizations(resolveLocale(state.locale));
     if (api == null || project == null) {
-      await update(project: null, items: const [], error:'Open de app om in te stellen');
+      await update(project: null, items: const [], error: l10n.widgetSetupRequired);
       return;
     }
     try {
@@ -75,7 +77,7 @@ class TicketsHomeWidget {
           project: project, scope: WorkItemScope.assignedToMe, openOnly: true);
       await update(project: project, items: items);
     } catch (e) {
-      await update(project: project, error: e.toString());
+      await update(project: project, error: l10n.error(e));
     }
   }
 }

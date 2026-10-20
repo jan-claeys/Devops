@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../l10n/l10n.dart';
 import '../models/work_item.dart';
 import '../services/app_state.dart';
 import '../widgets/work_item_visuals.dart';
@@ -72,7 +73,7 @@ class _WorkItemDetailScreenState extends State<WorkItemDetailScreen> {
     if (!await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication) &&
         mounted) {
       ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text('Kon de browser niet openen')));
+          .showSnackBar(SnackBar(content: Text(context.l10n.browserOpenFailed)));
     }
   }
 
@@ -88,7 +89,7 @@ class _WorkItemDetailScreenState extends State<WorkItemDetailScreen> {
               : FloatingActionButton.extended(
                   onPressed: () => _openInBrowser(detail.item),
                   icon: const Icon(Icons.open_in_new),
-                  label: const Text('Open in DevOps'),
+                  label: Text(context.l10n.openInDevOps),
                 ),
           body: RefreshIndicator(
             onRefresh: () async {
@@ -115,11 +116,12 @@ class _WorkItemDetailScreenState extends State<WorkItemDetailScreen> {
                             Icon(Icons.error_outline,
                                 size: 48, color: Theme.of(context).colorScheme.error),
                             const SizedBox(height: 12),
-                            Text(snapshot.error.toString(), textAlign: TextAlign.center),
+                            Text(context.l10n.error(snapshot.error!),
+                                textAlign: TextAlign.center),
                             const SizedBox(height: 16),
                             FilledButton.tonal(
                               onPressed: () => setState(() => _future = _load()),
-                              child: const Text('Opnieuw proberen'),
+                              child: Text(context.l10n.retry),
                             ),
                           ],
                         ),
@@ -147,10 +149,11 @@ class _WorkItemDetailScreenState extends State<WorkItemDetailScreen> {
   List<Widget> _buildBody(_Detail detail) {
     final item = detail.item;
     final theme = Theme.of(context);
+    final l10n = context.l10n;
     final sections = <(String, String?)>[
-      ('Beschrijving', item.description),
-      ('Stappen om te reproduceren', item.reproSteps),
-      ('Acceptatiecriteria', item.acceptanceCriteria),
+      (l10n.description, item.description),
+      (l10n.reproSteps, item.reproSteps),
+      (l10n.acceptanceCriteria, item.acceptanceCriteria),
     ].where((s) => htmlToText(s.$2).isNotEmpty);
 
     return [
@@ -189,43 +192,45 @@ class _WorkItemDetailScreenState extends State<WorkItemDetailScreen> {
           children: [
             _InfoRow(
               icon: Icons.person_outline,
-              label: 'Toegewezen aan',
+              label: l10n.assignedTo,
               valueWidget: Row(
                 children: [
                   PersonAvatar(item.assignedTo, radius: 12),
                   const SizedBox(width: 8),
-                  Flexible(child: Text(item.assignedTo?.displayName ?? 'Niet toegewezen')),
+                  Flexible(child: Text(item.assignedTo?.displayName ?? l10n.unassigned)),
                 ],
               ),
             ),
             if (item.priority != null)
-              _InfoRow(icon: Icons.flag_outlined, label: 'Prioriteit', value: '${item.priority}'),
+              _InfoRow(icon: Icons.flag_outlined, label: l10n.priority, value: '${item.priority}'),
             if (item.storyPoints != null)
-              _InfoRow(icon: Icons.speed, label: 'Inspanning', value: '${item.storyPoints}'),
+              _InfoRow(icon: Icons.speed, label: l10n.effort, value: '${item.storyPoints}'),
             if (item.originalEstimate != null)
               _InfoRow(
                   icon: Icons.schedule,
-                  label: 'Oorspronkelijke schatting',
-                  value: '${item.originalEstimate} u'),
+                  label: l10n.originalEstimate,
+                  value: l10n.hours('${item.originalEstimate}')),
             if (item.remainingWork != null)
               _InfoRow(
                   icon: Icons.hourglass_bottom,
-                  label: 'Resterend werk',
-                  value: '${item.remainingWork} u'),
+                  label: l10n.remainingWork,
+                  value: l10n.hours('${item.remainingWork}')),
             if (item.completedWork != null)
               _InfoRow(
                   icon: Icons.task_alt,
-                  label: 'Voltooid werk',
-                  value: '${item.completedWork} u'),
-            _InfoRow(icon: Icons.account_tree_outlined, label: 'Area', value: item.areaPath),
-            _InfoRow(icon: Icons.event_repeat, label: 'Iteratie', value: item.iterationPath),
+                  label: l10n.completedWork,
+                  value: l10n.hours('${item.completedWork}')),
+            _InfoRow(icon: Icons.account_tree_outlined, label: l10n.area, value: item.areaPath),
+            _InfoRow(icon: Icons.event_repeat, label: l10n.iteration, value: item.iterationPath),
             _InfoRow(
                 icon: Icons.add_circle_outline,
-                label: 'Aangemaakt',
-                value:
-                    '${formatDateTime(item.createdDate)} door ${item.createdBy?.displayName ?? '-'}'),
+                label: l10n.created,
+                value: l10n.createdOnBy(formatDateTime(l10n, item.createdDate),
+                    item.createdBy?.displayName ?? '-')),
             _InfoRow(
-                icon: Icons.update, label: 'Gewijzigd', value: formatDateTime(item.changedDate)),
+                icon: Icons.update,
+                label: l10n.changed,
+                value: formatDateTime(l10n, item.changedDate)),
           ],
         ),
       ),
@@ -239,27 +244,27 @@ class _WorkItemDetailScreenState extends State<WorkItemDetailScreen> {
       if (detail.parent != null || detail.children.isNotEmpty) ...[
         const SizedBox(height: 16),
         _SectionCard(
-          title: 'Gekoppelde items',
+          title: l10n.linkedItems,
           padding: const EdgeInsets.symmetric(vertical: 8),
           child: Column(
             children: [
               if (detail.parent != null)
                 _LinkedTile(
                     item: detail.parent!,
-                    relation: 'Bovenliggend',
+                    relation: l10n.parent,
                     onTap: () => _openLinked(detail.parent!.id)),
               for (final child in detail.children)
                 _LinkedTile(
-                    item: child, relation: 'Onderliggend', onTap: () => _openLinked(child.id)),
+                    item: child, relation: l10n.child, onTap: () => _openLinked(child.id)),
             ],
           ),
         ),
       ],
       const SizedBox(height: 16),
       _SectionCard(
-        title: 'Opmerkingen (${detail.comments.length})',
+        title: l10n.commentsCount(detail.comments.length),
         child: detail.comments.isEmpty
-            ? Text('Nog geen opmerkingen.',
+            ? Text(l10n.noComments,
                 style: theme.textTheme.bodyMedium
                     ?.copyWith(color: theme.colorScheme.onSurfaceVariant))
             : Column(
@@ -387,10 +392,10 @@ class _CommentView extends StatelessWidget {
               Text.rich(
                 TextSpan(children: [
                   TextSpan(
-                      text: comment.createdBy?.displayName ?? 'Onbekend',
+                      text: comment.createdBy?.displayName ?? context.l10n.unknownPerson,
                       style: theme.textTheme.labelLarge),
                   TextSpan(
-                      text: '  ${formatRelative(comment.createdDate)}',
+                      text: '  ${formatRelative(context.l10n, comment.createdDate)}',
                       style: theme.textTheme.bodySmall
                           ?.copyWith(color: theme.colorScheme.onSurfaceVariant)),
                 ]),

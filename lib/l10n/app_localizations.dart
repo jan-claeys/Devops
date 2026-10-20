@@ -1,0 +1,661 @@
+import 'dart:async';
+
+import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:intl/intl.dart' as intl;
+
+import 'app_localizations_ar.dart';
+import 'app_localizations_de.dart';
+import 'app_localizations_en.dart';
+import 'app_localizations_es.dart';
+import 'app_localizations_fr.dart';
+import 'app_localizations_hi.dart';
+import 'app_localizations_id.dart';
+import 'app_localizations_it.dart';
+import 'app_localizations_ja.dart';
+import 'app_localizations_ko.dart';
+import 'app_localizations_nl.dart';
+import 'app_localizations_pl.dart';
+import 'app_localizations_pt.dart';
+import 'app_localizations_ru.dart';
+import 'app_localizations_tr.dart';
+import 'app_localizations_uk.dart';
+import 'app_localizations_zh.dart';
+
+// ignore_for_file: type=lint
+
+/// Callers can lookup localized strings with an instance of AppLocalizations
+/// returned by `AppLocalizations.of(context)`.
+///
+/// Applications need to include `AppLocalizations.delegate()` in their app's
+/// `localizationDelegates` list, and the locales they support in the app's
+/// `supportedLocales` list. For example:
+///
+/// ```dart
+/// import 'l10n/app_localizations.dart';
+///
+/// return MaterialApp(
+///   localizationsDelegates: AppLocalizations.localizationsDelegates,
+///   supportedLocales: AppLocalizations.supportedLocales,
+///   home: MyApplicationHome(),
+/// );
+/// ```
+///
+/// ## Update pubspec.yaml
+///
+/// Please make sure to update your pubspec.yaml to include the following
+/// packages:
+///
+/// ```yaml
+/// dependencies:
+///   # Internationalization support.
+///   flutter_localizations:
+///     sdk: flutter
+///   intl: any # Use the pinned version from flutter_localizations
+///
+///   # Rest of dependencies
+/// ```
+///
+/// ## iOS Applications
+///
+/// iOS applications define key application metadata, including supported
+/// locales, in an Info.plist file that is built into the application bundle.
+/// To configure the locales supported by your app, you’ll need to edit this
+/// file.
+///
+/// First, open your project’s ios/Runner.xcworkspace Xcode workspace file.
+/// Then, in the Project Navigator, open the Info.plist file under the Runner
+/// project’s Runner folder.
+///
+/// Next, select the Information Property List item, select Add Item from the
+/// Editor menu, then select Localizations from the pop-up menu.
+///
+/// Select and expand the newly-created Localizations item then, for each
+/// locale your application supports, add a new item and select the locale
+/// you wish to add from the pop-up menu in the Value field. This list should
+/// be consistent with the languages listed in the AppLocalizations.supportedLocales
+/// property.
+abstract class AppLocalizations {
+  AppLocalizations(String locale)
+    : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+
+  final String localeName;
+
+  static AppLocalizations of(BuildContext context) {
+    return Localizations.of<AppLocalizations>(context, AppLocalizations)!;
+  }
+
+  static const LocalizationsDelegate<AppLocalizations> delegate =
+      _AppLocalizationsDelegate();
+
+  /// A list of this localizations delegate along with the default localizations
+  /// delegates.
+  ///
+  /// Returns a list of localizations delegates containing this delegate along with
+  /// GlobalMaterialLocalizations.delegate, GlobalCupertinoLocalizations.delegate,
+  /// and GlobalWidgetsLocalizations.delegate.
+  ///
+  /// Additional delegates can be added by appending to this list in
+  /// MaterialApp. This list does not have to be used at all if a custom list
+  /// of delegates is preferred or required.
+  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
+      <LocalizationsDelegate<dynamic>>[
+        delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ];
+
+  /// A list of this localizations delegate's supported locales.
+  static const List<Locale> supportedLocales = <Locale>[
+    Locale('en'),
+    Locale('ar'),
+    Locale('de'),
+    Locale('es'),
+    Locale('fr'),
+    Locale('hi'),
+    Locale('id'),
+    Locale('it'),
+    Locale('ja'),
+    Locale('ko'),
+    Locale('nl'),
+    Locale('pl'),
+    Locale('pt'),
+    Locale('ru'),
+    Locale('tr'),
+    Locale('uk'),
+    Locale('zh'),
+  ];
+
+  /// No description provided for @welcome.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome'**
+  String get welcome;
+
+  /// No description provided for @settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settings;
+
+  /// No description provided for @connectionSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection saved'**
+  String get connectionSaved;
+
+  /// No description provided for @onboardingIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect to Azure DevOps to view your tickets.'**
+  String get onboardingIntro;
+
+  /// No description provided for @connection.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection'**
+  String get connection;
+
+  /// No description provided for @organization.
+  ///
+  /// In en, this message translates to:
+  /// **'Organization'**
+  String get organization;
+
+  /// No description provided for @organizationHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. mycompany or https://dev.azure.com/mycompany'**
+  String get organizationHint;
+
+  /// No description provided for @organizationRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your organization'**
+  String get organizationRequired;
+
+  /// No description provided for @personalAccessToken.
+  ///
+  /// In en, this message translates to:
+  /// **'Personal Access Token'**
+  String get personalAccessToken;
+
+  /// No description provided for @tokenAlreadyStored.
+  ///
+  /// In en, this message translates to:
+  /// **'A token is already stored. Enter it again to change it.'**
+  String get tokenAlreadyStored;
+
+  /// No description provided for @tokenScopeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Required scope: Work Items (Read) and Project and Team (Read)'**
+  String get tokenScopeHint;
+
+  /// No description provided for @tokenRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your token'**
+  String get tokenRequired;
+
+  /// No description provided for @connecting.
+  ///
+  /// In en, this message translates to:
+  /// **'Connecting…'**
+  String get connecting;
+
+  /// No description provided for @connect.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect'**
+  String get connect;
+
+  /// No description provided for @appearance.
+  ///
+  /// In en, this message translates to:
+  /// **'Appearance'**
+  String get appearance;
+
+  /// No description provided for @themeLight.
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get themeLight;
+
+  /// No description provided for @themeSystem.
+  ///
+  /// In en, this message translates to:
+  /// **'System'**
+  String get themeSystem;
+
+  /// No description provided for @themeDark.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark'**
+  String get themeDark;
+
+  /// No description provided for @colorAzureBlue.
+  ///
+  /// In en, this message translates to:
+  /// **'Azure blue'**
+  String get colorAzureBlue;
+
+  /// No description provided for @colorSystem.
+  ///
+  /// In en, this message translates to:
+  /// **'System color'**
+  String get colorSystem;
+
+  /// No description provided for @language.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get language;
+
+  /// No description provided for @languageSystem.
+  ///
+  /// In en, this message translates to:
+  /// **'System language'**
+  String get languageSystem;
+
+  /// No description provided for @signOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign out'**
+  String get signOut;
+
+  /// No description provided for @selectTicketTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a ticket'**
+  String get selectTicketTitle;
+
+  /// No description provided for @selectTicketMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a ticket on the left to see its details.'**
+  String get selectTicketMessage;
+
+  /// No description provided for @chooseProject.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose project'**
+  String get chooseProject;
+
+  /// No description provided for @refresh.
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh'**
+  String get refresh;
+
+  /// No description provided for @searchTicketsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search by title, ID, tag or person'**
+  String get searchTicketsHint;
+
+  /// No description provided for @scopeAssignedToMe.
+  ///
+  /// In en, this message translates to:
+  /// **'Assigned to me'**
+  String get scopeAssignedToMe;
+
+  /// No description provided for @scopeCreatedByMe.
+  ///
+  /// In en, this message translates to:
+  /// **'Created by me'**
+  String get scopeCreatedByMe;
+
+  /// No description provided for @scopeAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get scopeAll;
+
+  /// No description provided for @openOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Open only'**
+  String get openOnly;
+
+  /// No description provided for @loadTicketsFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load tickets'**
+  String get loadTicketsFailed;
+
+  /// No description provided for @retry.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get retry;
+
+  /// No description provided for @noProjectTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No project selected'**
+  String get noProjectTitle;
+
+  /// No description provided for @noProjectMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a project to view tickets.'**
+  String get noProjectMessage;
+
+  /// No description provided for @noTicketsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No tickets'**
+  String get noTicketsTitle;
+
+  /// No description provided for @noTicketsMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'There are no tickets matching the filters.'**
+  String get noTicketsMessage;
+
+  /// No description provided for @ticketCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 ticket} other{{count} tickets}}'**
+  String ticketCount(int count);
+
+  /// No description provided for @unassigned.
+  ///
+  /// In en, this message translates to:
+  /// **'Unassigned'**
+  String get unassigned;
+
+  /// No description provided for @chooseAProject.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a project'**
+  String get chooseAProject;
+
+  /// No description provided for @searchProjectHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search project'**
+  String get searchProjectHint;
+
+  /// No description provided for @loadProjectsFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load projects'**
+  String get loadProjectsFailed;
+
+  /// No description provided for @browserOpenFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t open the browser'**
+  String get browserOpenFailed;
+
+  /// No description provided for @openInDevOps.
+  ///
+  /// In en, this message translates to:
+  /// **'Open in DevOps'**
+  String get openInDevOps;
+
+  /// No description provided for @description.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get description;
+
+  /// No description provided for @reproSteps.
+  ///
+  /// In en, this message translates to:
+  /// **'Steps to reproduce'**
+  String get reproSteps;
+
+  /// No description provided for @acceptanceCriteria.
+  ///
+  /// In en, this message translates to:
+  /// **'Acceptance criteria'**
+  String get acceptanceCriteria;
+
+  /// No description provided for @assignedTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Assigned to'**
+  String get assignedTo;
+
+  /// No description provided for @priority.
+  ///
+  /// In en, this message translates to:
+  /// **'Priority'**
+  String get priority;
+
+  /// No description provided for @effort.
+  ///
+  /// In en, this message translates to:
+  /// **'Effort'**
+  String get effort;
+
+  /// No description provided for @originalEstimate.
+  ///
+  /// In en, this message translates to:
+  /// **'Original estimate'**
+  String get originalEstimate;
+
+  /// No description provided for @remainingWork.
+  ///
+  /// In en, this message translates to:
+  /// **'Remaining work'**
+  String get remainingWork;
+
+  /// No description provided for @completedWork.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed work'**
+  String get completedWork;
+
+  /// No description provided for @hours.
+  ///
+  /// In en, this message translates to:
+  /// **'{value} h'**
+  String hours(String value);
+
+  /// No description provided for @area.
+  ///
+  /// In en, this message translates to:
+  /// **'Area'**
+  String get area;
+
+  /// No description provided for @iteration.
+  ///
+  /// In en, this message translates to:
+  /// **'Iteration'**
+  String get iteration;
+
+  /// No description provided for @created.
+  ///
+  /// In en, this message translates to:
+  /// **'Created'**
+  String get created;
+
+  /// No description provided for @createdOnBy.
+  ///
+  /// In en, this message translates to:
+  /// **'{date} by {name}'**
+  String createdOnBy(String date, String name);
+
+  /// No description provided for @changed.
+  ///
+  /// In en, this message translates to:
+  /// **'Changed'**
+  String get changed;
+
+  /// No description provided for @linkedItems.
+  ///
+  /// In en, this message translates to:
+  /// **'Linked items'**
+  String get linkedItems;
+
+  /// No description provided for @parent.
+  ///
+  /// In en, this message translates to:
+  /// **'Parent'**
+  String get parent;
+
+  /// No description provided for @child.
+  ///
+  /// In en, this message translates to:
+  /// **'Child'**
+  String get child;
+
+  /// No description provided for @commentsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Comments ({count})'**
+  String commentsCount(int count);
+
+  /// No description provided for @noComments.
+  ///
+  /// In en, this message translates to:
+  /// **'No comments yet.'**
+  String get noComments;
+
+  /// No description provided for @unknownPerson.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get unknownPerson;
+
+  /// No description provided for @justNow.
+  ///
+  /// In en, this message translates to:
+  /// **'just now'**
+  String get justNow;
+
+  /// No description provided for @minutesAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} min ago'**
+  String minutesAgo(int count);
+
+  /// No description provided for @hoursAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} h ago'**
+  String hoursAgo(int count);
+
+  /// No description provided for @daysAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} d ago'**
+  String daysAgo(int count);
+
+  /// No description provided for @errorUnauthorized.
+  ///
+  /// In en, this message translates to:
+  /// **'Not authorized. Check your Personal Access Token.'**
+  String get errorUnauthorized;
+
+  /// No description provided for @errorNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Not found. Check the organization or the project.'**
+  String get errorNotFound;
+
+  /// No description provided for @errorHttp.
+  ///
+  /// In en, this message translates to:
+  /// **'Error {code} from Azure DevOps'**
+  String errorHttp(int code);
+
+  /// No description provided for @errorUnexpectedResponse.
+  ///
+  /// In en, this message translates to:
+  /// **'Unexpected response. Check the organization and your token.'**
+  String get errorUnexpectedResponse;
+
+  /// No description provided for @widgetSetupRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Open the app to set up'**
+  String get widgetSetupRequired;
+}
+
+class _AppLocalizationsDelegate
+    extends LocalizationsDelegate<AppLocalizations> {
+  const _AppLocalizationsDelegate();
+
+  @override
+  Future<AppLocalizations> load(Locale locale) {
+    return SynchronousFuture<AppLocalizations>(lookupAppLocalizations(locale));
+  }
+
+  @override
+  bool isSupported(Locale locale) => <String>[
+    'ar',
+    'de',
+    'en',
+    'es',
+    'fr',
+    'hi',
+    'id',
+    'it',
+    'ja',
+    'ko',
+    'nl',
+    'pl',
+    'pt',
+    'ru',
+    'tr',
+    'uk',
+    'zh',
+  ].contains(locale.languageCode);
+
+  @override
+  bool shouldReload(_AppLocalizationsDelegate old) => false;
+}
+
+AppLocalizations lookupAppLocalizations(Locale locale) {
+  // Lookup logic when only language code is specified.
+  switch (locale.languageCode) {
+    case 'ar':
+      return AppLocalizationsAr();
+    case 'de':
+      return AppLocalizationsDe();
+    case 'en':
+      return AppLocalizationsEn();
+    case 'es':
+      return AppLocalizationsEs();
+    case 'fr':
+      return AppLocalizationsFr();
+    case 'hi':
+      return AppLocalizationsHi();
+    case 'id':
+      return AppLocalizationsId();
+    case 'it':
+      return AppLocalizationsIt();
+    case 'ja':
+      return AppLocalizationsJa();
+    case 'ko':
+      return AppLocalizationsKo();
+    case 'nl':
+      return AppLocalizationsNl();
+    case 'pl':
+      return AppLocalizationsPl();
+    case 'pt':
+      return AppLocalizationsPt();
+    case 'ru':
+      return AppLocalizationsRu();
+    case 'tr':
+      return AppLocalizationsTr();
+    case 'uk':
+      return AppLocalizationsUk();
+    case 'zh':
+      return AppLocalizationsZh();
+  }
+
+  throw FlutterError(
+    'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
+    'an issue with the localizations generation tool. Please file an issue '
+    'on GitHub with a reproducible sample app and the gen-l10n configuration '
+    'that was used.',
+  );
+}

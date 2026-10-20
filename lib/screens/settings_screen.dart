@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/l10n.dart';
 import '../services/app_state.dart';
 import '../services/devops_api.dart';
 import '../services/home_widget_service.dart';
@@ -52,10 +53,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
       if (!widget.isOnboarding) {
         Navigator.of(context).pop();
         ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text('Verbinding opgeslagen')));
+            .showSnackBar(SnackBar(content: Text(context.l10n.connectionSaved)));
       }
     } catch (e) {
-      setState(() => _error = e.toString());
+      setState(() => _error = context.l10n.error(e));
     } finally {
       if (mounted) setState(() => _busy = false);
     }
@@ -64,12 +65,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     final state = AppScope.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     return Scaffold(
       body: CustomScrollView(
         slivers: [
           SliverAppBar.large(
-            title: Text(widget.isOnboarding ? 'Welkom' : 'Instellingen'),
+            title: Text(widget.isOnboarding ? l10n.welcome : l10n.settings),
           ),
           SliverToBoxAdapter(
             child: Center(
@@ -84,24 +86,24 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       children: [
                         if (widget.isOnboarding) ...[
                           Text(
-                            'Verbind met Azure DevOps om je tickets te bekijken.',
+                            l10n.onboardingIntro,
                             style: theme.textTheme.bodyLarge,
                           ),
                           const SizedBox(height: 24),
                         ],
-                        Text('Verbinding', style: theme.textTheme.titleMedium),
+                        Text(l10n.connection, style: theme.textTheme.titleMedium),
                         const SizedBox(height: 12),
                         TextFormField(
                           controller: _org,
-                          decoration: const InputDecoration(
-                            labelText: 'Organisatie',
-                            hintText: 'bv. mijnbedrijf of https://dev.azure.com/mijnbedrijf',
-                            prefixIcon: Icon(Icons.business_outlined),
+                          decoration: InputDecoration(
+                            labelText: l10n.organization,
+                            hintText: l10n.organizationHint,
+                            prefixIcon: const Icon(Icons.business_outlined),
                           ),
                           textInputAction: TextInputAction.next,
                           autocorrect: false,
                           validator: (v) =>
-                              (v == null || v.trim().isEmpty) ? 'Vul je organisatie in' : null,
+                              (v == null || v.trim().isEmpty) ? l10n.organizationRequired : null,
                         ),
                         const SizedBox(height: 16),
                         TextFormField(
@@ -110,10 +112,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           autocorrect: false,
                           enableSuggestions: false,
                           decoration: InputDecoration(
-                            labelText: 'Personal Access Token',
+                            labelText: l10n.personalAccessToken,
                             helperText: state.hasPat
-                                ? 'Er is al een token opgeslagen. Vul opnieuw in om te wijzigen.'
-                                : 'Scope nodig: Work Items (Read) en Project and Team (Read)',
+                                ? l10n.tokenAlreadyStored
+                                : l10n.tokenScopeHint,
                             helperMaxLines: 2,
                             prefixIcon: const Icon(Icons.key_outlined),
                             suffixIcon: IconButton(
@@ -125,7 +127,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           ),
                           onFieldSubmitted: (_) => _save(),
                           validator: (v) =>
-                              (v == null || v.trim().isEmpty) ? 'Vul je token in' : null,
+                              (v == null || v.trim().isEmpty) ? l10n.tokenRequired : null,
                         ),
                         if (_error != null) ...[
                           const SizedBox(height: 16),
@@ -148,45 +150,49 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   dimension: 18,
                                   child: CircularProgressIndicator(strokeWidth: 2))
                               : const Icon(Icons.link),
-                          label: Text(_busy ? 'Verbinden…' : 'Verbinden'),
+                          label: Text(_busy ? l10n.connecting : l10n.connect),
                         ),
                         if (!widget.isOnboarding) ...[
                           const SizedBox(height: 32),
-                          Text('Weergave', style: theme.textTheme.titleMedium),
+                          Text(l10n.appearance, style: theme.textTheme.titleMedium),
                           const SizedBox(height: 12),
                           SegmentedButton<ThemeMode>(
-                            segments: const [
+                            segments: [
                               ButtonSegment(
                                   value: ThemeMode.light,
-                                  icon: Icon(Icons.light_mode_outlined),
-                                  label: Text('Licht')),
+                                  icon: const Icon(Icons.light_mode_outlined),
+                                  label: Text(l10n.themeLight)),
                               ButtonSegment(
                                   value: ThemeMode.system,
-                                  icon: Icon(Icons.brightness_auto_outlined),
-                                  label: Text('Systeem')),
+                                  icon: const Icon(Icons.brightness_auto_outlined),
+                                  label: Text(l10n.themeSystem)),
                               ButtonSegment(
                                   value: ThemeMode.dark,
-                                  icon: Icon(Icons.dark_mode_outlined),
-                                  label: Text('Donker')),
+                                  icon: const Icon(Icons.dark_mode_outlined),
+                                  label: Text(l10n.themeDark)),
                             ],
                             selected: {state.themeMode},
                             onSelectionChanged: (s) => state.setThemeMode(s.first),
                           ),
                           const SizedBox(height: 12),
                           SegmentedButton<bool>(
-                            segments: const [
+                            segments: [
                               ButtonSegment(
                                   value: false,
-                                  icon: Icon(Icons.water_drop_outlined),
-                                  label: Text('Azure-blauw')),
+                                  icon: const Icon(Icons.water_drop_outlined),
+                                  label: Text(l10n.colorAzureBlue)),
                               ButtonSegment(
                                   value: true,
-                                  icon: Icon(Icons.palette_outlined),
-                                  label: Text('Systeemkleur')),
+                                  icon: const Icon(Icons.palette_outlined),
+                                  label: Text(l10n.colorSystem)),
                             ],
                             selected: {state.useDynamicColor},
                             onSelectionChanged: (s) => state.setUseDynamicColor(s.first),
                           ),
+                          const SizedBox(height: 32),
+                          Text(l10n.language, style: theme.textTheme.titleMedium),
+                          const SizedBox(height: 12),
+                          const _LanguagePicker(),
                           const SizedBox(height: 32),
                           OutlinedButton.icon(
                             style: OutlinedButton.styleFrom(
@@ -198,7 +204,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               nav.popUntil((r) => r.isFirst);
                             },
                             icon: const Icon(Icons.logout),
-                            label: const Text('Afmelden'),
+                            label: Text(l10n.signOut),
                           ),
                         ],
                       ],
@@ -210,6 +216,31 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _LanguagePicker extends StatelessWidget {
+  const _LanguagePicker();
+
+  @override
+  Widget build(BuildContext context) {
+    final state = AppScope.of(context);
+    final l10n = context.l10n;
+    // An empty code stands for following the system language.
+    return DropdownMenu<String>(
+      // Rebuild so the "system language" label follows a language change.
+      key: ValueKey(l10n.localeName),
+      expandedInsets: EdgeInsets.zero,
+      leadingIcon: const Icon(Icons.language),
+      initialSelection: state.locale?.languageCode ?? '',
+      dropdownMenuEntries: [
+        DropdownMenuEntry(value: '', label: l10n.languageSystem),
+        for (final MapEntry(key: code, value: name) in languageNames.entries)
+          DropdownMenuEntry(value: code, label: name),
+      ],
+      onSelected: (code) =>
+          state.setLocale(code == null || code.isEmpty ? null : Locale(code)),
     );
   }
 }

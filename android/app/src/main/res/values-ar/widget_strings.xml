@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tickets_widget_label">تذاكري</string>
+    <string name="tickets_widget_description">تذاكر Azure DevOps المفتوحة في لمحة</string>
+    <string name="tickets_widget_refresh">تحديث</string>
+    <string name="tickets_widget_not_loaded">افتح التطبيق للتحميل</string>
+    <string name="tickets_widget_empty">لا توجد تذاكر مفتوحة</string>
+    <string name="tickets_widget_open_count">مفتوحة: %1$d</string>
+</resources>

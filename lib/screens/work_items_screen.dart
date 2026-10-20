@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/l10n.dart';
 import '../models/work_item.dart';
 import '../services/app_state.dart';
 import '../services/devops_api.dart';
@@ -143,10 +144,10 @@ class _WorkItemsScreenState extends State<WorkItemsScreen> {
                     child: _selectedId == null
                         ? ColoredBox(
                             color: scheme.surface,
-                            child: const _EmptyState(
+                            child: _EmptyState(
                               icon: Icons.touch_app_outlined,
-                              title: 'Selecteer een ticket',
-                              message: 'Kies links een ticket om de details te zien.',
+                              title: context.l10n.selectTicketTitle,
+                              message: context.l10n.selectTicketMessage,
                             ),
                           )
                         : WorkItemDetailScreen(
@@ -167,6 +168,7 @@ class _WorkItemsScreenState extends State<WorkItemsScreen> {
 
   Widget _buildList(AppState state, bool wide) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
     final items = _filtered;
     final availableTypes = {for (final w in _items ?? const <WorkItem>[]) w.type}.toList()
       ..sort();
@@ -185,7 +187,7 @@ class _WorkItemsScreenState extends State<WorkItemsScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Flexible(
-                      child: Text(state.project ?? 'Kies project',
+                      child: Text(state.project ?? l10n.chooseProject,
                           overflow: TextOverflow.ellipsis),
                     ),
                     const Icon(Icons.arrow_drop_down),
@@ -194,12 +196,12 @@ class _WorkItemsScreenState extends State<WorkItemsScreen> {
               ),
               actions: [
                 IconButton(
-                  tooltip: 'Vernieuwen',
+                  tooltip: l10n.refresh,
                   onPressed: _loading ? null : _load,
                   icon: const Icon(Icons.refresh),
                 ),
                 IconButton(
-                  tooltip: 'Instellingen',
+                  tooltip: l10n.settings,
                   onPressed: () => Navigator.of(context).push(
                       MaterialPageRoute(builder: (_) => const SettingsScreen())),
                   icon: const Icon(Icons.settings_outlined),
@@ -211,7 +213,7 @@ class _WorkItemsScreenState extends State<WorkItemsScreen> {
                 padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
                 child: SearchBar(
                   controller: _search,
-                  hintText: 'Zoek op titel, ID, tag of persoon',
+                  hintText: l10n.searchTicketsHint,
                   leading: const Icon(Icons.search),
                   trailing: [
                     if (_search.text.isNotEmpty)
@@ -230,19 +232,19 @@ class _WorkItemsScreenState extends State<WorkItemsScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
                 child: SegmentedButton<WorkItemScope>(
                   showSelectedIcon: false,
-                  segments: const [
+                  segments: [
                     ButtonSegment(
                         value: WorkItemScope.assignedToMe,
-                        icon: Icon(Icons.person_outline),
-                        label: Text('Aan mij')),
+                        icon: const Icon(Icons.person_outline),
+                        label: Text(l10n.scopeAssignedToMe)),
                     ButtonSegment(
                         value: WorkItemScope.createdByMe,
-                        icon: Icon(Icons.edit_outlined),
-                        label: Text('Door mij')),
+                        icon: const Icon(Icons.edit_outlined),
+                        label: Text(l10n.scopeCreatedByMe)),
                     ButtonSegment(
                         value: WorkItemScope.all,
-                        icon: Icon(Icons.groups_outlined),
-                        label: Text('Alles')),
+                        icon: const Icon(Icons.groups_outlined),
+                        label: Text(l10n.scopeAll)),
                   ],
                   selected: {_scope},
                   onSelectionChanged: (s) {
@@ -259,7 +261,7 @@ class _WorkItemsScreenState extends State<WorkItemsScreen> {
                 child: Row(
                   children: [
                     FilterChip(
-                      label: const Text('Alleen open'),
+                      label: Text(l10n.openOnly),
                       selected: _openOnly,
                       onSelected: (v) {
                         setState(() => _openOnly = v);
@@ -295,12 +297,12 @@ class _WorkItemsScreenState extends State<WorkItemsScreen> {
                 hasScrollBody: false,
                 child: _EmptyState(
                   icon: Icons.cloud_off_outlined,
-                  title: 'Kon tickets niet laden',
-                  message: _error.toString(),
+                  title: l10n.loadTicketsFailed,
+                  message: l10n.error(_error!),
                   action: FilledButton.tonalIcon(
                     onPressed: _load,
                     icon: const Icon(Icons.refresh),
-                    label: const Text('Opnieuw proberen'),
+                    label: Text(l10n.retry),
                   ),
                 ),
               )
@@ -309,22 +311,22 @@ class _WorkItemsScreenState extends State<WorkItemsScreen> {
                 hasScrollBody: false,
                 child: _EmptyState(
                   icon: Icons.folder_open_outlined,
-                  title: 'Geen project gekozen',
-                  message: 'Kies een project om tickets te bekijken.',
+                  title: l10n.noProjectTitle,
+                  message: l10n.noProjectMessage,
                   action: FilledButton.icon(
                     onPressed: _pickProject,
                     icon: const Icon(Icons.folder_outlined),
-                    label: const Text('Kies project'),
+                    label: Text(l10n.chooseProject),
                   ),
                 ),
               )
             else if (_items != null && items.isEmpty)
-              const SliverFillRemaining(
+              SliverFillRemaining(
                 hasScrollBody: false,
                 child: _EmptyState(
                   icon: Icons.inbox_outlined,
-                  title: 'Geen tickets',
-                  message: 'Er zijn geen tickets die aan de filters voldoen.',
+                  title: l10n.noTicketsTitle,
+                  message: l10n.noTicketsMessage,
                 ),
               )
             else ...[
@@ -332,7 +334,7 @@ class _WorkItemsScreenState extends State<WorkItemsScreen> {
                 SliverPadding(
                   padding: const EdgeInsets.fromLTRB(20, 4, 20, 8),
                   sliver: SliverToBoxAdapter(
-                    child: Text('${items.length} tickets',
+                    child: Text(l10n.ticketCount(items.length),
                         style: theme.textTheme.labelLarge
                             ?.copyWith(color: theme.colorScheme.onSurfaceVariant)),
                   ),
@@ -368,6 +370,7 @@ class _WorkItemCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
+    final l10n = context.l10n;
     final muted = theme.textTheme.bodySmall?.copyWith(color: scheme.onSurfaceVariant);
     return Card.filled(
       color: selected ? scheme.secondaryContainer : scheme.surfaceContainerLow,
@@ -393,7 +396,7 @@ class _WorkItemCard extends StatelessWidget {
                           Text('P${item.priority}', style: muted),
                         ],
                         const Spacer(),
-                        Text(formatRelative(item.changedDate), style: muted),
+                        Text(formatRelative(l10n, item.changedDate), style: muted),
                       ],
                     ),
                     const SizedBox(height: 2),
@@ -417,7 +420,7 @@ class _WorkItemCard extends StatelessWidget {
                           ),
                         ),
                         Tooltip(
-                          message: item.assignedTo?.displayName ?? 'Niet toegewezen',
+                          message: item.assignedTo?.displayName ?? l10n.unassigned,
                           child: PersonAvatar(item.assignedTo, radius: 12),
                         ),
                       ],
@@ -461,14 +464,14 @@ class _ProjectPickerState extends State<_ProjectPicker> {
             padding: const EdgeInsets.fromLTRB(24, 0, 24, 12),
             child: Row(
               children: [
-                Text('Kies een project', style: theme.textTheme.titleLarge),
+                Text(context.l10n.chooseAProject, style: theme.textTheme.titleLarge),
               ],
             ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: SearchBar(
-              hintText: 'Zoek project',
+              hintText: context.l10n.searchProjectHint,
               leading: const Icon(Icons.search),
               elevation: const WidgetStatePropertyAll(0),
               onChanged: (v) => setState(() => _query = v.toLowerCase()),
@@ -482,8 +485,8 @@ class _ProjectPickerState extends State<_ProjectPicker> {
                 if (snapshot.hasError) {
                   return _EmptyState(
                     icon: Icons.error_outline,
-                    title: 'Kon projecten niet laden',
-                    message: snapshot.error.toString(),
+                    title: context.l10n.loadProjectsFailed,
+                    message: context.l10n.error(snapshot.error!),
                   );
                 }
                 if (!snapshot.hasData) {

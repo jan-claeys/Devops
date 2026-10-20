@@ -1,0 +1,259 @@
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
+
+import 'app_localizations.dart';
+
+// ignore_for_file: type=lint
+
+/// The translations for Chinese (`zh`).
+class AppLocalizationsZh extends AppLocalizations {
+  AppLocalizationsZh([String locale = 'zh']) : super(locale);
+
+  @override
+  String get welcome => '欢迎';
+
+  @override
+  String get settings => '设置';
+
+  @override
+  String get connectionSaved => '连接已保存';
+
+  @override
+  String get onboardingIntro => '连接到 Azure DevOps 以查看你的工单。';
+
+  @override
+  String get connection => '连接';
+
+  @override
+  String get organization => '组织';
+
+  @override
+  String get organizationHint =>
+      '例如 mycompany 或 https://dev.azure.com/mycompany';
+
+  @override
+  String get organizationRequired => '请输入你的组织';
+
+  @override
+  String get personalAccessToken => 'Personal Access Token';
+
+  @override
+  String get tokenAlreadyStored => '已保存一个令牌。重新输入即可更改。';
+
+  @override
+  String get tokenScopeHint =>
+      '所需范围：Work Items (Read) 和 Project and Team (Read)';
+
+  @override
+  String get tokenRequired => '请输入你的令牌';
+
+  @override
+  String get connecting => '正在连接…';
+
+  @override
+  String get connect => '连接';
+
+  @override
+  String get appearance => '外观';
+
+  @override
+  String get themeLight => '浅色';
+
+  @override
+  String get themeSystem => '系统';
+
+  @override
+  String get themeDark => '深色';
+
+  @override
+  String get colorAzureBlue => 'Azure 蓝';
+
+  @override
+  String get colorSystem => '系统颜色';
+
+  @override
+  String get language => '语言';
+
+  @override
+  String get languageSystem => '系统语言';
+
+  @override
+  String get signOut => '退出登录';
+
+  @override
+  String get selectTicketTitle => '选择一个工单';
+
+  @override
+  String get selectTicketMessage => '在左侧选择一个工单以查看详情。';
+
+  @override
+  String get chooseProject => '选择项目';
+
+  @override
+  String get refresh => '刷新';
+
+  @override
+  String get searchTicketsHint => '按标题、ID、标签或人员搜索';
+
+  @override
+  String get scopeAssignedToMe => '分配给我';
+
+  @override
+  String get scopeCreatedByMe => '我创建的';
+
+  @override
+  String get scopeAll => '全部';
+
+  @override
+  String get openOnly => '仅未关闭';
+
+  @override
+  String get loadTicketsFailed => '无法加载工单';
+
+  @override
+  String get retry => '重试';
+
+  @override
+  String get noProjectTitle => '未选择项目';
+
+  @override
+  String get noProjectMessage => '选择一个项目以查看工单。';
+
+  @override
+  String get noTicketsTitle => '没有工单';
+
+  @override
+  String get noTicketsMessage => '没有符合筛选条件的工单。';
+
+  @override
+  String ticketCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count 个工单',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get unassigned => '未分配';
+
+  @override
+  String get chooseAProject => '选择一个项目';
+
+  @override
+  String get searchProjectHint => '搜索项目';
+
+  @override
+  String get loadProjectsFailed => '无法加载项目';
+
+  @override
+  String get browserOpenFailed => '无法打开浏览器';
+
+  @override
+  String get openInDevOps => '在 DevOps 中打开';
+
+  @override
+  String get description => '描述';
+
+  @override
+  String get reproSteps => '重现步骤';
+
+  @override
+  String get acceptanceCriteria => '验收标准';
+
+  @override
+  String get assignedTo => '分配给';
+
+  @override
+  String get priority => '优先级';
+
+  @override
+  String get effort => '工作量';
+
+  @override
+  String get originalEstimate => '原始估计';
+
+  @override
+  String get remainingWork => '剩余工作';
+
+  @override
+  String get completedWork => '已完成工作';
+
+  @override
+  String hours(String value) {
+    return '$value 小时';
+  }
+
+  @override
+  String get area => '区域';
+
+  @override
+  String get iteration => '迭代';
+
+  @override
+  String get created => '创建时间';
+
+  @override
+  String createdOnBy(String date, String name) {
+    return '$date，由 $name';
+  }
+
+  @override
+  String get changed => '修改时间';
+
+  @override
+  String get linkedItems => '关联项';
+
+  @override
+  String get parent => '父项';
+
+  @override
+  String get child => '子项';
+
+  @override
+  String commentsCount(int count) {
+    return '评论（$count）';
+  }
+
+  @override
+  String get noComments => '暂无评论。';
+
+  @override
+  String get unknownPerson => '未知';
+
+  @override
+  String get justNow => '刚刚';
+
+  @override
+  String minutesAgo(int count) {
+    return '$count 分钟前';
+  }
+
+  @override
+  String hoursAgo(int count) {
+    return '$count 小时前';
+  }
+
+  @override
+  String daysAgo(int count) {
+    return '$count 天前';
+  }
+
+  @override
+  String get errorUnauthorized => '未授权。请检查你的 Personal Access Token。';
+
+  @override
+  String get errorNotFound => '未找到。请检查组织或项目。';
+
+  @override
+  String errorHttp(int code) {
+    return 'Azure DevOps 返回错误 $code';
+  }
+
+  @override
+  String get errorUnexpectedResponse => '意外的响应。请检查组织和令牌。';
+
+  @override
+  String get widgetSetupRequired => '打开应用进行设置';
+}

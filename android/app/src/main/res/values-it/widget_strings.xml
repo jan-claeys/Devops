@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tickets_widget_label">I miei ticket</string>
+    <string name="tickets_widget_description">I tuoi ticket Azure DevOps aperti a colpo d\'occhio</string>
+    <string name="tickets_widget_refresh">Aggiorna</string>
+    <string name="tickets_widget_not_loaded">Apri l\'app per caricare</string>
+    <string name="tickets_widget_empty">Nessun ticket aperto</string>
+    <string name="tickets_widget_open_count">%1$d aperti</string>
+</resources>

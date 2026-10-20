@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tickets_widget_label">Biletlerim</string>
+    <string name="tickets_widget_description">Açık Azure DevOps biletleriniz bir bakışta</string>
+    <string name="tickets_widget_refresh">Yenile</string>
+    <string name="tickets_widget_not_loaded">Yüklemek için uygulamayı açın</string>
+    <string name="tickets_widget_empty">Açık bilet yok</string>
+    <string name="tickets_widget_open_count">%1$d açık</string>
+</resources>

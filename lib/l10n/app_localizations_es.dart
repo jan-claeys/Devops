@@ -1,0 +1,267 @@
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
+
+import 'app_localizations.dart';
+
+// ignore_for_file: type=lint
+
+/// The translations for Spanish Castilian (`es`).
+class AppLocalizationsEs extends AppLocalizations {
+  AppLocalizationsEs([String locale = 'es']) : super(locale);
+
+  @override
+  String get welcome => 'Bienvenido';
+
+  @override
+  String get settings => 'Ajustes';
+
+  @override
+  String get connectionSaved => 'Conexión guardada';
+
+  @override
+  String get onboardingIntro =>
+      'Conéctate a Azure DevOps para ver tus tickets.';
+
+  @override
+  String get connection => 'Conexión';
+
+  @override
+  String get organization => 'Organización';
+
+  @override
+  String get organizationHint =>
+      'p. ej. miempresa o https://dev.azure.com/miempresa';
+
+  @override
+  String get organizationRequired => 'Introduce tu organización';
+
+  @override
+  String get personalAccessToken => 'Personal Access Token';
+
+  @override
+  String get tokenAlreadyStored =>
+      'Ya hay un token guardado. Introdúcelo de nuevo para cambiarlo.';
+
+  @override
+  String get tokenScopeHint =>
+      'Ámbito necesario: Work Items (Read) y Project and Team (Read)';
+
+  @override
+  String get tokenRequired => 'Introduce tu token';
+
+  @override
+  String get connecting => 'Conectando…';
+
+  @override
+  String get connect => 'Conectar';
+
+  @override
+  String get appearance => 'Apariencia';
+
+  @override
+  String get themeLight => 'Claro';
+
+  @override
+  String get themeSystem => 'Sistema';
+
+  @override
+  String get themeDark => 'Oscuro';
+
+  @override
+  String get colorAzureBlue => 'Azul Azure';
+
+  @override
+  String get colorSystem => 'Color del sistema';
+
+  @override
+  String get language => 'Idioma';
+
+  @override
+  String get languageSystem => 'Idioma del sistema';
+
+  @override
+  String get signOut => 'Cerrar sesión';
+
+  @override
+  String get selectTicketTitle => 'Selecciona un ticket';
+
+  @override
+  String get selectTicketMessage =>
+      'Elige un ticket a la izquierda para ver sus detalles.';
+
+  @override
+  String get chooseProject => 'Elegir proyecto';
+
+  @override
+  String get refresh => 'Actualizar';
+
+  @override
+  String get searchTicketsHint => 'Buscar por título, ID, etiqueta o persona';
+
+  @override
+  String get scopeAssignedToMe => 'Asignados a mí';
+
+  @override
+  String get scopeCreatedByMe => 'Creados por mí';
+
+  @override
+  String get scopeAll => 'Todos';
+
+  @override
+  String get openOnly => 'Solo abiertos';
+
+  @override
+  String get loadTicketsFailed => 'No se pudieron cargar los tickets';
+
+  @override
+  String get retry => 'Reintentar';
+
+  @override
+  String get noProjectTitle => 'Ningún proyecto seleccionado';
+
+  @override
+  String get noProjectMessage => 'Elige un proyecto para ver los tickets.';
+
+  @override
+  String get noTicketsTitle => 'No hay tickets';
+
+  @override
+  String get noTicketsMessage =>
+      'No hay tickets que coincidan con los filtros.';
+
+  @override
+  String ticketCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count tickets',
+      one: '1 ticket',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get unassigned => 'Sin asignar';
+
+  @override
+  String get chooseAProject => 'Elige un proyecto';
+
+  @override
+  String get searchProjectHint => 'Buscar proyecto';
+
+  @override
+  String get loadProjectsFailed => 'No se pudieron cargar los proyectos';
+
+  @override
+  String get browserOpenFailed => 'No se pudo abrir el navegador';
+
+  @override
+  String get openInDevOps => 'Abrir en DevOps';
+
+  @override
+  String get description => 'Descripción';
+
+  @override
+  String get reproSteps => 'Pasos para reproducir';
+
+  @override
+  String get acceptanceCriteria => 'Criterios de aceptación';
+
+  @override
+  String get assignedTo => 'Asignado a';
+
+  @override
+  String get priority => 'Prioridad';
+
+  @override
+  String get effort => 'Esfuerzo';
+
+  @override
+  String get originalEstimate => 'Estimación original';
+
+  @override
+  String get remainingWork => 'Trabajo restante';
+
+  @override
+  String get completedWork => 'Trabajo completado';
+
+  @override
+  String hours(String value) {
+    return '$value h';
+  }
+
+  @override
+  String get area => 'Área';
+
+  @override
+  String get iteration => 'Iteración';
+
+  @override
+  String get created => 'Creado';
+
+  @override
+  String createdOnBy(String date, String name) {
+    return '$date por $name';
+  }
+
+  @override
+  String get changed => 'Modificado';
+
+  @override
+  String get linkedItems => 'Elementos vinculados';
+
+  @override
+  String get parent => 'Primario';
+
+  @override
+  String get child => 'Secundario';
+
+  @override
+  String commentsCount(int count) {
+    return 'Comentarios ($count)';
+  }
+
+  @override
+  String get noComments => 'Aún no hay comentarios.';
+
+  @override
+  String get unknownPerson => 'Desconocido';
+
+  @override
+  String get justNow => 'ahora mismo';
+
+  @override
+  String minutesAgo(int count) {
+    return 'hace $count min';
+  }
+
+  @override
+  String hoursAgo(int count) {
+    return 'hace $count h';
+  }
+
+  @override
+  String daysAgo(int count) {
+    return 'hace $count d';
+  }
+
+  @override
+  String get errorUnauthorized =>
+      'No autorizado. Comprueba tu Personal Access Token.';
+
+  @override
+  String get errorNotFound =>
+      'No encontrado. Comprueba la organización o el proyecto.';
+
+  @override
+  String errorHttp(int code) {
+    return 'Error $code de Azure DevOps';
+  }
+
+  @override
+  String get errorUnexpectedResponse =>
+      'Respuesta inesperada. Comprueba la organización y tu token.';
+
+  @override
+  String get widgetSetupRequired => 'Abre la app para configurarla';
+}

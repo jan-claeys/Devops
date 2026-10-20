@@ -1,0 +1,107 @@
+{
+  "@@locale": "en",
+
+  "welcome": "Welcome",
+  "settings": "Settings",
+  "connectionSaved": "Connection saved",
+  "onboardingIntro": "Connect to Azure DevOps to view your tickets.",
+  "connection": "Connection",
+  "organization": "Organization",
+  "organizationHint": "e.g. mycompany or https://dev.azure.com/mycompany",
+  "organizationRequired": "Enter your organization",
+  "personalAccessToken": "Personal Access Token",
+  "tokenAlreadyStored": "A token is already stored. Enter it again to change it.",
+  "tokenScopeHint": "Required scope: Work Items (Read) and Project and Team (Read)",
+  "tokenRequired": "Enter your token",
+  "connecting": "Connecting…",
+  "connect": "Connect",
+  "appearance": "Appearance",
+  "themeLight": "Light",
+  "themeSystem": "System",
+  "themeDark": "Dark",
+  "colorAzureBlue": "Azure blue",
+  "colorSystem": "System color",
+  "language": "Language",
+  "languageSystem": "System language",
+  "signOut": "Sign out",
+
+  "selectTicketTitle": "Select a ticket",
+  "selectTicketMessage": "Choose a ticket on the left to see its details.",
+  "chooseProject": "Choose project",
+  "refresh": "Refresh",
+  "searchTicketsHint": "Search by title, ID, tag or person",
+  "scopeAssignedToMe": "Assigned to me",
+  "scopeCreatedByMe": "Created by me",
+  "scopeAll": "All",
+  "openOnly": "Open only",
+  "loadTicketsFailed": "Couldn't load tickets",
+  "retry": "Try again",
+  "noProjectTitle": "No project selected",
+  "noProjectMessage": "Choose a project to view tickets.",
+  "noTicketsTitle": "No tickets",
+  "noTicketsMessage": "There are no tickets matching the filters.",
+  "ticketCount": "{count, plural, =1{1 ticket} other{{count} tickets}}",
+  "@ticketCount": {
+    "placeholders": {"count": {"type": "int"}}
+  },
+  "unassigned": "Unassigned",
+  "chooseAProject": "Choose a project",
+  "searchProjectHint": "Search project",
+  "loadProjectsFailed": "Couldn't load projects",
+
+  "browserOpenFailed": "Couldn't open the browser",
+  "openInDevOps": "Open in DevOps",
+  "description": "Description",
+  "reproSteps": "Steps to reproduce",
+  "acceptanceCriteria": "Acceptance criteria",
+  "assignedTo": "Assigned to",
+  "priority": "Priority",
+  "effort": "Effort",
+  "originalEstimate": "Original estimate",
+  "remainingWork": "Remaining work",
+  "completedWork": "Completed work",
+  "hours": "{value} h",
+  "@hours": {
+    "placeholders": {"value": {"type": "String"}}
+  },
+  "area": "Area",
+  "iteration": "Iteration",
+  "created": "Created",
+  "createdOnBy": "{date} by {name}",
+  "@createdOnBy": {
+    "placeholders": {"date": {"type": "String"}, "name": {"type": "String"}}
+  },
+  "changed": "Changed",
+  "linkedItems": "Linked items",
+  "parent": "Parent",
+  "child": "Child",
+  "commentsCount": "Comments ({count})",
+  "@commentsCount": {
+    "placeholders": {"count": {"type": "int"}}
+  },
+  "noComments": "No comments yet.",
+  "unknownPerson": "Unknown",
+
+  "justNow": "just now",
+  "minutesAgo": "{count} min ago",
+  "@minutesAgo": {
+    "placeholders": {"count": {"type": "int"}}
+  },
+  "hoursAgo": "{count} h ago",
+  "@hoursAgo": {
+    "placeholders": {"count": {"type": "int"}}
+  },
+  "daysAgo": "{count} d ago",
+  "@daysAgo": {
+    "placeholders": {"count": {"type": "int"}}
+  },
+
+  "errorUnauthorized": "Not authorized. Check your Personal Access Token.",
+  "errorNotFound": "Not found. Check the organization or the project.",
+  "errorHttp": "Error {code} from Azure DevOps",
+  "@errorHttp": {
+    "placeholders": {"code": {"type": "int"}}
+  },
+  "errorUnexpectedResponse": "Unexpected response. Check the organization and your token.",
+  "widgetSetupRequired": "Open the app to set up"
+}

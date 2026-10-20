@@ -2,9 +2,11 @@ import 'dart:async';
 
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:home_widget/home_widget.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
+import 'l10n/l10n.dart';
 import 'screens/settings_screen.dart';
 import 'screens/work_item_detail_screen.dart';
 import 'screens/work_items_screen.dart';
@@ -13,7 +15,7 @@ import 'services/home_widget_service.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await initializeDateFormatting('nl');
+  await initializeDateFormatting();
   final state = AppState();
   await state.load();
   unawaited(TicketsHomeWidget.registerBackgroundRefresh());
@@ -80,6 +82,16 @@ class _DevOpsTicketsAppState extends State<DevOpsTicketsApp> {
         return MaterialApp(
           navigatorKey: _navigator,
           title: 'DevOps Tickets',
+          // Without a chosen language Flutter picks the first supported system
+          // language, falling back to English (first in supportedLocales).
+          locale: state.locale,
+          supportedLocales: AppLocalizations.supportedLocales,
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
           debugShowCheckedModeBanner: false,
           theme: _theme(Brightness.light, useDynamic ? lightDynamic : null),
           darkTheme: _theme(Brightness.dark, useDynamic ? darkDynamic : null),

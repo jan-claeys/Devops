@@ -10,6 +10,7 @@ class AppState extends ChangeNotifier {
   static const _projectKey = 'project';
   static const _themeKey = 'themeMode';
   static const _dynamicColorKey = 'useDynamicColor';
+  static const _languageKey = 'language';
   static const _patKey = 'pat';
 
   final _secure = const FlutterSecureStorage();
@@ -21,6 +22,9 @@ class AppState extends ChangeNotifier {
 
   /// Follow the system accent colour (Material You) instead of Azure blue.
   bool useDynamicColor = false;
+
+  /// Language chosen in the settings; null follows the system language.
+  Locale? locale;
   DevOpsApi? api;
 
   bool get isConfigured => api != null;
@@ -31,6 +35,8 @@ class AppState extends ChangeNotifier {
     project = prefs.getString(_projectKey);
     themeMode = ThemeMode.values[prefs.getInt(_themeKey) ?? ThemeMode.system.index];
     useDynamicColor = prefs.getBool(_dynamicColorKey) ?? false;
+    final language = prefs.getString(_languageKey);
+    locale = language == null ? null : Locale(language);
     try {
       _pat = await _secure.read(key: _patKey);
     } catch (_) {
@@ -71,6 +77,17 @@ class AppState extends ChangeNotifier {
     useDynamicColor = value;
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool(_dynamicColorKey, value);
+    notifyListeners();
+  }
+
+  Future<void> setLocale(Locale? value) async {
+    locale = value;
+    final prefs = await SharedPreferences.getInstance();
+    if (value == null) {
+      await prefs.remove(_languageKey);
+    } else {
+      await prefs.setString(_languageKey, value.languageCode);
+    }
     notifyListeners();
   }
 
