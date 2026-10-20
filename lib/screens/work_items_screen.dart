@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../models/work_item.dart';
 import '../services/app_state.dart';
 import '../services/devops_api.dart';
+import '../services/home_widget_service.dart';
 import '../widgets/work_item_visuals.dart';
 import 'settings_screen.dart';
 import 'work_item_detail_screen.dart';
@@ -63,6 +64,10 @@ class _WorkItemsScreenState extends State<WorkItemsScreen> {
     try {
       final items =
           await api.queryWorkItems(project: project, scope: _scope, openOnly: _openOnly);
+      // The home screen widget shows exactly this view, so reuse the result.
+      if (_scope == WorkItemScope.assignedToMe && _openOnly) {
+        TicketsHomeWidget.update(project: project, items: items);
+      }
       if (!mounted) return;
       setState(() => _items = items);
     } catch (e) {

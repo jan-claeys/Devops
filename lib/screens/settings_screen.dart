@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../services/app_state.dart';
 import '../services/devops_api.dart';
+import '../services/home_widget_service.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key, this.isOnboarding = false});
@@ -193,6 +194,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             onPressed: () async {
                               final nav = Navigator.of(context);
                               await state.signOut();
+                              TicketsHomeWidget.refresh(state);
                               nav.popUntil((r) => r.isFirst);
                             },
                             icon: const Icon(Icons.logout),
