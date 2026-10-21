@@ -44,7 +44,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get tokenScopeHint =>
-      'Нужные права: Work Items (Read) и Project and Team (Read)';
+      'Нужные права: Work Items (Read), Build (Read) и Project and Team (Read)';
 
   @override
   String get tokenRequired => 'Введите токен';
@@ -61,7 +61,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'В разделе Scopes выберите Custom defined и включите только Work Items: Read и Project and Team: Read.';
+      'В разделе Scopes выберите Custom defined и включите только Work Items: Read, Build: Read и Project and Team: Read.';
 
   @override
   String get tokenHelpStep4 =>
@@ -341,4 +341,104 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get widgetSetupRequired => 'Откройте приложение для настройки';
+
+  @override
+  String get tickets => 'Тикеты';
+
+  @override
+  String get pipelines => 'Конвейеры';
+
+  @override
+  String get searchRunsHint => 'Поиск по конвейеру, ветке или человеку';
+
+  @override
+  String get activeOnly => 'Только активные';
+
+  @override
+  String get loadRunsFailed => 'Не удалось загрузить запуски';
+
+  @override
+  String get noRunsTitle => 'Нет запусков конвейеров';
+
+  @override
+  String get noRunsMessage => 'Нет запусков, соответствующих фильтрам.';
+
+  @override
+  String runCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count запуска',
+      many: '$count запусков',
+      few: '$count запуска',
+      one: '$count запуск',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get selectRunTitle => 'Выберите запуск';
+
+  @override
+  String get selectRunMessage =>
+      'Выберите запуск слева, чтобы следить за ходом выполнения.';
+
+  @override
+  String get runPending => 'Ожидание';
+
+  @override
+  String get runQueued => 'В очереди';
+
+  @override
+  String get runRunning => 'Выполняется';
+
+  @override
+  String get runCancelling => 'Отменяется';
+
+  @override
+  String get runSucceeded => 'Успешно';
+
+  @override
+  String get runPartiallySucceeded => 'Частично успешно';
+
+  @override
+  String get runFailed => 'Ошибка';
+
+  @override
+  String get runCanceled => 'Отменено';
+
+  @override
+  String get runSkipped => 'Пропущено';
+
+  @override
+  String get progress => 'Ход выполнения';
+
+  @override
+  String tasksProgress(int done, int total) {
+    return 'Выполнено задач: $done из $total';
+  }
+
+  @override
+  String get branch => 'Ветка';
+
+  @override
+  String get requestedBy => 'Запросил';
+
+  @override
+  String get queued => 'Поставлен в очередь';
+
+  @override
+  String get started => 'Начат';
+
+  @override
+  String get finished => 'Завершён';
+
+  @override
+  String get duration => 'Длительность';
+
+  @override
+  String get stages => 'Этапы';
+
+  @override
+  String get noStagesYet => 'Этапы появятся после начала запуска.';
 }

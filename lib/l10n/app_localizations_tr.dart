@@ -44,7 +44,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get tokenScopeHint =>
-      'Gerekli kapsam: Work Items (Read) ve Project and Team (Read)';
+      'Gerekli kapsam: Work Items (Read), Build (Read) ve Project and Team (Read)';
 
   @override
   String get tokenRequired => 'Belirtecinizi girin';
@@ -61,7 +61,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'Scopes altında Custom defined\'ı seçin ve yalnızca Work Items: Read ile Project and Team: Read\'i etkinleştirin.';
+      'Scopes altında Custom defined\'ı seçin ve yalnızca Work Items: Read, Build: Read ile Project and Team: Read\'i etkinleştirin.';
 
   @override
   String get tokenHelpStep4 =>
@@ -335,4 +335,102 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get widgetSetupRequired => 'Kurulum için uygulamayı açın';
+
+  @override
+  String get tickets => 'Biletler';
+
+  @override
+  String get pipelines => 'İşlem hatları';
+
+  @override
+  String get searchRunsHint => 'İşlem hattı, dal veya kişiye göre ara';
+
+  @override
+  String get activeOnly => 'Yalnızca etkin';
+
+  @override
+  String get loadRunsFailed => 'Çalıştırmalar yüklenemedi';
+
+  @override
+  String get noRunsTitle => 'İşlem hattı çalıştırması yok';
+
+  @override
+  String get noRunsMessage =>
+      'Filtrelerle eşleşen işlem hattı çalıştırması yok.';
+
+  @override
+  String runCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count çalıştırma',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get selectRunTitle => 'Bir çalıştırma seçin';
+
+  @override
+  String get selectRunMessage =>
+      'İlerlemesini izlemek için soldan bir çalıştırma seçin.';
+
+  @override
+  String get runPending => 'Bekliyor';
+
+  @override
+  String get runQueued => 'Kuyrukta';
+
+  @override
+  String get runRunning => 'Çalışıyor';
+
+  @override
+  String get runCancelling => 'İptal ediliyor';
+
+  @override
+  String get runSucceeded => 'Başarılı';
+
+  @override
+  String get runPartiallySucceeded => 'Kısmen başarılı';
+
+  @override
+  String get runFailed => 'Başarısız';
+
+  @override
+  String get runCanceled => 'İptal edildi';
+
+  @override
+  String get runSkipped => 'Atlandı';
+
+  @override
+  String get progress => 'İlerleme';
+
+  @override
+  String tasksProgress(int done, int total) {
+    return '$total görevden $done tamamlandı';
+  }
+
+  @override
+  String get branch => 'Dal';
+
+  @override
+  String get requestedBy => 'İsteyen';
+
+  @override
+  String get queued => 'Kuyruğa alındı';
+
+  @override
+  String get started => 'Başladı';
+
+  @override
+  String get finished => 'Bitti';
+
+  @override
+  String get duration => 'Süre';
+
+  @override
+  String get stages => 'Aşamalar';
+
+  @override
+  String get noStagesYet => 'Aşamalar çalıştırma başladığında görünür.';
 }

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
+import '../models/pipeline_run.dart';
 import '../models/work_item.dart';
 
 enum DevOpsError { unauthorized, notFound, http, unexpectedResponse }
@@ -64,6 +65,9 @@ class DevOpsApi {
 
   String webUrl(WorkItem item) =>
       '$baseUrl/${Uri.encodeComponent(item.project)}/_workitems/edit/${item.id}';
+
+  String runWebUrl(PipelineRun run) =>
+      '$baseUrl/${Uri.encodeComponent(run.project)}/_build/results?buildId=${run.id}';
 
   /// Headers to load [uri] with, such as an attachment image in a field.
   /// The PAT is only sent to the organization itself.
@@ -163,6 +167,39 @@ class DevOpsApi {
         .toList();
   }
 
+  /// The latest runs of the pipelines in all [projects], newest first.
+  Future<List<PipelineRun>> getPipelineRuns({
+    required List<String> projects,
+    int top = 50,
+  }) async {
+    final perProject = await Future.wait([
+      for (final project in projects)
+        _get('$baseUrl/${Uri.encodeComponent(project)}/_apis/build/builds'
+            '?\$top=$top&queryOrder=queueTimeDescending&api-version=$_apiVersion'),
+    ]);
+    final runs = [
+      for (final json in perProject)
+        ...(json['value'] as List).cast<Map<String, dynamic>>().map(PipelineRun.fromJson),
+    ]..sort((a, b) => (b.queueTime ?? DateTime(0)).compareTo(a.queueTime ?? DateTime(0)));
+    return runs.take(top).toList();
+  }
+
+  Future<PipelineRun> getPipelineRun(String project, int id) async {
+    final json = await _get('$baseUrl/${Uri.encodeComponent(project)}/_apis/build/builds/$id'
+        '?api-version=$_apiVersion');
+    return PipelineRun.fromJson(json);
+  }
+
+  /// The stages, jobs and tasks of a run; empty until the run starts.
+  Future<Timeline> getTimeline(String project, int id) async {
+    final json = await _get('$baseUrl/${Uri.encodeComponent(project)}/_apis/build/builds/$id'
+        '/timeline?api-version=$_apiVersion');
+    return Timeline([
+      for (final r in (json['records'] as List?) ?? const [])
+        TimelineRecord.fromJson(r as Map<String, dynamic>),
+    ]);
+  }
+
   Future<Map<String, dynamic>> _get(String url) async {
     final response = await _client.get(Uri.parse(url), headers: _headers);
     return _decode(response);
@@ -198,8 +235,11 @@ class DevOpsApi {
       } catch (_) {}
       throw DevOpsException(DevOpsError.http, statusCode: code, serverMessage: message);
     }
+    // The timeline of a run that hasn't started yet is empty or null.
+    if (code == 204 || response.bodyBytes.isEmpty) return const {};
     try {
-      return jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>;
+      return (jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>?) ??
+          const {};
     } on FormatException {
       // Azure DevOps answers with an HTML sign-in page when the PAT is invalid.
       throw DevOpsException(DevOpsError.unexpectedResponse, statusCode: code);

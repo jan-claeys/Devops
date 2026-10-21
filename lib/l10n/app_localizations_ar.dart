@@ -43,7 +43,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get tokenScopeHint =>
-      'النطاق المطلوب: Work Items (Read) و Project and Team (Read)';
+      'النطاق المطلوب: Work Items (Read)، Build (Read) و Project and Team (Read)';
 
   @override
   String get tokenRequired => 'أدخل الرمز';
@@ -60,7 +60,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'ضمن Scopes، اختر Custom defined وفعّل فقط Work Items: Read و Project and Team: Read.';
+      'ضمن Scopes، اختر Custom defined وفعّل فقط Work Items: Read، Build: Read و Project and Team: Read.';
 
   @override
   String get tokenHelpStep4 =>
@@ -341,4 +341,105 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get widgetSetupRequired => 'افتح التطبيق للإعداد';
+
+  @override
+  String get tickets => 'التذاكر';
+
+  @override
+  String get pipelines => 'البنيات';
+
+  @override
+  String get searchRunsHint => 'ابحث حسب البنية أو الفرع أو الشخص';
+
+  @override
+  String get activeOnly => 'النشطة فقط';
+
+  @override
+  String get loadRunsFailed => 'تعذّر تحميل عمليات التشغيل';
+
+  @override
+  String get noRunsTitle => 'لا توجد عمليات تشغيل';
+
+  @override
+  String get noRunsMessage => 'لا توجد عمليات تشغيل تطابق عوامل التصفية.';
+
+  @override
+  String runCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count عملية تشغيل',
+      many: '$count عملية تشغيل',
+      few: '$count عمليات تشغيل',
+      two: 'عمليتا تشغيل',
+      one: 'عملية تشغيل واحدة',
+      zero: 'لا توجد عمليات تشغيل',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get selectRunTitle => 'اختر عملية تشغيل';
+
+  @override
+  String get selectRunMessage => 'اختر عملية تشغيل على اليسار لمتابعة تقدّمها.';
+
+  @override
+  String get runPending => 'في الانتظار';
+
+  @override
+  String get runQueued => 'في قائمة الانتظار';
+
+  @override
+  String get runRunning => 'قيد التشغيل';
+
+  @override
+  String get runCancelling => 'جارٍ الإلغاء';
+
+  @override
+  String get runSucceeded => 'نجحت';
+
+  @override
+  String get runPartiallySucceeded => 'نجحت جزئيًا';
+
+  @override
+  String get runFailed => 'فشلت';
+
+  @override
+  String get runCanceled => 'أُلغيت';
+
+  @override
+  String get runSkipped => 'تم تخطيها';
+
+  @override
+  String get progress => 'التقدّم';
+
+  @override
+  String tasksProgress(int done, int total) {
+    return 'اكتملت $done من $total مهام';
+  }
+
+  @override
+  String get branch => 'الفرع';
+
+  @override
+  String get requestedBy => 'طلبها';
+
+  @override
+  String get queued => 'أُضيفت إلى قائمة الانتظار';
+
+  @override
+  String get started => 'بدأت';
+
+  @override
+  String get finished => 'انتهت';
+
+  @override
+  String get duration => 'المدة';
+
+  @override
+  String get stages => 'المراحل';
+
+  @override
+  String get noStagesYet => 'تظهر المراحل عند بدء التشغيل.';
 }

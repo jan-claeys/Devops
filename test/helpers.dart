@@ -38,6 +38,52 @@ Map<String, dynamic> workItemJson(
 Map<String, dynamic> relation(String rel, int id) =>
     {'rel': rel, 'url': 'https://dev.azure.com/contoso/_apis/wit/workItems/$id'};
 
+/// Raw build JSON as returned by Azure DevOps.
+Map<String, dynamic> runJson(
+  int id, {
+  String pipeline = 'CI',
+  String project = 'Contoso',
+  String status = 'completed',
+  String? result = 'succeeded',
+  String branch = 'refs/heads/main',
+  String queueTime = '2026-10-20T10:00:00Z',
+  String? startTime = '2026-10-20T10:00:05Z',
+  String? finishTime = '2026-10-20T10:02:05Z',
+}) =>
+    {
+      'id': id,
+      'buildNumber': '20261020.$id',
+      'status': status,
+      'result': ?result,
+      'definition': {'id': 1, 'name': pipeline},
+      'project': {'id': '1', 'name': project},
+      'sourceBranch': branch,
+      'requestedFor': {'displayName': 'Jan Claeys'},
+      'queueTime': queueTime,
+      'startTime': ?startTime,
+      'finishTime': ?finishTime,
+    };
+
+/// Raw timeline record JSON as returned by Azure DevOps.
+Map<String, dynamic> recordJson(
+  String id,
+  String type,
+  String name, {
+  String? parent,
+  String state = 'completed',
+  String? result = 'succeeded',
+  int order = 1,
+}) =>
+    {
+      'id': id,
+      'parentId': parent,
+      'type': type,
+      'name': name,
+      'state': state,
+      'result': result,
+      'order': order,
+    };
+
 /// In-memory stand-in for the Azure DevOps REST API.
 class FakeDevOps {
   final projects = <Map<String, dynamic>>[
@@ -49,6 +95,11 @@ class FakeDevOps {
   List<int>? queryResult;
   final comments = <int, List<Map<String, dynamic>>>{};
 
+  /// Pipeline runs by id; [timelines] holds their records, missing until a
+  /// run starts.
+  final runs = <int, Map<String, dynamic>>{};
+  final timelines = <int, List<Map<String, dynamic>>>{};
+
   /// When set, requests answer with this status code; with [failPath] only
   /// the requests whose path contains it.
   int? failWith;
@@ -56,6 +107,11 @@ class FakeDevOps {
   final requests = <http.Request>[];
 
   void add(Map<String, dynamic> item) => items[item['id'] as int] = item;
+
+  void addRun(Map<String, dynamic> run, [List<Map<String, dynamic>>? records]) {
+    runs[run['id'] as int] = run;
+    if (records != null) timelines[run['id'] as int] = records;
+  }
 
   late final client = MockClient((request) async {
     requests.add(request);
@@ -81,6 +137,26 @@ class FakeDevOps {
     final comment = RegExp(r'/workItems/(\d+)/comments$').firstMatch(path);
     if (comment != null) {
       return _json({'comments': comments[int.parse(comment[1]!)] ?? []});
+    }
+    final builds = RegExp(r'/([^/]+)/_apis/build/builds$').firstMatch(path);
+    if (builds != null) {
+      final project = Uri.decodeComponent(builds[1]!);
+      return _json({
+        'value': [
+          for (final run in runs.values)
+            if ((run['project'] as Map)['name'] == project) run,
+        ],
+      });
+    }
+    final timeline = RegExp(r'/_apis/build/builds/(\d+)/timeline$').firstMatch(path);
+    if (timeline != null) {
+      final records = timelines[int.parse(timeline[1]!)];
+      return records == null ? http.Response('', 204) : _json({'records': records});
+    }
+    final build = RegExp(r'/_apis/build/builds/(\d+)$').firstMatch(path);
+    if (build != null) {
+      final run = runs[int.parse(build[1]!)];
+      return run == null ? http.Response('', 404) : _json(run);
     }
     final single = RegExp(r'/_apis/wit/workitems/(\d+)$').firstMatch(path);
     if (single != null) {

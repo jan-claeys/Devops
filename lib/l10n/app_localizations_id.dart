@@ -44,7 +44,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get tokenScopeHint =>
-      'Cakupan yang diperlukan: Work Items (Read) dan Project and Team (Read)';
+      'Cakupan yang diperlukan: Work Items (Read), Build (Read) dan Project and Team (Read)';
 
   @override
   String get tokenRequired => 'Masukkan token Anda';
@@ -61,7 +61,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'Di Scopes, pilih Custom defined dan aktifkan hanya Work Items: Read dan Project and Team: Read.';
+      'Di Scopes, pilih Custom defined dan aktifkan hanya Work Items: Read, Build: Read dan Project and Team: Read.';
 
   @override
   String get tokenHelpStep4 =>
@@ -336,4 +336,102 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get widgetSetupRequired => 'Buka aplikasi untuk menyiapkan';
+
+  @override
+  String get tickets => 'Tiket';
+
+  @override
+  String get pipelines => 'Pipeline';
+
+  @override
+  String get searchRunsHint => 'Cari menurut pipeline, branch, atau orang';
+
+  @override
+  String get activeOnly => 'Hanya yang aktif';
+
+  @override
+  String get loadRunsFailed => 'Tidak dapat memuat run pipeline';
+
+  @override
+  String get noRunsTitle => 'Tidak ada run pipeline';
+
+  @override
+  String get noRunsMessage =>
+      'Tidak ada run pipeline yang cocok dengan filter.';
+
+  @override
+  String runCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count run',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get selectRunTitle => 'Pilih run pipeline';
+
+  @override
+  String get selectRunMessage =>
+      'Pilih run di sebelah kiri untuk mengikuti progresnya.';
+
+  @override
+  String get runPending => 'Menunggu';
+
+  @override
+  String get runQueued => 'Dalam antrean';
+
+  @override
+  String get runRunning => 'Berjalan';
+
+  @override
+  String get runCancelling => 'Membatalkan';
+
+  @override
+  String get runSucceeded => 'Berhasil';
+
+  @override
+  String get runPartiallySucceeded => 'Berhasil sebagian';
+
+  @override
+  String get runFailed => 'Gagal';
+
+  @override
+  String get runCanceled => 'Dibatalkan';
+
+  @override
+  String get runSkipped => 'Dilewati';
+
+  @override
+  String get progress => 'Progres';
+
+  @override
+  String tasksProgress(int done, int total) {
+    return '$done dari $total tugas selesai';
+  }
+
+  @override
+  String get branch => 'Branch';
+
+  @override
+  String get requestedBy => 'Diminta oleh';
+
+  @override
+  String get queued => 'Masuk antrean';
+
+  @override
+  String get started => 'Dimulai';
+
+  @override
+  String get finished => 'Selesai';
+
+  @override
+  String get duration => 'Durasi';
+
+  @override
+  String get stages => 'Tahap';
+
+  @override
+  String get noStagesYet => 'Tahap muncul setelah run dimulai.';
 }

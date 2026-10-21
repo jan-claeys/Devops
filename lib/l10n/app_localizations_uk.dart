@@ -44,7 +44,7 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get tokenScopeHint =>
-      'Потрібні права: Work Items (Read) і Project and Team (Read)';
+      'Потрібні права: Work Items (Read), Build (Read) і Project and Team (Read)';
 
   @override
   String get tokenRequired => 'Введіть токен';
@@ -61,7 +61,7 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'У розділі Scopes виберіть Custom defined і ввімкніть лише Work Items: Read і Project and Team: Read.';
+      'У розділі Scopes виберіть Custom defined і ввімкніть лише Work Items: Read, Build: Read і Project and Team: Read.';
 
   @override
   String get tokenHelpStep4 =>
@@ -341,4 +341,104 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get widgetSetupRequired => 'Відкрийте застосунок для налаштування';
+
+  @override
+  String get tickets => 'Тікети';
+
+  @override
+  String get pipelines => 'Конвеєри';
+
+  @override
+  String get searchRunsHint => 'Пошук за конвеєром, гілкою або людиною';
+
+  @override
+  String get activeOnly => 'Лише активні';
+
+  @override
+  String get loadRunsFailed => 'Не вдалося завантажити запуски';
+
+  @override
+  String get noRunsTitle => 'Немає запусків конвеєрів';
+
+  @override
+  String get noRunsMessage => 'Немає запусків, що відповідають фільтрам.';
+
+  @override
+  String runCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count запуску',
+      many: '$count запусків',
+      few: '$count запуски',
+      one: '$count запуск',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get selectRunTitle => 'Виберіть запуск';
+
+  @override
+  String get selectRunMessage =>
+      'Виберіть запуск ліворуч, щоб стежити за перебігом.';
+
+  @override
+  String get runPending => 'Очікування';
+
+  @override
+  String get runQueued => 'У черзі';
+
+  @override
+  String get runRunning => 'Виконується';
+
+  @override
+  String get runCancelling => 'Скасовується';
+
+  @override
+  String get runSucceeded => 'Успішно';
+
+  @override
+  String get runPartiallySucceeded => 'Частково успішно';
+
+  @override
+  String get runFailed => 'Помилка';
+
+  @override
+  String get runCanceled => 'Скасовано';
+
+  @override
+  String get runSkipped => 'Пропущено';
+
+  @override
+  String get progress => 'Перебіг';
+
+  @override
+  String tasksProgress(int done, int total) {
+    return 'Виконано завдань: $done з $total';
+  }
+
+  @override
+  String get branch => 'Гілка';
+
+  @override
+  String get requestedBy => 'Запит від';
+
+  @override
+  String get queued => 'Поставлено в чергу';
+
+  @override
+  String get started => 'Розпочато';
+
+  @override
+  String get finished => 'Завершено';
+
+  @override
+  String get duration => 'Тривалість';
+
+  @override
+  String get stages => 'Етапи';
+
+  @override
+  String get noStagesYet => 'Етапи з’являться після початку запуску.';
 }

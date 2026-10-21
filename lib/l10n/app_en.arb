@@ -11,12 +11,12 @@
   "organizationRequired": "Enter your organization",
   "personalAccessToken": "Personal Access Token",
   "tokenAlreadyStored": "A token is already stored. Enter it again to change it.",
-  "tokenScopeHint": "Required scope: Work Items (Read) and Project and Team (Read)",
+  "tokenScopeHint": "Required scope: Work Items (Read), Build (Read) and Project and Team (Read)",
   "tokenRequired": "Enter your token",
   "tokenHelpTitle": "How do I create a token?",
   "tokenHelpStep1": "In Azure DevOps, open User settings → Personal access tokens and select New Token.",
   "tokenHelpStep2": "Pick your organization and an expiration date.",
-  "tokenHelpStep3": "Under Scopes, choose Custom defined and enable only Work Items: Read and Project and Team: Read.",
+  "tokenHelpStep3": "Under Scopes, choose Custom defined and enable only Work Items: Read, Build: Read and Project and Team: Read.",
   "tokenHelpStep4": "Select Create, copy the token and paste it above. It is shown only once.",
   "tokenHelpPermissions": "A token never has more rights than your account: you need at least Stakeholder access and read access to the projects you want to see.",
   "tokenHelpDocs": "Microsoft documentation",
@@ -131,5 +131,41 @@
     "placeholders": {"code": {"type": "int"}}
   },
   "errorUnexpectedResponse": "Unexpected response. Check the organization and your token.",
-  "widgetSetupRequired": "Open the app to set up"
+  "widgetSetupRequired": "Open the app to set up",
+
+  "tickets": "Tickets",
+  "pipelines": "Pipelines",
+  "searchRunsHint": "Search by pipeline, branch or person",
+  "activeOnly": "Active only",
+  "loadRunsFailed": "Couldn't load pipeline runs",
+  "noRunsTitle": "No pipeline runs",
+  "noRunsMessage": "There are no pipeline runs matching the filters.",
+  "runCount": "{count, plural, =1{1 run} other{{count} runs}}",
+  "@runCount": {
+    "placeholders": {"count": {"type": "int"}}
+  },
+  "selectRunTitle": "Select a pipeline run",
+  "selectRunMessage": "Choose a run on the left to follow its progress.",
+  "runPending": "Waiting",
+  "runQueued": "Queued",
+  "runRunning": "Running",
+  "runCancelling": "Cancelling",
+  "runSucceeded": "Succeeded",
+  "runPartiallySucceeded": "Partially succeeded",
+  "runFailed": "Failed",
+  "runCanceled": "Canceled",
+  "runSkipped": "Skipped",
+  "progress": "Progress",
+  "tasksProgress": "{done} of {total} tasks done",
+  "@tasksProgress": {
+    "placeholders": {"done": {"type": "int"}, "total": {"type": "int"}}
+  },
+  "branch": "Branch",
+  "requestedBy": "Requested by",
+  "queued": "Queued",
+  "started": "Started",
+  "finished": "Finished",
+  "duration": "Duration",
+  "stages": "Stages",
+  "noStagesYet": "The stages appear once the run starts."
 }

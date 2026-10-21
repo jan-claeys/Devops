@@ -42,7 +42,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get tokenScopeHint =>
-      '所需范围：Work Items (Read) 和 Project and Team (Read)';
+      '所需范围：Work Items (Read)、Build (Read) 和 Project and Team (Read)';
 
   @override
   String get tokenRequired => '请输入你的令牌';
@@ -59,7 +59,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      '在 Scopes 下选择 Custom defined，并只启用 Work Items: Read 和 Project and Team: Read。';
+      '在 Scopes 下选择 Custom defined，并只启用 Work Items: Read、Build: Read 和 Project and Team: Read。';
 
   @override
   String get tokenHelpStep4 => '选择 Create，复制令牌并粘贴到上方。令牌只显示一次。';
@@ -327,4 +327,100 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get widgetSetupRequired => '打开应用进行设置';
+
+  @override
+  String get tickets => '工单';
+
+  @override
+  String get pipelines => '管道';
+
+  @override
+  String get searchRunsHint => '按管道、分支或人员搜索';
+
+  @override
+  String get activeOnly => '仅进行中';
+
+  @override
+  String get loadRunsFailed => '无法加载管道运行';
+
+  @override
+  String get noRunsTitle => '没有管道运行';
+
+  @override
+  String get noRunsMessage => '没有符合筛选条件的管道运行。';
+
+  @override
+  String runCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count 次运行',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get selectRunTitle => '选择一次管道运行';
+
+  @override
+  String get selectRunMessage => '在左侧选择一次运行以跟踪其进度。';
+
+  @override
+  String get runPending => '等待中';
+
+  @override
+  String get runQueued => '排队中';
+
+  @override
+  String get runRunning => '运行中';
+
+  @override
+  String get runCancelling => '正在取消';
+
+  @override
+  String get runSucceeded => '成功';
+
+  @override
+  String get runPartiallySucceeded => '部分成功';
+
+  @override
+  String get runFailed => '失败';
+
+  @override
+  String get runCanceled => '已取消';
+
+  @override
+  String get runSkipped => '已跳过';
+
+  @override
+  String get progress => '进度';
+
+  @override
+  String tasksProgress(int done, int total) {
+    return '已完成 $done/$total 个任务';
+  }
+
+  @override
+  String get branch => '分支';
+
+  @override
+  String get requestedBy => '请求者';
+
+  @override
+  String get queued => '排队时间';
+
+  @override
+  String get started => '开始时间';
+
+  @override
+  String get finished => '结束时间';
+
+  @override
+  String get duration => '持续时间';
+
+  @override
+  String get stages => '阶段';
+
+  @override
+  String get noStagesYet => '运行开始后将显示阶段。';
 }

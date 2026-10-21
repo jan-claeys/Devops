@@ -44,7 +44,7 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get tokenScopeHint =>
-      'आवश्यक स्कोप: Work Items (Read) और Project and Team (Read)';
+      'आवश्यक स्कोप: Work Items (Read), Build (Read) और Project and Team (Read)';
 
   @override
   String get tokenRequired => 'अपना टोकन दर्ज करें';
@@ -61,7 +61,7 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'Scopes में Custom defined चुनें और केवल Work Items: Read और Project and Team: Read चालू करें।';
+      'Scopes में Custom defined चुनें और केवल Work Items: Read, Build: Read और Project and Team: Read चालू करें।';
 
   @override
   String get tokenHelpStep4 =>
@@ -334,4 +334,102 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get widgetSetupRequired => 'सेट अप करने के लिए ऐप खोलें';
+
+  @override
+  String get tickets => 'टिकट';
+
+  @override
+  String get pipelines => 'पाइपलाइन';
+
+  @override
+  String get searchRunsHint => 'पाइपलाइन, ब्रांच या व्यक्ति से खोजें';
+
+  @override
+  String get activeOnly => 'केवल सक्रिय';
+
+  @override
+  String get loadRunsFailed => 'पाइपलाइन रन लोड नहीं हो सके';
+
+  @override
+  String get noRunsTitle => 'कोई पाइपलाइन रन नहीं';
+
+  @override
+  String get noRunsMessage =>
+      'फ़िल्टर से मेल खाने वाला कोई पाइपलाइन रन नहीं है।';
+
+  @override
+  String runCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count रन',
+      one: '1 रन',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get selectRunTitle => 'एक पाइपलाइन रन चुनें';
+
+  @override
+  String get selectRunMessage => 'प्रगति देखने के लिए बाईं ओर एक रन चुनें।';
+
+  @override
+  String get runPending => 'प्रतीक्षा में';
+
+  @override
+  String get runQueued => 'कतार में';
+
+  @override
+  String get runRunning => 'चल रहा है';
+
+  @override
+  String get runCancelling => 'रद्द हो रहा है';
+
+  @override
+  String get runSucceeded => 'सफल';
+
+  @override
+  String get runPartiallySucceeded => 'आंशिक रूप से सफल';
+
+  @override
+  String get runFailed => 'विफल';
+
+  @override
+  String get runCanceled => 'रद्द किया गया';
+
+  @override
+  String get runSkipped => 'छोड़ा गया';
+
+  @override
+  String get progress => 'प्रगति';
+
+  @override
+  String tasksProgress(int done, int total) {
+    return '$total में से $done कार्य पूरे';
+  }
+
+  @override
+  String get branch => 'ब्रांच';
+
+  @override
+  String get requestedBy => 'अनुरोधकर्ता';
+
+  @override
+  String get queued => 'कतार में डाला गया';
+
+  @override
+  String get started => 'शुरू हुआ';
+
+  @override
+  String get finished => 'समाप्त हुआ';
+
+  @override
+  String get duration => 'अवधि';
+
+  @override
+  String get stages => 'चरण';
+
+  @override
+  String get noStagesYet => 'रन शुरू होने पर चरण दिखाई देंगे।';
 }

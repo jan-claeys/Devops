@@ -8,6 +8,7 @@ import '../services/app_state.dart';
 import '../services/devops_api.dart';
 import '../services/home_widget_service.dart';
 import '../services/logging.dart';
+import '../widgets/empty_state.dart';
 import '../widgets/project_picker.dart';
 import '../widgets/work_item_visuals.dart';
 import 'settings_screen.dart';
@@ -150,7 +151,7 @@ class _WorkItemsScreenState extends State<WorkItemsScreen> {
                     child: _selectedId == null
                         ? ColoredBox(
                             color: scheme.surface,
-                            child: _EmptyState(
+                            child: EmptyState(
                               icon: Icons.touch_app_outlined,
                               title: context.l10n.selectTicketTitle,
                               message: context.l10n.selectTicketMessage,
@@ -324,7 +325,7 @@ class _WorkItemsScreenState extends State<WorkItemsScreen> {
             if (_error != null)
               SliverFillRemaining(
                 hasScrollBody: false,
-                child: _EmptyState(
+                child: EmptyState(
                   icon: Icons.cloud_off_outlined,
                   title: l10n.loadTicketsFailed,
                   message: l10n.error(_error!),
@@ -338,7 +339,7 @@ class _WorkItemsScreenState extends State<WorkItemsScreen> {
             else if (state.projects.isEmpty)
               SliverFillRemaining(
                 hasScrollBody: false,
-                child: _EmptyState(
+                child: EmptyState(
                   icon: Icons.folder_open_outlined,
                   title: l10n.noProjectsTitle,
                   message: l10n.noProjectsMessage,
@@ -352,7 +353,7 @@ class _WorkItemsScreenState extends State<WorkItemsScreen> {
             else if (_items != null && items.isEmpty)
               SliverFillRemaining(
                 hasScrollBody: false,
-                child: _EmptyState(
+                child: EmptyState(
                   icon: Icons.inbox_outlined,
                   title: l10n.noTicketsTitle,
                   message: l10n.noTicketsMessage,
@@ -475,44 +476,6 @@ class _WorkItemCard extends StatelessWidget {
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class _EmptyState extends StatelessWidget {
-  const _EmptyState({
-    required this.icon,
-    required this.title,
-    required this.message,
-    this.action,
-  });
-
-  final IconData icon;
-  final String title;
-  final String message;
-  final Widget? action;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(32),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(icon, size: 56, color: theme.colorScheme.primary),
-            const SizedBox(height: 16),
-            Text(title, style: theme.textTheme.titleLarge, textAlign: TextAlign.center),
-            const SizedBox(height: 8),
-            Text(message,
-                style: theme.textTheme.bodyMedium
-                    ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
-                textAlign: TextAlign.center),
-            if (action != null) ...[const SizedBox(height: 24), action!],
-          ],
         ),
       ),
     );

@@ -43,7 +43,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tokenScopeHint =>
-      'Required scope: Work Items (Read) and Project and Team (Read)';
+      'Required scope: Work Items (Read), Build (Read) and Project and Team (Read)';
 
   @override
   String get tokenRequired => 'Enter your token';
@@ -60,7 +60,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'Under Scopes, choose Custom defined and enable only Work Items: Read and Project and Team: Read.';
+      'Under Scopes, choose Custom defined and enable only Work Items: Read, Build: Read and Project and Team: Read.';
 
   @override
   String get tokenHelpStep4 =>
@@ -337,4 +337,103 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get widgetSetupRequired => 'Open the app to set up';
+
+  @override
+  String get tickets => 'Tickets';
+
+  @override
+  String get pipelines => 'Pipelines';
+
+  @override
+  String get searchRunsHint => 'Search by pipeline, branch or person';
+
+  @override
+  String get activeOnly => 'Active only';
+
+  @override
+  String get loadRunsFailed => 'Couldn\'t load pipeline runs';
+
+  @override
+  String get noRunsTitle => 'No pipeline runs';
+
+  @override
+  String get noRunsMessage =>
+      'There are no pipeline runs matching the filters.';
+
+  @override
+  String runCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count runs',
+      one: '1 run',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get selectRunTitle => 'Select a pipeline run';
+
+  @override
+  String get selectRunMessage =>
+      'Choose a run on the left to follow its progress.';
+
+  @override
+  String get runPending => 'Waiting';
+
+  @override
+  String get runQueued => 'Queued';
+
+  @override
+  String get runRunning => 'Running';
+
+  @override
+  String get runCancelling => 'Cancelling';
+
+  @override
+  String get runSucceeded => 'Succeeded';
+
+  @override
+  String get runPartiallySucceeded => 'Partially succeeded';
+
+  @override
+  String get runFailed => 'Failed';
+
+  @override
+  String get runCanceled => 'Canceled';
+
+  @override
+  String get runSkipped => 'Skipped';
+
+  @override
+  String get progress => 'Progress';
+
+  @override
+  String tasksProgress(int done, int total) {
+    return '$done of $total tasks done';
+  }
+
+  @override
+  String get branch => 'Branch';
+
+  @override
+  String get requestedBy => 'Requested by';
+
+  @override
+  String get queued => 'Queued';
+
+  @override
+  String get started => 'Started';
+
+  @override
+  String get finished => 'Finished';
+
+  @override
+  String get duration => 'Duration';
+
+  @override
+  String get stages => 'Stages';
+
+  @override
+  String get noStagesYet => 'The stages appear once the run starts.';
 }

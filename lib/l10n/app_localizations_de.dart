@@ -44,7 +44,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get tokenScopeHint =>
-      'Benötigter Bereich: Work Items (Read) und Project and Team (Read)';
+      'Benötigter Bereich: Work Items (Read), Build (Read) und Project and Team (Read)';
 
   @override
   String get tokenRequired => 'Gib dein Token ein';
@@ -61,7 +61,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'Wähle unter Scopes die Option Custom defined und aktiviere nur Work Items: Read und Project and Team: Read.';
+      'Wähle unter Scopes die Option Custom defined und aktiviere nur Work Items: Read, Build: Read und Project and Team: Read.';
 
   @override
   String get tokenHelpStep4 =>
@@ -338,4 +338,105 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get widgetSetupRequired => 'Öffne die App zum Einrichten';
+
+  @override
+  String get tickets => 'Tickets';
+
+  @override
+  String get pipelines => 'Pipelines';
+
+  @override
+  String get searchRunsHint => 'Nach Pipeline, Branch oder Person suchen';
+
+  @override
+  String get activeOnly => 'Nur aktive';
+
+  @override
+  String get loadRunsFailed =>
+      'Pipeline-Ausführungen konnten nicht geladen werden';
+
+  @override
+  String get noRunsTitle => 'Keine Pipeline-Ausführungen';
+
+  @override
+  String get noRunsMessage =>
+      'Es gibt keine Pipeline-Ausführungen, die den Filtern entsprechen.';
+
+  @override
+  String runCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Ausführungen',
+      one: '1 Ausführung',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get selectRunTitle => 'Wähle eine Pipeline-Ausführung';
+
+  @override
+  String get selectRunMessage =>
+      'Wähle links eine Ausführung, um ihren Fortschritt zu verfolgen.';
+
+  @override
+  String get runPending => 'Wartend';
+
+  @override
+  String get runQueued => 'In Warteschlange';
+
+  @override
+  String get runRunning => 'Läuft';
+
+  @override
+  String get runCancelling => 'Wird abgebrochen';
+
+  @override
+  String get runSucceeded => 'Erfolgreich';
+
+  @override
+  String get runPartiallySucceeded => 'Teilweise erfolgreich';
+
+  @override
+  String get runFailed => 'Fehlgeschlagen';
+
+  @override
+  String get runCanceled => 'Abgebrochen';
+
+  @override
+  String get runSkipped => 'Übersprungen';
+
+  @override
+  String get progress => 'Fortschritt';
+
+  @override
+  String tasksProgress(int done, int total) {
+    return '$done von $total Aufgaben erledigt';
+  }
+
+  @override
+  String get branch => 'Branch';
+
+  @override
+  String get requestedBy => 'Angefordert von';
+
+  @override
+  String get queued => 'Eingereiht';
+
+  @override
+  String get started => 'Gestartet';
+
+  @override
+  String get finished => 'Beendet';
+
+  @override
+  String get duration => 'Dauer';
+
+  @override
+  String get stages => 'Phasen';
+
+  @override
+  String get noStagesYet =>
+      'Die Phasen erscheinen, sobald die Ausführung startet.';
 }

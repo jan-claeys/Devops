@@ -191,7 +191,7 @@ abstract class AppLocalizations {
   /// No description provided for @tokenScopeHint.
   ///
   /// In en, this message translates to:
-  /// **'Required scope: Work Items (Read) and Project and Team (Read)'**
+  /// **'Required scope: Work Items (Read), Build (Read) and Project and Team (Read)'**
   String get tokenScopeHint;
 
   /// No description provided for @tokenRequired.
@@ -221,7 +221,7 @@ abstract class AppLocalizations {
   /// No description provided for @tokenHelpStep3.
   ///
   /// In en, this message translates to:
-  /// **'Under Scopes, choose Custom defined and enable only Work Items: Read and Project and Team: Read.'**
+  /// **'Under Scopes, choose Custom defined and enable only Work Items: Read, Build: Read and Project and Team: Read.'**
   String get tokenHelpStep3;
 
   /// No description provided for @tokenHelpStep4.
@@ -691,6 +691,180 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Open the app to set up'**
   String get widgetSetupRequired;
+
+  /// No description provided for @tickets.
+  ///
+  /// In en, this message translates to:
+  /// **'Tickets'**
+  String get tickets;
+
+  /// No description provided for @pipelines.
+  ///
+  /// In en, this message translates to:
+  /// **'Pipelines'**
+  String get pipelines;
+
+  /// No description provided for @searchRunsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search by pipeline, branch or person'**
+  String get searchRunsHint;
+
+  /// No description provided for @activeOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Active only'**
+  String get activeOnly;
+
+  /// No description provided for @loadRunsFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load pipeline runs'**
+  String get loadRunsFailed;
+
+  /// No description provided for @noRunsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No pipeline runs'**
+  String get noRunsTitle;
+
+  /// No description provided for @noRunsMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'There are no pipeline runs matching the filters.'**
+  String get noRunsMessage;
+
+  /// No description provided for @runCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 run} other{{count} runs}}'**
+  String runCount(int count);
+
+  /// No description provided for @selectRunTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a pipeline run'**
+  String get selectRunTitle;
+
+  /// No description provided for @selectRunMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a run on the left to follow its progress.'**
+  String get selectRunMessage;
+
+  /// No description provided for @runPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting'**
+  String get runPending;
+
+  /// No description provided for @runQueued.
+  ///
+  /// In en, this message translates to:
+  /// **'Queued'**
+  String get runQueued;
+
+  /// No description provided for @runRunning.
+  ///
+  /// In en, this message translates to:
+  /// **'Running'**
+  String get runRunning;
+
+  /// No description provided for @runCancelling.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelling'**
+  String get runCancelling;
+
+  /// No description provided for @runSucceeded.
+  ///
+  /// In en, this message translates to:
+  /// **'Succeeded'**
+  String get runSucceeded;
+
+  /// No description provided for @runPartiallySucceeded.
+  ///
+  /// In en, this message translates to:
+  /// **'Partially succeeded'**
+  String get runPartiallySucceeded;
+
+  /// No description provided for @runFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed'**
+  String get runFailed;
+
+  /// No description provided for @runCanceled.
+  ///
+  /// In en, this message translates to:
+  /// **'Canceled'**
+  String get runCanceled;
+
+  /// No description provided for @runSkipped.
+  ///
+  /// In en, this message translates to:
+  /// **'Skipped'**
+  String get runSkipped;
+
+  /// No description provided for @progress.
+  ///
+  /// In en, this message translates to:
+  /// **'Progress'**
+  String get progress;
+
+  /// No description provided for @tasksProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'{done} of {total} tasks done'**
+  String tasksProgress(int done, int total);
+
+  /// No description provided for @branch.
+  ///
+  /// In en, this message translates to:
+  /// **'Branch'**
+  String get branch;
+
+  /// No description provided for @requestedBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Requested by'**
+  String get requestedBy;
+
+  /// No description provided for @queued.
+  ///
+  /// In en, this message translates to:
+  /// **'Queued'**
+  String get queued;
+
+  /// No description provided for @started.
+  ///
+  /// In en, this message translates to:
+  /// **'Started'**
+  String get started;
+
+  /// No description provided for @finished.
+  ///
+  /// In en, this message translates to:
+  /// **'Finished'**
+  String get finished;
+
+  /// No description provided for @duration.
+  ///
+  /// In en, this message translates to:
+  /// **'Duration'**
+  String get duration;
+
+  /// No description provided for @stages.
+  ///
+  /// In en, this message translates to:
+  /// **'Stages'**
+  String get stages;
+
+  /// No description provided for @noStagesYet.
+  ///
+  /// In en, this message translates to:
+  /// **'The stages appear once the run starts.'**
+  String get noStagesYet;
 }
 
 class _AppLocalizationsDelegate

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:devops/models/pipeline_run.dart';
 import 'package:devops/models/work_item.dart';
 import 'package:devops/services/devops_api.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -172,6 +173,43 @@ void main() {
     expect(url.path, '/contoso/My%20Project/_apis/wit/workItems/5/comments');
     expect(url.queryParameters['order'], 'desc');
     expect(url.queryParameters['\$expand'], 'renderedText');
+  });
+
+  group('pipelines', () {
+    test('getPipelineRuns merges the projects, newest first', () async {
+      fake
+        ..addRun(runJson(1, queueTime: '2026-10-20T08:00:00Z'))
+        ..addRun(runJson(2, project: 'My Project', queueTime: '2026-10-20T09:00:00Z'))
+        ..addRun(runJson(3, queueTime: '2026-10-20T10:00:00Z'));
+      final runs = await api.getPipelineRuns(projects: ['Contoso', 'My Project'], top: 2);
+      expect(runs.map((r) => r.id), [3, 2]);
+      expect(fake.requests.map((r) => r.url.path), [
+        '/contoso/Contoso/_apis/build/builds',
+        '/contoso/My%20Project/_apis/build/builds',
+      ]);
+      expect(fake.requests.first.url.queryParameters['\$top'], '2');
+    });
+
+    test('getPipelineRun and getTimeline read one run', () async {
+      fake.addRun(runJson(4, status: 'inProgress', result: null), [
+        recordJson('s1', 'Stage', 'Build', state: 'inProgress', result: null),
+      ]);
+      final run = await api.getPipelineRun('Contoso', 4);
+      expect(run.status, RunStatus.running);
+      final timeline = await api.getTimeline('Contoso', 4);
+      expect(timeline.roots.single.name, 'Build');
+    });
+
+    test('a run that hasn\'t started has an empty timeline', () async {
+      fake.addRun(runJson(4, status: 'notStarted', result: null));
+      expect((await api.getTimeline('Contoso', 4)).roots, isEmpty);
+    });
+
+    test('runWebUrl links to the results page', () {
+      final run = PipelineRun.fromJson(runJson(4, project: 'My Project'));
+      expect(api.runWebUrl(run),
+          'https://dev.azure.com/contoso/My%20Project/_build/results?buildId=4');
+    });
   });
 
   test('headersFor only authenticates the organization', () {

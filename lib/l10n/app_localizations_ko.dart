@@ -42,7 +42,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get tokenScopeHint =>
-      '필요한 범위: Work Items (Read) 및 Project and Team (Read)';
+      '필요한 범위: Work Items (Read), Build (Read) 및 Project and Team (Read)';
 
   @override
   String get tokenRequired => '토큰을 입력하세요';
@@ -59,7 +59,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'Scopes에서 Custom defined를 선택하고 Work Items: Read와 Project and Team: Read만 켭니다.';
+      'Scopes에서 Custom defined를 선택하고 Work Items: Read, Build: Read와 Project and Team: Read만 켭니다.';
 
   @override
   String get tokenHelpStep4 =>
@@ -329,4 +329,100 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get widgetSetupRequired => '앱을 열어 설정하세요';
+
+  @override
+  String get tickets => '티켓';
+
+  @override
+  String get pipelines => '파이프라인';
+
+  @override
+  String get searchRunsHint => '파이프라인, 브랜치 또는 사람으로 검색';
+
+  @override
+  String get activeOnly => '진행 중인 항목만';
+
+  @override
+  String get loadRunsFailed => '파이프라인 실행을 불러오지 못했습니다';
+
+  @override
+  String get noRunsTitle => '파이프라인 실행 없음';
+
+  @override
+  String get noRunsMessage => '필터와 일치하는 파이프라인 실행이 없습니다.';
+
+  @override
+  String runCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '실행 $count개',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get selectRunTitle => '파이프라인 실행 선택';
+
+  @override
+  String get selectRunMessage => '왼쪽에서 실행을 선택하면 진행 상황을 볼 수 있습니다.';
+
+  @override
+  String get runPending => '대기 중';
+
+  @override
+  String get runQueued => '대기열에 있음';
+
+  @override
+  String get runRunning => '실행 중';
+
+  @override
+  String get runCancelling => '취소 중';
+
+  @override
+  String get runSucceeded => '성공';
+
+  @override
+  String get runPartiallySucceeded => '부분 성공';
+
+  @override
+  String get runFailed => '실패';
+
+  @override
+  String get runCanceled => '취소됨';
+
+  @override
+  String get runSkipped => '건너뜀';
+
+  @override
+  String get progress => '진행 상황';
+
+  @override
+  String tasksProgress(int done, int total) {
+    return '작업 $total개 중 $done개 완료';
+  }
+
+  @override
+  String get branch => '브랜치';
+
+  @override
+  String get requestedBy => '요청자';
+
+  @override
+  String get queued => '대기열 추가';
+
+  @override
+  String get started => '시작';
+
+  @override
+  String get finished => '종료';
+
+  @override
+  String get duration => '소요 시간';
+
+  @override
+  String get stages => '단계';
+
+  @override
+  String get noStagesYet => '실행이 시작되면 단계가 표시됩니다.';
 }

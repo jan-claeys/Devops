@@ -42,7 +42,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get tokenScopeHint =>
-      '必要なスコープ: Work Items (Read) と Project and Team (Read)';
+      '必要なスコープ: Work Items (Read)、Build (Read) と Project and Team (Read)';
 
   @override
   String get tokenRequired => 'トークンを入力してください';
@@ -59,7 +59,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'Scopes で Custom defined を選び、Work Items: Read と Project and Team: Read のみを有効にします。';
+      'Scopes で Custom defined を選び、Work Items: Read、Build: Read と Project and Team: Read のみを有効にします。';
 
   @override
   String get tokenHelpStep4 =>
@@ -329,4 +329,100 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get widgetSetupRequired => 'アプリを開いて設定してください';
+
+  @override
+  String get tickets => 'チケット';
+
+  @override
+  String get pipelines => 'パイプライン';
+
+  @override
+  String get searchRunsHint => 'パイプライン、ブランチ、ユーザーで検索';
+
+  @override
+  String get activeOnly => '実行中のみ';
+
+  @override
+  String get loadRunsFailed => 'パイプラインの実行を読み込めませんでした';
+
+  @override
+  String get noRunsTitle => 'パイプラインの実行はありません';
+
+  @override
+  String get noRunsMessage => 'フィルターに一致するパイプラインの実行はありません。';
+
+  @override
+  String runCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count 件の実行',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get selectRunTitle => 'パイプラインの実行を選択';
+
+  @override
+  String get selectRunMessage => '左側で実行を選ぶと進行状況を確認できます。';
+
+  @override
+  String get runPending => '待機中';
+
+  @override
+  String get runQueued => 'キュー登録済み';
+
+  @override
+  String get runRunning => '実行中';
+
+  @override
+  String get runCancelling => 'キャンセル中';
+
+  @override
+  String get runSucceeded => '成功';
+
+  @override
+  String get runPartiallySucceeded => '一部成功';
+
+  @override
+  String get runFailed => '失敗';
+
+  @override
+  String get runCanceled => 'キャンセル済み';
+
+  @override
+  String get runSkipped => 'スキップ';
+
+  @override
+  String get progress => '進行状況';
+
+  @override
+  String tasksProgress(int done, int total) {
+    return '$total 件中 $done 件のタスクが完了';
+  }
+
+  @override
+  String get branch => 'ブランチ';
+
+  @override
+  String get requestedBy => '要求者';
+
+  @override
+  String get queued => 'キュー登録';
+
+  @override
+  String get started => '開始';
+
+  @override
+  String get finished => '終了';
+
+  @override
+  String get duration => '所要時間';
+
+  @override
+  String get stages => 'ステージ';
+
+  @override
+  String get noStagesYet => '実行が始まるとステージが表示されます。';
 }

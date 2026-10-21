@@ -44,7 +44,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get tokenScopeHint =>
-      'Scope nodig: Work Items (Read) en Project and Team (Read)';
+      'Scope nodig: Work Items (Read), Build (Read) en Project and Team (Read)';
 
   @override
   String get tokenRequired => 'Vul je token in';
@@ -61,7 +61,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'Kies bij Scopes voor Custom defined en vink alleen Work Items: Read en Project and Team: Read aan.';
+      'Kies bij Scopes voor Custom defined en vink alleen Work Items: Read, Build: Read en Project and Team: Read aan.';
 
   @override
   String get tokenHelpStep4 =>
@@ -339,4 +339,103 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get widgetSetupRequired => 'Open de app om in te stellen';
+
+  @override
+  String get tickets => 'Tickets';
+
+  @override
+  String get pipelines => 'Pipelines';
+
+  @override
+  String get searchRunsHint => 'Zoek op pipeline, branch of persoon';
+
+  @override
+  String get activeOnly => 'Alleen actief';
+
+  @override
+  String get loadRunsFailed => 'Kon de pipeline-runs niet laden';
+
+  @override
+  String get noRunsTitle => 'Geen pipeline-runs';
+
+  @override
+  String get noRunsMessage =>
+      'Er zijn geen pipeline-runs die aan de filters voldoen.';
+
+  @override
+  String runCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count runs',
+      one: '1 run',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get selectRunTitle => 'Selecteer een pipeline-run';
+
+  @override
+  String get selectRunMessage =>
+      'Kies links een run om de voortgang te volgen.';
+
+  @override
+  String get runPending => 'Wachten';
+
+  @override
+  String get runQueued => 'In wachtrij';
+
+  @override
+  String get runRunning => 'Bezig';
+
+  @override
+  String get runCancelling => 'Wordt geannuleerd';
+
+  @override
+  String get runSucceeded => 'Geslaagd';
+
+  @override
+  String get runPartiallySucceeded => 'Gedeeltelijk geslaagd';
+
+  @override
+  String get runFailed => 'Mislukt';
+
+  @override
+  String get runCanceled => 'Geannuleerd';
+
+  @override
+  String get runSkipped => 'Overgeslagen';
+
+  @override
+  String get progress => 'Voortgang';
+
+  @override
+  String tasksProgress(int done, int total) {
+    return '$done van $total taken klaar';
+  }
+
+  @override
+  String get branch => 'Branch';
+
+  @override
+  String get requestedBy => 'Aangevraagd door';
+
+  @override
+  String get queued => 'In wachtrij gezet';
+
+  @override
+  String get started => 'Gestart';
+
+  @override
+  String get finished => 'Klaar';
+
+  @override
+  String get duration => 'Duur';
+
+  @override
+  String get stages => 'Stages';
+
+  @override
+  String get noStagesYet => 'De stages verschijnen zodra de run start.';
 }
