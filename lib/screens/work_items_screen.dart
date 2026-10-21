@@ -9,7 +9,6 @@ import '../services/devops_api.dart';
 import '../services/home_widget_service.dart';
 import '../services/logging.dart';
 import '../widgets/empty_state.dart';
-import '../widgets/project_picker.dart';
 import '../widgets/work_item_visuals.dart';
 import 'settings_screen.dart';
 import 'work_item_detail_screen.dart';
@@ -46,11 +45,7 @@ class _WorkItemsScreenState extends State<WorkItemsScreen> {
       _loadedFor = key;
       _selectedId = null;
       _types.clear();
-      if (state.projects.isEmpty) {
-        WidgetsBinding.instance.addPostFrameCallback((_) => _pickProjects());
-      } else {
-        _load();
-      }
+      _load();
     }
   }
 
@@ -83,16 +78,6 @@ class _WorkItemsScreenState extends State<WorkItemsScreen> {
       if (mounted) setState(() => _error = e);
     } finally {
       if (mounted) setState(() => _loading = false);
-    }
-  }
-
-  Future<void> _pickProjects() async {
-    final state = AppScope.read(context);
-    final picked =
-        await showProjectPicker(context, api: state.api!, current: state.projects);
-    if (picked != null && !listEquals(picked, state.projects)) {
-      _items = null;
-      await state.setProjects(picked);
     }
   }
 
@@ -237,26 +222,9 @@ class _WorkItemsScreenState extends State<WorkItemsScreen> {
         child: CustomScrollView(
           physics: const AlwaysScrollableScrollPhysics(),
           slivers: [
-            SliverAppBar.medium(
-              title: InkWell(
-                borderRadius: BorderRadius.circular(8),
-                onTap: _pickProjects,
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Flexible(
-                      child: Text(
-                          switch (state.projects) {
-                            [] => l10n.chooseProjects,
-                            [final project] => project,
-                            final projects => l10n.projectCount(projects.length),
-                          },
-                          overflow: TextOverflow.ellipsis),
-                    ),
-                    const Icon(Icons.arrow_drop_down),
-                  ],
-                ),
-              ),
+            // No title: the navigation bar already shows which screen this is.
+            SliverAppBar(
+              floating: true,
               actions: [
                 IconButton(
                   tooltip: l10n.refresh,
@@ -333,20 +301,6 @@ class _WorkItemsScreenState extends State<WorkItemsScreen> {
                     onPressed: _load,
                     icon: const Icon(Icons.refresh),
                     label: Text(l10n.retry),
-                  ),
-                ),
-              )
-            else if (state.projects.isEmpty)
-              SliverFillRemaining(
-                hasScrollBody: false,
-                child: EmptyState(
-                  icon: Icons.folder_open_outlined,
-                  title: l10n.noProjectsTitle,
-                  message: l10n.noProjectsMessage,
-                  action: FilledButton.icon(
-                    onPressed: _pickProjects,
-                    icon: const Icon(Icons.folder_outlined),
-                    label: Text(l10n.chooseProjects),
                   ),
                 ),
               )

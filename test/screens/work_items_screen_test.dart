@@ -40,7 +40,6 @@ void main() {
   testWidgets('loads my open tickets', (tester) async {
     await pumpScreen(tester);
 
-    expect(find.text('Contoso'), findsWidgets);
     expect(find.text(en.ticketCount(3)), findsOneWidget);
     expect(find.text('Login fails'), findsOneWidget);
     expect(find.text('#1'), findsOneWidget);
@@ -142,34 +141,12 @@ void main() {
     expect(fake.requests.length, greaterThan(before));
   });
 
-  testWidgets('asks for projects when none are selected', (tester) async {
-    fake.projects.add({'id': '2', 'name': 'Fabrikam'});
-    await pumpScreen(tester, projects: []);
-
-    expect(find.text(en.chooseProjects), findsWidgets);
-    expect(find.text('Main project'), findsOneWidget);
-
-    await tester.enterText(find.byType(SearchBar).last, 'fab');
-    await tester.pumpAndSettle();
-    expect(find.widgetWithText(CheckboxListTile, 'Contoso'), findsNothing);
-
-    await tester.tap(find.text('Fabrikam'));
-    await tester.pumpAndSettle();
-    await tester.tap(find.text(en.apply));
-    await tester.pumpAndSettle();
-    expect(find.text('Fabrikam'), findsWidgets);
-    expect(find.text('Login fails'), findsOneWidget);
-    expect(fake.requests.last.url.path, contains('workitemsbatch'));
-    expect(lastQuery(), contains("[System.TeamProject] IN ('Fabrikam')"));
-  });
-
   testWidgets('shows the tickets of several projects', (tester) async {
     fake
       ..projects.add({'id': '2', 'name': 'Fabrikam'})
       ..add(workItemJson(4, title: 'Invoice export', project: 'Fabrikam'));
     await pumpScreen(tester, projects: ['Contoso', 'Fabrikam']);
 
-    expect(find.text(en.projectCount(2)), findsWidgets);
     expect(lastQuery(), contains("[System.TeamProject] IN ('Contoso', 'Fabrikam')"));
     expect(find.text('Invoice export'), findsOneWidget);
     // Every card names its project.
@@ -181,38 +158,12 @@ void main() {
     expect(find.text(en.ticketCount(1)), findsOneWidget);
   });
 
-  testWidgets('changes the projects from the title', (tester) async {
-    fake.projects.add({'id': '2', 'name': 'Fabrikam'});
-    final state = connectedState(fake);
-    await pumpApp(tester, const WorkItemsScreen(), state: state);
-    await tester.pumpAndSettle();
-
-    await tester.tap(find.text('Contoso').first);
-    await tester.pumpAndSettle();
-    await tester.tap(find.text('Fabrikam'));
-    await tester.pumpAndSettle();
-    await tester.tap(find.text(en.apply));
-    await tester.pumpAndSettle();
-
-    expect(state.projects, ['Contoso', 'Fabrikam']);
-    expect(find.text(en.projectCount(2)), findsWidgets);
-    expect(lastQuery(), contains("IN ('Contoso', 'Fabrikam')"));
-  });
-
-  testWidgets('shows the no-project state when the picker is dismissed', (tester) async {
-    await pumpScreen(tester, projects: []);
-    await tester.tapAt(const Offset(200, 20));
-    await tester.pumpAndSettle();
-    expect(find.text(en.noProjectsTitle), findsOneWidget);
-  });
-
-  testWidgets('project picker shows load errors', (tester) async {
-    fake
-      ..failWith = 500
-      ..failPath = '/_apis/projects';
-    await pumpScreen(tester, projects: []);
-    expect(find.text(en.loadProjectsFailed), findsOneWidget);
-    expect(find.text(en.errorHttp(500)), findsOneWidget);
+  testWidgets('has no title, the navigation bar names the screen', (tester) async {
+    await pumpScreen(tester);
+    expect(find.text(en.tickets), findsNothing);
+    // With a single project the cards don't repeat its name either.
+    expect(find.text('Contoso'), findsNothing);
+    expect(find.byIcon(Icons.arrow_drop_down), findsNothing);
   });
 
   testWidgets('opens the details on a phone', (tester) async {

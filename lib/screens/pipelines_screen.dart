@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 
@@ -10,7 +9,6 @@ import '../services/app_state.dart';
 import '../services/logging.dart';
 import '../widgets/empty_state.dart';
 import '../widgets/pipeline_visuals.dart';
-import '../widgets/project_picker.dart';
 import '../widgets/work_item_visuals.dart';
 import 'pipeline_run_screen.dart';
 import 'settings_screen.dart';
@@ -102,15 +100,6 @@ class _PipelinesScreenState extends State<PipelinesScreen> {
     }
   }
 
-  Future<void> _pickProjects() async {
-    final state = AppScope.read(context);
-    final picked =
-        await showProjectPicker(context, api: state.api!, current: state.projects);
-    if (picked != null && !listEquals(picked, state.projects)) {
-      await state.setProjects(picked);
-    }
-  }
-
   List<PipelineRun> get _filtered {
     final query = _search.text.trim().toLowerCase();
     return (_runs ?? const <PipelineRun>[]).where((r) {
@@ -199,26 +188,9 @@ class _PipelinesScreenState extends State<PipelinesScreen> {
         child: CustomScrollView(
           physics: const AlwaysScrollableScrollPhysics(),
           slivers: [
-            SliverAppBar.medium(
-              title: InkWell(
-                borderRadius: BorderRadius.circular(8),
-                onTap: _pickProjects,
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Flexible(
-                      child: Text(
-                          switch (state.projects) {
-                            [] => l10n.chooseProjects,
-                            [final project] => project,
-                            final projects => l10n.projectCount(projects.length),
-                          },
-                          overflow: TextOverflow.ellipsis),
-                    ),
-                    const Icon(Icons.arrow_drop_down),
-                  ],
-                ),
-              ),
+            // No title: the navigation bar already shows which screen this is.
+            SliverAppBar(
+              floating: true,
               actions: [
                 IconButton(
                   tooltip: l10n.refresh,
@@ -281,20 +253,6 @@ class _PipelinesScreenState extends State<PipelinesScreen> {
                     onPressed: _load,
                     icon: const Icon(Icons.refresh),
                     label: Text(l10n.retry),
-                  ),
-                ),
-              )
-            else if (state.projects.isEmpty)
-              SliverFillRemaining(
-                hasScrollBody: false,
-                child: EmptyState(
-                  icon: Icons.folder_open_outlined,
-                  title: l10n.noProjectsTitle,
-                  message: l10n.noProjectsMessage,
-                  action: FilledButton.icon(
-                    onPressed: _pickProjects,
-                    icon: const Icon(Icons.folder_outlined),
-                    label: Text(l10n.chooseProjects),
                   ),
                 ),
               )

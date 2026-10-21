@@ -184,6 +184,40 @@ void main() {
     expect(find.text(en.projectCount(2)), findsOneWidget);
   });
 
+  testWidgets('searches the projects', (tester) async {
+    fake.projects.add({'id': '2', 'name': 'Fabrikam'});
+    mockStorage(prefs: {
+      'organization': 'contoso',
+      'projects': ['Contoso'],
+    }, secure: {'pat': 'x'});
+    await state.load();
+    await openSettings(tester);
+    await tester.tap(find.text(en.projectCount(1)));
+    await tester.pumpAndSettle();
+    expect(find.text('Main project'), findsOneWidget);
+
+    await tester.enterText(find.byType(SearchBar), 'fab');
+    await tester.pumpAndSettle();
+    expect(find.widgetWithText(CheckboxListTile, 'Contoso'), findsNothing);
+    expect(find.widgetWithText(CheckboxListTile, 'Fabrikam'), findsOneWidget);
+  });
+
+  testWidgets('the project picker shows load errors', (tester) async {
+    mockStorage(prefs: {
+      'organization': 'contoso',
+      'projects': ['Contoso'],
+    }, secure: {'pat': 'x'});
+    await state.load();
+    fake
+      ..failWith = 500
+      ..failPath = '/_apis/projects';
+    await openSettings(tester);
+    await tester.tap(find.text(en.projectCount(1)));
+    await tester.pumpAndSettle();
+    expect(find.text(en.loadProjectsFailed), findsOneWidget);
+    expect(find.text(en.errorHttp(500)), findsOneWidget);
+  });
+
   testWidgets('prefills the organization and mentions a stored token', (tester) async {
     mockStorage(prefs: {'organization': 'contoso'}, secure: {'pat': 'secret'});
     await state.load();
