@@ -83,6 +83,19 @@ class AppLocalizationsRu extends AppLocalizations {
   String get privacy => 'Конфиденциальность';
 
   @override
+  String get about => 'О приложении';
+
+  @override
+  String appVersion(String version) {
+    return 'Версия $version';
+  }
+
+  @override
+  String madeBy(String name) {
+    return 'Автор: $name';
+  }
+
+  @override
   String get sendErrorReports => 'Отправлять отчёты об ошибках';
 
   @override

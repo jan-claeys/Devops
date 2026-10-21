@@ -83,6 +83,19 @@ class AppLocalizationsHi extends AppLocalizations {
   String get privacy => 'गोपनीयता';
 
   @override
+  String get about => 'परिचय';
+
+  @override
+  String appVersion(String version) {
+    return 'संस्करण $version';
+  }
+
+  @override
+  String madeBy(String name) {
+    return '$name द्वारा निर्मित';
+  }
+
+  @override
   String get sendErrorReports => 'त्रुटि रिपोर्ट भेजें';
 
   @override

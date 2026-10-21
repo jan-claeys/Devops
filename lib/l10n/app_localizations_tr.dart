@@ -83,6 +83,19 @@ class AppLocalizationsTr extends AppLocalizations {
   String get privacy => 'Gizlilik';
 
   @override
+  String get about => 'Hakkında';
+
+  @override
+  String appVersion(String version) {
+    return 'Sürüm $version';
+  }
+
+  @override
+  String madeBy(String name) {
+    return '$name tarafından yapıldı';
+  }
+
+  @override
   String get sendErrorReports => 'Hata raporları gönder';
 
   @override

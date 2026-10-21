@@ -81,6 +81,19 @@ class AppLocalizationsZh extends AppLocalizations {
   String get privacy => '隐私';
 
   @override
+  String get about => '关于';
+
+  @override
+  String appVersion(String version) {
+    return '版本 $version';
+  }
+
+  @override
+  String madeBy(String name) {
+    return '由 $name 开发';
+  }
+
+  @override
   String get sendErrorReports => '发送错误报告';
 
   @override

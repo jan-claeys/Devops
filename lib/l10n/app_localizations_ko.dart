@@ -81,6 +81,19 @@ class AppLocalizationsKo extends AppLocalizations {
   String get privacy => '개인정보';
 
   @override
+  String get about => '정보';
+
+  @override
+  String appVersion(String version) {
+    return '버전 $version';
+  }
+
+  @override
+  String madeBy(String name) {
+    return '제작: $name';
+  }
+
+  @override
   String get sendErrorReports => '오류 보고서 보내기';
 
   @override

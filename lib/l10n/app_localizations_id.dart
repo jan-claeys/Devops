@@ -83,6 +83,19 @@ class AppLocalizationsId extends AppLocalizations {
   String get privacy => 'Privasi';
 
   @override
+  String get about => 'Tentang';
+
+  @override
+  String appVersion(String version) {
+    return 'Versi $version';
+  }
+
+  @override
+  String madeBy(String name) {
+    return 'Dibuat oleh $name';
+  }
+
+  @override
   String get sendErrorReports => 'Kirim laporan kesalahan';
 
   @override

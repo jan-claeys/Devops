@@ -83,6 +83,19 @@ class AppLocalizationsDe extends AppLocalizations {
   String get privacy => 'Datenschutz';
 
   @override
+  String get about => 'Über';
+
+  @override
+  String appVersion(String version) {
+    return 'Version $version';
+  }
+
+  @override
+  String madeBy(String name) {
+    return 'Erstellt von $name';
+  }
+
+  @override
   String get sendErrorReports => 'Fehlerberichte senden';
 
   @override

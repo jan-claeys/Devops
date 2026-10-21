@@ -83,6 +83,19 @@ class AppLocalizationsUk extends AppLocalizations {
   String get privacy => 'Конфіденційність';
 
   @override
+  String get about => 'Про застосунок';
+
+  @override
+  String appVersion(String version) {
+    return 'Версія $version';
+  }
+
+  @override
+  String madeBy(String name) {
+    return 'Автор: $name';
+  }
+
+  @override
   String get sendErrorReports => 'Надсилати звіти про помилки';
 
   @override

@@ -82,6 +82,19 @@ class AppLocalizationsAr extends AppLocalizations {
   String get privacy => 'الخصوصية';
 
   @override
+  String get about => 'حول';
+
+  @override
+  String appVersion(String version) {
+    return 'الإصدار $version';
+  }
+
+  @override
+  String madeBy(String name) {
+    return 'من إنشاء $name';
+  }
+
+  @override
   String get sendErrorReports => 'إرسال تقارير الأخطاء';
 
   @override
