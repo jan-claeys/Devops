@@ -170,10 +170,39 @@ void main() {
     expect(comment.createdBy!.displayName, 'Jan');
     expect(comment.createdDate, DateTime.utc(2026, 3, 4, 5, 6, 7).toLocal());
 
+    expect(comment.isMarkdown, isFalse);
+
     final empty = WorkItemComment.fromJson({});
     expect(empty.text, '');
     expect(empty.createdBy, isNull);
     expect(empty.createdDate, isNull);
+    expect(empty.mentions, isEmpty);
+  });
+
+  test('WorkItemComment.fromJson reads Markdown mentions from the rendered text', () {
+    final comment = WorkItemComment.fromJson({
+      'text': '@<6F9B0A4C-1111-2222-3333-444455556666> look',
+      'format': 'markdown',
+      'renderedText': '<p><a href="#" data-vss-mention="version:2.0,6f9b0a4c-1111-2222-3333-444455556666">'
+          '@Jan Claeys</a> look</p>',
+    });
+    expect(comment.isMarkdown, isTrue);
+    expect(comment.mentions, {'6f9b0a4c-1111-2222-3333-444455556666': 'Jan Claeys'});
+  });
+
+  test('WorkItem.fromJson reads which fields are Markdown', () {
+    final item = WorkItem.fromJson({
+      'id': 1,
+      'fields': <String, dynamic>{},
+      'multilineFieldsFormat': {
+        WorkItem.descriptionField: 'Markdown',
+        WorkItem.reproStepsField: 'html',
+      },
+    });
+    expect(item.isMarkdown(WorkItem.descriptionField), isTrue);
+    expect(item.isMarkdown(WorkItem.reproStepsField), isFalse);
+    expect(item.isMarkdown(WorkItem.acceptanceCriteriaField), isFalse);
+    expect(WorkItem.fromJson({'id': 1}).markdownFields, isEmpty);
   });
 
   test('Project.fromJson', () {

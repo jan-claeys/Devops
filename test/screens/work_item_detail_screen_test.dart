@@ -1,4 +1,5 @@
 import 'package:devops/screens/work_item_detail_screen.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -124,6 +125,37 @@ void main() {
     expect(find.text(en.commentsCount(1)), findsOneWidget);
     expect(find.textContaining('can you check?', findRichText: true), findsOneWidget);
     expect(find.textContaining(en.justNow, findRichText: true), findsOneWidget);
+  });
+
+  testWidgets('renders Markdown fields and comments', (tester) async {
+    fake.add(workItemJson(20, title: 'Story', type: 'User Story', fields: {
+      'System.Description': 'Needs **bold** work, see #10',
+    })
+      ..['multilineFieldsFormat'] = {'System.Description': 'markdown'});
+    fake.comments[20] = [
+      {
+        'text': '@<6f9b0a4c-1111-2222-3333-444455556666> done in `main`',
+        'format': 'markdown',
+        'renderedText': '<a data-vss-mention="version:2.0,6f9b0a4c-1111-2222-3333-444455556666">'
+            '@Jan Claeys</a> done',
+      },
+    ];
+    int? opened;
+    await pumpDetail(tester, id: 20, onOpen: (id) => opened = id);
+
+    expect(find.text(en.description), findsOneWidget);
+    expect(find.textContaining('**', findRichText: true), findsNothing);
+    expect(find.textContaining('Needs bold work', findRichText: true), findsOneWidget);
+    expect(find.textContaining('@Jan Claeys done in main', findRichText: true), findsOneWidget);
+
+    final link = tester
+        .widgetList<SelectableText>(find.byType(SelectableText))
+        .map((t) => t.textSpan?.children ?? const <InlineSpan>[])
+        .expand((spans) => spans)
+        .whereType<TextSpan>()
+        .singleWhere((span) => span.text == '#10');
+    (link.recognizer! as TapGestureRecognizer).onTap!();
+    expect(opened, 10);
   });
 
   testWidgets('works without comments or links', (tester) async {

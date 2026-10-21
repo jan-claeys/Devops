@@ -151,6 +151,10 @@ String htmlToText(String? html) {
   return text.trim();
 }
 
+/// Whether a field or comment has nothing to show, as Markdown or as HTML.
+bool isBlankContent(String? text, {bool markdown = false}) =>
+    markdown ? (text?.trim().isEmpty ?? true) : htmlToText(text).isEmpty;
+
 /// Like [htmlToText], but renders @mentions with [mentionStyle].
 TextSpan htmlToSpan(String? html, {TextStyle? style, TextStyle? mentionStyle}) {
   const start = '\u0001', end = '\u0002';

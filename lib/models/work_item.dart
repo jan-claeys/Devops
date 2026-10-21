@@ -28,18 +28,40 @@ class Identity {
 }
 
 class WorkItem {
-  WorkItem({required this.id, required this.fields, this.relations = const []});
+  WorkItem({
+    required this.id,
+    required this.fields,
+    this.relations = const [],
+    this.markdownFields = const {},
+  });
 
   final int id;
   final Map<String, dynamic> fields;
   final List<Map<String, dynamic>> relations;
+
+  /// Multi-line fields that Azure DevOps stores as Markdown instead of HTML.
+  final Set<String> markdownFields;
+
+  static const descriptionField = 'System.Description';
+  static const reproStepsField = 'Microsoft.VSTS.TCM.ReproSteps';
+  static const acceptanceCriteriaField = 'Microsoft.VSTS.Common.AcceptanceCriteria';
+  static const symptomField = 'Microsoft.VSTS.CMMI.Symptom';
+  static const systemInfoField = 'Microsoft.VSTS.TCM.SystemInfo';
+  static const proposedFixField = 'Microsoft.VSTS.CMMI.ProposedFix';
 
   factory WorkItem.fromJson(Map<String, dynamic> json) => WorkItem(
         id: json['id'] as int,
         fields: (json['fields'] as Map<String, dynamic>?) ?? const {},
         relations: ((json['relations'] as List?) ?? const [])
             .cast<Map<String, dynamic>>(),
+        markdownFields: {
+          for (final MapEntry(:key, :value)
+              in ((json['multilineFieldsFormat'] as Map?) ?? const {}).entries)
+            if ('$value'.toLowerCase() == 'markdown') key as String,
+        },
       );
+
+  bool isMarkdown(String field) => markdownFields.contains(field);
 
   String get title => fields['System.Title'] as String? ?? '#$id';
   String get state => fields['System.State'] as String? ?? '';
@@ -69,13 +91,12 @@ class WorkItem {
     return raw.split(';').map((t) => t.trim()).where((t) => t.isNotEmpty).toList();
   }
 
-  String? get description => fields['System.Description'] as String?;
-  String? get reproSteps => fields['Microsoft.VSTS.TCM.ReproSteps'] as String?;
-  String? get acceptanceCriteria =>
-      fields['Microsoft.VSTS.Common.AcceptanceCriteria'] as String?;
-  String? get symptom => fields['Microsoft.VSTS.CMMI.Symptom'] as String?;
-  String? get systemInfo => fields['Microsoft.VSTS.TCM.SystemInfo'] as String?;
-  String? get proposedFix => fields['Microsoft.VSTS.CMMI.ProposedFix'] as String?;
+  String? get description => fields[descriptionField] as String?;
+  String? get reproSteps => fields[reproStepsField] as String?;
+  String? get acceptanceCriteria => fields[acceptanceCriteriaField] as String?;
+  String? get symptom => fields[symptomField] as String?;
+  String? get systemInfo => fields[systemInfoField] as String?;
+  String? get proposedFix => fields[proposedFixField] as String?;
   bool get isBug => type == 'Bug';
 
   /// Id of the parent work item, if any.
@@ -108,18 +129,39 @@ class WorkItemComment {
     required this.text,
     required this.createdBy,
     required this.createdDate,
+    this.isMarkdown = false,
+    this.mentions = const {},
   });
 
   final String text;
   final Identity? createdBy;
   final DateTime? createdDate;
 
+  /// True when [text] is Markdown instead of HTML.
+  final bool isMarkdown;
+
+  /// Display names of the people mentioned as `@<guid>`, keyed by lowercase guid.
+  final Map<String, String> mentions;
+
   factory WorkItemComment.fromJson(Map<String, dynamic> json) => WorkItemComment(
         text: json['text'] as String? ?? '',
         createdBy: Identity.fromJson(json['createdBy']),
         createdDate:
             DateTime.tryParse(json['createdDate'] as String? ?? '')?.toLocal(),
+        isMarkdown: '${json['format']}'.toLowerCase() == 'markdown',
+        mentions: _mentions(json['renderedText'] as String?),
       );
+
+  /// Markdown comments only hold the guid of a mentioned person; the HTML
+  /// that Azure DevOps renders from them carries the display name.
+  static Map<String, String> _mentions(String? renderedText) => {
+        for (final m in RegExp(
+          r'''<a\b[^>]*data-vss-mention=["'][^"',]*,([0-9a-f-]+)["'][^>]*>@?(.*?)</a>''',
+          caseSensitive: false,
+          dotAll: true,
+        ).allMatches(renderedText ?? ''))
+          m[1]!.toLowerCase(): m[2]!,
+      };
 }
 
 class Project {

@@ -161,6 +161,14 @@ void main() {
     final url = fake.requests.single.url;
     expect(url.path, '/contoso/My%20Project/_apis/wit/workItems/5/comments');
     expect(url.queryParameters['order'], 'desc');
+    expect(url.queryParameters['\$expand'], 'renderedText');
+  });
+
+  test('headersFor only authenticates the organization', () {
+    expect(api.headersFor(Uri.parse('https://dev.azure.com/contoso/_apis/wit/attachments/1')),
+        {'Authorization': 'Basic ${base64Encode(utf8.encode(':secret'))}'});
+    expect(api.headersFor(Uri.parse('http://dev.azure.com/x.png')), isNull);
+    expect(api.headersFor(Uri.parse('https://example.com/x.png')), isNull);
   });
 
   test('decodes UTF-8 bodies', () async {
