@@ -463,4 +463,95 @@ class AppLocalizationsPt extends AppLocalizations {
   String waitingForApprovalBy(String names) {
     return 'Aguardando aprovação de $names';
   }
+
+  @override
+  String get pullRequests => 'Pull requests';
+
+  @override
+  String get searchPullRequestsHint =>
+      'Pesquisar por título, ID, branch ou pessoa';
+
+  @override
+  String get scopeReviewing => 'Para revisar';
+
+  @override
+  String get loadPullRequestsFailed =>
+      'Não foi possível carregar os pull requests';
+
+  @override
+  String get codeScopeHint =>
+      'Os pull requests precisam do escopo Code (Read) no seu token.';
+
+  @override
+  String get noPullRequestsTitle => 'Nenhum pull request';
+
+  @override
+  String get noPullRequestsMessage =>
+      'Não há pull requests que correspondam aos filtros.';
+
+  @override
+  String pullRequestCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count pull requests',
+      one: '1 pull request',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get selectPullRequestTitle => 'Selecione um pull request';
+
+  @override
+  String get selectPullRequestMessage =>
+      'Escolha um pull request à esquerda para ver os detalhes.';
+
+  @override
+  String get prDraft => 'Rascunho';
+
+  @override
+  String get prActive => 'Ativo';
+
+  @override
+  String get prCompleted => 'Concluído';
+
+  @override
+  String get prAbandoned => 'Abandonado';
+
+  @override
+  String get mergeConflicts => 'Conflitos de merge';
+
+  @override
+  String get repository => 'Repositório';
+
+  @override
+  String get closed => 'Fechado';
+
+  @override
+  String get reviewers => 'Revisores';
+
+  @override
+  String get noReviewers => 'Sem revisores';
+
+  @override
+  String get requiredReviewer => 'Obrigatório';
+
+  @override
+  String get voteApproved => 'Aprovado';
+
+  @override
+  String get voteApprovedWithSuggestions => 'Aprovado com sugestões';
+
+  @override
+  String get voteNone => 'Sem voto';
+
+  @override
+  String get voteWaitingForAuthor => 'Aguardando o autor';
+
+  @override
+  String get voteRejected => 'Rejeitado';
+
+  @override
+  String get threadResolved => 'Resolvido';
 }

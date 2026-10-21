@@ -447,4 +447,89 @@ class AppLocalizationsZh extends AppLocalizations {
   String waitingForApprovalBy(String names) {
     return '等待 $names 审批';
   }
+
+  @override
+  String get pullRequests => '拉取请求';
+
+  @override
+  String get searchPullRequestsHint => '按标题、ID、分支或人员搜索';
+
+  @override
+  String get scopeReviewing => '待我审阅';
+
+  @override
+  String get loadPullRequestsFailed => '无法加载拉取请求';
+
+  @override
+  String get codeScopeHint => '拉取请求需要令牌具有 Code (Read) 范围。';
+
+  @override
+  String get noPullRequestsTitle => '没有拉取请求';
+
+  @override
+  String get noPullRequestsMessage => '没有符合筛选条件的拉取请求。';
+
+  @override
+  String pullRequestCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count 个拉取请求',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get selectPullRequestTitle => '选择一个拉取请求';
+
+  @override
+  String get selectPullRequestMessage => '在左侧选择一个拉取请求以查看详细信息。';
+
+  @override
+  String get prDraft => '草稿';
+
+  @override
+  String get prActive => '活动';
+
+  @override
+  String get prCompleted => '已完成';
+
+  @override
+  String get prAbandoned => '已放弃';
+
+  @override
+  String get mergeConflicts => '合并冲突';
+
+  @override
+  String get repository => '存储库';
+
+  @override
+  String get closed => '已关闭';
+
+  @override
+  String get reviewers => '审阅者';
+
+  @override
+  String get noReviewers => '没有审阅者';
+
+  @override
+  String get requiredReviewer => '必需';
+
+  @override
+  String get voteApproved => '已批准';
+
+  @override
+  String get voteApprovedWithSuggestions => '已批准但有建议';
+
+  @override
+  String get voteNone => '未投票';
+
+  @override
+  String get voteWaitingForAuthor => '等待作者';
+
+  @override
+  String get voteRejected => '已拒绝';
+
+  @override
+  String get threadResolved => '已解决';
 }

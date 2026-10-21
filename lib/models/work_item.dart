@@ -1,7 +1,8 @@
 class Identity {
-  const Identity({required this.displayName, this.uniqueName, this.imageUrl});
+  const Identity({required this.displayName, this.id, this.uniqueName, this.imageUrl});
 
   final String displayName;
+  final String? id;
   final String? uniqueName;
   final String? imageUrl;
 
@@ -9,6 +10,7 @@ class Identity {
     if (json is Map<String, dynamic>) {
       return Identity(
         displayName: json['displayName'] as String? ?? '',
+        id: json['id'] as String?,
         uniqueName: json['uniqueName'] as String?,
         imageUrl: json['imageUrl'] as String?,
       );

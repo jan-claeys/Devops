@@ -179,5 +179,35 @@
   "waitingForApprovalBy": "Waiting for approval by {names}",
   "@waitingForApprovalBy": {
     "placeholders": {"names": {"type": "String"}}
-  }
+  },
+
+  "pullRequests": "Pull requests",
+  "searchPullRequestsHint": "Search by title, ID, branch or person",
+  "scopeReviewing": "Reviewing",
+  "loadPullRequestsFailed": "Couldn't load pull requests",
+  "codeScopeHint": "Pull requests need the Code (Read) scope on your token.",
+  "noPullRequestsTitle": "No pull requests",
+  "noPullRequestsMessage": "There are no pull requests matching the filters.",
+  "pullRequestCount": "{count, plural, =1{1 pull request} other{{count} pull requests}}",
+  "@pullRequestCount": {
+    "placeholders": {"count": {"type": "int"}}
+  },
+  "selectPullRequestTitle": "Select a pull request",
+  "selectPullRequestMessage": "Choose a pull request on the left to see its details.",
+  "prDraft": "Draft",
+  "prActive": "Active",
+  "prCompleted": "Completed",
+  "prAbandoned": "Abandoned",
+  "mergeConflicts": "Merge conflicts",
+  "repository": "Repository",
+  "closed": "Closed",
+  "reviewers": "Reviewers",
+  "noReviewers": "No reviewers",
+  "requiredReviewer": "Required",
+  "voteApproved": "Approved",
+  "voteApprovedWithSuggestions": "Approved with suggestions",
+  "voteNone": "No vote",
+  "voteWaitingForAuthor": "Waiting for author",
+  "voteRejected": "Rejected",
+  "threadResolved": "Resolved"
 }

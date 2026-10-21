@@ -465,4 +465,95 @@ class AppLocalizationsDe extends AppLocalizations {
   String waitingForApprovalBy(String names) {
     return 'Wartet auf Genehmigung von $names';
   }
+
+  @override
+  String get pullRequests => 'Pull Requests';
+
+  @override
+  String get searchPullRequestsHint =>
+      'Nach Titel, ID, Branch oder Person suchen';
+
+  @override
+  String get scopeReviewing => 'Zu prüfen';
+
+  @override
+  String get loadPullRequestsFailed =>
+      'Pull Requests konnten nicht geladen werden';
+
+  @override
+  String get codeScopeHint =>
+      'Für Pull Requests braucht dein Token den Bereich Code (Read).';
+
+  @override
+  String get noPullRequestsTitle => 'Keine Pull Requests';
+
+  @override
+  String get noPullRequestsMessage =>
+      'Es gibt keine Pull Requests, die den Filtern entsprechen.';
+
+  @override
+  String pullRequestCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Pull Requests',
+      one: '1 Pull Request',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get selectPullRequestTitle => 'Pull Request auswählen';
+
+  @override
+  String get selectPullRequestMessage =>
+      'Wähle links einen Pull Request, um die Details zu sehen.';
+
+  @override
+  String get prDraft => 'Entwurf';
+
+  @override
+  String get prActive => 'Aktiv';
+
+  @override
+  String get prCompleted => 'Abgeschlossen';
+
+  @override
+  String get prAbandoned => 'Verworfen';
+
+  @override
+  String get mergeConflicts => 'Mergekonflikte';
+
+  @override
+  String get repository => 'Repository';
+
+  @override
+  String get closed => 'Geschlossen';
+
+  @override
+  String get reviewers => 'Reviewer';
+
+  @override
+  String get noReviewers => 'Keine Reviewer';
+
+  @override
+  String get requiredReviewer => 'Erforderlich';
+
+  @override
+  String get voteApproved => 'Genehmigt';
+
+  @override
+  String get voteApprovedWithSuggestions => 'Mit Vorschlägen genehmigt';
+
+  @override
+  String get voteNone => 'Keine Stimme';
+
+  @override
+  String get voteWaitingForAuthor => 'Wartet auf Autor';
+
+  @override
+  String get voteRejected => 'Abgelehnt';
+
+  @override
+  String get threadResolved => 'Gelöst';
 }

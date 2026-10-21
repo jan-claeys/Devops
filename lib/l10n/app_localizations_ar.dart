@@ -468,4 +468,97 @@ class AppLocalizationsAr extends AppLocalizations {
   String waitingForApprovalBy(String names) {
     return 'بانتظار موافقة $names';
   }
+
+  @override
+  String get pullRequests => 'طلبات السحب';
+
+  @override
+  String get searchPullRequestsHint =>
+      'ابحث حسب العنوان أو المعرّف أو الفرع أو الشخص';
+
+  @override
+  String get scopeReviewing => 'للمراجعة';
+
+  @override
+  String get loadPullRequestsFailed => 'تعذّر تحميل طلبات السحب';
+
+  @override
+  String get codeScopeHint =>
+      'تحتاج طلبات السحب إلى النطاق Code (Read) في الرمز المميز.';
+
+  @override
+  String get noPullRequestsTitle => 'لا توجد طلبات سحب';
+
+  @override
+  String get noPullRequestsMessage => 'لا توجد طلبات سحب تطابق عوامل التصفية.';
+
+  @override
+  String pullRequestCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count طلب سحب',
+      many: '$count طلب سحب',
+      few: '$count طلبات سحب',
+      two: 'طلبا سحب',
+      one: 'طلب سحب واحد',
+      zero: 'لا توجد طلبات سحب',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get selectPullRequestTitle => 'اختر طلب سحب';
+
+  @override
+  String get selectPullRequestMessage =>
+      'اختر طلب سحب على اليسار لعرض تفاصيله.';
+
+  @override
+  String get prDraft => 'مسودة';
+
+  @override
+  String get prActive => 'نشط';
+
+  @override
+  String get prCompleted => 'مكتمل';
+
+  @override
+  String get prAbandoned => 'متروك';
+
+  @override
+  String get mergeConflicts => 'تعارضات الدمج';
+
+  @override
+  String get repository => 'المستودع';
+
+  @override
+  String get closed => 'مغلق';
+
+  @override
+  String get reviewers => 'المراجعون';
+
+  @override
+  String get noReviewers => 'لا يوجد مراجعون';
+
+  @override
+  String get requiredReviewer => 'مطلوب';
+
+  @override
+  String get voteApproved => 'تمت الموافقة';
+
+  @override
+  String get voteApprovedWithSuggestions => 'تمت الموافقة مع اقتراحات';
+
+  @override
+  String get voteNone => 'لا يوجد تصويت';
+
+  @override
+  String get voteWaitingForAuthor => 'بانتظار المؤلف';
+
+  @override
+  String get voteRejected => 'مرفوض';
+
+  @override
+  String get threadResolved => 'تم الحل';
 }

@@ -286,6 +286,7 @@ class _RequiredScopes extends StatelessWidget {
 
   static const _scopes = [
     (Icons.assignment_outlined, 'Work Items'),
+    (Icons.code, 'Code'),
     (Icons.rocket_launch_outlined, 'Build'),
     (Icons.account_tree_outlined, 'Release'),
     (Icons.groups_outlined, 'Project and Team'),

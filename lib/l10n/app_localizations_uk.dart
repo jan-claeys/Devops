@@ -466,4 +466,96 @@ class AppLocalizationsUk extends AppLocalizations {
   String waitingForApprovalBy(String names) {
     return 'Очікує схвалення: $names';
   }
+
+  @override
+  String get pullRequests => 'Pull request’и';
+
+  @override
+  String get searchPullRequestsHint =>
+      'Пошук за назвою, ID, гілкою або людиною';
+
+  @override
+  String get scopeReviewing => 'На перевірку';
+
+  @override
+  String get loadPullRequestsFailed => 'Не вдалося завантажити pull request’и';
+
+  @override
+  String get codeScopeHint =>
+      'Для pull request’ів токену потрібні права Code (Read).';
+
+  @override
+  String get noPullRequestsTitle => 'Немає pull request’ів';
+
+  @override
+  String get noPullRequestsMessage =>
+      'Немає pull request’ів, що відповідають фільтрам.';
+
+  @override
+  String pullRequestCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count pull request’у',
+      many: '$count pull request’ів',
+      few: '$count pull request’и',
+      one: '$count pull request',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get selectPullRequestTitle => 'Виберіть pull request';
+
+  @override
+  String get selectPullRequestMessage =>
+      'Виберіть pull request ліворуч, щоб побачити подробиці.';
+
+  @override
+  String get prDraft => 'Чернетка';
+
+  @override
+  String get prActive => 'Активний';
+
+  @override
+  String get prCompleted => 'Завершено';
+
+  @override
+  String get prAbandoned => 'Скасовано';
+
+  @override
+  String get mergeConflicts => 'Конфлікти злиття';
+
+  @override
+  String get repository => 'Репозиторій';
+
+  @override
+  String get closed => 'Закрито';
+
+  @override
+  String get reviewers => 'Рецензенти';
+
+  @override
+  String get noReviewers => 'Немає рецензентів';
+
+  @override
+  String get requiredReviewer => 'Обов’язковий';
+
+  @override
+  String get voteApproved => 'Схвалено';
+
+  @override
+  String get voteApprovedWithSuggestions => 'Схвалено з пропозиціями';
+
+  @override
+  String get voteNone => 'Немає голосу';
+
+  @override
+  String get voteWaitingForAuthor => 'Очікує автора';
+
+  @override
+  String get voteRejected => 'Відхилено';
+
+  @override
+  String get threadResolved => 'Вирішено';
 }

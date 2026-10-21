@@ -457,4 +457,93 @@ class AppLocalizationsHi extends AppLocalizations {
   String waitingForApprovalBy(String names) {
     return '$names के अनुमोदन की प्रतीक्षा';
   }
+
+  @override
+  String get pullRequests => 'पुल रिक्वेस्ट';
+
+  @override
+  String get searchPullRequestsHint => 'शीर्षक, ID, ब्रांच या व्यक्ति से खोजें';
+
+  @override
+  String get scopeReviewing => 'समीक्षा के लिए';
+
+  @override
+  String get loadPullRequestsFailed => 'पुल रिक्वेस्ट लोड नहीं हो सके';
+
+  @override
+  String get codeScopeHint =>
+      'पुल रिक्वेस्ट के लिए आपके टोकन में Code (Read) स्कोप चाहिए।';
+
+  @override
+  String get noPullRequestsTitle => 'कोई पुल रिक्वेस्ट नहीं';
+
+  @override
+  String get noPullRequestsMessage =>
+      'फ़िल्टर से मेल खाने वाला कोई पुल रिक्वेस्ट नहीं है।';
+
+  @override
+  String pullRequestCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count पुल रिक्वेस्ट',
+      one: '1 पुल रिक्वेस्ट',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get selectPullRequestTitle => 'एक पुल रिक्वेस्ट चुनें';
+
+  @override
+  String get selectPullRequestMessage =>
+      'विवरण देखने के लिए बाईं ओर एक पुल रिक्वेस्ट चुनें।';
+
+  @override
+  String get prDraft => 'ड्राफ़्ट';
+
+  @override
+  String get prActive => 'सक्रिय';
+
+  @override
+  String get prCompleted => 'पूर्ण';
+
+  @override
+  String get prAbandoned => 'छोड़ा गया';
+
+  @override
+  String get mergeConflicts => 'मर्ज विरोध';
+
+  @override
+  String get repository => 'रिपॉज़िटरी';
+
+  @override
+  String get closed => 'बंद';
+
+  @override
+  String get reviewers => 'समीक्षक';
+
+  @override
+  String get noReviewers => 'कोई समीक्षक नहीं';
+
+  @override
+  String get requiredReviewer => 'आवश्यक';
+
+  @override
+  String get voteApproved => 'स्वीकृत';
+
+  @override
+  String get voteApprovedWithSuggestions => 'सुझावों के साथ स्वीकृत';
+
+  @override
+  String get voteNone => 'कोई वोट नहीं';
+
+  @override
+  String get voteWaitingForAuthor => 'लेखक की प्रतीक्षा';
+
+  @override
+  String get voteRejected => 'अस्वीकृत';
+
+  @override
+  String get threadResolved => 'हल किया गया';
 }

@@ -450,4 +450,89 @@ class AppLocalizationsJa extends AppLocalizations {
   String waitingForApprovalBy(String names) {
     return '$names の承認待ち';
   }
+
+  @override
+  String get pullRequests => 'プル リクエスト';
+
+  @override
+  String get searchPullRequestsHint => 'タイトル、ID、ブランチ、ユーザーで検索';
+
+  @override
+  String get scopeReviewing => 'レビュー担当';
+
+  @override
+  String get loadPullRequestsFailed => 'プル リクエストを読み込めませんでした';
+
+  @override
+  String get codeScopeHint => 'プル リクエストにはトークンの Code (Read) スコープが必要です。';
+
+  @override
+  String get noPullRequestsTitle => 'プル リクエストはありません';
+
+  @override
+  String get noPullRequestsMessage => 'フィルターに一致するプル リクエストはありません。';
+
+  @override
+  String pullRequestCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count 件のプル リクエスト',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get selectPullRequestTitle => 'プル リクエストを選択';
+
+  @override
+  String get selectPullRequestMessage => '左側でプル リクエストを選ぶと詳細が表示されます。';
+
+  @override
+  String get prDraft => '下書き';
+
+  @override
+  String get prActive => 'アクティブ';
+
+  @override
+  String get prCompleted => '完了';
+
+  @override
+  String get prAbandoned => '破棄';
+
+  @override
+  String get mergeConflicts => 'マージの競合';
+
+  @override
+  String get repository => 'リポジトリ';
+
+  @override
+  String get closed => 'クローズ';
+
+  @override
+  String get reviewers => 'レビュー担当者';
+
+  @override
+  String get noReviewers => 'レビュー担当者はいません';
+
+  @override
+  String get requiredReviewer => '必須';
+
+  @override
+  String get voteApproved => '承認済み';
+
+  @override
+  String get voteApprovedWithSuggestions => '提案付きで承認';
+
+  @override
+  String get voteNone => '投票なし';
+
+  @override
+  String get voteWaitingForAuthor => '作成者を待機中';
+
+  @override
+  String get voteRejected => '却下';
+
+  @override
+  String get threadResolved => '解決済み';
 }

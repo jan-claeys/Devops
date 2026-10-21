@@ -53,7 +53,8 @@ void main() {
     expect(find.text(en.onboardingIntro), findsOneWidget);
     expect(find.text(en.requiredScopes), findsOneWidget);
     expect(find.text('Project and Team'), findsOneWidget);
-    expect(find.text('Read'), findsNWidgets(4));
+    expect(find.text('Code'), findsOneWidget);
+    expect(find.text('Read'), findsNWidgets(5));
     expect(find.text(en.appearance), findsNothing);
     expect(find.text(en.signOut), findsNothing);
   });
@@ -123,6 +124,8 @@ void main() {
     expect(find.text(en.projects), findsOneWidget);
     expect(find.text(en.noProjectsTitle), findsOneWidget);
 
+    await tester.ensureVisible(find.text(en.noProjectsTitle));
+    await tester.pumpAndSettle();
     await tester.tap(find.text(en.noProjectsTitle));
     await tester.pumpAndSettle();
     await pickProjects(tester, ['Contoso']);

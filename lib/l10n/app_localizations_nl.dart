@@ -463,4 +463,93 @@ class AppLocalizationsNl extends AppLocalizations {
   String waitingForApprovalBy(String names) {
     return 'Wacht op goedkeuring van $names';
   }
+
+  @override
+  String get pullRequests => 'Pull requests';
+
+  @override
+  String get searchPullRequestsHint => 'Zoek op titel, ID, branch of persoon';
+
+  @override
+  String get scopeReviewing => 'Te reviewen';
+
+  @override
+  String get loadPullRequestsFailed => 'Kon de pull requests niet laden';
+
+  @override
+  String get codeScopeHint =>
+      'Voor pull requests heeft je token de scope Code (Read) nodig.';
+
+  @override
+  String get noPullRequestsTitle => 'Geen pull requests';
+
+  @override
+  String get noPullRequestsMessage =>
+      'Er zijn geen pull requests die aan de filters voldoen.';
+
+  @override
+  String pullRequestCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count pull requests',
+      one: '1 pull request',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get selectPullRequestTitle => 'Selecteer een pull request';
+
+  @override
+  String get selectPullRequestMessage =>
+      'Kies links een pull request om de details te zien.';
+
+  @override
+  String get prDraft => 'Concept';
+
+  @override
+  String get prActive => 'Actief';
+
+  @override
+  String get prCompleted => 'Voltooid';
+
+  @override
+  String get prAbandoned => 'Afgebroken';
+
+  @override
+  String get mergeConflicts => 'Mergeconflicten';
+
+  @override
+  String get repository => 'Repository';
+
+  @override
+  String get closed => 'Gesloten';
+
+  @override
+  String get reviewers => 'Reviewers';
+
+  @override
+  String get noReviewers => 'Geen reviewers';
+
+  @override
+  String get requiredReviewer => 'Verplicht';
+
+  @override
+  String get voteApproved => 'Goedgekeurd';
+
+  @override
+  String get voteApprovedWithSuggestions => 'Goedgekeurd met suggesties';
+
+  @override
+  String get voteNone => 'Geen stem';
+
+  @override
+  String get voteWaitingForAuthor => 'Wacht op auteur';
+
+  @override
+  String get voteRejected => 'Afgewezen';
+
+  @override
+  String get threadResolved => 'Opgelost';
 }

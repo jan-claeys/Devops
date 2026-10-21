@@ -450,4 +450,89 @@ class AppLocalizationsKo extends AppLocalizations {
   String waitingForApprovalBy(String names) {
     return '$names의 승인 대기 중';
   }
+
+  @override
+  String get pullRequests => '끌어오기 요청';
+
+  @override
+  String get searchPullRequestsHint => '제목, ID, 분기 또는 사람으로 검색';
+
+  @override
+  String get scopeReviewing => '검토 대상';
+
+  @override
+  String get loadPullRequestsFailed => '끌어오기 요청을 불러오지 못했습니다';
+
+  @override
+  String get codeScopeHint => '끌어오기 요청을 보려면 토큰에 Code (Read) 범위가 필요합니다.';
+
+  @override
+  String get noPullRequestsTitle => '끌어오기 요청 없음';
+
+  @override
+  String get noPullRequestsMessage => '필터와 일치하는 끌어오기 요청이 없습니다.';
+
+  @override
+  String pullRequestCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '끌어오기 요청 $count개',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get selectPullRequestTitle => '끌어오기 요청 선택';
+
+  @override
+  String get selectPullRequestMessage => '왼쪽에서 끌어오기 요청을 선택하면 세부 정보를 볼 수 있습니다.';
+
+  @override
+  String get prDraft => '초안';
+
+  @override
+  String get prActive => '활성';
+
+  @override
+  String get prCompleted => '완료됨';
+
+  @override
+  String get prAbandoned => '중단됨';
+
+  @override
+  String get mergeConflicts => '병합 충돌';
+
+  @override
+  String get repository => '리포지토리';
+
+  @override
+  String get closed => '닫힘';
+
+  @override
+  String get reviewers => '검토자';
+
+  @override
+  String get noReviewers => '검토자 없음';
+
+  @override
+  String get requiredReviewer => '필수';
+
+  @override
+  String get voteApproved => '승인됨';
+
+  @override
+  String get voteApprovedWithSuggestions => '제안과 함께 승인됨';
+
+  @override
+  String get voteNone => '투표 없음';
+
+  @override
+  String get voteWaitingForAuthor => '작성자 대기 중';
+
+  @override
+  String get voteRejected => '거부됨';
+
+  @override
+  String get threadResolved => '해결됨';
 }

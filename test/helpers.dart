@@ -163,6 +163,49 @@ Map<String, dynamic> environmentJson(
       ],
     };
 
+/// Id of the signed in user in [FakeDevOps].
+const meId = '00000000-0000-0000-0000-00000000000a';
+
+/// Raw pull request JSON as returned by Azure DevOps; [reviewers] are
+/// (name, vote) pairs.
+Map<String, dynamic> pullRequestJson(
+  int id, {
+  String title = 'Add feature',
+  String project = 'Contoso',
+  String repository = 'web',
+  String status = 'active',
+  bool isDraft = false,
+  String source = 'refs/heads/feature/login',
+  String target = 'refs/heads/main',
+  String createdBy = 'Jan Claeys',
+  String? createdById,
+  String creationDate = '2026-10-20T10:00:00Z',
+  String? description,
+  String mergeStatus = 'succeeded',
+  List<(String, int)> reviewers = const [],
+}) =>
+    {
+      'pullRequestId': id,
+      'title': title,
+      'status': status,
+      'isDraft': isDraft,
+      'repository': {
+        'id': 'repo-$repository',
+        'name': repository,
+        'project': {'id': '1', 'name': project},
+      },
+      'sourceRefName': source,
+      'targetRefName': target,
+      'createdBy': {'displayName': createdBy, 'id': createdById ?? 'id-$createdBy'},
+      'creationDate': creationDate,
+      'description': ?description,
+      'mergeStatus': mergeStatus,
+      'reviewers': [
+        for (final (name, vote) in reviewers)
+          {'displayName': name, 'id': name == 'Me' ? meId : 'id-$name', 'vote': vote},
+      ],
+    };
+
 /// In-memory stand-in for the Azure DevOps REST API.
 class FakeDevOps {
   final projects = <Map<String, dynamic>>[
@@ -181,6 +224,13 @@ class FakeDevOps {
 
   /// Releases of classic release pipelines, by id, all in Contoso.
   final releases = <int, Map<String, dynamic>>{};
+
+  /// Pull requests by id, with their raw threads and linked work item ids.
+  final pullRequests = <int, Map<String, dynamic>>{};
+  final threads = <int, List<Map<String, dynamic>>>{};
+  final pullRequestWorkItems = <int, List<int>>{};
+
+  void addPullRequest(Map<String, dynamic> pr) => pullRequests[pr['pullRequestId'] as int] = pr;
 
   /// When set, requests answer with this status code; with [failPath] only
   /// the requests whose path contains it.
@@ -219,6 +269,48 @@ class FakeDevOps {
     final comment = RegExp(r'/workItems/(\d+)/comments$').firstMatch(path);
     if (comment != null) {
       return _json({'comments': comments[int.parse(comment[1]!)] ?? []});
+    }
+    if (path.endsWith('/_apis/connectionData')) {
+      return _json({
+        'authenticatedUser': {'id': meId, 'providerDisplayName': 'Me'},
+      });
+    }
+    final pullRequestList = RegExp(r'/([^/]+)/_apis/git/pullrequests$').firstMatch(path);
+    if (pullRequestList != null) {
+      final project = Uri.decodeComponent(pullRequestList[1]!);
+      final query = request.url.queryParameters;
+      final status = query['searchCriteria.status'];
+      final creator = query['searchCriteria.creatorId'];
+      final reviewer = query['searchCriteria.reviewerId'];
+      return _json({
+        'value': [
+          for (final pr in pullRequests.values)
+            if (((pr['repository'] as Map)['project'] as Map)['name'] == project &&
+                (status == 'all' || pr['status'] == (status ?? 'active')) &&
+                (creator == null || (pr['createdBy'] as Map)['id'] == creator) &&
+                (reviewer == null ||
+                    (pr['reviewers'] as List).any((r) => (r as Map)['id'] == reviewer)))
+              pr,
+        ],
+      });
+    }
+    final pullRequest = RegExp(r'/_apis/git/pullrequests/(\d+)$').firstMatch(path);
+    if (pullRequest != null) {
+      final json = pullRequests[int.parse(pullRequest[1]!)];
+      return json == null ? http.Response('', 404) : _json(json);
+    }
+    final prThreads = RegExp(r'/pullRequests/(\d+)/threads$').firstMatch(path);
+    if (prThreads != null) {
+      return _json({'value': threads[int.parse(prThreads[1]!)] ?? []});
+    }
+    final prWorkItems = RegExp(r'/pullRequests/(\d+)/workitems$').firstMatch(path);
+    if (prWorkItems != null) {
+      return _json({
+        'value': [
+          for (final id in pullRequestWorkItems[int.parse(prWorkItems[1]!)] ?? const [])
+            {'id': '$id', 'url': 'https://dev.azure.com/contoso/_apis/wit/workItems/$id'},
+        ],
+      });
     }
     if (path.endsWith('/_apis/release/releases')) {
       return _json({'value': releases.values.toList()});

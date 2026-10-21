@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import '../models/pipeline_run.dart';
+import '../models/pull_request.dart';
 import '../models/work_item.dart';
 
 enum DevOpsError { unauthorized, notFound, http, unexpectedResponse }
@@ -22,6 +23,8 @@ class DevOpsException implements Exception {
 
 enum WorkItemScope { assignedToMe, createdByMe, all }
 
+enum PullRequestScope { reviewing, createdByMe, all }
+
 /// Thin client for the Azure DevOps REST API (v7.1), authenticated with a PAT.
 class DevOpsApi {
   DevOpsApi({required String organization, required String pat, http.Client? client})
@@ -36,6 +39,7 @@ class DevOpsApi {
   final String releaseUrl;
   final http.Client _client;
   final String _auth;
+  String? _currentUserId;
 
   static const _apiVersion = '7.1';
 
@@ -90,6 +94,10 @@ class DevOpsApi {
               '?_a=release-pipeline-progress&releaseId=${run.id}',
         _ => '$baseUrl/${Uri.encodeComponent(run.project)}/_build/results?buildId=${run.id}',
       };
+
+  String pullRequestWebUrl(PullRequest pr) =>
+      '$baseUrl/${Uri.encodeComponent(pr.project)}/_git/'
+      '${Uri.encodeComponent(pr.repositoryName)}/pullrequest/${pr.id}';
 
   /// Headers to load [uri] with, such as an attachment image in a field.
   /// The PAT is only sent to the organization itself.
@@ -248,6 +256,69 @@ class DevOpsApi {
         TimelineRecord.fromJson(r as Map<String, dynamic>),
     ]);
   }
+
+  /// Id of the user the token belongs to.
+  Future<String> getCurrentUserId() async {
+    if (_currentUserId case final id?) return id;
+    final json = await _get('$baseUrl/_apis/connectionData');
+    final id = (json['authenticatedUser'] as Map?)?['id'] as String?;
+    if (id == null) throw DevOpsException(DevOpsError.unexpectedResponse);
+    return _currentUserId = id;
+  }
+
+  /// The pull requests of all [projects], newest first.
+  Future<List<PullRequest>> getPullRequests({
+    required List<String> projects,
+    PullRequestScope scope = PullRequestScope.all,
+    bool openOnly = true,
+    int top = 100,
+  }) async {
+    final me = scope == PullRequestScope.all ? null : await getCurrentUserId();
+    final criteria = {
+      'searchCriteria.status': openOnly ? 'active' : 'all',
+      if (scope == PullRequestScope.createdByMe) 'searchCriteria.creatorId': ?me,
+      if (scope == PullRequestScope.reviewing) 'searchCriteria.reviewerId': ?me,
+    }.entries.map((e) => '${e.key}=${Uri.encodeQueryComponent(e.value)}').join('&');
+    final perProject = await Future.wait([
+      for (final project in projects)
+        _get('$baseUrl/${Uri.encodeComponent(project)}/_apis/git/pullrequests'
+            '?$criteria&\$top=$top&api-version=$_apiVersion'),
+    ]);
+    final pullRequests = [
+      for (final json in perProject)
+        ...(json['value'] as List).cast<Map<String, dynamic>>().map(PullRequest.fromJson),
+    ]..sort((a, b) =>
+        (b.creationDate ?? DateTime(0)).compareTo(a.creationDate ?? DateTime(0)));
+    return pullRequests.take(top).toList();
+  }
+
+  Future<PullRequest> getPullRequest(String project, int id) async {
+    final json = await _get('$baseUrl/${Uri.encodeComponent(project)}/_apis/git/pullrequests/$id'
+        '?api-version=$_apiVersion');
+    return PullRequest.fromJson(json);
+  }
+
+  /// The discussions on [pr], most recently active first.
+  Future<List<PullRequestThread>> getPullRequestThreads(PullRequest pr) async {
+    final json = await _get('${_pullRequestUrl(pr)}/threads?api-version=$_apiVersion');
+    return [
+      for (final t in ((json['value'] as List?) ?? const []).cast<Map<String, dynamic>>())
+        ?PullRequestThread.fromJson(t),
+    ]..sort((a, b) => (b.lastUpdated ?? DateTime(0)).compareTo(a.lastUpdated ?? DateTime(0)));
+  }
+
+  /// Ids of the work items linked to [pr].
+  Future<List<int>> getPullRequestWorkItemIds(PullRequest pr) async {
+    final json = await _get('${_pullRequestUrl(pr)}/workitems?api-version=$_apiVersion');
+    return [
+      for (final w in ((json['value'] as List?) ?? const []).cast<Map<String, dynamic>>())
+        ?int.tryParse('${w['id']}'),
+    ];
+  }
+
+  String _pullRequestUrl(PullRequest pr) =>
+      '$baseUrl/${Uri.encodeComponent(pr.project)}/_apis/git/repositories/'
+      '${pr.repositoryId}/pullRequests/${pr.id}';
 
   Future<Map<String, dynamic>> _get(String url) async {
     final response = await _client.get(Uri.parse(url), headers: _headers);

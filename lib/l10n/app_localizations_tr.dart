@@ -458,4 +458,92 @@ class AppLocalizationsTr extends AppLocalizations {
   String waitingForApprovalBy(String names) {
     return '$names onayı bekleniyor';
   }
+
+  @override
+  String get pullRequests => 'Çekme istekleri';
+
+  @override
+  String get searchPullRequestsHint =>
+      'Başlık, kimlik, dal veya kişiye göre ara';
+
+  @override
+  String get scopeReviewing => 'İncelenecek';
+
+  @override
+  String get loadPullRequestsFailed => 'Çekme istekleri yüklenemedi';
+
+  @override
+  String get codeScopeHint =>
+      'Çekme istekleri için belirtecinizde Code (Read) kapsamı gerekir.';
+
+  @override
+  String get noPullRequestsTitle => 'Çekme isteği yok';
+
+  @override
+  String get noPullRequestsMessage => 'Filtrelerle eşleşen çekme isteği yok.';
+
+  @override
+  String pullRequestCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count çekme isteği',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get selectPullRequestTitle => 'Bir çekme isteği seçin';
+
+  @override
+  String get selectPullRequestMessage =>
+      'Ayrıntılarını görmek için soldan bir çekme isteği seçin.';
+
+  @override
+  String get prDraft => 'Taslak';
+
+  @override
+  String get prActive => 'Etkin';
+
+  @override
+  String get prCompleted => 'Tamamlandı';
+
+  @override
+  String get prAbandoned => 'Bırakıldı';
+
+  @override
+  String get mergeConflicts => 'Birleştirme çakışmaları';
+
+  @override
+  String get repository => 'Depo';
+
+  @override
+  String get closed => 'Kapatıldı';
+
+  @override
+  String get reviewers => 'Gözden geçirenler';
+
+  @override
+  String get noReviewers => 'Gözden geçiren yok';
+
+  @override
+  String get requiredReviewer => 'Zorunlu';
+
+  @override
+  String get voteApproved => 'Onaylandı';
+
+  @override
+  String get voteApprovedWithSuggestions => 'Önerilerle onaylandı';
+
+  @override
+  String get voteNone => 'Oy yok';
+
+  @override
+  String get voteWaitingForAuthor => 'Yazar bekleniyor';
+
+  @override
+  String get voteRejected => 'Reddedildi';
+
+  @override
+  String get threadResolved => 'Çözüldü';
 }

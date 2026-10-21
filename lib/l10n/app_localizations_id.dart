@@ -459,4 +459,93 @@ class AppLocalizationsId extends AppLocalizations {
   String waitingForApprovalBy(String names) {
     return 'Menunggu persetujuan dari $names';
   }
+
+  @override
+  String get pullRequests => 'Pull request';
+
+  @override
+  String get searchPullRequestsHint =>
+      'Cari menurut judul, ID, branch, atau orang';
+
+  @override
+  String get scopeReviewing => 'Untuk ditinjau';
+
+  @override
+  String get loadPullRequestsFailed => 'Tidak dapat memuat pull request';
+
+  @override
+  String get codeScopeHint =>
+      'Pull request memerlukan cakupan Code (Read) pada token Anda.';
+
+  @override
+  String get noPullRequestsTitle => 'Tidak ada pull request';
+
+  @override
+  String get noPullRequestsMessage =>
+      'Tidak ada pull request yang cocok dengan filter.';
+
+  @override
+  String pullRequestCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count pull request',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get selectPullRequestTitle => 'Pilih pull request';
+
+  @override
+  String get selectPullRequestMessage =>
+      'Pilih pull request di sebelah kiri untuk melihat detailnya.';
+
+  @override
+  String get prDraft => 'Draf';
+
+  @override
+  String get prActive => 'Aktif';
+
+  @override
+  String get prCompleted => 'Selesai';
+
+  @override
+  String get prAbandoned => 'Ditinggalkan';
+
+  @override
+  String get mergeConflicts => 'Konflik merge';
+
+  @override
+  String get repository => 'Repositori';
+
+  @override
+  String get closed => 'Ditutup';
+
+  @override
+  String get reviewers => 'Peninjau';
+
+  @override
+  String get noReviewers => 'Tidak ada peninjau';
+
+  @override
+  String get requiredReviewer => 'Wajib';
+
+  @override
+  String get voteApproved => 'Disetujui';
+
+  @override
+  String get voteApprovedWithSuggestions => 'Disetujui dengan saran';
+
+  @override
+  String get voteNone => 'Belum memilih';
+
+  @override
+  String get voteWaitingForAuthor => 'Menunggu penulis';
+
+  @override
+  String get voteRejected => 'Ditolak';
+
+  @override
+  String get threadResolved => 'Terselesaikan';
 }

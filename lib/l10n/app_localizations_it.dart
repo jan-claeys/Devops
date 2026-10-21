@@ -463,4 +463,93 @@ class AppLocalizationsIt extends AppLocalizations {
   String waitingForApprovalBy(String names) {
     return 'In attesa dell’approvazione di $names';
   }
+
+  @override
+  String get pullRequests => 'Pull request';
+
+  @override
+  String get searchPullRequestsHint => 'Cerca per titolo, ID, branch o persona';
+
+  @override
+  String get scopeReviewing => 'Da revisionare';
+
+  @override
+  String get loadPullRequestsFailed => 'Impossibile caricare le pull request';
+
+  @override
+  String get codeScopeHint =>
+      'Le pull request richiedono l’ambito Code (Read) nel token.';
+
+  @override
+  String get noPullRequestsTitle => 'Nessuna pull request';
+
+  @override
+  String get noPullRequestsMessage =>
+      'Nessuna pull request corrisponde ai filtri.';
+
+  @override
+  String pullRequestCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count pull request',
+      one: '1 pull request',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get selectPullRequestTitle => 'Seleziona una pull request';
+
+  @override
+  String get selectPullRequestMessage =>
+      'Scegli una pull request a sinistra per vederne i dettagli.';
+
+  @override
+  String get prDraft => 'Bozza';
+
+  @override
+  String get prActive => 'Attiva';
+
+  @override
+  String get prCompleted => 'Completata';
+
+  @override
+  String get prAbandoned => 'Abbandonata';
+
+  @override
+  String get mergeConflicts => 'Conflitti di merge';
+
+  @override
+  String get repository => 'Repository';
+
+  @override
+  String get closed => 'Chiusa';
+
+  @override
+  String get reviewers => 'Revisori';
+
+  @override
+  String get noReviewers => 'Nessun revisore';
+
+  @override
+  String get requiredReviewer => 'Obbligatorio';
+
+  @override
+  String get voteApproved => 'Approvato';
+
+  @override
+  String get voteApprovedWithSuggestions => 'Approvato con suggerimenti';
+
+  @override
+  String get voteNone => 'Nessun voto';
+
+  @override
+  String get voteWaitingForAuthor => 'In attesa dell’autore';
+
+  @override
+  String get voteRejected => 'Rifiutato';
+
+  @override
+  String get threadResolved => 'Risolto';
 }

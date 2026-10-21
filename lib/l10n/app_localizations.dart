@@ -913,6 +913,162 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Waiting for approval by {names}'**
   String waitingForApprovalBy(String names);
+
+  /// No description provided for @pullRequests.
+  ///
+  /// In en, this message translates to:
+  /// **'Pull requests'**
+  String get pullRequests;
+
+  /// No description provided for @searchPullRequestsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search by title, ID, branch or person'**
+  String get searchPullRequestsHint;
+
+  /// No description provided for @scopeReviewing.
+  ///
+  /// In en, this message translates to:
+  /// **'Reviewing'**
+  String get scopeReviewing;
+
+  /// No description provided for @loadPullRequestsFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load pull requests'**
+  String get loadPullRequestsFailed;
+
+  /// No description provided for @codeScopeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Pull requests need the Code (Read) scope on your token.'**
+  String get codeScopeHint;
+
+  /// No description provided for @noPullRequestsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No pull requests'**
+  String get noPullRequestsTitle;
+
+  /// No description provided for @noPullRequestsMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'There are no pull requests matching the filters.'**
+  String get noPullRequestsMessage;
+
+  /// No description provided for @pullRequestCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 pull request} other{{count} pull requests}}'**
+  String pullRequestCount(int count);
+
+  /// No description provided for @selectPullRequestTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a pull request'**
+  String get selectPullRequestTitle;
+
+  /// No description provided for @selectPullRequestMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a pull request on the left to see its details.'**
+  String get selectPullRequestMessage;
+
+  /// No description provided for @prDraft.
+  ///
+  /// In en, this message translates to:
+  /// **'Draft'**
+  String get prDraft;
+
+  /// No description provided for @prActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get prActive;
+
+  /// No description provided for @prCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get prCompleted;
+
+  /// No description provided for @prAbandoned.
+  ///
+  /// In en, this message translates to:
+  /// **'Abandoned'**
+  String get prAbandoned;
+
+  /// No description provided for @mergeConflicts.
+  ///
+  /// In en, this message translates to:
+  /// **'Merge conflicts'**
+  String get mergeConflicts;
+
+  /// No description provided for @repository.
+  ///
+  /// In en, this message translates to:
+  /// **'Repository'**
+  String get repository;
+
+  /// No description provided for @closed.
+  ///
+  /// In en, this message translates to:
+  /// **'Closed'**
+  String get closed;
+
+  /// No description provided for @reviewers.
+  ///
+  /// In en, this message translates to:
+  /// **'Reviewers'**
+  String get reviewers;
+
+  /// No description provided for @noReviewers.
+  ///
+  /// In en, this message translates to:
+  /// **'No reviewers'**
+  String get noReviewers;
+
+  /// No description provided for @requiredReviewer.
+  ///
+  /// In en, this message translates to:
+  /// **'Required'**
+  String get requiredReviewer;
+
+  /// No description provided for @voteApproved.
+  ///
+  /// In en, this message translates to:
+  /// **'Approved'**
+  String get voteApproved;
+
+  /// No description provided for @voteApprovedWithSuggestions.
+  ///
+  /// In en, this message translates to:
+  /// **'Approved with suggestions'**
+  String get voteApprovedWithSuggestions;
+
+  /// No description provided for @voteNone.
+  ///
+  /// In en, this message translates to:
+  /// **'No vote'**
+  String get voteNone;
+
+  /// No description provided for @voteWaitingForAuthor.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for author'**
+  String get voteWaitingForAuthor;
+
+  /// No description provided for @voteRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Rejected'**
+  String get voteRejected;
+
+  /// No description provided for @threadResolved.
+  ///
+  /// In en, this message translates to:
+  /// **'Resolved'**
+  String get threadResolved;
 }
 
 class _AppLocalizationsDelegate

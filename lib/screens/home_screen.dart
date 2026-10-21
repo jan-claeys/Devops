@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 
 import '../l10n/l10n.dart';
 import 'pipelines_screen.dart';
+import 'pull_requests_screen.dart';
 import 'work_items_screen.dart';
 
-/// Switches between the tickets and the pipelines: a navigation bar at the
-/// bottom on phones, a rail on the side on wider screens.
+/// Switches between the tickets, the pull requests and the pipelines: a
+/// navigation bar at the bottom on phones, a rail on the side on wider screens.
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -21,17 +22,22 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    // Keeps both tabs alive. IndexedStack leaves tickers running, so the
-    // hidden tab disables them itself; the pipelines pause refreshing then.
+    // Keeps all tabs alive. IndexedStack leaves tickers running, so the
+    // hidden tabs disable them itself; the pipelines pause refreshing then.
     final body = IndexedStack(
       index: _index,
       children: [
-        for (final (i, tab) in const [WorkItemsScreen(), PipelinesScreen()].indexed)
+        for (final (i, tab) in const [
+          WorkItemsScreen(),
+          PullRequestsScreen(),
+          PipelinesScreen(),
+        ].indexed)
           TickerMode(enabled: i == _index, child: tab),
       ],
     );
     final destinations = [
       (Icons.assignment_outlined, Icons.assignment, l10n.tickets),
+      (Icons.call_merge, Icons.call_merge, l10n.pullRequests),
       (Icons.rocket_launch_outlined, Icons.rocket_launch, l10n.pipelines),
     ];
     void select(int i) => setState(() => _index = i);
