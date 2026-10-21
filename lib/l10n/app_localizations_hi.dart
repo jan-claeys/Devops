@@ -188,6 +188,18 @@ class AppLocalizationsHi extends AppLocalizations {
   String get acceptanceCriteria => 'स्वीकृति मानदंड';
 
   @override
+  String get symptom => 'लक्षण';
+
+  @override
+  String get systemInfo => 'सिस्टम जानकारी';
+
+  @override
+  String get proposedFix => 'सुधार';
+
+  @override
+  String get emptyField => 'कोई सामग्री नहीं';
+
+  @override
   String get assignedTo => 'सौंपा गया';
 
   @override

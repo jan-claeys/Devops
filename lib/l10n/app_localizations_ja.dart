@@ -186,6 +186,18 @@ class AppLocalizationsJa extends AppLocalizations {
   String get acceptanceCriteria => '受け入れ基準';
 
   @override
+  String get symptom => '症状';
+
+  @override
+  String get systemInfo => 'システム情報';
+
+  @override
+  String get proposedFix => '修正';
+
+  @override
+  String get emptyField => '内容なし';
+
+  @override
   String get assignedTo => '担当者';
 
   @override

@@ -191,6 +191,18 @@ class AppLocalizationsEs extends AppLocalizations {
   String get acceptanceCriteria => 'Criterios de aceptación';
 
   @override
+  String get symptom => 'Síntoma';
+
+  @override
+  String get systemInfo => 'Información del sistema';
+
+  @override
+  String get proposedFix => 'Corrección';
+
+  @override
+  String get emptyField => 'Sin contenido';
+
+  @override
   String get assignedTo => 'Asignado a';
 
   @override

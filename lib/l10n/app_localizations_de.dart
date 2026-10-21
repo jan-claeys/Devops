@@ -190,6 +190,18 @@ class AppLocalizationsDe extends AppLocalizations {
   String get acceptanceCriteria => 'Akzeptanzkriterien';
 
   @override
+  String get symptom => 'Symptom';
+
+  @override
+  String get systemInfo => 'Systeminfo';
+
+  @override
+  String get proposedFix => 'Lösung';
+
+  @override
+  String get emptyField => 'Kein Inhalt';
+
+  @override
   String get assignedTo => 'Zugewiesen an';
 
   @override

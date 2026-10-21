@@ -191,6 +191,18 @@ class AppLocalizationsNl extends AppLocalizations {
   String get acceptanceCriteria => 'Acceptatiecriteria';
 
   @override
+  String get symptom => 'Symptoom';
+
+  @override
+  String get systemInfo => 'Systeeminfo';
+
+  @override
+  String get proposedFix => 'Oplossing';
+
+  @override
+  String get emptyField => 'Geen inhoud';
+
+  @override
   String get assignedTo => 'Toegewezen aan';
 
   @override

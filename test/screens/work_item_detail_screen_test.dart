@@ -92,6 +92,24 @@ void main() {
     expect(find.text(en.acceptanceCriteria), findsNothing);
   });
 
+  testWidgets('always shows the bug fields', (tester) async {
+    fake.items[10]!['fields']['Microsoft.VSTS.CMMI.Symptom'] = '<div>Lots not selected</div>';
+    await pumpDetail(tester);
+    expect(find.text(en.symptom), findsOneWidget);
+    expect(find.text('Lots not selected'), findsOneWidget);
+    expect(find.text(en.systemInfo), findsOneWidget);
+    expect(find.text(en.proposedFix), findsOneWidget);
+    expect(find.text(en.emptyField), findsNWidgets(2));
+  });
+
+  testWidgets('hides bug fields for other types', (tester) async {
+    fake.add(workItemJson(20, title: 'Story', type: 'User Story'));
+    await pumpDetail(tester, id: 20);
+    expect(find.text(en.reproSteps), findsNothing);
+    expect(find.text(en.symptom), findsNothing);
+    expect(find.text(en.emptyField), findsNothing);
+  });
+
   testWidgets('shows linked items', (tester) async {
     await pumpDetail(tester);
     expect(find.text(en.linkedItems), findsOneWidget);

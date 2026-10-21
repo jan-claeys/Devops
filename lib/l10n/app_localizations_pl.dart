@@ -192,6 +192,18 @@ class AppLocalizationsPl extends AppLocalizations {
   String get acceptanceCriteria => 'Kryteria akceptacji';
 
   @override
+  String get symptom => 'Objaw';
+
+  @override
+  String get systemInfo => 'Informacje o systemie';
+
+  @override
+  String get proposedFix => 'Poprawka';
+
+  @override
+  String get emptyField => 'Brak treści';
+
+  @override
   String get assignedTo => 'Przypisane do';
 
   @override

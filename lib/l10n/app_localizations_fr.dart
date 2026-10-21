@@ -190,6 +190,18 @@ class AppLocalizationsFr extends AppLocalizations {
   String get acceptanceCriteria => 'Critères d\'acceptation';
 
   @override
+  String get symptom => 'Symptôme';
+
+  @override
+  String get systemInfo => 'Infos système';
+
+  @override
+  String get proposedFix => 'Correctif';
+
+  @override
+  String get emptyField => 'Aucun contenu';
+
+  @override
   String get assignedTo => 'Attribué à';
 
   @override

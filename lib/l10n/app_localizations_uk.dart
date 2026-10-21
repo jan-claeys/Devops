@@ -192,6 +192,18 @@ class AppLocalizationsUk extends AppLocalizations {
   String get acceptanceCriteria => 'Критерії приймання';
 
   @override
+  String get symptom => 'Симптом';
+
+  @override
+  String get systemInfo => 'Відомості про систему';
+
+  @override
+  String get proposedFix => 'Виправлення';
+
+  @override
+  String get emptyField => 'Немає вмісту';
+
+  @override
   String get assignedTo => 'Призначено';
 
   @override

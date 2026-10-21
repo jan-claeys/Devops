@@ -175,11 +175,19 @@ class _WorkItemDetailScreenState extends State<WorkItemDetailScreen> {
     final item = detail.item;
     final theme = Theme.of(context);
     final l10n = context.l10n;
+    // Bugs always show their tracking fields, like the DevOps bug form does.
     final sections = <(String, String?)>[
       (l10n.description, item.description),
-      (l10n.reproSteps, item.reproSteps),
+      if (!item.isBug) (l10n.reproSteps, item.reproSteps),
       (l10n.acceptanceCriteria, item.acceptanceCriteria),
-    ].where((s) => htmlToText(s.$2).isNotEmpty);
+    ].where((s) => htmlToText(s.$2).isNotEmpty).followedBy([
+      if (item.isBug) ...[
+        (l10n.reproSteps, item.reproSteps),
+        (l10n.symptom, item.symptom),
+        (l10n.systemInfo, item.systemInfo),
+        (l10n.proposedFix, item.proposedFix),
+      ],
+    ]);
 
     return [
       Row(
@@ -263,7 +271,12 @@ class _WorkItemDetailScreenState extends State<WorkItemDetailScreen> {
         const SizedBox(height: 16),
         _SectionCard(
           title: title,
-          child: SelectableText(htmlToText(html), style: theme.textTheme.bodyMedium),
+          child: htmlToText(html).isEmpty
+              ? Text(l10n.emptyField,
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                      color: theme.colorScheme.onSurfaceVariant,
+                      fontStyle: FontStyle.italic))
+              : SelectableText(htmlToText(html), style: theme.textTheme.bodyMedium),
         ),
       ],
       if (detail.parent != null || detail.children.isNotEmpty) ...[

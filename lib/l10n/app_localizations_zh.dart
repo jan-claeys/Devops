@@ -185,6 +185,18 @@ class AppLocalizationsZh extends AppLocalizations {
   String get acceptanceCriteria => '验收标准';
 
   @override
+  String get symptom => '症状';
+
+  @override
+  String get systemInfo => '系统信息';
+
+  @override
+  String get proposedFix => '修复';
+
+  @override
+  String get emptyField => '无内容';
+
+  @override
   String get assignedTo => '分配给';
 
   @override

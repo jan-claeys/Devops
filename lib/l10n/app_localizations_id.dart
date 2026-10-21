@@ -189,6 +189,18 @@ class AppLocalizationsId extends AppLocalizations {
   String get acceptanceCriteria => 'Kriteria penerimaan';
 
   @override
+  String get symptom => 'Gejala';
+
+  @override
+  String get systemInfo => 'Info sistem';
+
+  @override
+  String get proposedFix => 'Perbaikan';
+
+  @override
+  String get emptyField => 'Tidak ada konten';
+
+  @override
   String get assignedTo => 'Ditugaskan ke';
 
   @override

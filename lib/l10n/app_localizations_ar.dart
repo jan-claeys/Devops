@@ -192,6 +192,18 @@ class AppLocalizationsAr extends AppLocalizations {
   String get acceptanceCriteria => 'معايير القبول';
 
   @override
+  String get symptom => 'العَرَض';
+
+  @override
+  String get systemInfo => 'معلومات النظام';
+
+  @override
+  String get proposedFix => 'الإصلاح';
+
+  @override
+  String get emptyField => 'لا يوجد محتوى';
+
+  @override
   String get assignedTo => 'مسندة إلى';
 
   @override

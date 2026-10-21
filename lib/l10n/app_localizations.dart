@@ -452,6 +452,30 @@ abstract class AppLocalizations {
   /// **'Acceptance criteria'**
   String get acceptanceCriteria;
 
+  /// No description provided for @symptom.
+  ///
+  /// In en, this message translates to:
+  /// **'Symptom'**
+  String get symptom;
+
+  /// No description provided for @systemInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'System info'**
+  String get systemInfo;
+
+  /// No description provided for @proposedFix.
+  ///
+  /// In en, this message translates to:
+  /// **'Fix'**
+  String get proposedFix;
+
+  /// No description provided for @emptyField.
+  ///
+  /// In en, this message translates to:
+  /// **'No content'**
+  String get emptyField;
+
   /// No description provided for @assignedTo.
   ///
   /// In en, this message translates to:

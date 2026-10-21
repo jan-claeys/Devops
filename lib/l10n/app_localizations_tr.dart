@@ -189,6 +189,18 @@ class AppLocalizationsTr extends AppLocalizations {
   String get acceptanceCriteria => 'Kabul kriterleri';
 
   @override
+  String get symptom => 'Belirti';
+
+  @override
+  String get systemInfo => 'Sistem bilgisi';
+
+  @override
+  String get proposedFix => 'Düzeltme';
+
+  @override
+  String get emptyField => 'İçerik yok';
+
+  @override
   String get assignedTo => 'Atanan';
 
   @override

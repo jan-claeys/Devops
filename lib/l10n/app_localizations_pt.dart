@@ -190,6 +190,18 @@ class AppLocalizationsPt extends AppLocalizations {
   String get acceptanceCriteria => 'Critérios de aceitação';
 
   @override
+  String get symptom => 'Sintoma';
+
+  @override
+  String get systemInfo => 'Informações do sistema';
+
+  @override
+  String get proposedFix => 'Correção';
+
+  @override
+  String get emptyField => 'Sem conteúdo';
+
+  @override
   String get assignedTo => 'Atribuído a';
 
   @override

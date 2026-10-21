@@ -192,6 +192,18 @@ class AppLocalizationsRu extends AppLocalizations {
   String get acceptanceCriteria => 'Критерии приёмки';
 
   @override
+  String get symptom => 'Симптом';
+
+  @override
+  String get systemInfo => 'Сведения о системе';
+
+  @override
+  String get proposedFix => 'Исправление';
+
+  @override
+  String get emptyField => 'Нет содержимого';
+
+  @override
   String get assignedTo => 'Назначен';
 
   @override

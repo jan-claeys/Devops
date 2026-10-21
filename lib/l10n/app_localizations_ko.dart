@@ -186,6 +186,18 @@ class AppLocalizationsKo extends AppLocalizations {
   String get acceptanceCriteria => '수락 기준';
 
   @override
+  String get symptom => '증상';
+
+  @override
+  String get systemInfo => '시스템 정보';
+
+  @override
+  String get proposedFix => '수정';
+
+  @override
+  String get emptyField => '내용 없음';
+
+  @override
   String get assignedTo => '담당자';
 
   @override
