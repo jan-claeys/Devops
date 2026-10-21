@@ -50,6 +50,31 @@ class AppLocalizationsNl extends AppLocalizations {
   String get tokenRequired => 'Vul je token in';
 
   @override
+  String get tokenHelpTitle => 'Hoe maak ik een token aan?';
+
+  @override
+  String get tokenHelpStep1 =>
+      'Open in Azure DevOps User settings → Personal access tokens en kies New Token.';
+
+  @override
+  String get tokenHelpStep2 => 'Kies je organisatie en een vervaldatum.';
+
+  @override
+  String get tokenHelpStep3 =>
+      'Kies bij Scopes voor Custom defined en vink alleen Work Items: Read en Project and Team: Read aan.';
+
+  @override
+  String get tokenHelpStep4 =>
+      'Kies Create, kopieer het token en plak het hierboven. Het wordt maar één keer getoond.';
+
+  @override
+  String get tokenHelpPermissions =>
+      'Een token heeft nooit meer rechten dan je account: je hebt minstens Stakeholder-toegang nodig en leesrechten op de projecten die je wilt zien.';
+
+  @override
+  String get tokenHelpDocs => 'Documentatie van Microsoft';
+
+  @override
   String get connecting => 'Verbinden…';
 
   @override

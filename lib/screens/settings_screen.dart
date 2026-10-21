@@ -13,6 +13,8 @@ final _log = Logger('SettingsScreen');
 
 const _author = 'Jan Claeys';
 final _repositoryUrl = Uri.parse('https://github.com/jan-claeys/Devops');
+final _patDocsUrl = Uri.parse(
+    'https://learn.microsoft.com/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate');
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key, this.isOnboarding = false});
@@ -163,6 +165,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               : const Icon(Icons.link),
                           label: Text(_busy ? l10n.connecting : l10n.connect),
                         ),
+                        const SizedBox(height: 16),
+                        const _TokenHelp(),
                         if (!widget.isOnboarding) ...[
                           const SizedBox(height: 32),
                           Text(l10n.appearance, style: theme.textTheme.titleMedium),
@@ -241,6 +245,57 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
               ),
             ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Explains how to create a Personal Access Token with the minimum scopes.
+class _TokenHelp extends StatelessWidget {
+  const _TokenHelp();
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final theme = Theme.of(context);
+    final steps = [
+      l10n.tokenHelpStep1,
+      l10n.tokenHelpStep2,
+      l10n.tokenHelpStep3,
+      l10n.tokenHelpStep4,
+    ];
+    return Card.outlined(
+      clipBehavior: Clip.antiAlias,
+      child: ExpansionTile(
+        shape: const Border(),
+        leading: const Icon(Icons.help_outline),
+        title: Text(l10n.tokenHelpTitle),
+        expandedCrossAxisAlignment: CrossAxisAlignment.start,
+        childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+        children: [
+          for (final (i, step) in steps.indexed)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(width: 24, child: Text('${i + 1}.')),
+                  Expanded(child: Text(step)),
+                ],
+              ),
+            ),
+          Text(
+            l10n.tokenHelpPermissions,
+            style: theme.textTheme.bodySmall
+                ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+          ),
+          const SizedBox(height: 4),
+          TextButton.icon(
+            onPressed: () => launchUrl(_patDocsUrl, mode: LaunchMode.externalApplication),
+            icon: const Icon(Icons.open_in_new),
+            label: Text(l10n.tokenHelpDocs),
           ),
         ],
       ),

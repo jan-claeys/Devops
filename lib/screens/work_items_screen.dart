@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 
@@ -174,6 +175,57 @@ class _WorkItemsScreenState extends State<WorkItemsScreen> {
     });
   }
 
+  Widget _buildFilterChips(AppLocalizations l10n, List<String> availableTypes) {
+    final chips = [
+      FilterChip(
+        label: Text(l10n.openOnly),
+        selected: _openOnly,
+        onSelected: (v) {
+          setState(() => _openOnly = v);
+          _load();
+        },
+      ),
+      if (availableTypes.length > 1) ...[
+        const SizedBox(height: 24, child: VerticalDivider(width: 8)),
+        for (final type in availableTypes)
+          FilterChip(
+            avatar: Icon(WorkItemTypeStyle.of(type).icon,
+                color: WorkItemTypeStyle.of(type).color),
+            label: Text(type),
+            selected: _types.contains(type),
+            onSelected: (v) =>
+                setState(() => v ? _types.add(type) : _types.remove(type)),
+          ),
+      ],
+    ];
+    const padding = EdgeInsets.symmetric(horizontal: 16, vertical: 8);
+
+    // A mouse can't swipe a horizontal scroll view, so wrap the chips on desktop.
+    final desktop = switch (defaultTargetPlatform) {
+      TargetPlatform.windows || TargetPlatform.macOS || TargetPlatform.linux => true,
+      _ => false,
+    };
+    if (desktop) {
+      return Padding(
+        padding: padding,
+        child: Wrap(
+          spacing: 8,
+          runSpacing: 8,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          children: chips,
+        ),
+      );
+    }
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      padding: padding,
+      child: Row(
+        spacing: 8,
+        children: chips,
+      ),
+    );
+  }
+
   Widget _buildList(AppState state, bool wide) {
     final theme = Theme.of(context);
     final l10n = context.l10n;
@@ -262,40 +314,7 @@ class _WorkItemsScreenState extends State<WorkItemsScreen> {
                 ),
               ),
             ),
-            SliverToBoxAdapter(
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                child: Row(
-                  children: [
-                    FilterChip(
-                      label: Text(l10n.openOnly),
-                      selected: _openOnly,
-                      onSelected: (v) {
-                        setState(() => _openOnly = v);
-                        _load();
-                      },
-                    ),
-                    if (availableTypes.length > 1) ...[
-                      const SizedBox(width: 8),
-                      const SizedBox(height: 24, child: VerticalDivider()),
-                      for (final type in availableTypes)
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8),
-                          child: FilterChip(
-                            avatar: Icon(WorkItemTypeStyle.of(type).icon,
-                                color: WorkItemTypeStyle.of(type).color),
-                            label: Text(type),
-                            selected: _types.contains(type),
-                            onSelected: (v) => setState(
-                                () => v ? _types.add(type) : _types.remove(type)),
-                          ),
-                        ),
-                    ],
-                  ],
-                ),
-              ),
-            ),
+            SliverToBoxAdapter(child: _buildFilterChips(l10n, availableTypes)),
             if (_loading)
               const SliverToBoxAdapter(child: LinearProgressIndicator())
             else

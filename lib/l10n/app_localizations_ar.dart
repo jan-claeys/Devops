@@ -49,6 +49,31 @@ class AppLocalizationsAr extends AppLocalizations {
   String get tokenRequired => 'أدخل الرمز';
 
   @override
+  String get tokenHelpTitle => 'كيف أنشئ رمزًا؟';
+
+  @override
+  String get tokenHelpStep1 =>
+      'في Azure DevOps، افتح User settings ← Personal access tokens واختر New Token.';
+
+  @override
+  String get tokenHelpStep2 => 'اختر مؤسستك وتاريخ انتهاء الصلاحية.';
+
+  @override
+  String get tokenHelpStep3 =>
+      'ضمن Scopes، اختر Custom defined وفعّل فقط Work Items: Read و Project and Team: Read.';
+
+  @override
+  String get tokenHelpStep4 =>
+      'اختر Create، وانسخ الرمز والصقه أعلاه. يُعرض مرة واحدة فقط.';
+
+  @override
+  String get tokenHelpPermissions =>
+      'لا يملك الرمز أبدًا صلاحيات أكثر من حسابك: تحتاج على الأقل إلى وصول Stakeholder وصلاحية قراءة المشاريع التي تريد عرضها.';
+
+  @override
+  String get tokenHelpDocs => 'وثائق Microsoft';
+
+  @override
   String get connecting => 'جارٍ الاتصال…';
 
   @override

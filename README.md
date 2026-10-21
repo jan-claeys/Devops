@@ -34,11 +34,38 @@ Supported platforms in this repo: Android, iOS, Windows and Web. The home screen
 On first launch the app asks for:
 
 1. **Organization** – any of `myorg`, `dev.azure.com/myorg`, `https://myorg.visualstudio.com` or a full on-premises collection URL.
-2. **Personal Access Token** – create one in Azure DevOps under *User settings → Personal access tokens* with these scopes:
-   - **Work Items**: Read
-   - **Project and Team**: Read
+2. **Personal Access Token** – see [Create a Personal Access Token](#create-a-personal-access-token) below.
 
 The connection is verified before it is saved. The PAT is kept in secure storage (`flutter_secure_storage`); other settings are stored in `shared_preferences`.
+
+### Create a Personal Access Token
+
+The app only reads data, so a read-only token is enough. Microsoft's official guide: [Use personal access tokens](https://learn.microsoft.com/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate).
+
+1. Sign in to your organization (`https://dev.azure.com/{yourorganization}`).
+2. Open **User settings** (the icon next to your profile picture, top right) → **Personal access tokens**.
+3. Click **+ New Token**.
+4. Fill in:
+   - **Name** – for example `DevOps app`.
+   - **Organization** – the organization you will connect to (or *All accessible organizations*).
+   - **Expiration** – up to one year; when the token expires, the app reports *Not authorized* and you need to enter a new token in *Settings*.
+   - **Scopes** – choose **Custom defined** and select only:
+
+     | Scope | Permission | Used for |
+     | --- | --- | --- |
+     | **Work Items** | Read (`vso.work`) | WIQL queries, work item details, links, comments and attachments/images |
+     | **Project and Team** | Read (`vso.project`) | Listing the projects in the organization (also used to verify the connection) |
+
+     Click *Show all scopes* if a scope is not visible. Do not choose *Full access*.
+5. Click **Create** and copy the token right away – Azure DevOps shows it only once.
+6. Paste it in the app's **Personal Access Token** field and tap **Connect**.
+
+A token can never do more than your own account. You also need:
+
+- An access level of at least **Stakeholder** (or **Basic**) in the organization.
+- Read access to the projects and area paths whose work items you want to see (by default, members of a project's *Readers* or *Contributors* group have this).
+
+If you cannot create a token, your organization's administrators may have restricted PAT creation by policy; see [Manage personal access tokens using policies](https://learn.microsoft.com/azure/devops/organizations/accounts/manage-pats-with-policies-for-administrators). For Azure DevOps Server (on-premises) the steps are the same, starting from your collection URL.
 
 ## Project structure
 

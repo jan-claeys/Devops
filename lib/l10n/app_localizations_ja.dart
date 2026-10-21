@@ -48,6 +48,31 @@ class AppLocalizationsJa extends AppLocalizations {
   String get tokenRequired => 'トークンを入力してください';
 
   @override
+  String get tokenHelpTitle => 'トークンの作成方法';
+
+  @override
+  String get tokenHelpStep1 =>
+      'Azure DevOps で User settings → Personal access tokens を開き、New Token を選択します。';
+
+  @override
+  String get tokenHelpStep2 => '組織と有効期限を選択します。';
+
+  @override
+  String get tokenHelpStep3 =>
+      'Scopes で Custom defined を選び、Work Items: Read と Project and Team: Read のみを有効にします。';
+
+  @override
+  String get tokenHelpStep4 =>
+      'Create を選択してトークンをコピーし、上に貼り付けます。トークンは一度だけ表示されます。';
+
+  @override
+  String get tokenHelpPermissions =>
+      'トークンがアカウント以上の権限を持つことはありません。少なくとも Stakeholder アクセスと、表示したいプロジェクトの読み取り権限が必要です。';
+
+  @override
+  String get tokenHelpDocs => 'Microsoft のドキュメント';
+
+  @override
   String get connecting => '接続中…';
 
   @override

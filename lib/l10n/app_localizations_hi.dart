@@ -50,6 +50,31 @@ class AppLocalizationsHi extends AppLocalizations {
   String get tokenRequired => 'अपना टोकन दर्ज करें';
 
   @override
+  String get tokenHelpTitle => 'टोकन कैसे बनाएँ?';
+
+  @override
+  String get tokenHelpStep1 =>
+      'Azure DevOps में User settings → Personal access tokens खोलें और New Token चुनें।';
+
+  @override
+  String get tokenHelpStep2 => 'अपना संगठन और समाप्ति तिथि चुनें।';
+
+  @override
+  String get tokenHelpStep3 =>
+      'Scopes में Custom defined चुनें और केवल Work Items: Read और Project and Team: Read चालू करें।';
+
+  @override
+  String get tokenHelpStep4 =>
+      'Create चुनें, टोकन कॉपी करें और ऊपर पेस्ट करें। यह केवल एक बार दिखाया जाता है।';
+
+  @override
+  String get tokenHelpPermissions =>
+      'टोकन के पास कभी भी आपके खाते से अधिक अधिकार नहीं होते: आपको कम से कम Stakeholder एक्सेस और जिन प्रोजेक्ट्स को देखना है उन पर पढ़ने की अनुमति चाहिए।';
+
+  @override
+  String get tokenHelpDocs => 'Microsoft दस्तावेज़';
+
+  @override
   String get connecting => 'कनेक्ट हो रहा है…';
 
   @override

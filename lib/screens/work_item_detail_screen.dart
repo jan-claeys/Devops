@@ -6,6 +6,7 @@ import '../l10n/l10n.dart';
 import '../models/work_item.dart';
 import '../services/app_state.dart';
 import '../services/logging.dart';
+import '../widgets/devops_markdown.dart';
 import '../widgets/work_item_visuals.dart';
 
 final _log = Logger('WorkItemDetailScreen');
@@ -171,21 +172,24 @@ class _WorkItemDetailScreenState extends State<WorkItemDetailScreen> {
     );
   }
 
+  bool _isBlankField(WorkItem item, String field) =>
+      isBlankContent(item.fields[field] as String?, markdown: item.isMarkdown(field));
+
   List<Widget> _buildBody(_Detail detail) {
     final item = detail.item;
     final theme = Theme.of(context);
     final l10n = context.l10n;
     // Bugs always show their tracking fields, like the DevOps bug form does.
-    final sections = <(String, String?)>[
-      (l10n.description, item.description),
-      if (!item.isBug) (l10n.reproSteps, item.reproSteps),
-      (l10n.acceptanceCriteria, item.acceptanceCriteria),
-    ].where((s) => htmlToText(s.$2).isNotEmpty).followedBy([
+    final sections = <(String, String)>[
+      (l10n.description, WorkItem.descriptionField),
+      if (!item.isBug) (l10n.reproSteps, WorkItem.reproStepsField),
+      (l10n.acceptanceCriteria, WorkItem.acceptanceCriteriaField),
+    ].where((s) => !_isBlankField(item, s.$2)).followedBy([
       if (item.isBug) ...[
-        (l10n.reproSteps, item.reproSteps),
-        (l10n.symptom, item.symptom),
-        (l10n.systemInfo, item.systemInfo),
-        (l10n.proposedFix, item.proposedFix),
+        (l10n.reproSteps, WorkItem.reproStepsField),
+        (l10n.symptom, WorkItem.symptomField),
+        (l10n.systemInfo, WorkItem.systemInfoField),
+        (l10n.proposedFix, WorkItem.proposedFixField),
       ],
     ]);
 
@@ -267,16 +271,23 @@ class _WorkItemDetailScreenState extends State<WorkItemDetailScreen> {
           ],
         ),
       ),
-      for (final (title, html) in sections) ...[
+      for (final (title, field) in sections) ...[
         const SizedBox(height: 16),
         _SectionCard(
           title: title,
-          child: htmlToText(html).isEmpty
+          child: _isBlankField(item, field)
               ? Text(l10n.emptyField,
                   style: theme.textTheme.bodyMedium?.copyWith(
                       color: theme.colorScheme.onSurfaceVariant,
                       fontStyle: FontStyle.italic))
-              : SelectableText(htmlToText(html), style: theme.textTheme.bodyMedium),
+              : item.isMarkdown(field)
+                  ? DevOpsMarkdown(
+                      item.fields[field] as String,
+                      onOpenWorkItem: _openLinked,
+                      imageHeaders: AppScope.read(context).api?.headersFor,
+                    )
+                  : SelectableText(htmlToText(item.fields[field] as String?),
+                      style: theme.textTheme.bodyMedium),
         ),
       ],
       if (detail.parent != null || detail.children.isNotEmpty) ...[
@@ -309,7 +320,7 @@ class _WorkItemDetailScreenState extends State<WorkItemDetailScreen> {
                 children: [
                   for (final (i, c) in detail.comments.indexed) ...[
                     if (i > 0) const Divider(height: 24),
-                    _CommentView(comment: c),
+                    _CommentView(comment: c, onOpenWorkItem: _openLinked),
                   ],
                 ],
               ),
@@ -411,9 +422,10 @@ class _LinkedTile extends StatelessWidget {
 }
 
 class _CommentView extends StatelessWidget {
-  const _CommentView({required this.comment});
+  const _CommentView({required this.comment, required this.onOpenWorkItem});
 
   final WorkItemComment comment;
+  final ValueChanged<int> onOpenWorkItem;
 
   @override
   Widget build(BuildContext context) {
@@ -439,12 +451,20 @@ class _CommentView extends StatelessWidget {
                 ]),
               ),
               const SizedBox(height: 4),
-              SelectableText.rich(htmlToSpan(
-                comment.text,
-                style: theme.textTheme.bodyMedium,
-                mentionStyle: TextStyle(
-                    color: theme.colorScheme.primary, fontWeight: FontWeight.w600),
-              )),
+              if (comment.isMarkdown)
+                DevOpsMarkdown(
+                  comment.text,
+                  mentions: comment.mentions,
+                  onOpenWorkItem: onOpenWorkItem,
+                  imageHeaders: AppScope.read(context).api?.headersFor,
+                )
+              else
+                SelectableText.rich(htmlToSpan(
+                  comment.text,
+                  style: theme.textTheme.bodyMedium,
+                  mentionStyle: TextStyle(
+                      color: theme.colorScheme.primary, fontWeight: FontWeight.w600),
+                )),
             ],
           ),
         ),

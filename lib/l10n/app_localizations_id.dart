@@ -50,6 +50,31 @@ class AppLocalizationsId extends AppLocalizations {
   String get tokenRequired => 'Masukkan token Anda';
 
   @override
+  String get tokenHelpTitle => 'Bagaimana cara membuat token?';
+
+  @override
+  String get tokenHelpStep1 =>
+      'Di Azure DevOps, buka User settings → Personal access tokens lalu pilih New Token.';
+
+  @override
+  String get tokenHelpStep2 => 'Pilih organisasi Anda dan tanggal kedaluwarsa.';
+
+  @override
+  String get tokenHelpStep3 =>
+      'Di Scopes, pilih Custom defined dan aktifkan hanya Work Items: Read dan Project and Team: Read.';
+
+  @override
+  String get tokenHelpStep4 =>
+      'Pilih Create, salin token, lalu tempel di atas. Token hanya ditampilkan sekali.';
+
+  @override
+  String get tokenHelpPermissions =>
+      'Token tidak pernah memiliki hak lebih dari akun Anda: Anda memerlukan setidaknya akses Stakeholder dan izin baca pada proyek yang ingin dilihat.';
+
+  @override
+  String get tokenHelpDocs => 'Dokumentasi Microsoft';
+
+  @override
   String get connecting => 'Menghubungkan…';
 
   @override

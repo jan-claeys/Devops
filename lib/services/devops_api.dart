@@ -65,6 +65,15 @@ class DevOpsApi {
   String webUrl(WorkItem item) =>
       '$baseUrl/${Uri.encodeComponent(item.project)}/_workitems/edit/${item.id}';
 
+  /// Headers to load [uri] with, such as an attachment image in a field.
+  /// The PAT is only sent to the organization itself.
+  Map<String, String>? headersFor(Uri uri) {
+    final base = Uri.parse(baseUrl);
+    return uri.scheme == base.scheme && uri.host == base.host && uri.port == base.port
+        ? {'Authorization': _auth}
+        : null;
+  }
+
   Future<List<Project>> getProjects() async {
     final json = await _get('$baseUrl/_apis/projects?\$top=500&api-version=$_apiVersion');
     final projects = (json['value'] as List)
@@ -139,7 +148,7 @@ class DevOpsApi {
   Future<List<WorkItemComment>> getComments(String project, int id) async {
     final json = await _get(
         '$baseUrl/${Uri.encodeComponent(project)}/_apis/wit/workItems/$id/comments'
-        '?order=desc&api-version=7.1-preview.4');
+        '?order=desc&\$expand=renderedText&api-version=7.1-preview.4');
     return (json['comments'] as List)
         .cast<Map<String, dynamic>>()
         .map(WorkItemComment.fromJson)
