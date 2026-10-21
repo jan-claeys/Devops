@@ -75,3 +75,8 @@ kotlin {
 flutter {
     source = "../.."
 }
+
+dependencies {
+    // Same version home_widget uses; keeps the process alive during widget refreshes.
+    implementation("androidx.work:work-runtime-ktx:2.11.2")
+}
