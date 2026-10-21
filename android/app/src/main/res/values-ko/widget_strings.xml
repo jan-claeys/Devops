@@ -3,6 +3,7 @@
     <string name="tickets_widget_label">내 티켓</string>
     <string name="tickets_widget_description">열린 Azure DevOps 티켓을 한눈에</string>
     <string name="tickets_widget_refresh">새로 고침</string>
+    <string name="tickets_widget_refreshing">새로 고치는 중…</string>
     <string name="tickets_widget_not_loaded">앱을 열어 불러오세요</string>
     <string name="tickets_widget_empty">열린 티켓 없음</string>
     <string name="tickets_widget_open_count">열림 %1$d개</string>
