@@ -8,6 +8,7 @@ import '../services/app_state.dart';
 import '../services/devops_api.dart';
 import '../services/home_widget_service.dart';
 import '../services/logging.dart';
+import '../widgets/project_picker.dart';
 
 final _log = Logger('SettingsScreen');
 
@@ -61,18 +62,27 @@ class _SettingsScreenState extends State<SettingsScreen> {
       await DevOpsApi(organization: org, pat: pat, client: client).getProjects();
       if (!mounted) return;
       await AppScope.read(context).saveConnection(organization: org, pat: pat);
-      if (!mounted) return;
-      if (!widget.isOnboarding) {
-        Navigator.of(context).pop();
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text(context.l10n.connectionSaved)));
-      }
     } catch (e, st) {
       logFailure(_log, 'Verifying the connection failed', e, st);
-      setState(() => _error = context.l10n.error(e));
+      if (mounted) setState(() => _error = context.l10n.error(e));
+      return;
     } finally {
       if (mounted) setState(() => _busy = false);
     }
+    if (!mounted) return;
+    // A new connection has no projects yet; tickets are shown once they are chosen.
+    if (AppScope.read(context).projects.isEmpty) await _pickProjects();
+    if (!mounted || widget.isOnboarding) return;
+    Navigator.of(context).pop();
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(context.l10n.connectionSaved)));
+  }
+
+  Future<void> _pickProjects() async {
+    final state = AppScope.read(context);
+    final picked =
+        await showProjectPicker(context, api: state.api!, current: state.projects);
+    if (picked != null) await state.setProjects(picked);
   }
 
   @override
@@ -126,9 +136,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           enableSuggestions: false,
                           decoration: InputDecoration(
                             labelText: l10n.personalAccessToken,
-                            helperText: state.hasPat
-                                ? l10n.tokenAlreadyStored
-                                : l10n.tokenScopeHint,
+                            helperText: state.hasPat ? l10n.tokenAlreadyStored : null,
                             helperMaxLines: 2,
                             prefixIcon: const Icon(Icons.key_outlined),
                             suffixIcon: IconButton(
@@ -142,6 +150,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           validator: (v) =>
                               (v == null || v.trim().isEmpty) ? l10n.tokenRequired : null,
                         ),
+                        const SizedBox(height: 16),
+                        const _RequiredScopes(),
                         if (_error != null) ...[
                           const SizedBox(height: 16),
                           Card.filled(
@@ -167,6 +177,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                         const SizedBox(height: 16),
                         const _TokenHelp(),
+                        if (state.isConfigured) ...[
+                          const SizedBox(height: 32),
+                          Text(l10n.projects, style: theme.textTheme.titleMedium),
+                          const SizedBox(height: 4),
+                          ListTile(
+                            contentPadding: EdgeInsets.zero,
+                            leading: const Icon(Icons.folder_outlined),
+                            title: Text(state.projects.isEmpty
+                                ? l10n.noProjectsTitle
+                                : state.projects.join(', ')),
+                            subtitle: Text(state.projects.isEmpty
+                                ? l10n.noProjectsMessage
+                                : l10n.projectCount(state.projects.length)),
+                            trailing: const Icon(Icons.chevron_right),
+                            onTap: _pickProjects,
+                          ),
+                        ],
                         if (!widget.isOnboarding) ...[
                           const SizedBox(height: 32),
                           Text(l10n.appearance, style: theme.textTheme.titleMedium),
@@ -247,6 +274,68 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+/// Lists the token scopes the app needs, one per row, so they are easy to tick
+/// off in Azure DevOps. Names match the Azure DevOps UI and stay untranslated.
+class _RequiredScopes extends StatelessWidget {
+  const _RequiredScopes();
+
+  static const _scopes = [
+    (Icons.assignment_outlined, 'Work Items'),
+    (Icons.code, 'Code'),
+    (Icons.rocket_launch_outlined, 'Build'),
+    (Icons.account_tree_outlined, 'Release'),
+    (Icons.groups_outlined, 'Project and Team'),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final scheme = theme.colorScheme;
+    return Card.filled(
+      margin: EdgeInsets.zero,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(16, 12, 16, 4),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              children: [
+                Icon(Icons.verified_user_outlined, size: 20, color: scheme.primary),
+                const SizedBox(width: 8),
+                Text(context.l10n.requiredScopes, style: theme.textTheme.titleSmall),
+              ],
+            ),
+            const SizedBox(height: 4),
+            for (final (icon, name) in _scopes)
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 6),
+                child: Row(
+                  children: [
+                    Icon(icon, size: 20, color: scheme.onSurfaceVariant),
+                    const SizedBox(width: 12),
+                    Expanded(child: Text(name, style: theme.textTheme.bodyMedium)),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                      decoration: BoxDecoration(
+                        color: scheme.secondaryContainer,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Text(
+                        'Read',
+                        style: theme.textTheme.labelMedium
+                            ?.copyWith(color: scheme.onSecondaryContainer),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+          ],
+        ),
       ),
     );
   }

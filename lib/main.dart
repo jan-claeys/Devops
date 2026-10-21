@@ -8,9 +8,9 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 import 'l10n/l10n.dart';
+import 'screens/home_screen.dart';
 import 'screens/settings_screen.dart';
 import 'screens/work_item_detail_screen.dart';
-import 'screens/work_items_screen.dart';
 import 'services/app_state.dart';
 import 'services/home_widget_service.dart';
 import 'services/logging.dart';
@@ -106,8 +106,9 @@ class _DevOpsAppState extends State<DevOpsApp> {
           theme: _theme(Brightness.light, useDynamic ? lightDynamic : null),
           darkTheme: _theme(Brightness.dark, useDynamic ? darkDynamic : null),
           themeMode: state.themeMode,
-          home: state.isConfigured
-              ? const WorkItemsScreen()
+          // Onboarding also asks for the projects before showing tickets.
+          home: state.isConfigured && state.projects.isNotEmpty
+              ? const HomeScreen()
               : const SettingsScreen(isOnboarding: true),
         );
       },

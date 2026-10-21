@@ -19,7 +19,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get connectionSaved => '연결이 저장되었습니다';
 
   @override
-  String get onboardingIntro => 'Azure DevOps에 연결하여 티켓을 확인하세요.';
+  String get onboardingIntro => '시작하려면 Azure DevOps에 연결하세요.';
 
   @override
   String get connection => '연결';
@@ -41,8 +41,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get tokenAlreadyStored => '토큰이 이미 저장되어 있습니다. 변경하려면 다시 입력하세요.';
 
   @override
-  String get tokenScopeHint =>
-      '필요한 범위: Work Items (Read) 및 Project and Team (Read)';
+  String get requiredScopes => '필요한 범위';
 
   @override
   String get tokenRequired => '토큰을 입력하세요';
@@ -59,7 +58,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'Scopes에서 Custom defined를 선택하고 Work Items: Read와 Project and Team: Read만 켭니다.';
+      'Scopes에서 Custom defined를 선택하고 위에 나열된 범위만 각각 Read로 켭니다.';
 
   @override
   String get tokenHelpStep4 =>
@@ -135,7 +134,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get selectTicketMessage => '왼쪽에서 티켓을 선택하면 세부 정보가 표시됩니다.';
 
   @override
-  String get chooseProject => '프로젝트 선택';
+  String get chooseProjects => '프로젝트 선택';
 
   @override
   String get refresh => '새로 고침';
@@ -162,10 +161,10 @@ class AppLocalizationsKo extends AppLocalizations {
   String get retry => '다시 시도';
 
   @override
-  String get noProjectTitle => '선택된 프로젝트 없음';
+  String get noProjectsTitle => '선택된 프로젝트 없음';
 
   @override
-  String get noProjectMessage => '티켓을 보려면 프로젝트를 선택하세요.';
+  String get noProjectsMessage => '티켓을 보려면 프로젝트를 하나 이상 선택하세요.';
 
   @override
   String get noTicketsTitle => '티켓 없음';
@@ -187,7 +186,20 @@ class AppLocalizationsKo extends AppLocalizations {
   String get unassigned => '할당되지 않음';
 
   @override
-  String get chooseAProject => '프로젝트 선택';
+  String get projects => '프로젝트';
+
+  @override
+  String projectCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '프로젝트 $count개',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get apply => '적용';
 
   @override
   String get searchProjectHint => '프로젝트 검색';
@@ -316,4 +328,211 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get widgetSetupRequired => '앱을 열어 설정하세요';
+
+  @override
+  String get tickets => '티켓';
+
+  @override
+  String get pipelines => '파이프라인';
+
+  @override
+  String get searchRunsHint => '파이프라인, 브랜치 또는 사람으로 검색';
+
+  @override
+  String get activeOnly => '진행 중인 항목만';
+
+  @override
+  String get loadRunsFailed => '파이프라인 실행을 불러오지 못했습니다';
+
+  @override
+  String get noRunsTitle => '파이프라인 실행 없음';
+
+  @override
+  String get noRunsMessage => '필터와 일치하는 파이프라인 실행이 없습니다.';
+
+  @override
+  String runCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '실행 $count개',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get selectRunTitle => '파이프라인 실행 선택';
+
+  @override
+  String get selectRunMessage => '왼쪽에서 실행을 선택하면 진행 상황을 볼 수 있습니다.';
+
+  @override
+  String get runPending => '대기 중';
+
+  @override
+  String get runQueued => '대기열에 있음';
+
+  @override
+  String get runRunning => '실행 중';
+
+  @override
+  String get runCancelling => '취소 중';
+
+  @override
+  String get runSucceeded => '성공';
+
+  @override
+  String get runPartiallySucceeded => '부분 성공';
+
+  @override
+  String get runFailed => '실패';
+
+  @override
+  String get runCanceled => '취소됨';
+
+  @override
+  String get runSkipped => '건너뜀';
+
+  @override
+  String get progress => '진행 상황';
+
+  @override
+  String tasksProgress(int done, int total) {
+    return '작업 $total개 중 $done개 완료';
+  }
+
+  @override
+  String get branch => '브랜치';
+
+  @override
+  String get requestedBy => '요청자';
+
+  @override
+  String get queued => '대기열 추가';
+
+  @override
+  String get started => '시작';
+
+  @override
+  String get finished => '종료';
+
+  @override
+  String get duration => '소요 시간';
+
+  @override
+  String get stages => '단계';
+
+  @override
+  String get noStagesYet => '실행이 시작되면 단계가 표시됩니다.';
+
+  @override
+  String get runWaitingForApproval => '승인 대기 중';
+
+  @override
+  String get runNotDeployed => '배포 안 됨';
+
+  @override
+  String get builds => '빌드';
+
+  @override
+  String get releases => '릴리스';
+
+  @override
+  String get loadReleasesFailed => '릴리스를 불러오지 못했습니다';
+
+  @override
+  String get releaseScopeHint => '릴리스를 보려면 토큰에 Release (Read) 범위가 필요합니다.';
+
+  @override
+  String get artifact => '아티팩트';
+
+  @override
+  String waitingForApprovalBy(String names) {
+    return '$names의 승인 대기 중';
+  }
+
+  @override
+  String get pullRequests => '끌어오기 요청';
+
+  @override
+  String get searchPullRequestsHint => '제목, ID, 분기 또는 사람으로 검색';
+
+  @override
+  String get scopeReviewing => '검토 대상';
+
+  @override
+  String get loadPullRequestsFailed => '끌어오기 요청을 불러오지 못했습니다';
+
+  @override
+  String get codeScopeHint => '끌어오기 요청을 보려면 토큰에 Code (Read) 범위가 필요합니다.';
+
+  @override
+  String get noPullRequestsTitle => '끌어오기 요청 없음';
+
+  @override
+  String get noPullRequestsMessage => '필터와 일치하는 끌어오기 요청이 없습니다.';
+
+  @override
+  String pullRequestCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '끌어오기 요청 $count개',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get selectPullRequestTitle => '끌어오기 요청 선택';
+
+  @override
+  String get selectPullRequestMessage => '왼쪽에서 끌어오기 요청을 선택하면 세부 정보를 볼 수 있습니다.';
+
+  @override
+  String get prDraft => '초안';
+
+  @override
+  String get prActive => '활성';
+
+  @override
+  String get prCompleted => '완료됨';
+
+  @override
+  String get prAbandoned => '중단됨';
+
+  @override
+  String get mergeConflicts => '병합 충돌';
+
+  @override
+  String get repository => '리포지토리';
+
+  @override
+  String get closed => '닫힘';
+
+  @override
+  String get reviewers => '검토자';
+
+  @override
+  String get noReviewers => '검토자 없음';
+
+  @override
+  String get requiredReviewer => '필수';
+
+  @override
+  String get voteApproved => '승인됨';
+
+  @override
+  String get voteApprovedWithSuggestions => '제안과 함께 승인됨';
+
+  @override
+  String get voteNone => '투표 없음';
+
+  @override
+  String get voteWaitingForAuthor => '작성자 대기 중';
+
+  @override
+  String get voteRejected => '거부됨';
+
+  @override
+  String get threadResolved => '해결됨';
 }

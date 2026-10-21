@@ -19,8 +19,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get connectionSaved => 'Подключение сохранено';
 
   @override
-  String get onboardingIntro =>
-      'Подключитесь к Azure DevOps, чтобы видеть свои тикеты.';
+  String get onboardingIntro => 'Подключитесь к Azure DevOps, чтобы начать.';
 
   @override
   String get connection => 'Подключение';
@@ -43,8 +42,7 @@ class AppLocalizationsRu extends AppLocalizations {
       'Токен уже сохранён. Введите его снова, чтобы изменить.';
 
   @override
-  String get tokenScopeHint =>
-      'Нужные права: Work Items (Read) и Project and Team (Read)';
+  String get requiredScopes => 'Нужные права';
 
   @override
   String get tokenRequired => 'Введите токен';
@@ -61,7 +59,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'В разделе Scopes выберите Custom defined и включите только Work Items: Read и Project and Team: Read.';
+      'В разделе Scopes выберите Custom defined и включите только права, перечисленные выше, каждое с уровнем Read.';
 
   @override
   String get tokenHelpStep4 =>
@@ -138,7 +136,7 @@ class AppLocalizationsRu extends AppLocalizations {
       'Выберите тикет слева, чтобы увидеть подробности.';
 
   @override
-  String get chooseProject => 'Выбрать проект';
+  String get chooseProjects => 'Выберите проекты';
 
   @override
   String get refresh => 'Обновить';
@@ -165,10 +163,11 @@ class AppLocalizationsRu extends AppLocalizations {
   String get retry => 'Повторить';
 
   @override
-  String get noProjectTitle => 'Проект не выбран';
+  String get noProjectsTitle => 'Проекты не выбраны';
 
   @override
-  String get noProjectMessage => 'Выберите проект, чтобы увидеть тикеты.';
+  String get noProjectsMessage =>
+      'Выберите один или несколько проектов, чтобы увидеть тикеты.';
 
   @override
   String get noTicketsTitle => 'Нет тикетов';
@@ -193,7 +192,23 @@ class AppLocalizationsRu extends AppLocalizations {
   String get unassigned => 'Не назначен';
 
   @override
-  String get chooseAProject => 'Выберите проект';
+  String get projects => 'Проекты';
+
+  @override
+  String projectCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count проекта',
+      many: '$count проектов',
+      few: '$count проекта',
+      one: '$count проект',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get apply => 'Применить';
 
   @override
   String get searchProjectHint => 'Поиск проекта';
@@ -324,4 +339,223 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get widgetSetupRequired => 'Откройте приложение для настройки';
+
+  @override
+  String get tickets => 'Тикеты';
+
+  @override
+  String get pipelines => 'Конвейеры';
+
+  @override
+  String get searchRunsHint => 'Поиск по конвейеру, ветке или человеку';
+
+  @override
+  String get activeOnly => 'Только активные';
+
+  @override
+  String get loadRunsFailed => 'Не удалось загрузить запуски';
+
+  @override
+  String get noRunsTitle => 'Нет запусков конвейеров';
+
+  @override
+  String get noRunsMessage => 'Нет запусков, соответствующих фильтрам.';
+
+  @override
+  String runCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count запуска',
+      many: '$count запусков',
+      few: '$count запуска',
+      one: '$count запуск',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get selectRunTitle => 'Выберите запуск';
+
+  @override
+  String get selectRunMessage =>
+      'Выберите запуск слева, чтобы следить за ходом выполнения.';
+
+  @override
+  String get runPending => 'Ожидание';
+
+  @override
+  String get runQueued => 'В очереди';
+
+  @override
+  String get runRunning => 'Выполняется';
+
+  @override
+  String get runCancelling => 'Отменяется';
+
+  @override
+  String get runSucceeded => 'Успешно';
+
+  @override
+  String get runPartiallySucceeded => 'Частично успешно';
+
+  @override
+  String get runFailed => 'Ошибка';
+
+  @override
+  String get runCanceled => 'Отменено';
+
+  @override
+  String get runSkipped => 'Пропущено';
+
+  @override
+  String get progress => 'Ход выполнения';
+
+  @override
+  String tasksProgress(int done, int total) {
+    return 'Выполнено задач: $done из $total';
+  }
+
+  @override
+  String get branch => 'Ветка';
+
+  @override
+  String get requestedBy => 'Запросил';
+
+  @override
+  String get queued => 'Поставлен в очередь';
+
+  @override
+  String get started => 'Начат';
+
+  @override
+  String get finished => 'Завершён';
+
+  @override
+  String get duration => 'Длительность';
+
+  @override
+  String get stages => 'Этапы';
+
+  @override
+  String get noStagesYet => 'Этапы появятся после начала запуска.';
+
+  @override
+  String get runWaitingForApproval => 'Ожидает утверждения';
+
+  @override
+  String get runNotDeployed => 'Не развёрнуто';
+
+  @override
+  String get builds => 'Сборки';
+
+  @override
+  String get releases => 'Выпуски';
+
+  @override
+  String get loadReleasesFailed => 'Не удалось загрузить выпуски';
+
+  @override
+  String get releaseScopeHint =>
+      'Для выпусков токену нужны права Release (Read).';
+
+  @override
+  String get artifact => 'Артефакт';
+
+  @override
+  String waitingForApprovalBy(String names) {
+    return 'Ожидает утверждения: $names';
+  }
+
+  @override
+  String get pullRequests => 'Pull request’ы';
+
+  @override
+  String get searchPullRequestsHint =>
+      'Поиск по названию, ID, ветке или человеку';
+
+  @override
+  String get scopeReviewing => 'На проверку';
+
+  @override
+  String get loadPullRequestsFailed => 'Не удалось загрузить pull request’ы';
+
+  @override
+  String get codeScopeHint =>
+      'Для pull request’ов токену нужны права Code (Read).';
+
+  @override
+  String get noPullRequestsTitle => 'Нет pull request’ов';
+
+  @override
+  String get noPullRequestsMessage =>
+      'Нет pull request’ов, соответствующих фильтрам.';
+
+  @override
+  String pullRequestCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count pull request’а',
+      many: '$count pull request’ов',
+      few: '$count pull request’а',
+      one: '$count pull request',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get selectPullRequestTitle => 'Выберите pull request';
+
+  @override
+  String get selectPullRequestMessage =>
+      'Выберите pull request слева, чтобы увидеть подробности.';
+
+  @override
+  String get prDraft => 'Черновик';
+
+  @override
+  String get prActive => 'Активный';
+
+  @override
+  String get prCompleted => 'Завершён';
+
+  @override
+  String get prAbandoned => 'Отменён';
+
+  @override
+  String get mergeConflicts => 'Конфликты слияния';
+
+  @override
+  String get repository => 'Репозиторий';
+
+  @override
+  String get closed => 'Закрыт';
+
+  @override
+  String get reviewers => 'Рецензенты';
+
+  @override
+  String get noReviewers => 'Нет рецензентов';
+
+  @override
+  String get requiredReviewer => 'Обязательный';
+
+  @override
+  String get voteApproved => 'Одобрено';
+
+  @override
+  String get voteApprovedWithSuggestions => 'Одобрено с предложениями';
+
+  @override
+  String get voteNone => 'Нет голоса';
+
+  @override
+  String get voteWaitingForAuthor => 'Ожидает автора';
+
+  @override
+  String get voteRejected => 'Отклонено';
+
+  @override
+  String get threadResolved => 'Решено';
 }

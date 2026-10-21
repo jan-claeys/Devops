@@ -19,8 +19,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get connectionSaved => 'Bağlantı kaydedildi';
 
   @override
-  String get onboardingIntro =>
-      'Biletlerinizi görmek için Azure DevOps\'a bağlanın.';
+  String get onboardingIntro => 'Başlamak için Azure DevOps\'a bağlanın.';
 
   @override
   String get connection => 'Bağlantı';
@@ -43,8 +42,7 @@ class AppLocalizationsTr extends AppLocalizations {
       'Zaten kayıtlı bir belirteç var. Değiştirmek için yeniden girin.';
 
   @override
-  String get tokenScopeHint =>
-      'Gerekli kapsam: Work Items (Read) ve Project and Team (Read)';
+  String get requiredScopes => 'Gerekli kapsamlar';
 
   @override
   String get tokenRequired => 'Belirtecinizi girin';
@@ -61,7 +59,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'Scopes altında Custom defined\'ı seçin ve yalnızca Work Items: Read ile Project and Team: Read\'i etkinleştirin.';
+      'Scopes altında Custom defined\'ı seçin ve yalnızca yukarıda listelenen kapsamları Read olarak etkinleştirin.';
 
   @override
   String get tokenHelpStep4 =>
@@ -138,7 +136,7 @@ class AppLocalizationsTr extends AppLocalizations {
       'Ayrıntıları görmek için soldan bir bilet seçin.';
 
   @override
-  String get chooseProject => 'Proje seç';
+  String get chooseProjects => 'Projeleri seç';
 
   @override
   String get refresh => 'Yenile';
@@ -165,10 +163,11 @@ class AppLocalizationsTr extends AppLocalizations {
   String get retry => 'Tekrar dene';
 
   @override
-  String get noProjectTitle => 'Proje seçilmedi';
+  String get noProjectsTitle => 'Proje seçilmedi';
 
   @override
-  String get noProjectMessage => 'Biletleri görmek için bir proje seçin.';
+  String get noProjectsMessage =>
+      'Biletleri görmek için bir veya daha fazla proje seçin.';
 
   @override
   String get noTicketsTitle => 'Bilet yok';
@@ -190,7 +189,20 @@ class AppLocalizationsTr extends AppLocalizations {
   String get unassigned => 'Atanmamış';
 
   @override
-  String get chooseAProject => 'Bir proje seçin';
+  String get projects => 'Projeler';
+
+  @override
+  String projectCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count proje',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get apply => 'Uygula';
 
   @override
   String get searchProjectHint => 'Proje ara';
@@ -321,4 +333,217 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get widgetSetupRequired => 'Kurulum için uygulamayı açın';
+
+  @override
+  String get tickets => 'Biletler';
+
+  @override
+  String get pipelines => 'İşlem hatları';
+
+  @override
+  String get searchRunsHint => 'İşlem hattı, dal veya kişiye göre ara';
+
+  @override
+  String get activeOnly => 'Yalnızca etkin';
+
+  @override
+  String get loadRunsFailed => 'Çalıştırmalar yüklenemedi';
+
+  @override
+  String get noRunsTitle => 'İşlem hattı çalıştırması yok';
+
+  @override
+  String get noRunsMessage =>
+      'Filtrelerle eşleşen işlem hattı çalıştırması yok.';
+
+  @override
+  String runCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count çalıştırma',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get selectRunTitle => 'Bir çalıştırma seçin';
+
+  @override
+  String get selectRunMessage =>
+      'İlerlemesini izlemek için soldan bir çalıştırma seçin.';
+
+  @override
+  String get runPending => 'Bekliyor';
+
+  @override
+  String get runQueued => 'Kuyrukta';
+
+  @override
+  String get runRunning => 'Çalışıyor';
+
+  @override
+  String get runCancelling => 'İptal ediliyor';
+
+  @override
+  String get runSucceeded => 'Başarılı';
+
+  @override
+  String get runPartiallySucceeded => 'Kısmen başarılı';
+
+  @override
+  String get runFailed => 'Başarısız';
+
+  @override
+  String get runCanceled => 'İptal edildi';
+
+  @override
+  String get runSkipped => 'Atlandı';
+
+  @override
+  String get progress => 'İlerleme';
+
+  @override
+  String tasksProgress(int done, int total) {
+    return '$total görevden $done tamamlandı';
+  }
+
+  @override
+  String get branch => 'Dal';
+
+  @override
+  String get requestedBy => 'İsteyen';
+
+  @override
+  String get queued => 'Kuyruğa alındı';
+
+  @override
+  String get started => 'Başladı';
+
+  @override
+  String get finished => 'Bitti';
+
+  @override
+  String get duration => 'Süre';
+
+  @override
+  String get stages => 'Aşamalar';
+
+  @override
+  String get noStagesYet => 'Aşamalar çalıştırma başladığında görünür.';
+
+  @override
+  String get runWaitingForApproval => 'Onay bekliyor';
+
+  @override
+  String get runNotDeployed => 'Dağıtılmadı';
+
+  @override
+  String get builds => 'Derlemeler';
+
+  @override
+  String get releases => 'Sürümler';
+
+  @override
+  String get loadReleasesFailed => 'Sürümler yüklenemedi';
+
+  @override
+  String get releaseScopeHint =>
+      'Sürümler için belirtecinizde Release (Read) kapsamı gerekir.';
+
+  @override
+  String get artifact => 'Yapıt';
+
+  @override
+  String waitingForApprovalBy(String names) {
+    return '$names onayı bekleniyor';
+  }
+
+  @override
+  String get pullRequests => 'Çekme istekleri';
+
+  @override
+  String get searchPullRequestsHint =>
+      'Başlık, kimlik, dal veya kişiye göre ara';
+
+  @override
+  String get scopeReviewing => 'İncelenecek';
+
+  @override
+  String get loadPullRequestsFailed => 'Çekme istekleri yüklenemedi';
+
+  @override
+  String get codeScopeHint =>
+      'Çekme istekleri için belirtecinizde Code (Read) kapsamı gerekir.';
+
+  @override
+  String get noPullRequestsTitle => 'Çekme isteği yok';
+
+  @override
+  String get noPullRequestsMessage => 'Filtrelerle eşleşen çekme isteği yok.';
+
+  @override
+  String pullRequestCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count çekme isteği',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get selectPullRequestTitle => 'Bir çekme isteği seçin';
+
+  @override
+  String get selectPullRequestMessage =>
+      'Ayrıntılarını görmek için soldan bir çekme isteği seçin.';
+
+  @override
+  String get prDraft => 'Taslak';
+
+  @override
+  String get prActive => 'Etkin';
+
+  @override
+  String get prCompleted => 'Tamamlandı';
+
+  @override
+  String get prAbandoned => 'Bırakıldı';
+
+  @override
+  String get mergeConflicts => 'Birleştirme çakışmaları';
+
+  @override
+  String get repository => 'Depo';
+
+  @override
+  String get closed => 'Kapatıldı';
+
+  @override
+  String get reviewers => 'Gözden geçirenler';
+
+  @override
+  String get noReviewers => 'Gözden geçiren yok';
+
+  @override
+  String get requiredReviewer => 'Zorunlu';
+
+  @override
+  String get voteApproved => 'Onaylandı';
+
+  @override
+  String get voteApprovedWithSuggestions => 'Önerilerle onaylandı';
+
+  @override
+  String get voteNone => 'Oy yok';
+
+  @override
+  String get voteWaitingForAuthor => 'Yazar bekleniyor';
+
+  @override
+  String get voteRejected => 'Reddedildi';
+
+  @override
+  String get threadResolved => 'Çözüldü';
 }

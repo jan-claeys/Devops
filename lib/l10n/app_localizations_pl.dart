@@ -19,8 +19,7 @@ class AppLocalizationsPl extends AppLocalizations {
   String get connectionSaved => 'Połączenie zapisane';
 
   @override
-  String get onboardingIntro =>
-      'Połącz się z Azure DevOps, aby zobaczyć swoje zgłoszenia.';
+  String get onboardingIntro => 'Połącz się z Azure DevOps, aby zacząć.';
 
   @override
   String get connection => 'Połączenie';
@@ -43,8 +42,7 @@ class AppLocalizationsPl extends AppLocalizations {
       'Token jest już zapisany. Wpisz go ponownie, aby go zmienić.';
 
   @override
-  String get tokenScopeHint =>
-      'Wymagany zakres: Work Items (Read) i Project and Team (Read)';
+  String get requiredScopes => 'Wymagane zakresy';
 
   @override
   String get tokenRequired => 'Podaj swój token';
@@ -61,7 +59,7 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'W sekcji Scopes wybierz Custom defined i zaznacz tylko Work Items: Read oraz Project and Team: Read.';
+      'W sekcji Scopes wybierz Custom defined i zaznacz tylko zakresy wymienione powyżej, każdy z opcją Read.';
 
   @override
   String get tokenHelpStep4 =>
@@ -138,7 +136,7 @@ class AppLocalizationsPl extends AppLocalizations {
       'Wybierz zgłoszenie po lewej, aby zobaczyć szczegóły.';
 
   @override
-  String get chooseProject => 'Wybierz projekt';
+  String get chooseProjects => 'Wybierz projekty';
 
   @override
   String get refresh => 'Odśwież';
@@ -165,10 +163,11 @@ class AppLocalizationsPl extends AppLocalizations {
   String get retry => 'Spróbuj ponownie';
 
   @override
-  String get noProjectTitle => 'Nie wybrano projektu';
+  String get noProjectsTitle => 'Nie wybrano projektów';
 
   @override
-  String get noProjectMessage => 'Wybierz projekt, aby zobaczyć zgłoszenia.';
+  String get noProjectsMessage =>
+      'Wybierz jeden lub więcej projektów, aby zobaczyć zgłoszenia.';
 
   @override
   String get noTicketsTitle => 'Brak zgłoszeń';
@@ -193,7 +192,23 @@ class AppLocalizationsPl extends AppLocalizations {
   String get unassigned => 'Nieprzypisane';
 
   @override
-  String get chooseAProject => 'Wybierz projekt';
+  String get projects => 'Projekty';
+
+  @override
+  String projectCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count projektu',
+      many: '$count projektów',
+      few: '$count projekty',
+      one: '1 projekt',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get apply => 'Zastosuj';
 
   @override
   String get searchProjectHint => 'Szukaj projektu';
@@ -325,4 +340,223 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get widgetSetupRequired => 'Otwórz aplikację, aby ją skonfigurować';
+
+  @override
+  String get tickets => 'Zgłoszenia';
+
+  @override
+  String get pipelines => 'Potoki';
+
+  @override
+  String get searchRunsHint => 'Szukaj po potoku, gałęzi lub osobie';
+
+  @override
+  String get activeOnly => 'Tylko aktywne';
+
+  @override
+  String get loadRunsFailed => 'Nie udało się wczytać uruchomień';
+
+  @override
+  String get noRunsTitle => 'Brak uruchomień potoków';
+
+  @override
+  String get noRunsMessage => 'Brak uruchomień potoków pasujących do filtrów.';
+
+  @override
+  String runCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count uruchomienia',
+      many: '$count uruchomień',
+      few: '$count uruchomienia',
+      one: '1 uruchomienie',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get selectRunTitle => 'Wybierz uruchomienie';
+
+  @override
+  String get selectRunMessage =>
+      'Wybierz uruchomienie po lewej, aby śledzić postęp.';
+
+  @override
+  String get runPending => 'Oczekuje';
+
+  @override
+  String get runQueued => 'W kolejce';
+
+  @override
+  String get runRunning => 'W toku';
+
+  @override
+  String get runCancelling => 'Anulowanie';
+
+  @override
+  String get runSucceeded => 'Powodzenie';
+
+  @override
+  String get runPartiallySucceeded => 'Częściowe powodzenie';
+
+  @override
+  String get runFailed => 'Niepowodzenie';
+
+  @override
+  String get runCanceled => 'Anulowano';
+
+  @override
+  String get runSkipped => 'Pominięto';
+
+  @override
+  String get progress => 'Postęp';
+
+  @override
+  String tasksProgress(int done, int total) {
+    return 'Ukończono $done z $total zadań';
+  }
+
+  @override
+  String get branch => 'Gałąź';
+
+  @override
+  String get requestedBy => 'Zlecone przez';
+
+  @override
+  String get queued => 'Dodano do kolejki';
+
+  @override
+  String get started => 'Rozpoczęto';
+
+  @override
+  String get finished => 'Zakończono';
+
+  @override
+  String get duration => 'Czas trwania';
+
+  @override
+  String get stages => 'Etapy';
+
+  @override
+  String get noStagesYet => 'Etapy pojawią się po rozpoczęciu uruchomienia.';
+
+  @override
+  String get runWaitingForApproval => 'Oczekuje na zatwierdzenie';
+
+  @override
+  String get runNotDeployed => 'Nie wdrożono';
+
+  @override
+  String get builds => 'Kompilacje';
+
+  @override
+  String get releases => 'Wydania';
+
+  @override
+  String get loadReleasesFailed => 'Nie udało się wczytać wydań';
+
+  @override
+  String get releaseScopeHint =>
+      'Wydania wymagają zakresu Release (Read) w tokenie.';
+
+  @override
+  String get artifact => 'Artefakt';
+
+  @override
+  String waitingForApprovalBy(String names) {
+    return 'Oczekuje na zatwierdzenie przez: $names';
+  }
+
+  @override
+  String get pullRequests => 'Pull requesty';
+
+  @override
+  String get searchPullRequestsHint =>
+      'Szukaj według tytułu, ID, gałęzi lub osoby';
+
+  @override
+  String get scopeReviewing => 'Do przeglądu';
+
+  @override
+  String get loadPullRequestsFailed => 'Nie udało się wczytać pull requestów';
+
+  @override
+  String get codeScopeHint =>
+      'Pull requesty wymagają zakresu Code (Read) w tokenie.';
+
+  @override
+  String get noPullRequestsTitle => 'Brak pull requestów';
+
+  @override
+  String get noPullRequestsMessage =>
+      'Brak pull requestów pasujących do filtrów.';
+
+  @override
+  String pullRequestCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count pull requesta',
+      many: '$count pull requestów',
+      few: '$count pull requesty',
+      one: '1 pull request',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get selectPullRequestTitle => 'Wybierz pull request';
+
+  @override
+  String get selectPullRequestMessage =>
+      'Wybierz pull request po lewej, aby zobaczyć szczegóły.';
+
+  @override
+  String get prDraft => 'Wersja robocza';
+
+  @override
+  String get prActive => 'Aktywny';
+
+  @override
+  String get prCompleted => 'Ukończony';
+
+  @override
+  String get prAbandoned => 'Porzucony';
+
+  @override
+  String get mergeConflicts => 'Konflikty scalania';
+
+  @override
+  String get repository => 'Repozytorium';
+
+  @override
+  String get closed => 'Zamknięty';
+
+  @override
+  String get reviewers => 'Recenzenci';
+
+  @override
+  String get noReviewers => 'Brak recenzentów';
+
+  @override
+  String get requiredReviewer => 'Wymagany';
+
+  @override
+  String get voteApproved => 'Zatwierdzono';
+
+  @override
+  String get voteApprovedWithSuggestions => 'Zatwierdzono z sugestiami';
+
+  @override
+  String get voteNone => 'Brak głosu';
+
+  @override
+  String get voteWaitingForAuthor => 'Oczekuje na autora';
+
+  @override
+  String get voteRejected => 'Odrzucono';
+
+  @override
+  String get threadResolved => 'Rozwiązany';
 }

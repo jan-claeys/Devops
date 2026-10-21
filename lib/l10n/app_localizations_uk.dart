@@ -19,8 +19,7 @@ class AppLocalizationsUk extends AppLocalizations {
   String get connectionSaved => 'Підключення збережено';
 
   @override
-  String get onboardingIntro =>
-      'Підключіться до Azure DevOps, щоб бачити свої тікети.';
+  String get onboardingIntro => 'Підключіться до Azure DevOps, щоб почати.';
 
   @override
   String get connection => 'Підключення';
@@ -43,8 +42,7 @@ class AppLocalizationsUk extends AppLocalizations {
       'Токен уже збережено. Введіть його знову, щоб змінити.';
 
   @override
-  String get tokenScopeHint =>
-      'Потрібні права: Work Items (Read) і Project and Team (Read)';
+  String get requiredScopes => 'Потрібні права';
 
   @override
   String get tokenRequired => 'Введіть токен';
@@ -61,7 +59,7 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'У розділі Scopes виберіть Custom defined і ввімкніть лише Work Items: Read і Project and Team: Read.';
+      'У розділі Scopes виберіть Custom defined і ввімкніть лише права, перелічені вище, кожне з рівнем Read.';
 
   @override
   String get tokenHelpStep4 =>
@@ -138,7 +136,7 @@ class AppLocalizationsUk extends AppLocalizations {
       'Виберіть тікет ліворуч, щоб побачити подробиці.';
 
   @override
-  String get chooseProject => 'Вибрати проєкт';
+  String get chooseProjects => 'Виберіть проєкти';
 
   @override
   String get refresh => 'Оновити';
@@ -165,10 +163,11 @@ class AppLocalizationsUk extends AppLocalizations {
   String get retry => 'Повторити';
 
   @override
-  String get noProjectTitle => 'Проєкт не вибрано';
+  String get noProjectsTitle => 'Проєкти не вибрано';
 
   @override
-  String get noProjectMessage => 'Виберіть проєкт, щоб побачити тікети.';
+  String get noProjectsMessage =>
+      'Виберіть один або кілька проєктів, щоб побачити тікети.';
 
   @override
   String get noTicketsTitle => 'Немає тікетів';
@@ -193,7 +192,23 @@ class AppLocalizationsUk extends AppLocalizations {
   String get unassigned => 'Не призначено';
 
   @override
-  String get chooseAProject => 'Виберіть проєкт';
+  String get projects => 'Проєкти';
+
+  @override
+  String projectCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count проєкту',
+      many: '$count проєктів',
+      few: '$count проєкти',
+      one: '$count проєкт',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get apply => 'Застосувати';
 
   @override
   String get searchProjectHint => 'Пошук проєкту';
@@ -324,4 +339,223 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get widgetSetupRequired => 'Відкрийте застосунок для налаштування';
+
+  @override
+  String get tickets => 'Тікети';
+
+  @override
+  String get pipelines => 'Конвеєри';
+
+  @override
+  String get searchRunsHint => 'Пошук за конвеєром, гілкою або людиною';
+
+  @override
+  String get activeOnly => 'Лише активні';
+
+  @override
+  String get loadRunsFailed => 'Не вдалося завантажити запуски';
+
+  @override
+  String get noRunsTitle => 'Немає запусків конвеєрів';
+
+  @override
+  String get noRunsMessage => 'Немає запусків, що відповідають фільтрам.';
+
+  @override
+  String runCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count запуску',
+      many: '$count запусків',
+      few: '$count запуски',
+      one: '$count запуск',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get selectRunTitle => 'Виберіть запуск';
+
+  @override
+  String get selectRunMessage =>
+      'Виберіть запуск ліворуч, щоб стежити за перебігом.';
+
+  @override
+  String get runPending => 'Очікування';
+
+  @override
+  String get runQueued => 'У черзі';
+
+  @override
+  String get runRunning => 'Виконується';
+
+  @override
+  String get runCancelling => 'Скасовується';
+
+  @override
+  String get runSucceeded => 'Успішно';
+
+  @override
+  String get runPartiallySucceeded => 'Частково успішно';
+
+  @override
+  String get runFailed => 'Помилка';
+
+  @override
+  String get runCanceled => 'Скасовано';
+
+  @override
+  String get runSkipped => 'Пропущено';
+
+  @override
+  String get progress => 'Перебіг';
+
+  @override
+  String tasksProgress(int done, int total) {
+    return 'Виконано завдань: $done з $total';
+  }
+
+  @override
+  String get branch => 'Гілка';
+
+  @override
+  String get requestedBy => 'Запит від';
+
+  @override
+  String get queued => 'Поставлено в чергу';
+
+  @override
+  String get started => 'Розпочато';
+
+  @override
+  String get finished => 'Завершено';
+
+  @override
+  String get duration => 'Тривалість';
+
+  @override
+  String get stages => 'Етапи';
+
+  @override
+  String get noStagesYet => 'Етапи з’являться після початку запуску.';
+
+  @override
+  String get runWaitingForApproval => 'Очікує схвалення';
+
+  @override
+  String get runNotDeployed => 'Не розгорнуто';
+
+  @override
+  String get builds => 'Збірки';
+
+  @override
+  String get releases => 'Випуски';
+
+  @override
+  String get loadReleasesFailed => 'Не вдалося завантажити випуски';
+
+  @override
+  String get releaseScopeHint =>
+      'Для випусків токену потрібні права Release (Read).';
+
+  @override
+  String get artifact => 'Артефакт';
+
+  @override
+  String waitingForApprovalBy(String names) {
+    return 'Очікує схвалення: $names';
+  }
+
+  @override
+  String get pullRequests => 'Pull request’и';
+
+  @override
+  String get searchPullRequestsHint =>
+      'Пошук за назвою, ID, гілкою або людиною';
+
+  @override
+  String get scopeReviewing => 'На перевірку';
+
+  @override
+  String get loadPullRequestsFailed => 'Не вдалося завантажити pull request’и';
+
+  @override
+  String get codeScopeHint =>
+      'Для pull request’ів токену потрібні права Code (Read).';
+
+  @override
+  String get noPullRequestsTitle => 'Немає pull request’ів';
+
+  @override
+  String get noPullRequestsMessage =>
+      'Немає pull request’ів, що відповідають фільтрам.';
+
+  @override
+  String pullRequestCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count pull request’у',
+      many: '$count pull request’ів',
+      few: '$count pull request’и',
+      one: '$count pull request',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get selectPullRequestTitle => 'Виберіть pull request';
+
+  @override
+  String get selectPullRequestMessage =>
+      'Виберіть pull request ліворуч, щоб побачити подробиці.';
+
+  @override
+  String get prDraft => 'Чернетка';
+
+  @override
+  String get prActive => 'Активний';
+
+  @override
+  String get prCompleted => 'Завершено';
+
+  @override
+  String get prAbandoned => 'Скасовано';
+
+  @override
+  String get mergeConflicts => 'Конфлікти злиття';
+
+  @override
+  String get repository => 'Репозиторій';
+
+  @override
+  String get closed => 'Закрито';
+
+  @override
+  String get reviewers => 'Рецензенти';
+
+  @override
+  String get noReviewers => 'Немає рецензентів';
+
+  @override
+  String get requiredReviewer => 'Обов’язковий';
+
+  @override
+  String get voteApproved => 'Схвалено';
+
+  @override
+  String get voteApprovedWithSuggestions => 'Схвалено з пропозиціями';
+
+  @override
+  String get voteNone => 'Немає голосу';
+
+  @override
+  String get voteWaitingForAuthor => 'Очікує автора';
+
+  @override
+  String get voteRejected => 'Відхилено';
+
+  @override
+  String get threadResolved => 'Вирішено';
 }

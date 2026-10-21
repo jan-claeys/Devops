@@ -19,8 +19,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get connectionSaved => 'Koneksi disimpan';
 
   @override
-  String get onboardingIntro =>
-      'Hubungkan ke Azure DevOps untuk melihat tiket Anda.';
+  String get onboardingIntro => 'Hubungkan ke Azure DevOps untuk memulai.';
 
   @override
   String get connection => 'Koneksi';
@@ -43,8 +42,7 @@ class AppLocalizationsId extends AppLocalizations {
       'Token sudah tersimpan. Masukkan lagi untuk mengubahnya.';
 
   @override
-  String get tokenScopeHint =>
-      'Cakupan yang diperlukan: Work Items (Read) dan Project and Team (Read)';
+  String get requiredScopes => 'Cakupan yang diperlukan';
 
   @override
   String get tokenRequired => 'Masukkan token Anda';
@@ -61,7 +59,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'Di Scopes, pilih Custom defined dan aktifkan hanya Work Items: Read dan Project and Team: Read.';
+      'Di Scopes, pilih Custom defined dan aktifkan hanya cakupan yang tercantum di atas, masing-masing dengan Read.';
 
   @override
   String get tokenHelpStep4 =>
@@ -138,7 +136,7 @@ class AppLocalizationsId extends AppLocalizations {
       'Pilih tiket di sebelah kiri untuk melihat detailnya.';
 
   @override
-  String get chooseProject => 'Pilih proyek';
+  String get chooseProjects => 'Pilih proyek';
 
   @override
   String get refresh => 'Muat ulang';
@@ -165,10 +163,11 @@ class AppLocalizationsId extends AppLocalizations {
   String get retry => 'Coba lagi';
 
   @override
-  String get noProjectTitle => 'Tidak ada proyek dipilih';
+  String get noProjectsTitle => 'Tidak ada proyek dipilih';
 
   @override
-  String get noProjectMessage => 'Pilih proyek untuk melihat tiket.';
+  String get noProjectsMessage =>
+      'Pilih satu atau beberapa proyek untuk melihat tiket.';
 
   @override
   String get noTicketsTitle => 'Tidak ada tiket';
@@ -190,7 +189,20 @@ class AppLocalizationsId extends AppLocalizations {
   String get unassigned => 'Belum ditugaskan';
 
   @override
-  String get chooseAProject => 'Pilih proyek';
+  String get projects => 'Proyek';
+
+  @override
+  String projectCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count proyek',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get apply => 'Terapkan';
 
   @override
   String get searchProjectHint => 'Cari proyek';
@@ -322,4 +334,218 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get widgetSetupRequired => 'Buka aplikasi untuk menyiapkan';
+
+  @override
+  String get tickets => 'Tiket';
+
+  @override
+  String get pipelines => 'Pipeline';
+
+  @override
+  String get searchRunsHint => 'Cari menurut pipeline, branch, atau orang';
+
+  @override
+  String get activeOnly => 'Hanya yang aktif';
+
+  @override
+  String get loadRunsFailed => 'Tidak dapat memuat run pipeline';
+
+  @override
+  String get noRunsTitle => 'Tidak ada run pipeline';
+
+  @override
+  String get noRunsMessage =>
+      'Tidak ada run pipeline yang cocok dengan filter.';
+
+  @override
+  String runCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count run',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get selectRunTitle => 'Pilih run pipeline';
+
+  @override
+  String get selectRunMessage =>
+      'Pilih run di sebelah kiri untuk mengikuti progresnya.';
+
+  @override
+  String get runPending => 'Menunggu';
+
+  @override
+  String get runQueued => 'Dalam antrean';
+
+  @override
+  String get runRunning => 'Berjalan';
+
+  @override
+  String get runCancelling => 'Membatalkan';
+
+  @override
+  String get runSucceeded => 'Berhasil';
+
+  @override
+  String get runPartiallySucceeded => 'Berhasil sebagian';
+
+  @override
+  String get runFailed => 'Gagal';
+
+  @override
+  String get runCanceled => 'Dibatalkan';
+
+  @override
+  String get runSkipped => 'Dilewati';
+
+  @override
+  String get progress => 'Progres';
+
+  @override
+  String tasksProgress(int done, int total) {
+    return '$done dari $total tugas selesai';
+  }
+
+  @override
+  String get branch => 'Branch';
+
+  @override
+  String get requestedBy => 'Diminta oleh';
+
+  @override
+  String get queued => 'Masuk antrean';
+
+  @override
+  String get started => 'Dimulai';
+
+  @override
+  String get finished => 'Selesai';
+
+  @override
+  String get duration => 'Durasi';
+
+  @override
+  String get stages => 'Tahap';
+
+  @override
+  String get noStagesYet => 'Tahap muncul setelah run dimulai.';
+
+  @override
+  String get runWaitingForApproval => 'Menunggu persetujuan';
+
+  @override
+  String get runNotDeployed => 'Belum di-deploy';
+
+  @override
+  String get builds => 'Build';
+
+  @override
+  String get releases => 'Rilis';
+
+  @override
+  String get loadReleasesFailed => 'Tidak dapat memuat rilis';
+
+  @override
+  String get releaseScopeHint =>
+      'Rilis memerlukan cakupan Release (Read) pada token Anda.';
+
+  @override
+  String get artifact => 'Artefak';
+
+  @override
+  String waitingForApprovalBy(String names) {
+    return 'Menunggu persetujuan dari $names';
+  }
+
+  @override
+  String get pullRequests => 'Pull request';
+
+  @override
+  String get searchPullRequestsHint =>
+      'Cari menurut judul, ID, branch, atau orang';
+
+  @override
+  String get scopeReviewing => 'Untuk ditinjau';
+
+  @override
+  String get loadPullRequestsFailed => 'Tidak dapat memuat pull request';
+
+  @override
+  String get codeScopeHint =>
+      'Pull request memerlukan cakupan Code (Read) pada token Anda.';
+
+  @override
+  String get noPullRequestsTitle => 'Tidak ada pull request';
+
+  @override
+  String get noPullRequestsMessage =>
+      'Tidak ada pull request yang cocok dengan filter.';
+
+  @override
+  String pullRequestCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count pull request',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get selectPullRequestTitle => 'Pilih pull request';
+
+  @override
+  String get selectPullRequestMessage =>
+      'Pilih pull request di sebelah kiri untuk melihat detailnya.';
+
+  @override
+  String get prDraft => 'Draf';
+
+  @override
+  String get prActive => 'Aktif';
+
+  @override
+  String get prCompleted => 'Selesai';
+
+  @override
+  String get prAbandoned => 'Ditinggalkan';
+
+  @override
+  String get mergeConflicts => 'Konflik merge';
+
+  @override
+  String get repository => 'Repositori';
+
+  @override
+  String get closed => 'Ditutup';
+
+  @override
+  String get reviewers => 'Peninjau';
+
+  @override
+  String get noReviewers => 'Tidak ada peninjau';
+
+  @override
+  String get requiredReviewer => 'Wajib';
+
+  @override
+  String get voteApproved => 'Disetujui';
+
+  @override
+  String get voteApprovedWithSuggestions => 'Disetujui dengan saran';
+
+  @override
+  String get voteNone => 'Belum memilih';
+
+  @override
+  String get voteWaitingForAuthor => 'Menunggu penulis';
+
+  @override
+  String get voteRejected => 'Ditolak';
+
+  @override
+  String get threadResolved => 'Terselesaikan';
 }

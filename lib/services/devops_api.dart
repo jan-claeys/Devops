@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
+import '../models/pipeline_run.dart';
+import '../models/pull_request.dart';
 import '../models/work_item.dart';
 
 enum DevOpsError { unauthorized, notFound, http, unexpectedResponse }
@@ -21,16 +23,23 @@ class DevOpsException implements Exception {
 
 enum WorkItemScope { assignedToMe, createdByMe, all }
 
+enum PullRequestScope { reviewing, createdByMe, all }
+
 /// Thin client for the Azure DevOps REST API (v7.1), authenticated with a PAT.
 class DevOpsApi {
   DevOpsApi({required String organization, required String pat, http.Client? client})
       : baseUrl = normalizeOrganization(organization),
+        releaseUrl = releaseBaseUrl(normalizeOrganization(organization)),
         _client = client ?? http.Client(),
         _auth = 'Basic ${base64Encode(utf8.encode(':$pat'))}';
 
   final String baseUrl;
+
+  /// Base URL of the release management API of classic release pipelines.
+  final String releaseUrl;
   final http.Client _client;
   final String _auth;
+  String? _currentUserId;
 
   static const _apiVersion = '7.1';
 
@@ -65,6 +74,31 @@ class DevOpsApi {
   String webUrl(WorkItem item) =>
       '$baseUrl/${Uri.encodeComponent(item.project)}/_workitems/edit/${item.id}';
 
+  /// Release management has its own host in Azure DevOps Services; on a
+  /// server it lives in the collection itself.
+  static String releaseBaseUrl(String baseUrl) {
+    final uri = Uri.parse(baseUrl);
+    final host = switch (uri.host) {
+      'dev.azure.com' => 'vsrm.dev.azure.com',
+      final h when h.endsWith('.visualstudio.com') =>
+        h.replaceFirst(RegExp(r'\.visualstudio\.com$'), '.vsrm.visualstudio.com'),
+      final h => h,
+    };
+    return uri.replace(host: host).toString();
+  }
+
+  String runWebUrl(PipelineRun run) => switch (run) {
+        PipelineRun(:final webUrl?) => webUrl,
+        PipelineRun(kind: RunKind.release) =>
+          '$baseUrl/${Uri.encodeComponent(run.project)}/_releaseProgress'
+              '?_a=release-pipeline-progress&releaseId=${run.id}',
+        _ => '$baseUrl/${Uri.encodeComponent(run.project)}/_build/results?buildId=${run.id}',
+      };
+
+  String pullRequestWebUrl(PullRequest pr) =>
+      '$baseUrl/${Uri.encodeComponent(pr.project)}/_git/'
+      '${Uri.encodeComponent(pr.repositoryName)}/pullrequest/${pr.id}';
+
   /// Headers to load [uri] with, such as an attachment image in a field.
   /// The PAT is only sent to the organization itself.
   Map<String, String>? headersFor(Uri uri) {
@@ -84,13 +118,17 @@ class DevOpsApi {
     return projects;
   }
 
+  /// Queries the work items of all [projects] at once.
   Future<List<WorkItem>> queryWorkItems({
-    required String project,
+    required List<String> projects,
     WorkItemScope scope = WorkItemScope.assignedToMe,
     bool openOnly = true,
     int top = 200,
   }) async {
-    final conditions = <String>['[System.TeamProject] = @project'];
+    if (projects.isEmpty) return const [];
+    final conditions = <String>[
+      '[System.TeamProject] IN (${projects.map(_quote).join(', ')})',
+    ];
     switch (scope) {
       case WorkItemScope.assignedToMe:
         conditions.add('[System.AssignedTo] = @me');
@@ -100,14 +138,15 @@ class DevOpsApi {
         break;
     }
     if (openOnly) {
-      conditions.add("[System.State] NOT IN (${closedStates.map((s) => "'$s'").join(', ')})");
+      conditions.add('[System.State] NOT IN (${closedStates.map(_quote).join(', ')})');
     }
     final wiql = 'SELECT [System.Id] FROM WorkItems '
         'WHERE ${conditions.join(' AND ')} '
         'ORDER BY [System.ChangedDate] DESC';
 
+    // At organization level, so the query can span several projects.
     final result = await _post(
-      '$baseUrl/${Uri.encodeComponent(project)}/_apis/wit/wiql?\$top=$top&api-version=$_apiVersion',
+      '$baseUrl/_apis/wit/wiql?\$top=$top&api-version=$_apiVersion',
       {'query': wiql},
     );
     final ids = (result['workItems'] as List)
@@ -115,6 +154,9 @@ class DevOpsApi {
         .toList();
     return getWorkItems(ids, fields: listFields);
   }
+
+  /// A WIQL string literal; quotes are escaped by doubling them.
+  static String _quote(String value) => "'${value.replaceAll("'", "''")}'";
 
   /// Fetches work items in batches of 200, preserving the order of [ids].
   Future<List<WorkItem>> getWorkItems(List<int> ids, {List<String>? fields}) async {
@@ -155,6 +197,129 @@ class DevOpsApi {
         .toList();
   }
 
+  /// The latest runs of the pipelines in all [projects], newest first.
+  Future<List<PipelineRun>> getPipelineRuns({
+    required List<String> projects,
+    int top = 50,
+  }) async {
+    final perProject = await Future.wait([
+      for (final project in projects)
+        _get('$baseUrl/${Uri.encodeComponent(project)}/_apis/build/builds'
+            '?\$top=$top&queryOrder=queueTimeDescending&api-version=$_apiVersion'),
+    ]);
+    final runs = [
+      for (final json in perProject)
+        ...(json['value'] as List).cast<Map<String, dynamic>>().map(PipelineRun.fromJson),
+    ]..sort((a, b) => (b.queueTime ?? DateTime(0)).compareTo(a.queueTime ?? DateTime(0)));
+    return runs.take(top).toList();
+  }
+
+  Future<PipelineRun> getPipelineRun(String project, int id) async {
+    final json = await _get('$baseUrl/${Uri.encodeComponent(project)}/_apis/build/builds/$id'
+        '?api-version=$_apiVersion');
+    return PipelineRun.fromJson(json);
+  }
+
+  /// The latest releases of the classic release pipelines in all [projects],
+  /// newest first.
+  Future<List<PipelineRun>> getReleases({
+    required List<String> projects,
+    int top = 50,
+  }) async {
+    final perProject = await Future.wait([
+      for (final project in projects)
+        _get('$releaseUrl/${Uri.encodeComponent(project)}/_apis/release/releases'
+            '?\$top=$top&\$expand=environments,artifacts,approvals'
+            '&queryOrder=descending&api-version=$_apiVersion'),
+    ]);
+    final releases = [
+      for (final (i, json) in perProject.indexed)
+        for (final release in (json['value'] as List).cast<Map<String, dynamic>>())
+          PipelineRun.fromRelease(release, project: projects[i]),
+    ]..sort((a, b) => (b.queueTime ?? DateTime(0)).compareTo(a.queueTime ?? DateTime(0)));
+    return releases.take(top).toList();
+  }
+
+  /// A release with the jobs and tasks of its stages.
+  Future<(PipelineRun, Timeline)> getRelease(String project, int id) async {
+    final json = await _get('$releaseUrl/${Uri.encodeComponent(project)}'
+        '/_apis/release/releases/$id?api-version=$_apiVersion');
+    return (PipelineRun.fromRelease(json, project: project), Timeline.fromRelease(json));
+  }
+
+  /// The stages, jobs and tasks of a run; empty until the run starts.
+  Future<Timeline> getTimeline(String project, int id) async {
+    final json = await _get('$baseUrl/${Uri.encodeComponent(project)}/_apis/build/builds/$id'
+        '/timeline?api-version=$_apiVersion');
+    return Timeline([
+      for (final r in (json['records'] as List?) ?? const [])
+        TimelineRecord.fromJson(r as Map<String, dynamic>),
+    ]);
+  }
+
+  /// Id of the user the token belongs to.
+  Future<String> getCurrentUserId() async {
+    if (_currentUserId case final id?) return id;
+    final json = await _get('$baseUrl/_apis/connectionData');
+    final id = (json['authenticatedUser'] as Map?)?['id'] as String?;
+    if (id == null) throw DevOpsException(DevOpsError.unexpectedResponse);
+    return _currentUserId = id;
+  }
+
+  /// The pull requests of all [projects], newest first.
+  Future<List<PullRequest>> getPullRequests({
+    required List<String> projects,
+    PullRequestScope scope = PullRequestScope.all,
+    bool openOnly = true,
+    int top = 100,
+  }) async {
+    final me = scope == PullRequestScope.all ? null : await getCurrentUserId();
+    final criteria = {
+      'searchCriteria.status': openOnly ? 'active' : 'all',
+      if (scope == PullRequestScope.createdByMe) 'searchCriteria.creatorId': ?me,
+      if (scope == PullRequestScope.reviewing) 'searchCriteria.reviewerId': ?me,
+    }.entries.map((e) => '${e.key}=${Uri.encodeQueryComponent(e.value)}').join('&');
+    final perProject = await Future.wait([
+      for (final project in projects)
+        _get('$baseUrl/${Uri.encodeComponent(project)}/_apis/git/pullrequests'
+            '?$criteria&\$top=$top&api-version=$_apiVersion'),
+    ]);
+    final pullRequests = [
+      for (final json in perProject)
+        ...(json['value'] as List).cast<Map<String, dynamic>>().map(PullRequest.fromJson),
+    ]..sort((a, b) =>
+        (b.creationDate ?? DateTime(0)).compareTo(a.creationDate ?? DateTime(0)));
+    return pullRequests.take(top).toList();
+  }
+
+  Future<PullRequest> getPullRequest(String project, int id) async {
+    final json = await _get('$baseUrl/${Uri.encodeComponent(project)}/_apis/git/pullrequests/$id'
+        '?api-version=$_apiVersion');
+    return PullRequest.fromJson(json);
+  }
+
+  /// The discussions on [pr], most recently active first.
+  Future<List<PullRequestThread>> getPullRequestThreads(PullRequest pr) async {
+    final json = await _get('${_pullRequestUrl(pr)}/threads?api-version=$_apiVersion');
+    return [
+      for (final t in ((json['value'] as List?) ?? const []).cast<Map<String, dynamic>>())
+        ?PullRequestThread.fromJson(t),
+    ]..sort((a, b) => (b.lastUpdated ?? DateTime(0)).compareTo(a.lastUpdated ?? DateTime(0)));
+  }
+
+  /// Ids of the work items linked to [pr].
+  Future<List<int>> getPullRequestWorkItemIds(PullRequest pr) async {
+    final json = await _get('${_pullRequestUrl(pr)}/workitems?api-version=$_apiVersion');
+    return [
+      for (final w in ((json['value'] as List?) ?? const []).cast<Map<String, dynamic>>())
+        ?int.tryParse('${w['id']}'),
+    ];
+  }
+
+  String _pullRequestUrl(PullRequest pr) =>
+      '$baseUrl/${Uri.encodeComponent(pr.project)}/_apis/git/repositories/'
+      '${pr.repositoryId}/pullRequests/${pr.id}';
+
   Future<Map<String, dynamic>> _get(String url) async {
     final response = await _client.get(Uri.parse(url), headers: _headers);
     return _decode(response);
@@ -190,8 +355,11 @@ class DevOpsApi {
       } catch (_) {}
       throw DevOpsException(DevOpsError.http, statusCode: code, serverMessage: message);
     }
+    // The timeline of a run that hasn't started yet is empty or null.
+    if (code == 204 || response.bodyBytes.isEmpty) return const {};
     try {
-      return jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>;
+      return (jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>?) ??
+          const {};
     } on FormatException {
       // Azure DevOps answers with an HTML sign-in page when the PAT is invalid.
       throw DevOpsException(DevOpsError.unexpectedResponse, statusCode: code);

@@ -19,7 +19,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get connectionSaved => '接続を保存しました';
 
   @override
-  String get onboardingIntro => 'Azure DevOps に接続してチケットを表示します。';
+  String get onboardingIntro => 'Azure DevOps に接続して始めましょう。';
 
   @override
   String get connection => '接続';
@@ -41,8 +41,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get tokenAlreadyStored => 'トークンは保存済みです。変更するには再入力してください。';
 
   @override
-  String get tokenScopeHint =>
-      '必要なスコープ: Work Items (Read) と Project and Team (Read)';
+  String get requiredScopes => '必要なスコープ';
 
   @override
   String get tokenRequired => 'トークンを入力してください';
@@ -59,7 +58,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'Scopes で Custom defined を選び、Work Items: Read と Project and Team: Read のみを有効にします。';
+      'Scopes で Custom defined を選び、上記のスコープのみをそれぞれ Read で有効にします。';
 
   @override
   String get tokenHelpStep4 =>
@@ -135,7 +134,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get selectTicketMessage => '左側のチケットを選ぶと詳細が表示されます。';
 
   @override
-  String get chooseProject => 'プロジェクトを選択';
+  String get chooseProjects => 'プロジェクトを選択';
 
   @override
   String get refresh => '更新';
@@ -162,10 +161,10 @@ class AppLocalizationsJa extends AppLocalizations {
   String get retry => '再試行';
 
   @override
-  String get noProjectTitle => 'プロジェクトが選択されていません';
+  String get noProjectsTitle => 'プロジェクトが選択されていません';
 
   @override
-  String get noProjectMessage => 'プロジェクトを選択してチケットを表示します。';
+  String get noProjectsMessage => 'チケットを表示するには、1 つ以上のプロジェクトを選択してください。';
 
   @override
   String get noTicketsTitle => 'チケットはありません';
@@ -187,7 +186,20 @@ class AppLocalizationsJa extends AppLocalizations {
   String get unassigned => '未割り当て';
 
   @override
-  String get chooseAProject => 'プロジェクトを選択';
+  String get projects => 'プロジェクト';
+
+  @override
+  String projectCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count 件のプロジェクト',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get apply => '適用';
 
   @override
   String get searchProjectHint => 'プロジェクトを検索';
@@ -316,4 +328,211 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get widgetSetupRequired => 'アプリを開いて設定してください';
+
+  @override
+  String get tickets => 'チケット';
+
+  @override
+  String get pipelines => 'パイプライン';
+
+  @override
+  String get searchRunsHint => 'パイプライン、ブランチ、ユーザーで検索';
+
+  @override
+  String get activeOnly => '実行中のみ';
+
+  @override
+  String get loadRunsFailed => 'パイプラインの実行を読み込めませんでした';
+
+  @override
+  String get noRunsTitle => 'パイプラインの実行はありません';
+
+  @override
+  String get noRunsMessage => 'フィルターに一致するパイプラインの実行はありません。';
+
+  @override
+  String runCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count 件の実行',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get selectRunTitle => 'パイプラインの実行を選択';
+
+  @override
+  String get selectRunMessage => '左側で実行を選ぶと進行状況を確認できます。';
+
+  @override
+  String get runPending => '待機中';
+
+  @override
+  String get runQueued => 'キュー登録済み';
+
+  @override
+  String get runRunning => '実行中';
+
+  @override
+  String get runCancelling => 'キャンセル中';
+
+  @override
+  String get runSucceeded => '成功';
+
+  @override
+  String get runPartiallySucceeded => '一部成功';
+
+  @override
+  String get runFailed => '失敗';
+
+  @override
+  String get runCanceled => 'キャンセル済み';
+
+  @override
+  String get runSkipped => 'スキップ';
+
+  @override
+  String get progress => '進行状況';
+
+  @override
+  String tasksProgress(int done, int total) {
+    return '$total 件中 $done 件のタスクが完了';
+  }
+
+  @override
+  String get branch => 'ブランチ';
+
+  @override
+  String get requestedBy => '要求者';
+
+  @override
+  String get queued => 'キュー登録';
+
+  @override
+  String get started => '開始';
+
+  @override
+  String get finished => '終了';
+
+  @override
+  String get duration => '所要時間';
+
+  @override
+  String get stages => 'ステージ';
+
+  @override
+  String get noStagesYet => '実行が始まるとステージが表示されます。';
+
+  @override
+  String get runWaitingForApproval => '承認待ち';
+
+  @override
+  String get runNotDeployed => '未デプロイ';
+
+  @override
+  String get builds => 'ビルド';
+
+  @override
+  String get releases => 'リリース';
+
+  @override
+  String get loadReleasesFailed => 'リリースを読み込めませんでした';
+
+  @override
+  String get releaseScopeHint => 'リリースにはトークンの Release (Read) スコープが必要です。';
+
+  @override
+  String get artifact => '成果物';
+
+  @override
+  String waitingForApprovalBy(String names) {
+    return '$names の承認待ち';
+  }
+
+  @override
+  String get pullRequests => 'プル リクエスト';
+
+  @override
+  String get searchPullRequestsHint => 'タイトル、ID、ブランチ、ユーザーで検索';
+
+  @override
+  String get scopeReviewing => 'レビュー担当';
+
+  @override
+  String get loadPullRequestsFailed => 'プル リクエストを読み込めませんでした';
+
+  @override
+  String get codeScopeHint => 'プル リクエストにはトークンの Code (Read) スコープが必要です。';
+
+  @override
+  String get noPullRequestsTitle => 'プル リクエストはありません';
+
+  @override
+  String get noPullRequestsMessage => 'フィルターに一致するプル リクエストはありません。';
+
+  @override
+  String pullRequestCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count 件のプル リクエスト',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get selectPullRequestTitle => 'プル リクエストを選択';
+
+  @override
+  String get selectPullRequestMessage => '左側でプル リクエストを選ぶと詳細が表示されます。';
+
+  @override
+  String get prDraft => '下書き';
+
+  @override
+  String get prActive => 'アクティブ';
+
+  @override
+  String get prCompleted => '完了';
+
+  @override
+  String get prAbandoned => '破棄';
+
+  @override
+  String get mergeConflicts => 'マージの競合';
+
+  @override
+  String get repository => 'リポジトリ';
+
+  @override
+  String get closed => 'クローズ';
+
+  @override
+  String get reviewers => 'レビュー担当者';
+
+  @override
+  String get noReviewers => 'レビュー担当者はいません';
+
+  @override
+  String get requiredReviewer => '必須';
+
+  @override
+  String get voteApproved => '承認済み';
+
+  @override
+  String get voteApprovedWithSuggestions => '提案付きで承認';
+
+  @override
+  String get voteNone => '投票なし';
+
+  @override
+  String get voteWaitingForAuthor => '作成者を待機中';
+
+  @override
+  String get voteRejected => '却下';
+
+  @override
+  String get threadResolved => '解決済み';
 }

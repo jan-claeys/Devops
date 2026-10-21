@@ -19,8 +19,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get connectionSaved => 'कनेक्शन सहेजा गया';
 
   @override
-  String get onboardingIntro =>
-      'अपने टिकट देखने के लिए Azure DevOps से कनेक्ट करें।';
+  String get onboardingIntro => 'शुरू करने के लिए Azure DevOps से कनेक्ट करें।';
 
   @override
   String get connection => 'कनेक्शन';
@@ -43,8 +42,7 @@ class AppLocalizationsHi extends AppLocalizations {
       'एक टोकन पहले से सहेजा गया है। बदलने के लिए फिर से दर्ज करें।';
 
   @override
-  String get tokenScopeHint =>
-      'आवश्यक स्कोप: Work Items (Read) और Project and Team (Read)';
+  String get requiredScopes => 'आवश्यक स्कोप';
 
   @override
   String get tokenRequired => 'अपना टोकन दर्ज करें';
@@ -61,7 +59,7 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'Scopes में Custom defined चुनें और केवल Work Items: Read और Project and Team: Read चालू करें।';
+      'Scopes में Custom defined चुनें और केवल ऊपर दिए गए स्कोप को Read के साथ चालू करें।';
 
   @override
   String get tokenHelpStep4 =>
@@ -137,7 +135,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get selectTicketMessage => 'विवरण देखने के लिए बाईं ओर एक टिकट चुनें।';
 
   @override
-  String get chooseProject => 'प्रोजेक्ट चुनें';
+  String get chooseProjects => 'प्रोजेक्ट चुनें';
 
   @override
   String get refresh => 'रीफ़्रेश करें';
@@ -164,10 +162,11 @@ class AppLocalizationsHi extends AppLocalizations {
   String get retry => 'फिर से कोशिश करें';
 
   @override
-  String get noProjectTitle => 'कोई प्रोजेक्ट नहीं चुना गया';
+  String get noProjectsTitle => 'कोई प्रोजेक्ट नहीं चुना गया';
 
   @override
-  String get noProjectMessage => 'टिकट देखने के लिए एक प्रोजेक्ट चुनें।';
+  String get noProjectsMessage =>
+      'टिकट देखने के लिए एक या अधिक प्रोजेक्ट चुनें।';
 
   @override
   String get noTicketsTitle => 'कोई टिकट नहीं';
@@ -189,7 +188,20 @@ class AppLocalizationsHi extends AppLocalizations {
   String get unassigned => 'असाइन नहीं';
 
   @override
-  String get chooseAProject => 'एक प्रोजेक्ट चुनें';
+  String get projects => 'प्रोजेक्ट';
+
+  @override
+  String projectCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count प्रोजेक्ट',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get apply => 'लागू करें';
 
   @override
   String get searchProjectHint => 'प्रोजेक्ट खोजें';
@@ -320,4 +332,218 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get widgetSetupRequired => 'सेट अप करने के लिए ऐप खोलें';
+
+  @override
+  String get tickets => 'टिकट';
+
+  @override
+  String get pipelines => 'पाइपलाइन';
+
+  @override
+  String get searchRunsHint => 'पाइपलाइन, ब्रांच या व्यक्ति से खोजें';
+
+  @override
+  String get activeOnly => 'केवल सक्रिय';
+
+  @override
+  String get loadRunsFailed => 'पाइपलाइन रन लोड नहीं हो सके';
+
+  @override
+  String get noRunsTitle => 'कोई पाइपलाइन रन नहीं';
+
+  @override
+  String get noRunsMessage =>
+      'फ़िल्टर से मेल खाने वाला कोई पाइपलाइन रन नहीं है।';
+
+  @override
+  String runCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count रन',
+      one: '1 रन',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get selectRunTitle => 'एक पाइपलाइन रन चुनें';
+
+  @override
+  String get selectRunMessage => 'प्रगति देखने के लिए बाईं ओर एक रन चुनें।';
+
+  @override
+  String get runPending => 'प्रतीक्षा में';
+
+  @override
+  String get runQueued => 'कतार में';
+
+  @override
+  String get runRunning => 'चल रहा है';
+
+  @override
+  String get runCancelling => 'रद्द हो रहा है';
+
+  @override
+  String get runSucceeded => 'सफल';
+
+  @override
+  String get runPartiallySucceeded => 'आंशिक रूप से सफल';
+
+  @override
+  String get runFailed => 'विफल';
+
+  @override
+  String get runCanceled => 'रद्द किया गया';
+
+  @override
+  String get runSkipped => 'छोड़ा गया';
+
+  @override
+  String get progress => 'प्रगति';
+
+  @override
+  String tasksProgress(int done, int total) {
+    return '$total में से $done कार्य पूरे';
+  }
+
+  @override
+  String get branch => 'ब्रांच';
+
+  @override
+  String get requestedBy => 'अनुरोधकर्ता';
+
+  @override
+  String get queued => 'कतार में डाला गया';
+
+  @override
+  String get started => 'शुरू हुआ';
+
+  @override
+  String get finished => 'समाप्त हुआ';
+
+  @override
+  String get duration => 'अवधि';
+
+  @override
+  String get stages => 'चरण';
+
+  @override
+  String get noStagesYet => 'रन शुरू होने पर चरण दिखाई देंगे।';
+
+  @override
+  String get runWaitingForApproval => 'अनुमोदन की प्रतीक्षा';
+
+  @override
+  String get runNotDeployed => 'डिप्लॉय नहीं हुआ';
+
+  @override
+  String get builds => 'बिल्ड';
+
+  @override
+  String get releases => 'रिलीज़';
+
+  @override
+  String get loadReleasesFailed => 'रिलीज़ लोड नहीं हो सके';
+
+  @override
+  String get releaseScopeHint =>
+      'रिलीज़ के लिए आपके टोकन में Release (Read) स्कोप चाहिए।';
+
+  @override
+  String get artifact => 'आर्टिफ़ैक्ट';
+
+  @override
+  String waitingForApprovalBy(String names) {
+    return '$names के अनुमोदन की प्रतीक्षा';
+  }
+
+  @override
+  String get pullRequests => 'पुल रिक्वेस्ट';
+
+  @override
+  String get searchPullRequestsHint => 'शीर्षक, ID, ब्रांच या व्यक्ति से खोजें';
+
+  @override
+  String get scopeReviewing => 'समीक्षा के लिए';
+
+  @override
+  String get loadPullRequestsFailed => 'पुल रिक्वेस्ट लोड नहीं हो सके';
+
+  @override
+  String get codeScopeHint =>
+      'पुल रिक्वेस्ट के लिए आपके टोकन में Code (Read) स्कोप चाहिए।';
+
+  @override
+  String get noPullRequestsTitle => 'कोई पुल रिक्वेस्ट नहीं';
+
+  @override
+  String get noPullRequestsMessage =>
+      'फ़िल्टर से मेल खाने वाला कोई पुल रिक्वेस्ट नहीं है।';
+
+  @override
+  String pullRequestCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count पुल रिक्वेस्ट',
+      one: '1 पुल रिक्वेस्ट',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get selectPullRequestTitle => 'एक पुल रिक्वेस्ट चुनें';
+
+  @override
+  String get selectPullRequestMessage =>
+      'विवरण देखने के लिए बाईं ओर एक पुल रिक्वेस्ट चुनें।';
+
+  @override
+  String get prDraft => 'ड्राफ़्ट';
+
+  @override
+  String get prActive => 'सक्रिय';
+
+  @override
+  String get prCompleted => 'पूर्ण';
+
+  @override
+  String get prAbandoned => 'छोड़ा गया';
+
+  @override
+  String get mergeConflicts => 'मर्ज विरोध';
+
+  @override
+  String get repository => 'रिपॉज़िटरी';
+
+  @override
+  String get closed => 'बंद';
+
+  @override
+  String get reviewers => 'समीक्षक';
+
+  @override
+  String get noReviewers => 'कोई समीक्षक नहीं';
+
+  @override
+  String get requiredReviewer => 'आवश्यक';
+
+  @override
+  String get voteApproved => 'स्वीकृत';
+
+  @override
+  String get voteApprovedWithSuggestions => 'सुझावों के साथ स्वीकृत';
+
+  @override
+  String get voteNone => 'कोई वोट नहीं';
+
+  @override
+  String get voteWaitingForAuthor => 'लेखक की प्रतीक्षा';
+
+  @override
+  String get voteRejected => 'अस्वीकृत';
+
+  @override
+  String get threadResolved => 'हल किया गया';
 }

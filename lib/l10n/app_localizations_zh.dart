@@ -19,7 +19,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get connectionSaved => '连接已保存';
 
   @override
-  String get onboardingIntro => '连接到 Azure DevOps 以查看你的工单。';
+  String get onboardingIntro => '连接到 Azure DevOps 以开始使用。';
 
   @override
   String get connection => '连接';
@@ -41,8 +41,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get tokenAlreadyStored => '已保存一个令牌。重新输入即可更改。';
 
   @override
-  String get tokenScopeHint =>
-      '所需范围：Work Items (Read) 和 Project and Team (Read)';
+  String get requiredScopes => '所需范围';
 
   @override
   String get tokenRequired => '请输入你的令牌';
@@ -58,8 +57,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get tokenHelpStep2 => '选择你的组织和过期日期。';
 
   @override
-  String get tokenHelpStep3 =>
-      '在 Scopes 下选择 Custom defined，并只启用 Work Items: Read 和 Project and Team: Read。';
+  String get tokenHelpStep3 => '在 Scopes 下选择 Custom defined，并只为上面列出的范围启用 Read。';
 
   @override
   String get tokenHelpStep4 => '选择 Create，复制令牌并粘贴到上方。令牌只显示一次。';
@@ -133,7 +131,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get selectTicketMessage => '在左侧选择一个工单以查看详情。';
 
   @override
-  String get chooseProject => '选择项目';
+  String get chooseProjects => '选择项目';
 
   @override
   String get refresh => '刷新';
@@ -160,10 +158,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get retry => '重试';
 
   @override
-  String get noProjectTitle => '未选择项目';
+  String get noProjectsTitle => '未选择项目';
 
   @override
-  String get noProjectMessage => '选择一个项目以查看工单。';
+  String get noProjectsMessage => '选择一个或多个项目以查看工单。';
 
   @override
   String get noTicketsTitle => '没有工单';
@@ -185,7 +183,20 @@ class AppLocalizationsZh extends AppLocalizations {
   String get unassigned => '未分配';
 
   @override
-  String get chooseAProject => '选择一个项目';
+  String get projects => '项目';
+
+  @override
+  String projectCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count 个项目',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get apply => '应用';
 
   @override
   String get searchProjectHint => '搜索项目';
@@ -314,4 +325,211 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get widgetSetupRequired => '打开应用进行设置';
+
+  @override
+  String get tickets => '工单';
+
+  @override
+  String get pipelines => '管道';
+
+  @override
+  String get searchRunsHint => '按管道、分支或人员搜索';
+
+  @override
+  String get activeOnly => '仅进行中';
+
+  @override
+  String get loadRunsFailed => '无法加载管道运行';
+
+  @override
+  String get noRunsTitle => '没有管道运行';
+
+  @override
+  String get noRunsMessage => '没有符合筛选条件的管道运行。';
+
+  @override
+  String runCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count 次运行',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get selectRunTitle => '选择一次管道运行';
+
+  @override
+  String get selectRunMessage => '在左侧选择一次运行以跟踪其进度。';
+
+  @override
+  String get runPending => '等待中';
+
+  @override
+  String get runQueued => '排队中';
+
+  @override
+  String get runRunning => '运行中';
+
+  @override
+  String get runCancelling => '正在取消';
+
+  @override
+  String get runSucceeded => '成功';
+
+  @override
+  String get runPartiallySucceeded => '部分成功';
+
+  @override
+  String get runFailed => '失败';
+
+  @override
+  String get runCanceled => '已取消';
+
+  @override
+  String get runSkipped => '已跳过';
+
+  @override
+  String get progress => '进度';
+
+  @override
+  String tasksProgress(int done, int total) {
+    return '已完成 $done/$total 个任务';
+  }
+
+  @override
+  String get branch => '分支';
+
+  @override
+  String get requestedBy => '请求者';
+
+  @override
+  String get queued => '排队时间';
+
+  @override
+  String get started => '开始时间';
+
+  @override
+  String get finished => '结束时间';
+
+  @override
+  String get duration => '持续时间';
+
+  @override
+  String get stages => '阶段';
+
+  @override
+  String get noStagesYet => '运行开始后将显示阶段。';
+
+  @override
+  String get runWaitingForApproval => '等待审批';
+
+  @override
+  String get runNotDeployed => '未部署';
+
+  @override
+  String get builds => '生成';
+
+  @override
+  String get releases => '发布';
+
+  @override
+  String get loadReleasesFailed => '无法加载发布';
+
+  @override
+  String get releaseScopeHint => '发布需要令牌具有 Release (Read) 范围。';
+
+  @override
+  String get artifact => '项目';
+
+  @override
+  String waitingForApprovalBy(String names) {
+    return '等待 $names 审批';
+  }
+
+  @override
+  String get pullRequests => '拉取请求';
+
+  @override
+  String get searchPullRequestsHint => '按标题、ID、分支或人员搜索';
+
+  @override
+  String get scopeReviewing => '待我审阅';
+
+  @override
+  String get loadPullRequestsFailed => '无法加载拉取请求';
+
+  @override
+  String get codeScopeHint => '拉取请求需要令牌具有 Code (Read) 范围。';
+
+  @override
+  String get noPullRequestsTitle => '没有拉取请求';
+
+  @override
+  String get noPullRequestsMessage => '没有符合筛选条件的拉取请求。';
+
+  @override
+  String pullRequestCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count 个拉取请求',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get selectPullRequestTitle => '选择一个拉取请求';
+
+  @override
+  String get selectPullRequestMessage => '在左侧选择一个拉取请求以查看详细信息。';
+
+  @override
+  String get prDraft => '草稿';
+
+  @override
+  String get prActive => '活动';
+
+  @override
+  String get prCompleted => '已完成';
+
+  @override
+  String get prAbandoned => '已放弃';
+
+  @override
+  String get mergeConflicts => '合并冲突';
+
+  @override
+  String get repository => '存储库';
+
+  @override
+  String get closed => '已关闭';
+
+  @override
+  String get reviewers => '审阅者';
+
+  @override
+  String get noReviewers => '没有审阅者';
+
+  @override
+  String get requiredReviewer => '必需';
+
+  @override
+  String get voteApproved => '已批准';
+
+  @override
+  String get voteApprovedWithSuggestions => '已批准但有建议';
+
+  @override
+  String get voteNone => '未投票';
+
+  @override
+  String get voteWaitingForAuthor => '等待作者';
+
+  @override
+  String get voteRejected => '已拒绝';
+
+  @override
+  String get threadResolved => '已解决';
 }

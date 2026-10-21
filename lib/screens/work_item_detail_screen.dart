@@ -7,6 +7,7 @@ import '../models/work_item.dart';
 import '../services/app_state.dart';
 import '../services/logging.dart';
 import '../widgets/devops_markdown.dart';
+import '../widgets/section_card.dart';
 import '../widgets/work_item_visuals.dart';
 
 final _log = Logger('WorkItemDetailScreen');
@@ -224,10 +225,10 @@ class _WorkItemDetailScreenState extends State<WorkItemDetailScreen> {
         ],
       ),
       const SizedBox(height: 16),
-      _SectionCard(
+      SectionCard(
         child: Column(
           children: [
-            _InfoRow(
+            InfoRow(
               icon: Icons.person_outline,
               label: l10n.assignedTo,
               valueWidget: Row(
@@ -239,32 +240,32 @@ class _WorkItemDetailScreenState extends State<WorkItemDetailScreen> {
               ),
             ),
             if (item.priority != null)
-              _InfoRow(icon: Icons.flag_outlined, label: l10n.priority, value: '${item.priority}'),
+              InfoRow(icon: Icons.flag_outlined, label: l10n.priority, value: '${item.priority}'),
             if (item.storyPoints != null)
-              _InfoRow(icon: Icons.speed, label: l10n.effort, value: '${item.storyPoints}'),
+              InfoRow(icon: Icons.speed, label: l10n.effort, value: '${item.storyPoints}'),
             if (item.originalEstimate != null)
-              _InfoRow(
+              InfoRow(
                   icon: Icons.schedule,
                   label: l10n.originalEstimate,
                   value: l10n.hours('${item.originalEstimate}')),
             if (item.remainingWork != null)
-              _InfoRow(
+              InfoRow(
                   icon: Icons.hourglass_bottom,
                   label: l10n.remainingWork,
                   value: l10n.hours('${item.remainingWork}')),
             if (item.completedWork != null)
-              _InfoRow(
+              InfoRow(
                   icon: Icons.task_alt,
                   label: l10n.completedWork,
                   value: l10n.hours('${item.completedWork}')),
-            _InfoRow(icon: Icons.account_tree_outlined, label: l10n.area, value: item.areaPath),
-            _InfoRow(icon: Icons.event_repeat, label: l10n.iteration, value: item.iterationPath),
-            _InfoRow(
+            InfoRow(icon: Icons.account_tree_outlined, label: l10n.area, value: item.areaPath),
+            InfoRow(icon: Icons.event_repeat, label: l10n.iteration, value: item.iterationPath),
+            InfoRow(
                 icon: Icons.add_circle_outline,
                 label: l10n.created,
                 value: l10n.createdOnBy(formatDateTime(l10n, item.createdDate),
                     item.createdBy?.displayName ?? '-')),
-            _InfoRow(
+            InfoRow(
                 icon: Icons.update,
                 label: l10n.changed,
                 value: formatDateTime(l10n, item.changedDate)),
@@ -273,7 +274,7 @@ class _WorkItemDetailScreenState extends State<WorkItemDetailScreen> {
       ),
       for (final (title, field) in sections) ...[
         const SizedBox(height: 16),
-        _SectionCard(
+        SectionCard(
           title: title,
           child: _isBlankField(item, field)
               ? Text(l10n.emptyField,
@@ -292,7 +293,7 @@ class _WorkItemDetailScreenState extends State<WorkItemDetailScreen> {
       ],
       if (detail.parent != null || detail.children.isNotEmpty) ...[
         const SizedBox(height: 16),
-        _SectionCard(
+        SectionCard(
           title: l10n.linkedItems,
           padding: const EdgeInsets.symmetric(vertical: 8),
           child: Column(
@@ -310,7 +311,7 @@ class _WorkItemDetailScreenState extends State<WorkItemDetailScreen> {
         ),
       ],
       const SizedBox(height: 16),
-      _SectionCard(
+      SectionCard(
         title: l10n.commentsCount(detail.comments.length),
         child: detail.comments.isEmpty
             ? Text(l10n.noComments,
@@ -341,64 +342,6 @@ class _Detail {
   final List<WorkItemComment> comments;
   final WorkItem? parent;
   final List<WorkItem> children;
-}
-
-class _SectionCard extends StatelessWidget {
-  const _SectionCard({required this.child, this.title, this.padding});
-
-  final String? title;
-  final Widget child;
-  final EdgeInsetsGeometry? padding;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Card.outlined(
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            if (title != null) ...[
-              Text(title!, style: theme.textTheme.titleMedium),
-              const SizedBox(height: 8),
-            ],
-            Padding(padding: padding ?? EdgeInsets.zero, child: child),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _InfoRow extends StatelessWidget {
-  const _InfoRow({required this.icon, required this.label, this.value, this.valueWidget});
-
-  final IconData icon;
-  final String label;
-  final String? value;
-  final Widget? valueWidget;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6),
-      child: Row(
-        children: [
-          Icon(icon, size: 20, color: theme.colorScheme.onSurfaceVariant),
-          const SizedBox(width: 12),
-          SizedBox(
-            width: 130,
-            child: Text(label,
-                style: theme.textTheme.bodyMedium
-                    ?.copyWith(color: theme.colorScheme.onSurfaceVariant)),
-          ),
-          Expanded(child: valueWidget ?? Text(value ?? '-', style: theme.textTheme.bodyMedium)),
-        ],
-      ),
-    );
-  }
 }
 
 class _LinkedTile extends StatelessWidget {

@@ -56,7 +56,7 @@ void main() {
       for (var i = 1; i <= 60; i++)
         WorkItem.fromJson(workItemJson(i, title: 'T$i', state: 'New', type: 'Task')),
     ];
-    await TicketsHomeWidget.update(project: 'Contoso', items: items);
+    await TicketsHomeWidget.update(projects: ['Contoso'], items: items);
 
     final stored = jsonDecode(saved['items'] as String) as List;
     expect(stored, hasLength(50));
@@ -70,7 +70,7 @@ void main() {
 
   test('update with only an error keeps the previous tickets', () async {
     saved['items'] = '[{"id":1}]';
-    await TicketsHomeWidget.update(project: 'Contoso', error: 'Offline');
+    await TicketsHomeWidget.update(projects: ['Contoso'], error: 'Offline');
     expect(saved['items'], '[{"id":1}]');
     expect(saved['error'], 'Offline');
   });
@@ -78,7 +78,7 @@ void main() {
   test('update ignores platforms without widget support', () async {
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
         .setMockMethodCallHandler(channel, null);
-    await TicketsHomeWidget.update(project: 'Contoso', items: const []);
+    await TicketsHomeWidget.update(projects: ['Contoso'], items: const []);
   });
 
   test('refresh asks to set up the app when not configured', () async {
@@ -105,5 +105,12 @@ void main() {
     await TicketsHomeWidget.refresh(connectedState(fake));
     expect(saved['error'], en.errorUnauthorized);
     expect(saved['project'], 'Contoso');
+  });
+
+  test('refresh shows the names of all projects', () async {
+    final fake = FakeDevOps()..add(workItemJson(7));
+    await TicketsHomeWidget.refresh(
+        connectedState(fake, projects: ['Contoso', 'Fabrikam']));
+    expect(saved['project'], 'Contoso, Fabrikam');
   });
 }

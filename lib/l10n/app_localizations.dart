@@ -149,7 +149,7 @@ abstract class AppLocalizations {
   /// No description provided for @onboardingIntro.
   ///
   /// In en, this message translates to:
-  /// **'Connect to Azure DevOps to view your tickets.'**
+  /// **'Connect to Azure DevOps to get started.'**
   String get onboardingIntro;
 
   /// No description provided for @connection.
@@ -188,11 +188,11 @@ abstract class AppLocalizations {
   /// **'A token is already stored. Enter it again to change it.'**
   String get tokenAlreadyStored;
 
-  /// No description provided for @tokenScopeHint.
+  /// No description provided for @requiredScopes.
   ///
   /// In en, this message translates to:
-  /// **'Required scope: Work Items (Read) and Project and Team (Read)'**
-  String get tokenScopeHint;
+  /// **'Required scopes'**
+  String get requiredScopes;
 
   /// No description provided for @tokenRequired.
   ///
@@ -221,7 +221,7 @@ abstract class AppLocalizations {
   /// No description provided for @tokenHelpStep3.
   ///
   /// In en, this message translates to:
-  /// **'Under Scopes, choose Custom defined and enable only Work Items: Read and Project and Team: Read.'**
+  /// **'Under Scopes, choose Custom defined and enable only the scopes listed above, each with Read.'**
   String get tokenHelpStep3;
 
   /// No description provided for @tokenHelpStep4.
@@ -356,11 +356,11 @@ abstract class AppLocalizations {
   /// **'Choose a ticket on the left to see its details.'**
   String get selectTicketMessage;
 
-  /// No description provided for @chooseProject.
+  /// No description provided for @chooseProjects.
   ///
   /// In en, this message translates to:
-  /// **'Choose project'**
-  String get chooseProject;
+  /// **'Choose projects'**
+  String get chooseProjects;
 
   /// No description provided for @refresh.
   ///
@@ -410,17 +410,17 @@ abstract class AppLocalizations {
   /// **'Try again'**
   String get retry;
 
-  /// No description provided for @noProjectTitle.
+  /// No description provided for @noProjectsTitle.
   ///
   /// In en, this message translates to:
-  /// **'No project selected'**
-  String get noProjectTitle;
+  /// **'No projects selected'**
+  String get noProjectsTitle;
 
-  /// No description provided for @noProjectMessage.
+  /// No description provided for @noProjectsMessage.
   ///
   /// In en, this message translates to:
-  /// **'Choose a project to view tickets.'**
-  String get noProjectMessage;
+  /// **'Choose one or more projects to view tickets.'**
+  String get noProjectsMessage;
 
   /// No description provided for @noTicketsTitle.
   ///
@@ -446,11 +446,23 @@ abstract class AppLocalizations {
   /// **'Unassigned'**
   String get unassigned;
 
-  /// No description provided for @chooseAProject.
+  /// No description provided for @projects.
   ///
   /// In en, this message translates to:
-  /// **'Choose a project'**
-  String get chooseAProject;
+  /// **'Projects'**
+  String get projects;
+
+  /// No description provided for @projectCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 project} other{{count} projects}}'**
+  String projectCount(int count);
+
+  /// No description provided for @apply.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply'**
+  String get apply;
 
   /// No description provided for @searchProjectHint.
   ///
@@ -679,6 +691,384 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Open the app to set up'**
   String get widgetSetupRequired;
+
+  /// No description provided for @tickets.
+  ///
+  /// In en, this message translates to:
+  /// **'Tickets'**
+  String get tickets;
+
+  /// No description provided for @pipelines.
+  ///
+  /// In en, this message translates to:
+  /// **'Pipelines'**
+  String get pipelines;
+
+  /// No description provided for @searchRunsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search by pipeline, branch or person'**
+  String get searchRunsHint;
+
+  /// No description provided for @activeOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Active only'**
+  String get activeOnly;
+
+  /// No description provided for @loadRunsFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load pipeline runs'**
+  String get loadRunsFailed;
+
+  /// No description provided for @noRunsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No pipeline runs'**
+  String get noRunsTitle;
+
+  /// No description provided for @noRunsMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'There are no pipeline runs matching the filters.'**
+  String get noRunsMessage;
+
+  /// No description provided for @runCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 run} other{{count} runs}}'**
+  String runCount(int count);
+
+  /// No description provided for @selectRunTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a pipeline run'**
+  String get selectRunTitle;
+
+  /// No description provided for @selectRunMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a run on the left to follow its progress.'**
+  String get selectRunMessage;
+
+  /// No description provided for @runPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting'**
+  String get runPending;
+
+  /// No description provided for @runQueued.
+  ///
+  /// In en, this message translates to:
+  /// **'Queued'**
+  String get runQueued;
+
+  /// No description provided for @runRunning.
+  ///
+  /// In en, this message translates to:
+  /// **'Running'**
+  String get runRunning;
+
+  /// No description provided for @runCancelling.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelling'**
+  String get runCancelling;
+
+  /// No description provided for @runSucceeded.
+  ///
+  /// In en, this message translates to:
+  /// **'Succeeded'**
+  String get runSucceeded;
+
+  /// No description provided for @runPartiallySucceeded.
+  ///
+  /// In en, this message translates to:
+  /// **'Partially succeeded'**
+  String get runPartiallySucceeded;
+
+  /// No description provided for @runFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed'**
+  String get runFailed;
+
+  /// No description provided for @runCanceled.
+  ///
+  /// In en, this message translates to:
+  /// **'Canceled'**
+  String get runCanceled;
+
+  /// No description provided for @runSkipped.
+  ///
+  /// In en, this message translates to:
+  /// **'Skipped'**
+  String get runSkipped;
+
+  /// No description provided for @progress.
+  ///
+  /// In en, this message translates to:
+  /// **'Progress'**
+  String get progress;
+
+  /// No description provided for @tasksProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'{done} of {total} tasks done'**
+  String tasksProgress(int done, int total);
+
+  /// No description provided for @branch.
+  ///
+  /// In en, this message translates to:
+  /// **'Branch'**
+  String get branch;
+
+  /// No description provided for @requestedBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Requested by'**
+  String get requestedBy;
+
+  /// No description provided for @queued.
+  ///
+  /// In en, this message translates to:
+  /// **'Queued'**
+  String get queued;
+
+  /// No description provided for @started.
+  ///
+  /// In en, this message translates to:
+  /// **'Started'**
+  String get started;
+
+  /// No description provided for @finished.
+  ///
+  /// In en, this message translates to:
+  /// **'Finished'**
+  String get finished;
+
+  /// No description provided for @duration.
+  ///
+  /// In en, this message translates to:
+  /// **'Duration'**
+  String get duration;
+
+  /// No description provided for @stages.
+  ///
+  /// In en, this message translates to:
+  /// **'Stages'**
+  String get stages;
+
+  /// No description provided for @noStagesYet.
+  ///
+  /// In en, this message translates to:
+  /// **'The stages appear once the run starts.'**
+  String get noStagesYet;
+
+  /// No description provided for @runWaitingForApproval.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for approval'**
+  String get runWaitingForApproval;
+
+  /// No description provided for @runNotDeployed.
+  ///
+  /// In en, this message translates to:
+  /// **'Not deployed'**
+  String get runNotDeployed;
+
+  /// No description provided for @builds.
+  ///
+  /// In en, this message translates to:
+  /// **'Builds'**
+  String get builds;
+
+  /// No description provided for @releases.
+  ///
+  /// In en, this message translates to:
+  /// **'Releases'**
+  String get releases;
+
+  /// No description provided for @loadReleasesFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load the releases'**
+  String get loadReleasesFailed;
+
+  /// No description provided for @releaseScopeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Releases need the Release (Read) scope on your token.'**
+  String get releaseScopeHint;
+
+  /// No description provided for @artifact.
+  ///
+  /// In en, this message translates to:
+  /// **'Artifact'**
+  String get artifact;
+
+  /// No description provided for @waitingForApprovalBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for approval by {names}'**
+  String waitingForApprovalBy(String names);
+
+  /// No description provided for @pullRequests.
+  ///
+  /// In en, this message translates to:
+  /// **'Pull requests'**
+  String get pullRequests;
+
+  /// No description provided for @searchPullRequestsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search by title, ID, branch or person'**
+  String get searchPullRequestsHint;
+
+  /// No description provided for @scopeReviewing.
+  ///
+  /// In en, this message translates to:
+  /// **'Reviewing'**
+  String get scopeReviewing;
+
+  /// No description provided for @loadPullRequestsFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load pull requests'**
+  String get loadPullRequestsFailed;
+
+  /// No description provided for @codeScopeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Pull requests need the Code (Read) scope on your token.'**
+  String get codeScopeHint;
+
+  /// No description provided for @noPullRequestsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No pull requests'**
+  String get noPullRequestsTitle;
+
+  /// No description provided for @noPullRequestsMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'There are no pull requests matching the filters.'**
+  String get noPullRequestsMessage;
+
+  /// No description provided for @pullRequestCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 pull request} other{{count} pull requests}}'**
+  String pullRequestCount(int count);
+
+  /// No description provided for @selectPullRequestTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a pull request'**
+  String get selectPullRequestTitle;
+
+  /// No description provided for @selectPullRequestMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a pull request on the left to see its details.'**
+  String get selectPullRequestMessage;
+
+  /// No description provided for @prDraft.
+  ///
+  /// In en, this message translates to:
+  /// **'Draft'**
+  String get prDraft;
+
+  /// No description provided for @prActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get prActive;
+
+  /// No description provided for @prCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get prCompleted;
+
+  /// No description provided for @prAbandoned.
+  ///
+  /// In en, this message translates to:
+  /// **'Abandoned'**
+  String get prAbandoned;
+
+  /// No description provided for @mergeConflicts.
+  ///
+  /// In en, this message translates to:
+  /// **'Merge conflicts'**
+  String get mergeConflicts;
+
+  /// No description provided for @repository.
+  ///
+  /// In en, this message translates to:
+  /// **'Repository'**
+  String get repository;
+
+  /// No description provided for @closed.
+  ///
+  /// In en, this message translates to:
+  /// **'Closed'**
+  String get closed;
+
+  /// No description provided for @reviewers.
+  ///
+  /// In en, this message translates to:
+  /// **'Reviewers'**
+  String get reviewers;
+
+  /// No description provided for @noReviewers.
+  ///
+  /// In en, this message translates to:
+  /// **'No reviewers'**
+  String get noReviewers;
+
+  /// No description provided for @requiredReviewer.
+  ///
+  /// In en, this message translates to:
+  /// **'Required'**
+  String get requiredReviewer;
+
+  /// No description provided for @voteApproved.
+  ///
+  /// In en, this message translates to:
+  /// **'Approved'**
+  String get voteApproved;
+
+  /// No description provided for @voteApprovedWithSuggestions.
+  ///
+  /// In en, this message translates to:
+  /// **'Approved with suggestions'**
+  String get voteApprovedWithSuggestions;
+
+  /// No description provided for @voteNone.
+  ///
+  /// In en, this message translates to:
+  /// **'No vote'**
+  String get voteNone;
+
+  /// No description provided for @voteWaitingForAuthor.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for author'**
+  String get voteWaitingForAuthor;
+
+  /// No description provided for @voteRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Rejected'**
+  String get voteRejected;
+
+  /// No description provided for @threadResolved.
+  ///
+  /// In en, this message translates to:
+  /// **'Resolved'**
+  String get threadResolved;
 }
 
 class _AppLocalizationsDelegate

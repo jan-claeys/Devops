@@ -19,7 +19,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get connectionSaved => 'تم حفظ الاتصال';
 
   @override
-  String get onboardingIntro => 'اتصل بـ Azure DevOps لعرض تذاكرك.';
+  String get onboardingIntro => 'اتصل بـ Azure DevOps للبدء.';
 
   @override
   String get connection => 'الاتصال';
@@ -42,8 +42,7 @@ class AppLocalizationsAr extends AppLocalizations {
       'يوجد رمز محفوظ بالفعل. أدخله مرة أخرى لتغييره.';
 
   @override
-  String get tokenScopeHint =>
-      'النطاق المطلوب: Work Items (Read) و Project and Team (Read)';
+  String get requiredScopes => 'النطاقات المطلوبة';
 
   @override
   String get tokenRequired => 'أدخل الرمز';
@@ -60,7 +59,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'ضمن Scopes، اختر Custom defined وفعّل فقط Work Items: Read و Project and Team: Read.';
+      'ضمن Scopes، اختر Custom defined وفعّل فقط النطاقات المذكورة أعلاه، كلٌّ منها بصلاحية Read.';
 
   @override
   String get tokenHelpStep4 =>
@@ -136,7 +135,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get selectTicketMessage => 'اختر تذكرة من القائمة لعرض تفاصيلها.';
 
   @override
-  String get chooseProject => 'اختر مشروعًا';
+  String get chooseProjects => 'اختر المشاريع';
 
   @override
   String get refresh => 'تحديث';
@@ -163,10 +162,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get retry => 'إعادة المحاولة';
 
   @override
-  String get noProjectTitle => 'لم يتم اختيار مشروع';
+  String get noProjectsTitle => 'لم يتم اختيار مشاريع';
 
   @override
-  String get noProjectMessage => 'اختر مشروعًا لعرض التذاكر.';
+  String get noProjectsMessage => 'اختر مشروعًا واحدًا أو أكثر لعرض التذاكر.';
 
   @override
   String get noTicketsTitle => 'لا توجد تذاكر';
@@ -193,7 +192,25 @@ class AppLocalizationsAr extends AppLocalizations {
   String get unassigned => 'غير مسندة';
 
   @override
-  String get chooseAProject => 'اختر مشروعًا';
+  String get projects => 'المشاريع';
+
+  @override
+  String projectCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count مشروع',
+      many: '$count مشروعًا',
+      few: '$count مشاريع',
+      two: 'مشروعان',
+      one: 'مشروع واحد',
+      zero: 'لا توجد مشاريع',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get apply => 'تطبيق';
 
   @override
   String get searchProjectHint => 'ابحث عن مشروع';
@@ -323,4 +340,225 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get widgetSetupRequired => 'افتح التطبيق للإعداد';
+
+  @override
+  String get tickets => 'التذاكر';
+
+  @override
+  String get pipelines => 'المسارات';
+
+  @override
+  String get searchRunsHint => 'ابحث حسب البنية أو الفرع أو الشخص';
+
+  @override
+  String get activeOnly => 'النشطة فقط';
+
+  @override
+  String get loadRunsFailed => 'تعذّر تحميل عمليات التشغيل';
+
+  @override
+  String get noRunsTitle => 'لا توجد عمليات تشغيل';
+
+  @override
+  String get noRunsMessage => 'لا توجد عمليات تشغيل تطابق عوامل التصفية.';
+
+  @override
+  String runCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count عملية تشغيل',
+      many: '$count عملية تشغيل',
+      few: '$count عمليات تشغيل',
+      two: 'عمليتا تشغيل',
+      one: 'عملية تشغيل واحدة',
+      zero: 'لا توجد عمليات تشغيل',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get selectRunTitle => 'اختر عملية تشغيل';
+
+  @override
+  String get selectRunMessage => 'اختر عملية تشغيل على اليسار لمتابعة تقدّمها.';
+
+  @override
+  String get runPending => 'في الانتظار';
+
+  @override
+  String get runQueued => 'في قائمة الانتظار';
+
+  @override
+  String get runRunning => 'قيد التشغيل';
+
+  @override
+  String get runCancelling => 'جارٍ الإلغاء';
+
+  @override
+  String get runSucceeded => 'نجحت';
+
+  @override
+  String get runPartiallySucceeded => 'نجحت جزئيًا';
+
+  @override
+  String get runFailed => 'فشلت';
+
+  @override
+  String get runCanceled => 'أُلغيت';
+
+  @override
+  String get runSkipped => 'تم تخطيها';
+
+  @override
+  String get progress => 'التقدّم';
+
+  @override
+  String tasksProgress(int done, int total) {
+    return 'اكتملت $done من $total مهام';
+  }
+
+  @override
+  String get branch => 'الفرع';
+
+  @override
+  String get requestedBy => 'طلبها';
+
+  @override
+  String get queued => 'أُضيفت إلى قائمة الانتظار';
+
+  @override
+  String get started => 'بدأت';
+
+  @override
+  String get finished => 'انتهت';
+
+  @override
+  String get duration => 'المدة';
+
+  @override
+  String get stages => 'المراحل';
+
+  @override
+  String get noStagesYet => 'تظهر المراحل عند بدء التشغيل.';
+
+  @override
+  String get runWaitingForApproval => 'بانتظار الموافقة';
+
+  @override
+  String get runNotDeployed => 'لم يُنشر';
+
+  @override
+  String get builds => 'عمليات البناء';
+
+  @override
+  String get releases => 'الإصدارات';
+
+  @override
+  String get loadReleasesFailed => 'تعذّر تحميل الإصدارات';
+
+  @override
+  String get releaseScopeHint =>
+      'تحتاج الإصدارات إلى النطاق Release (Read) في الرمز المميز.';
+
+  @override
+  String get artifact => 'العنصر';
+
+  @override
+  String waitingForApprovalBy(String names) {
+    return 'بانتظار موافقة $names';
+  }
+
+  @override
+  String get pullRequests => 'طلبات السحب';
+
+  @override
+  String get searchPullRequestsHint =>
+      'ابحث حسب العنوان أو المعرّف أو الفرع أو الشخص';
+
+  @override
+  String get scopeReviewing => 'للمراجعة';
+
+  @override
+  String get loadPullRequestsFailed => 'تعذّر تحميل طلبات السحب';
+
+  @override
+  String get codeScopeHint =>
+      'تحتاج طلبات السحب إلى النطاق Code (Read) في الرمز المميز.';
+
+  @override
+  String get noPullRequestsTitle => 'لا توجد طلبات سحب';
+
+  @override
+  String get noPullRequestsMessage => 'لا توجد طلبات سحب تطابق عوامل التصفية.';
+
+  @override
+  String pullRequestCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count طلب سحب',
+      many: '$count طلب سحب',
+      few: '$count طلبات سحب',
+      two: 'طلبا سحب',
+      one: 'طلب سحب واحد',
+      zero: 'لا توجد طلبات سحب',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get selectPullRequestTitle => 'اختر طلب سحب';
+
+  @override
+  String get selectPullRequestMessage =>
+      'اختر طلب سحب على اليسار لعرض تفاصيله.';
+
+  @override
+  String get prDraft => 'مسودة';
+
+  @override
+  String get prActive => 'نشط';
+
+  @override
+  String get prCompleted => 'مكتمل';
+
+  @override
+  String get prAbandoned => 'متروك';
+
+  @override
+  String get mergeConflicts => 'تعارضات الدمج';
+
+  @override
+  String get repository => 'المستودع';
+
+  @override
+  String get closed => 'مغلق';
+
+  @override
+  String get reviewers => 'المراجعون';
+
+  @override
+  String get noReviewers => 'لا يوجد مراجعون';
+
+  @override
+  String get requiredReviewer => 'مطلوب';
+
+  @override
+  String get voteApproved => 'تمت الموافقة';
+
+  @override
+  String get voteApprovedWithSuggestions => 'تمت الموافقة مع اقتراحات';
+
+  @override
+  String get voteNone => 'لا يوجد تصويت';
+
+  @override
+  String get voteWaitingForAuthor => 'بانتظار المؤلف';
+
+  @override
+  String get voteRejected => 'مرفوض';
+
+  @override
+  String get threadResolved => 'تم الحل';
 }
