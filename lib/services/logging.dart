@@ -37,6 +37,22 @@ Future<void> runWithErrorReporting(FutureOr<void> Function() appRunner) async {
     await appRunner();
     return;
   }
+  if (kIsWeb && Zone.current == Zone.root) {
+    // On web Sentry initializes the Flutter binding in the calling zone, but
+    // runs appRunner in a zone of its own, so runApp would complain about a
+    // zone mismatch. Sentry skips its zone when already inside one, so start
+    // our own and report its uncaught errors ourselves.
+    final done = Completer<void>();
+    runZonedGuarded(
+      () => _initSentry(appRunner).whenComplete(done.complete),
+      (error, stackTrace) => Sentry.captureException(error, stackTrace: stackTrace),
+    );
+    return done.future;
+  }
+  await _initSentry(appRunner);
+}
+
+Future<void> _initSentry(FutureOr<void> Function() appRunner) async {
   await SentryFlutter.init(
     (options) {
       options.dsn = sentryDsn;
