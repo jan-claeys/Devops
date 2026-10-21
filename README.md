@@ -9,10 +9,10 @@ A Flutter app for viewing your Azure DevOps work items (tickets) and following y
   - Filter on open items only and on work item type (Bug, Task, User Story, ...)
   - Search by title, ID, tag or assignee; pull to refresh
 - **Work item details**: description, state, assignee, priority, effort, original estimate / completed work, area and iteration path, tags, linked items and comments (including rendered @mentions), with a button to open the item in the browser
-- **Pipelines**: the latest runs of the selected projects with status, branch, duration and who started them
-  - Filter on active runs and search by pipeline, branch or person; refreshes automatically while a run is in progress
+- **Pipelines**: the latest builds and releases of the selected projects with status, branch, duration and who started them
+  - Show all runs, only builds or only releases; filter on active runs and search by pipeline, branch or person; refreshes automatically while a run is in progress or waiting for approval
   - Run details: progress bar, stages with their jobs and tasks (status, duration, errors and warnings), with a button to open the run in the browser
-  - YAML pipelines (including deployment stages) and classic build pipelines; classic release pipelines are not supported
+  - YAML pipelines (including deployment stages), classic build pipelines and classic release pipelines; releases show their stages, the artifact version and who still has to approve a stage
 - **Android home screen widget** showing your open work items; tapping a ticket opens it in the app
 - **Theming**: light/dark/system mode and optional dynamic colour (Material You)
 - **17 languages**: ar, de, en, es, fr, hi, id, it, ja, ko, nl, pl, pt, ru, tr, uk, zh (follows the system language by default, English as fallback)
@@ -60,6 +60,7 @@ The app only reads data, so a read-only token is enough. Microsoft's official gu
      | **Work Items** | Read (`vso.work`) | WIQL queries, work item details, links, comments and attachments/images |
      | **Project and Team** | Read (`vso.project`) | Listing the projects in the organization (also used to verify the connection) |
      | **Build** | Read (`vso.build`) | Pipeline runs and their stages, jobs and tasks |
+     | **Release** | Read (`vso.release`) | Releases of classic release pipelines, their stages and approvals |
 
      Click *Show all scopes* if a scope is not visible. Do not choose *Full access*.
 5. Click **Create** and copy the token right away – Azure DevOps shows it only once.
@@ -69,9 +70,11 @@ A token can never do more than your own account. You also need:
 
 - An access level of at least **Stakeholder** (or **Basic**) in the organization.
 - Read access to the projects and area paths whose work items you want to see (by default, members of a project's *Readers* or *Contributors* group have this).
-- The *View builds* permission on the pipelines you want to follow (also granted to *Readers* and *Contributors* by default).
+- The *View builds* permission on the pipelines and *View releases* on the release pipelines you want to follow (also granted to *Readers* and *Contributors* by default).
 
-Tokens created before the pipelines were added lack the **Build** scope: the *Pipelines* tab then reports *Not authorized*. Edit the token in Azure DevOps to add the scope (the token itself stays the same) or create a new one.
+Tokens created before the pipelines were added lack the **Build** and **Release** scopes: the *Pipelines* tab then reports *Not authorized*, or only shows the builds with a warning that the releases couldn't be loaded. Edit the token in Azure DevOps to add the scopes (the token itself stays the same) or create a new one.
+
+Releases are read from the release management API: `vsrm.dev.azure.com/{organization}` (or `{organization}.vsrm.visualstudio.com`). On Azure DevOps Server it is the collection URL itself.
 
 If you cannot create a token, your organization's administrators may have restricted PAT creation by policy; see [Manage personal access tokens using policies](https://learn.microsoft.com/azure/devops/organizations/accounts/manage-pats-with-policies-for-administrators). For Azure DevOps Server (on-premises) the steps are the same, starting from your collection URL.
 
@@ -82,10 +85,10 @@ lib/
 ├── main.dart                     App entry point, theming and localization setup
 ├── models/
 │   ├── work_item.dart            WorkItem, Project and comment models
-│   └── pipeline_run.dart         Pipeline runs and their timeline (stages, jobs, tasks)
+│   └── pipeline_run.dart         Builds, releases and their timeline (stages, jobs, tasks)
 ├── services/
 │   ├── app_state.dart            Settings, connection and theme state
-│   ├── devops_api.dart           Azure DevOps REST API client (v7.1, WIQL, builds)
+│   ├── devops_api.dart           Azure DevOps REST API client (v7.1, WIQL, builds, releases)
 │   └── home_widget_service.dart  Data feed for the Android home screen widget
 ├── screens/
 │   ├── home_screen.dart          Tabs for tickets and pipelines

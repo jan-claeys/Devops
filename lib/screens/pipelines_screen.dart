@@ -32,8 +32,15 @@ class _PipelinesScreenState extends State<PipelinesScreen> {
   final _search = TextEditingController();
   bool _activeOnly = false;
 
+  /// Only builds or only releases; null shows both.
+  RunKind? _kind;
+
   List<PipelineRun>? _runs;
   Object? _error;
+
+  /// Releases that failed to load while the builds did, for example because
+  /// the token lacks the Release scope.
+  Object? _releaseError;
   bool _loading = false;
   PipelineRun? _selected;
   String? _loadedFor;
@@ -79,11 +86,20 @@ class _PipelinesScreenState extends State<PipelinesScreen> {
       });
     }
     try {
-      final runs = await api.getPipelineRuns(projects: projects);
+      Object? releaseError;
+      final releases = api.getReleases(projects: projects).catchError((Object e, StackTrace st) {
+        logFailure(_log, 'Loading releases failed', e, st);
+        releaseError = e;
+        return <PipelineRun>[];
+      });
+      final builds = await api.getPipelineRuns(projects: projects);
+      final runs = [...builds, ...await releases]
+        ..sort((a, b) => (b.queueTime ?? DateTime(0)).compareTo(a.queueTime ?? DateTime(0)));
       if (!mounted) return;
       setState(() {
         _runs = runs;
         _error = null;
+        _releaseError = releaseError;
       });
     } catch (e, st) {
       logFailure(_log, 'Loading pipeline runs failed', e, st);
@@ -104,6 +120,7 @@ class _PipelinesScreenState extends State<PipelinesScreen> {
     final query = _search.text.trim().toLowerCase();
     return (_runs ?? const <PipelineRun>[]).where((r) {
       if (_activeOnly && r.status.isFinished) return false;
+      if (_kind != null && r.kind != _kind) return false;
       if (query.isEmpty) return true;
       return r.pipelineName.toLowerCase().contains(query) ||
           r.buildNumber.toLowerCase().contains(query) ||
@@ -118,7 +135,7 @@ class _PipelinesScreenState extends State<PipelinesScreen> {
       setState(() => _selected = run);
     } else {
       Navigator.of(context).push(MaterialPageRoute(
-        builder: (_) => PipelineRunScreen(project: run.project, id: run.id),
+        builder: (_) => PipelineRunScreen(project: run.project, id: run.id, kind: run.kind),
       ));
     }
   }
@@ -162,9 +179,10 @@ class _PipelinesScreenState extends State<PipelinesScreen> {
                             ),
                           )
                         : PipelineRunScreen(
-                            key: ValueKey((_selected!.project, _selected!.id)),
+                            key: ValueKey((_selected!.kind, _selected!.project, _selected!.id)),
                             project: _selected!.project,
                             id: _selected!.id,
+                            kind: _selected!.kind,
                             embedded: true,
                           ),
                   ),
@@ -227,8 +245,26 @@ class _PipelinesScreenState extends State<PipelinesScreen> {
             SliverToBoxAdapter(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                child: Row(
+                child: Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
                   children: [
+                    SegmentedButton<RunKind?>(
+                      showSelectedIcon: false,
+                      segments: [
+                        ButtonSegment(value: null, label: Text(l10n.scopeAll)),
+                        ButtonSegment(
+                            value: RunKind.build,
+                            icon: const Icon(Icons.construction),
+                            label: Text(l10n.builds)),
+                        ButtonSegment(
+                            value: RunKind.release,
+                            icon: const Icon(Icons.rocket_launch_outlined),
+                            label: Text(l10n.releases)),
+                      ],
+                      selected: {_kind},
+                      onSelectionChanged: (s) => setState(() => _kind = s.first),
+                    ),
                     FilterChip(
                       label: Text(l10n.activeOnly),
                       selected: _activeOnly,
@@ -238,6 +274,22 @@ class _PipelinesScreenState extends State<PipelinesScreen> {
                 ),
               ),
             ),
+            if (_error == null && _releaseError != null && _kind != RunKind.build)
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(12, 4, 12, 4),
+                  child: Card.filled(
+                    color: theme.colorScheme.errorContainer,
+                    child: ListTile(
+                      leading: Icon(Icons.warning_amber,
+                          color: theme.colorScheme.onErrorContainer),
+                      textColor: theme.colorScheme.onErrorContainer,
+                      title: Text(l10n.loadReleasesFailed),
+                      subtitle: Text('${l10n.error(_releaseError!)}\n${l10n.releaseScopeHint}'),
+                    ),
+                  ),
+                ),
+              ),
             if (_loading)
               const SliverToBoxAdapter(child: LinearProgressIndicator())
             else
@@ -285,6 +337,7 @@ class _PipelinesScreenState extends State<PipelinesScreen> {
                     showProject: state.projects.length > 1,
                     selected: wide &&
                         runs[i].id == _selected?.id &&
+                        runs[i].kind == _selected?.kind &&
                         runs[i].project == _selected?.project,
                     onTap: () => _open(runs[i], wide),
                   ),
@@ -365,13 +418,14 @@ class _RunCard extends StatelessWidget {
                     const SizedBox(height: 8),
                     Row(
                       children: [
-                        RunStatusBadge(run.status),
+                        Flexible(flex: 2, child: RunStatusBadge(run.status)),
                         const SizedBox(width: 8),
                         if (run.branch != null) ...[
                           Icon(Icons.call_split, size: 14, color: scheme.onSurfaceVariant),
                           const SizedBox(width: 2),
                         ],
                         Expanded(
+                          flex: 3,
                           child: Text(
                             run.branch ?? '',
                             maxLines: 1,
@@ -389,6 +443,10 @@ class _RunCard extends StatelessWidget {
                         ),
                       ],
                     ),
+                    if (run.stages.isNotEmpty) ...[
+                      const SizedBox(height: 8),
+                      StageChips(run.stages),
+                    ],
                   ],
                 ),
               ),

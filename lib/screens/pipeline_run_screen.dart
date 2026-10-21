@@ -20,11 +20,13 @@ class PipelineRunScreen extends StatefulWidget {
     super.key,
     required this.project,
     required this.id,
+    this.kind = RunKind.build,
     this.embedded = false,
   });
 
   final String project;
   final int id;
+  final RunKind kind;
 
   /// True when shown in the detail pane of the wide layout.
   final bool embedded;
@@ -66,14 +68,21 @@ class _PipelineRunScreenState extends State<PipelineRunScreen> {
     _refresh?.cancel();
     final api = AppScope.read(context).api!;
     try {
-      final timeline = api
-          .getTimeline(widget.project, widget.id)
-          .catchError((Object e, StackTrace st) {
-        logFailure(_log, 'Loading the timeline of run ${widget.id} failed', e, st);
-        return _timeline ?? Timeline(const []);
-      });
-      final run = await api.getPipelineRun(widget.project, widget.id);
-      final records = await timeline;
+      final PipelineRun run;
+      final Timeline records;
+      if (widget.kind == RunKind.release) {
+        (run, records) = await api.getRelease(widget.project, widget.id);
+      } else {
+        final timeline = api.getTimeline(widget.project, widget.id).catchError((
+          Object e,
+          StackTrace st,
+        ) {
+          logFailure(_log, 'Loading the timeline of run ${widget.id} failed', e, st);
+          return _timeline ?? Timeline(const []);
+        });
+        run = await api.getPipelineRun(widget.project, widget.id);
+        records = await timeline;
+      }
       if (!mounted) return;
       setState(() {
         _run = run;
@@ -93,8 +102,7 @@ class _PipelineRunScreenState extends State<PipelineRunScreen> {
 
   Future<void> _openInBrowser(PipelineRun run) async {
     final url = AppScope.read(context).api!.runWebUrl(run);
-    if (!await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication) &&
-        mounted) {
+    if (!await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication) && mounted) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(context.l10n.browserOpenFailed)));
     }
@@ -130,8 +138,11 @@ class _PipelineRunScreenState extends State<PipelineRunScreen> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(Icons.error_outline,
-                            size: 48, color: Theme.of(context).colorScheme.error),
+                        Icon(
+                          Icons.error_outline,
+                          size: 48,
+                          color: Theme.of(context).colorScheme.error,
+                        ),
                         const SizedBox(height: 12),
                         Text(l10n.error(_error!), textAlign: TextAlign.center),
                         const SizedBox(height: 16),
@@ -169,38 +180,49 @@ class _PipelineRunScreenState extends State<PipelineRunScreen> {
         children: [
           RunStatusIcon(run.status, size: 48),
           const SizedBox(width: 16),
-          Expanded(
-            child: SelectableText(run.pipelineName, style: theme.textTheme.headlineSmall),
-          ),
+          Expanded(child: SelectableText(run.pipelineName, style: theme.textTheme.headlineSmall)),
         ],
       ),
       const SizedBox(height: 16),
       Row(children: [RunStatusBadge(run.status)]),
-      const SizedBox(height: 16),
-      SectionCard(
-        title: l10n.progress,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            LinearProgressIndicator(
-              value: progress,
-              minHeight: 8,
-              borderRadius: BorderRadius.circular(4),
-              color: RunStatusStyle.of(run.status, theme.colorScheme).color,
-            ),
-            if (timeline.tasks.isNotEmpty) ...[
-              const SizedBox(height: 8),
-              Text(l10n.tasksProgress(timeline.finishedTasks, timeline.tasks.length),
-                  style: theme.textTheme.bodySmall
-                      ?.copyWith(color: theme.colorScheme.onSurfaceVariant)),
+      // A finished release often has stages that are never deployed, so a
+      // full bar would say little.
+      if (!run.isRelease || !run.status.isFinished) ...[
+        const SizedBox(height: 16),
+        SectionCard(
+          title: l10n.progress,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              LinearProgressIndicator(
+                value: progress,
+                minHeight: 8,
+                borderRadius: BorderRadius.circular(4),
+                color: RunStatusStyle.of(run.status, theme.colorScheme).color,
+              ),
+              if (timeline.tasks.isNotEmpty) ...[
+                const SizedBox(height: 8),
+                Text(
+                  l10n.tasksProgress(timeline.finishedTasks, timeline.tasks.length),
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: theme.colorScheme.onSurfaceVariant,
+                  ),
+                ),
+              ],
             ],
-          ],
+          ),
         ),
-      ),
+      ],
       const SizedBox(height: 16),
       SectionCard(
         child: Column(
           children: [
+            if (run.artifactVersion != null)
+              InfoRow(
+                icon: Icons.inventory_2_outlined,
+                label: l10n.artifact,
+                value: run.artifactVersion,
+              ),
             InfoRow(icon: Icons.call_split, label: l10n.branch, value: run.branch),
             InfoRow(
               icon: Icons.person_outline,
@@ -214,22 +236,26 @@ class _PipelineRunScreenState extends State<PipelineRunScreen> {
               ),
             ),
             InfoRow(
-                icon: Icons.schedule,
-                label: l10n.queued,
-                value: formatDateTime(l10n, run.queueTime)),
+              icon: Icons.schedule,
+              label: run.isRelease ? l10n.created : l10n.queued,
+              value: formatDateTime(l10n, run.queueTime),
+            ),
             InfoRow(
-                icon: Icons.play_arrow_outlined,
-                label: l10n.started,
-                value: formatDateTime(l10n, run.startTime)),
+              icon: Icons.play_arrow_outlined,
+              label: l10n.started,
+              value: formatDateTime(l10n, run.startTime),
+            ),
             if (run.finishTime != null)
               InfoRow(
-                  icon: Icons.flag_outlined,
-                  label: l10n.finished,
-                  value: formatDateTime(l10n, run.finishTime)),
+                icon: Icons.flag_outlined,
+                label: l10n.finished,
+                value: formatDateTime(l10n, run.finishTime),
+              ),
             InfoRow(
-                icon: Icons.timer_outlined,
-                label: l10n.duration,
-                value: formatDuration(run.duration())),
+              icon: Icons.timer_outlined,
+              label: l10n.duration,
+              value: formatDuration(run.duration()),
+            ),
           ],
         ),
       ),
@@ -238,9 +264,12 @@ class _PipelineRunScreenState extends State<PipelineRunScreen> {
         title: l10n.stages,
         padding: const EdgeInsets.only(top: 4),
         child: roots.isEmpty
-            ? Text(l10n.noStagesYet,
-                style: theme.textTheme.bodyMedium
-                    ?.copyWith(color: theme.colorScheme.onSurfaceVariant))
+            ? Text(
+                l10n.noStagesYet,
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: theme.colorScheme.onSurfaceVariant,
+                ),
+              )
             : Column(
                 children: [
                   for (final record in roots) _RecordTile(record: record, timeline: timeline),
@@ -274,18 +303,23 @@ class _RecordTile extends StatelessWidget {
           _Count(Icons.cancel_outlined, record.errorCount, theme.colorScheme.error),
         if (record.warningCount > 0)
           _Count(Icons.warning_amber, record.warningCount, const Color(0xFFFF9D00)),
-        Text(formatDuration(duration),
-            style: theme.textTheme.bodySmall
-                ?.copyWith(color: theme.colorScheme.onSurfaceVariant)),
+        Text(
+          formatDuration(duration),
+          style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+        ),
       ],
     );
     final padding = EdgeInsets.only(left: 16.0 * depth);
+    final approval = record.approvers.isEmpty
+        ? null
+        : context.l10n.waitingForApprovalBy(record.approvers.join(', '));
     if (children.isEmpty) {
       return ListTile(
         contentPadding: padding,
-        dense: true,
-        leading: RunStatusIcon(record.status, size: 20),
+        dense: approval == null,
+        leading: RunStatusIcon(record.status, size: approval == null ? 20 : 24),
         title: Text(record.name),
+        subtitle: approval == null ? null : Text(approval),
         trailing: trailing,
       );
     }
@@ -295,11 +329,10 @@ class _RecordTile extends StatelessWidget {
       tilePadding: padding,
       shape: const Border(),
       collapsedShape: const Border(),
-      initiallyExpanded:
-          record.status == RunStatus.running || record.status == RunStatus.failed,
+      initiallyExpanded: record.status == RunStatus.running || record.status == RunStatus.failed,
       leading: RunStatusIcon(record.status),
       title: Text(record.name),
-      subtitle: Text(formatDuration(duration)),
+      subtitle: Text([?approval, formatDuration(duration)].where((t) => t.isNotEmpty).join(' · ')),
       children: [
         for (final child in children)
           _RecordTile(record: child, timeline: timeline, depth: depth + 1),
@@ -317,11 +350,11 @@ class _Count extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, size: 16, color: color),
-          const SizedBox(width: 2),
-          Text('$count', style: Theme.of(context).textTheme.bodySmall?.copyWith(color: color)),
-        ],
-      );
+    mainAxisSize: MainAxisSize.min,
+    children: [
+      Icon(icon, size: 16, color: color),
+      const SizedBox(width: 2),
+      Text('$count', style: Theme.of(context).textTheme.bodySmall?.copyWith(color: color)),
+    ],
+  );
 }

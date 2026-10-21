@@ -42,7 +42,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get tokenScopeHint =>
-      '필요한 범위: Work Items (Read), Build (Read) 및 Project and Team (Read)';
+      '필요한 범위: Work Items (Read), Build (Read), Release (Read) 및 Project and Team (Read)';
 
   @override
   String get tokenRequired => '토큰을 입력하세요';
@@ -59,7 +59,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'Scopes에서 Custom defined를 선택하고 Work Items: Read, Build: Read와 Project and Team: Read만 켭니다.';
+      'Scopes에서 Custom defined를 선택하고 Work Items: Read, Build: Read, Release: Read와 Project and Team: Read만 켭니다.';
 
   @override
   String get tokenHelpStep4 =>
@@ -425,4 +425,30 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get noStagesYet => '실행이 시작되면 단계가 표시됩니다.';
+
+  @override
+  String get runWaitingForApproval => '승인 대기 중';
+
+  @override
+  String get runNotDeployed => '배포 안 됨';
+
+  @override
+  String get builds => '빌드';
+
+  @override
+  String get releases => '릴리스';
+
+  @override
+  String get loadReleasesFailed => '릴리스를 불러오지 못했습니다';
+
+  @override
+  String get releaseScopeHint => '릴리스를 보려면 토큰에 Release (Read) 범위가 필요합니다.';
+
+  @override
+  String get artifact => '아티팩트';
+
+  @override
+  String waitingForApprovalBy(String names) {
+    return '$names의 승인 대기 중';
+  }
 }

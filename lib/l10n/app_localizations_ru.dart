@@ -43,7 +43,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get tokenScopeHint =>
-      'Нужные права: Work Items (Read), Build (Read) и Project and Team (Read)';
+      'Нужные права: Work Items (Read), Build (Read), Release (Read) и Project and Team (Read)';
 
   @override
   String get tokenRequired => 'Введите токен';
@@ -60,7 +60,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'В разделе Scopes выберите Custom defined и включите только Work Items: Read, Build: Read и Project and Team: Read.';
+      'В разделе Scopes выберите Custom defined и включите только Work Items: Read, Build: Read, Release: Read и Project and Team: Read.';
 
   @override
   String get tokenHelpStep4 =>
@@ -440,4 +440,31 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get noStagesYet => 'Этапы появятся после начала запуска.';
+
+  @override
+  String get runWaitingForApproval => 'Ожидает утверждения';
+
+  @override
+  String get runNotDeployed => 'Не развёрнуто';
+
+  @override
+  String get builds => 'Сборки';
+
+  @override
+  String get releases => 'Выпуски';
+
+  @override
+  String get loadReleasesFailed => 'Не удалось загрузить выпуски';
+
+  @override
+  String get releaseScopeHint =>
+      'Для выпусков токену нужны права Release (Read).';
+
+  @override
+  String get artifact => 'Артефакт';
+
+  @override
+  String waitingForApprovalBy(String names) {
+    return 'Ожидает утверждения: $names';
+  }
 }

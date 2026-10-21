@@ -43,7 +43,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get tokenScopeHint =>
-      'Portée requise : Work Items (Read), Build (Read) et Project and Team (Read)';
+      'Portée requise : Work Items (Read), Build (Read), Release (Read) et Project and Team (Read)';
 
   @override
   String get tokenRequired => 'Saisissez votre jeton';
@@ -61,7 +61,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'Sous Scopes, choisissez Custom defined et activez uniquement Work Items: Read, Build: Read et Project and Team: Read.';
+      'Sous Scopes, choisissez Custom defined et activez uniquement Work Items: Read, Build: Read, Release: Read et Project and Team: Read.';
 
   @override
   String get tokenHelpStep4 =>
@@ -438,4 +438,31 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get noStagesYet =>
       'Les étapes apparaissent dès que l’exécution démarre.';
+
+  @override
+  String get runWaitingForApproval => 'En attente d’approbation';
+
+  @override
+  String get runNotDeployed => 'Non déployée';
+
+  @override
+  String get builds => 'Builds';
+
+  @override
+  String get releases => 'Releases';
+
+  @override
+  String get loadReleasesFailed => 'Impossible de charger les releases';
+
+  @override
+  String get releaseScopeHint =>
+      'Les releases nécessitent la portée Release (Read) sur votre jeton.';
+
+  @override
+  String get artifact => 'Artefact';
+
+  @override
+  String waitingForApprovalBy(String names) {
+    return 'En attente d’approbation de $names';
+  }
 }

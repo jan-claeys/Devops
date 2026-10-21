@@ -84,6 +84,85 @@ Map<String, dynamic> recordJson(
       'order': order,
     };
 
+/// Raw release JSON as returned by Azure DevOps, with [environments] from
+/// [environmentJson].
+Map<String, dynamic> releaseJson(
+  int id, {
+  String pipeline = 'Deploy web',
+  String createdOn = '2026-10-20T11:00:00Z',
+  String status = 'active',
+  List<Map<String, dynamic>> environments = const [],
+}) =>
+    {
+      'id': id,
+      'name': 'Release-$id',
+      'status': status,
+      'releaseDefinition': {'id': 1, 'name': pipeline},
+      'createdOn': createdOn,
+      'createdFor': {'displayName': 'Jan Claeys'},
+      'environments': environments,
+      'artifacts': [
+        {
+          'isPrimary': true,
+          'definitionReference': {
+            'branch': {'name': 'refs/heads/main'},
+            'version': {'name': '20261020.$id'},
+          },
+        },
+      ],
+      '_links': {
+        'web': {'href': 'https://dev.azure.com/contoso/Contoso/_releaseProgress?releaseId=$id'},
+      },
+    };
+
+/// A release environment (stage) with one deployment job running [tasks],
+/// each a (name, status) pair.
+Map<String, dynamic> environmentJson(
+  int id,
+  String name, {
+  String status = 'succeeded',
+  int rank = 1,
+  List<(String, String)> tasks = const [],
+  List<String> pendingApprovers = const [],
+}) =>
+    {
+      'id': id,
+      'name': name,
+      'rank': rank,
+      'status': status,
+      'preDeployApprovals': [
+        for (final approver in pendingApprovers)
+          {'status': 'pending', 'isAutomated': false, 'approver': {'displayName': approver}},
+      ],
+      'deploySteps': [
+        if (tasks.isNotEmpty)
+          {
+            'attempt': 1,
+            'releaseDeployPhases': [
+              {
+                'name': 'Agent job',
+                'rank': 1,
+                'status': status,
+                'startedOn': '2026-10-20T11:00:10Z',
+                'deploymentJobs': [
+                  {
+                    'job': {
+                      'name': 'Agent job',
+                      'status': status,
+                      'startTime': '2026-10-20T11:00:10Z',
+                    },
+                    'tasks': [
+                      for (final (i, (task, taskStatus)) in tasks.indexed)
+                        {'name': task, 'status': taskStatus, 'rank': i + 1},
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+      ],
+    };
+
 /// In-memory stand-in for the Azure DevOps REST API.
 class FakeDevOps {
   final projects = <Map<String, dynamic>>[
@@ -99,6 +178,9 @@ class FakeDevOps {
   /// run starts.
   final runs = <int, Map<String, dynamic>>{};
   final timelines = <int, List<Map<String, dynamic>>>{};
+
+  /// Releases of classic release pipelines, by id, all in Contoso.
+  final releases = <int, Map<String, dynamic>>{};
 
   /// When set, requests answer with this status code; with [failPath] only
   /// the requests whose path contains it.
@@ -137,6 +219,14 @@ class FakeDevOps {
     final comment = RegExp(r'/workItems/(\d+)/comments$').firstMatch(path);
     if (comment != null) {
       return _json({'comments': comments[int.parse(comment[1]!)] ?? []});
+    }
+    if (path.endsWith('/_apis/release/releases')) {
+      return _json({'value': releases.values.toList()});
+    }
+    final release = RegExp(r'/_apis/release/releases/(\d+)$').firstMatch(path);
+    if (release != null) {
+      final json = releases[int.parse(release[1]!)];
+      return json == null ? http.Response('', 404) : _json(json);
     }
     final builds = RegExp(r'/([^/]+)/_apis/build/builds$').firstMatch(path);
     if (builds != null) {

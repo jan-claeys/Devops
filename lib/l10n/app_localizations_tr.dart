@@ -43,7 +43,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get tokenScopeHint =>
-      'Gerekli kapsam: Work Items (Read), Build (Read) ve Project and Team (Read)';
+      'Gerekli kapsam: Work Items (Read), Build (Read), Release (Read) ve Project and Team (Read)';
 
   @override
   String get tokenRequired => 'Belirtecinizi girin';
@@ -60,7 +60,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'Scopes altında Custom defined\'ı seçin ve yalnızca Work Items: Read, Build: Read ile Project and Team: Read\'i etkinleştirin.';
+      'Scopes altında Custom defined\'ı seçin ve yalnızca Work Items: Read, Build: Read, Release: Read ile Project and Team: Read\'i etkinleştirin.';
 
   @override
   String get tokenHelpStep4 =>
@@ -432,4 +432,31 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get noStagesYet => 'Aşamalar çalıştırma başladığında görünür.';
+
+  @override
+  String get runWaitingForApproval => 'Onay bekliyor';
+
+  @override
+  String get runNotDeployed => 'Dağıtılmadı';
+
+  @override
+  String get builds => 'Derlemeler';
+
+  @override
+  String get releases => 'Sürümler';
+
+  @override
+  String get loadReleasesFailed => 'Sürümler yüklenemedi';
+
+  @override
+  String get releaseScopeHint =>
+      'Sürümler için belirtecinizde Release (Read) kapsamı gerekir.';
+
+  @override
+  String get artifact => 'Yapıt';
+
+  @override
+  String waitingForApprovalBy(String names) {
+    return '$names onayı bekleniyor';
+  }
 }

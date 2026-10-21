@@ -43,7 +43,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get tokenScopeHint =>
-      'Scope nodig: Work Items (Read), Build (Read) en Project and Team (Read)';
+      'Scope nodig: Work Items (Read), Build (Read), Release (Read) en Project and Team (Read)';
 
   @override
   String get tokenRequired => 'Vul je token in';
@@ -60,7 +60,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'Kies bij Scopes voor Custom defined en vink alleen Work Items: Read, Build: Read en Project and Team: Read aan.';
+      'Kies bij Scopes voor Custom defined en vink alleen Work Items: Read, Build: Read, Release: Read en Project and Team: Read aan.';
 
   @override
   String get tokenHelpStep4 =>
@@ -437,4 +437,31 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get noStagesYet => 'De stages verschijnen zodra de run start.';
+
+  @override
+  String get runWaitingForApproval => 'Wacht op goedkeuring';
+
+  @override
+  String get runNotDeployed => 'Niet uitgerold';
+
+  @override
+  String get builds => 'Builds';
+
+  @override
+  String get releases => 'Releases';
+
+  @override
+  String get loadReleasesFailed => 'Kon de releases niet laden';
+
+  @override
+  String get releaseScopeHint =>
+      'Voor releases heeft je token de scope Release (Read) nodig.';
+
+  @override
+  String get artifact => 'Artefact';
+
+  @override
+  String waitingForApprovalBy(String names) {
+    return 'Wacht op goedkeuring van $names';
+  }
 }

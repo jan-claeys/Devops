@@ -43,7 +43,7 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get tokenScopeHint =>
-      'आवश्यक स्कोप: Work Items (Read), Build (Read) और Project and Team (Read)';
+      'आवश्यक स्कोप: Work Items (Read), Build (Read), Release (Read) और Project and Team (Read)';
 
   @override
   String get tokenRequired => 'अपना टोकन दर्ज करें';
@@ -60,7 +60,7 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'Scopes में Custom defined चुनें और केवल Work Items: Read, Build: Read और Project and Team: Read चालू करें।';
+      'Scopes में Custom defined चुनें और केवल Work Items: Read, Build: Read, Release: Read और Project and Team: Read चालू करें।';
 
   @override
   String get tokenHelpStep4 =>
@@ -431,4 +431,31 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get noStagesYet => 'रन शुरू होने पर चरण दिखाई देंगे।';
+
+  @override
+  String get runWaitingForApproval => 'अनुमोदन की प्रतीक्षा';
+
+  @override
+  String get runNotDeployed => 'डिप्लॉय नहीं हुआ';
+
+  @override
+  String get builds => 'बिल्ड';
+
+  @override
+  String get releases => 'रिलीज़';
+
+  @override
+  String get loadReleasesFailed => 'रिलीज़ लोड नहीं हो सके';
+
+  @override
+  String get releaseScopeHint =>
+      'रिलीज़ के लिए आपके टोकन में Release (Read) स्कोप चाहिए।';
+
+  @override
+  String get artifact => 'आर्टिफ़ैक्ट';
+
+  @override
+  String waitingForApprovalBy(String names) {
+    return '$names के अनुमोदन की प्रतीक्षा';
+  }
 }

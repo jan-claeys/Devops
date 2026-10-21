@@ -43,7 +43,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get tokenScopeHint =>
-      'Ambito richiesto: Work Items (Read), Build (Read) e Project and Team (Read)';
+      'Ambito richiesto: Work Items (Read), Build (Read), Release (Read) e Project and Team (Read)';
 
   @override
   String get tokenRequired => 'Inserisci il tuo token';
@@ -61,7 +61,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'In Scopes scegli Custom defined e attiva solo Work Items: Read, Build: Read e Project and Team: Read.';
+      'In Scopes scegli Custom defined e attiva solo Work Items: Read, Build: Read, Release: Read e Project and Team: Read.';
 
   @override
   String get tokenHelpStep4 =>
@@ -437,4 +437,31 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get noStagesYet => 'Le fasi compaiono quando l’esecuzione inizia.';
+
+  @override
+  String get runWaitingForApproval => 'In attesa di approvazione';
+
+  @override
+  String get runNotDeployed => 'Non distribuita';
+
+  @override
+  String get builds => 'Build';
+
+  @override
+  String get releases => 'Release';
+
+  @override
+  String get loadReleasesFailed => 'Impossibile caricare le release';
+
+  @override
+  String get releaseScopeHint =>
+      'Le release richiedono l’ambito Release (Read) nel token.';
+
+  @override
+  String get artifact => 'Artefatto';
+
+  @override
+  String waitingForApprovalBy(String names) {
+    return 'In attesa dell’approvazione di $names';
+  }
 }

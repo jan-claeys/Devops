@@ -42,7 +42,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get tokenScopeHint =>
-      '必要なスコープ: Work Items (Read)、Build (Read) と Project and Team (Read)';
+      '必要なスコープ: Work Items (Read)、Build (Read)、Release (Read) と Project and Team (Read)';
 
   @override
   String get tokenRequired => 'トークンを入力してください';
@@ -59,7 +59,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'Scopes で Custom defined を選び、Work Items: Read、Build: Read と Project and Team: Read のみを有効にします。';
+      'Scopes で Custom defined を選び、Work Items: Read、Build: Read、Release: Read と Project and Team: Read のみを有効にします。';
 
   @override
   String get tokenHelpStep4 =>
@@ -425,4 +425,30 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get noStagesYet => '実行が始まるとステージが表示されます。';
+
+  @override
+  String get runWaitingForApproval => '承認待ち';
+
+  @override
+  String get runNotDeployed => '未デプロイ';
+
+  @override
+  String get builds => 'ビルド';
+
+  @override
+  String get releases => 'リリース';
+
+  @override
+  String get loadReleasesFailed => 'リリースを読み込めませんでした';
+
+  @override
+  String get releaseScopeHint => 'リリースにはトークンの Release (Read) スコープが必要です。';
+
+  @override
+  String get artifact => '成果物';
+
+  @override
+  String waitingForApprovalBy(String names) {
+    return '$names の承認待ち';
+  }
 }

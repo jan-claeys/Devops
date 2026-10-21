@@ -26,10 +26,14 @@ enum WorkItemScope { assignedToMe, createdByMe, all }
 class DevOpsApi {
   DevOpsApi({required String organization, required String pat, http.Client? client})
       : baseUrl = normalizeOrganization(organization),
+        releaseUrl = releaseBaseUrl(normalizeOrganization(organization)),
         _client = client ?? http.Client(),
         _auth = 'Basic ${base64Encode(utf8.encode(':$pat'))}';
 
   final String baseUrl;
+
+  /// Base URL of the release management API of classic release pipelines.
+  final String releaseUrl;
   final http.Client _client;
   final String _auth;
 
@@ -66,8 +70,26 @@ class DevOpsApi {
   String webUrl(WorkItem item) =>
       '$baseUrl/${Uri.encodeComponent(item.project)}/_workitems/edit/${item.id}';
 
-  String runWebUrl(PipelineRun run) =>
-      '$baseUrl/${Uri.encodeComponent(run.project)}/_build/results?buildId=${run.id}';
+  /// Release management has its own host in Azure DevOps Services; on a
+  /// server it lives in the collection itself.
+  static String releaseBaseUrl(String baseUrl) {
+    final uri = Uri.parse(baseUrl);
+    final host = switch (uri.host) {
+      'dev.azure.com' => 'vsrm.dev.azure.com',
+      final h when h.endsWith('.visualstudio.com') =>
+        h.replaceFirst(RegExp(r'\.visualstudio\.com$'), '.vsrm.visualstudio.com'),
+      final h => h,
+    };
+    return uri.replace(host: host).toString();
+  }
+
+  String runWebUrl(PipelineRun run) => switch (run) {
+        PipelineRun(:final webUrl?) => webUrl,
+        PipelineRun(kind: RunKind.release) =>
+          '$baseUrl/${Uri.encodeComponent(run.project)}/_releaseProgress'
+              '?_a=release-pipeline-progress&releaseId=${run.id}',
+        _ => '$baseUrl/${Uri.encodeComponent(run.project)}/_build/results?buildId=${run.id}',
+      };
 
   /// Headers to load [uri] with, such as an attachment image in a field.
   /// The PAT is only sent to the organization itself.
@@ -188,6 +210,33 @@ class DevOpsApi {
     final json = await _get('$baseUrl/${Uri.encodeComponent(project)}/_apis/build/builds/$id'
         '?api-version=$_apiVersion');
     return PipelineRun.fromJson(json);
+  }
+
+  /// The latest releases of the classic release pipelines in all [projects],
+  /// newest first.
+  Future<List<PipelineRun>> getReleases({
+    required List<String> projects,
+    int top = 50,
+  }) async {
+    final perProject = await Future.wait([
+      for (final project in projects)
+        _get('$releaseUrl/${Uri.encodeComponent(project)}/_apis/release/releases'
+            '?\$top=$top&\$expand=environments,artifacts,approvals'
+            '&queryOrder=descending&api-version=$_apiVersion'),
+    ]);
+    final releases = [
+      for (final (i, json) in perProject.indexed)
+        for (final release in (json['value'] as List).cast<Map<String, dynamic>>())
+          PipelineRun.fromRelease(release, project: projects[i]),
+    ]..sort((a, b) => (b.queueTime ?? DateTime(0)).compareTo(a.queueTime ?? DateTime(0)));
+    return releases.take(top).toList();
+  }
+
+  /// A release with the jobs and tasks of its stages.
+  Future<(PipelineRun, Timeline)> getRelease(String project, int id) async {
+    final json = await _get('$releaseUrl/${Uri.encodeComponent(project)}'
+        '/_apis/release/releases/$id?api-version=$_apiVersion');
+    return (PipelineRun.fromRelease(json, project: project), Timeline.fromRelease(json));
   }
 
   /// The stages, jobs and tasks of a run; empty until the run starts.

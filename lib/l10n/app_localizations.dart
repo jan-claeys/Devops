@@ -191,7 +191,7 @@ abstract class AppLocalizations {
   /// No description provided for @tokenScopeHint.
   ///
   /// In en, this message translates to:
-  /// **'Required scope: Work Items (Read), Build (Read) and Project and Team (Read)'**
+  /// **'Required scope: Work Items (Read), Build (Read), Release (Read) and Project and Team (Read)'**
   String get tokenScopeHint;
 
   /// No description provided for @tokenRequired.
@@ -221,7 +221,7 @@ abstract class AppLocalizations {
   /// No description provided for @tokenHelpStep3.
   ///
   /// In en, this message translates to:
-  /// **'Under Scopes, choose Custom defined and enable only Work Items: Read, Build: Read and Project and Team: Read.'**
+  /// **'Under Scopes, choose Custom defined and enable only Work Items: Read, Build: Read, Release: Read and Project and Team: Read.'**
   String get tokenHelpStep3;
 
   /// No description provided for @tokenHelpStep4.
@@ -865,6 +865,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The stages appear once the run starts.'**
   String get noStagesYet;
+
+  /// No description provided for @runWaitingForApproval.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for approval'**
+  String get runWaitingForApproval;
+
+  /// No description provided for @runNotDeployed.
+  ///
+  /// In en, this message translates to:
+  /// **'Not deployed'**
+  String get runNotDeployed;
+
+  /// No description provided for @builds.
+  ///
+  /// In en, this message translates to:
+  /// **'Builds'**
+  String get builds;
+
+  /// No description provided for @releases.
+  ///
+  /// In en, this message translates to:
+  /// **'Releases'**
+  String get releases;
+
+  /// No description provided for @loadReleasesFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load the releases'**
+  String get loadReleasesFailed;
+
+  /// No description provided for @releaseScopeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Releases need the Release (Read) scope on your token.'**
+  String get releaseScopeHint;
+
+  /// No description provided for @artifact.
+  ///
+  /// In en, this message translates to:
+  /// **'Artifact'**
+  String get artifact;
+
+  /// No description provided for @waitingForApprovalBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for approval by {names}'**
+  String waitingForApprovalBy(String names);
 }
 
 class _AppLocalizationsDelegate

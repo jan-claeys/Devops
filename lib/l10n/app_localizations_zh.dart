@@ -42,7 +42,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get tokenScopeHint =>
-      '所需范围：Work Items (Read)、Build (Read) 和 Project and Team (Read)';
+      '所需范围：Work Items (Read)、Build (Read)、Release (Read) 和 Project and Team (Read)';
 
   @override
   String get tokenRequired => '请输入你的令牌';
@@ -59,7 +59,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      '在 Scopes 下选择 Custom defined，并只启用 Work Items: Read、Build: Read 和 Project and Team: Read。';
+      '在 Scopes 下选择 Custom defined，并只启用 Work Items: Read、Build: Read、Release: Read 和 Project and Team: Read。';
 
   @override
   String get tokenHelpStep4 => '选择 Create，复制令牌并粘贴到上方。令牌只显示一次。';
@@ -423,4 +423,30 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get noStagesYet => '运行开始后将显示阶段。';
+
+  @override
+  String get runWaitingForApproval => '等待审批';
+
+  @override
+  String get runNotDeployed => '未部署';
+
+  @override
+  String get builds => '生成';
+
+  @override
+  String get releases => '发布';
+
+  @override
+  String get loadReleasesFailed => '无法加载发布';
+
+  @override
+  String get releaseScopeHint => '发布需要令牌具有 Release (Read) 范围。';
+
+  @override
+  String get artifact => '项目';
+
+  @override
+  String waitingForApprovalBy(String names) {
+    return '等待 $names 审批';
+  }
 }

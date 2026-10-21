@@ -85,4 +85,85 @@ void main() {
       expect(Timeline(const []).progress, isNull);
     });
   });
+
+  group('releases', () {
+    final release = releaseJson(9, environments: [
+      environmentJson(1, 'Test', tasks: [('Download', 'succeeded'), ('Deploy', 'succeeded')]),
+      environmentJson(2, 'Acceptance', rank: 2, status: 'notStarted',
+          pendingApprovers: ['Ann', 'Bob']),
+      environmentJson(3, 'Production', rank: 3, status: 'notStarted'),
+    ]);
+
+    test('parses a release', () {
+      final run = PipelineRun.fromRelease(release, project: 'Contoso');
+      expect(run.kind, RunKind.release);
+      expect(run.isRelease, isTrue);
+      expect(run.buildNumber, 'Release-9');
+      expect(run.pipelineName, 'Deploy web');
+      expect(run.branch, 'main');
+      expect(run.artifactVersion, '20261020.9');
+      expect(run.requestedFor?.displayName, 'Jan Claeys');
+      expect(run.queueTime, DateTime.parse('2026-10-20T11:00:00Z').toLocal());
+      expect(run.startTime, DateTime.parse('2026-10-20T11:00:10Z').toLocal());
+      expect(run.webUrl, contains('releaseId=9'));
+      expect(run.stages, [
+        (name: 'Test', status: RunStatus.succeeded),
+        (name: 'Acceptance', status: RunStatus.waitingForApproval),
+        (name: 'Production', status: RunStatus.notDeployed),
+      ]);
+    });
+
+    test('takes the status of the busiest or worst stage', () {
+      RunStatus status(List<String> stages, {String release = 'active'}) =>
+          PipelineRun.fromRelease(releaseJson(1, status: release, environments: [
+            for (final (i, s) in stages.indexed) environmentJson(i, 'S$i', status: s),
+          ])).status;
+      expect(status(['succeeded', 'notStarted']), RunStatus.succeeded);
+      expect(status(['succeeded', 'inProgress']), RunStatus.running);
+      expect(status(['rejected', 'succeeded']), RunStatus.failed);
+      expect(status(['queued', 'failed']), RunStatus.queued);
+      expect(status(['notStarted', 'notStarted']), RunStatus.notDeployed);
+      expect(status(['inProgress'], release: 'abandoned'), RunStatus.canceled);
+      expect(status(['succeeded', 'notStarted']).isFinished, isTrue);
+      expect(RunStatus.waitingForApproval.isFinished, isFalse);
+    });
+
+    test('turns the stages into a timeline', () {
+      final timeline = Timeline.fromRelease(release);
+      expect(timeline.roots.map((r) => r.name), ['Test', 'Acceptance', 'Production']);
+      expect(timeline.roots[1].approvers, ['Ann', 'Bob']);
+      final job = timeline.children(timeline.roots.first.id).single;
+      expect(job.type, 'Job');
+      expect(timeline.children(job.id).map((t) => (t.name, t.status)),
+          [('Download', RunStatus.succeeded), ('Deploy', RunStatus.succeeded)]);
+      expect(timeline.progress, 1);
+    });
+
+    test('shows the latest deployment attempt', () {
+      final env = environmentJson(1, 'Test', tasks: [('Old', 'failed')]);
+      final retry = environmentJson(1, 'Test', tasks: [('New', 'succeeded')]);
+      env['deploySteps'] = [
+        {...(retry['deploySteps'] as List).single as Map<String, dynamic>, 'attempt': 2},
+        ...env['deploySteps'] as List,
+      ];
+      final timeline = Timeline.fromRelease(releaseJson(1, environments: [env]));
+      expect(timeline.tasks.map((t) => t.name), ['New']);
+    });
+
+    test('counts the issues of tasks', () {
+      final env = environmentJson(1, 'Test', tasks: [('Deploy', 'failed')]);
+      final task = ((((env['deploySteps'] as List).single['releaseDeployPhases'] as List)
+              .single['deploymentJobs'] as List)
+          .single['tasks'] as List)
+          .single as Map<String, dynamic>;
+      task['issues'] = [
+        {'issueType': 'Error'},
+        {'issueType': 'Warning'},
+        {'issueType': 'Warning'},
+      ];
+      final record = Timeline.fromRelease(releaseJson(1, environments: [env])).tasks.single;
+      expect((record.errorCount, record.warningCount), (1, 2));
+      expect(record.status, RunStatus.failed);
+    });
+  });
 }

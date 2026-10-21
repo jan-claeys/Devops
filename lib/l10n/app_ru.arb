@@ -11,12 +11,12 @@
   "organizationRequired": "Введите организацию",
   "personalAccessToken": "Personal Access Token",
   "tokenAlreadyStored": "Токен уже сохранён. Введите его снова, чтобы изменить.",
-  "tokenScopeHint": "Нужные права: Work Items (Read), Build (Read) и Project and Team (Read)",
+  "tokenScopeHint": "Нужные права: Work Items (Read), Build (Read), Release (Read) и Project and Team (Read)",
   "tokenRequired": "Введите токен",
   "tokenHelpTitle": "Как создать токен?",
   "tokenHelpStep1": "В Azure DevOps откройте User settings → Personal access tokens и выберите New Token.",
   "tokenHelpStep2": "Выберите организацию и срок действия.",
-  "tokenHelpStep3": "В разделе Scopes выберите Custom defined и включите только Work Items: Read, Build: Read и Project and Team: Read.",
+  "tokenHelpStep3": "В разделе Scopes выберите Custom defined и включите только Work Items: Read, Build: Read, Release: Read и Project and Team: Read.",
   "tokenHelpStep4": "Нажмите Create, скопируйте токен и вставьте его выше. Он показывается только один раз.",
   "tokenHelpPermissions": "У токена никогда не бывает больше прав, чем у вашей учётной записи: нужен как минимум доступ Stakeholder и права на чтение нужных проектов.",
   "tokenHelpDocs": "Документация Microsoft",
@@ -128,5 +128,14 @@
   "finished": "Завершён",
   "duration": "Длительность",
   "stages": "Этапы",
-  "noStagesYet": "Этапы появятся после начала запуска."
+  "noStagesYet": "Этапы появятся после начала запуска.",
+
+  "runWaitingForApproval": "Ожидает утверждения",
+  "runNotDeployed": "Не развёрнуто",
+  "builds": "Сборки",
+  "releases": "Выпуски",
+  "loadReleasesFailed": "Не удалось загрузить выпуски",
+  "releaseScopeHint": "Для выпусков токену нужны права Release (Read).",
+  "artifact": "Артефакт",
+  "waitingForApprovalBy": "Ожидает утверждения: {names}"
 }

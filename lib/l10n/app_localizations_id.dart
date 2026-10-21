@@ -43,7 +43,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get tokenScopeHint =>
-      'Cakupan yang diperlukan: Work Items (Read), Build (Read) dan Project and Team (Read)';
+      'Cakupan yang diperlukan: Work Items (Read), Build (Read), Release (Read) dan Project and Team (Read)';
 
   @override
   String get tokenRequired => 'Masukkan token Anda';
@@ -60,7 +60,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'Di Scopes, pilih Custom defined dan aktifkan hanya Work Items: Read, Build: Read dan Project and Team: Read.';
+      'Di Scopes, pilih Custom defined dan aktifkan hanya Work Items: Read, Build: Read, Release: Read dan Project and Team: Read.';
 
   @override
   String get tokenHelpStep4 =>
@@ -433,4 +433,31 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get noStagesYet => 'Tahap muncul setelah run dimulai.';
+
+  @override
+  String get runWaitingForApproval => 'Menunggu persetujuan';
+
+  @override
+  String get runNotDeployed => 'Belum di-deploy';
+
+  @override
+  String get builds => 'Build';
+
+  @override
+  String get releases => 'Rilis';
+
+  @override
+  String get loadReleasesFailed => 'Tidak dapat memuat rilis';
+
+  @override
+  String get releaseScopeHint =>
+      'Rilis memerlukan cakupan Release (Read) pada token Anda.';
+
+  @override
+  String get artifact => 'Artefak';
+
+  @override
+  String waitingForApprovalBy(String names) {
+    return 'Menunggu persetujuan dari $names';
+  }
 }

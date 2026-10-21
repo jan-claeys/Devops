@@ -11,12 +11,12 @@
   "organizationRequired": "Vul je organisatie in",
   "personalAccessToken": "Personal Access Token",
   "tokenAlreadyStored": "Er is al een token opgeslagen. Vul opnieuw in om te wijzigen.",
-  "tokenScopeHint": "Scope nodig: Work Items (Read), Build (Read) en Project and Team (Read)",
+  "tokenScopeHint": "Scope nodig: Work Items (Read), Build (Read), Release (Read) en Project and Team (Read)",
   "tokenRequired": "Vul je token in",
   "tokenHelpTitle": "Hoe maak ik een token aan?",
   "tokenHelpStep1": "Open in Azure DevOps User settings → Personal access tokens en kies New Token.",
   "tokenHelpStep2": "Kies je organisatie en een vervaldatum.",
-  "tokenHelpStep3": "Kies bij Scopes voor Custom defined en vink alleen Work Items: Read, Build: Read en Project and Team: Read aan.",
+  "tokenHelpStep3": "Kies bij Scopes voor Custom defined en vink alleen Work Items: Read, Build: Read, Release: Read en Project and Team: Read aan.",
   "tokenHelpStep4": "Kies Create, kopieer het token en plak het hierboven. Het wordt maar één keer getoond.",
   "tokenHelpPermissions": "Een token heeft nooit meer rechten dan je account: je hebt minstens Stakeholder-toegang nodig en leesrechten op de projecten die je wilt zien.",
   "tokenHelpDocs": "Documentatie van Microsoft",
@@ -128,5 +128,14 @@
   "finished": "Klaar",
   "duration": "Duur",
   "stages": "Stages",
-  "noStagesYet": "De stages verschijnen zodra de run start."
+  "noStagesYet": "De stages verschijnen zodra de run start.",
+
+  "runWaitingForApproval": "Wacht op goedkeuring",
+  "runNotDeployed": "Niet uitgerold",
+  "builds": "Builds",
+  "releases": "Releases",
+  "loadReleasesFailed": "Kon de releases niet laden",
+  "releaseScopeHint": "Voor releases heeft je token de scope Release (Read) nodig.",
+  "artifact": "Artefact",
+  "waitingForApprovalBy": "Wacht op goedkeuring van {names}"
 }

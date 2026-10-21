@@ -14,12 +14,15 @@ class RunStatusStyle {
         RunStatus.pending => RunStatusStyle(scheme.outline, Icons.radio_button_unchecked),
         RunStatus.queued => RunStatusStyle(scheme.outline, Icons.schedule),
         RunStatus.running => const RunStatusStyle(Color(0xFF007ACC), Icons.play_circle),
+        RunStatus.waitingForApproval =>
+          const RunStatusStyle(Color(0xFF007ACC), Icons.pending_actions),
         RunStatus.cancelling => RunStatusStyle(scheme.outline, Icons.pending),
         RunStatus.succeeded => const RunStatusStyle(Color(0xFF339933), Icons.check_circle),
         RunStatus.partiallySucceeded => const RunStatusStyle(Color(0xFFFF9D00), Icons.error),
         RunStatus.failed => const RunStatusStyle(Color(0xFFCC293D), Icons.cancel),
         RunStatus.canceled => RunStatusStyle(scheme.outline, Icons.block),
         RunStatus.skipped => RunStatusStyle(scheme.outlineVariant, Icons.do_not_disturb_on),
+        RunStatus.notDeployed => RunStatusStyle(scheme.outline, Icons.radio_button_unchecked),
       };
 }
 
@@ -27,12 +30,14 @@ String runStatusLabel(AppLocalizations l10n, RunStatus status) => switch (status
       RunStatus.pending => l10n.runPending,
       RunStatus.queued => l10n.runQueued,
       RunStatus.running => l10n.runRunning,
+      RunStatus.waitingForApproval => l10n.runWaitingForApproval,
       RunStatus.cancelling => l10n.runCancelling,
       RunStatus.succeeded => l10n.runSucceeded,
       RunStatus.partiallySucceeded => l10n.runPartiallySucceeded,
       RunStatus.failed => l10n.runFailed,
       RunStatus.canceled => l10n.runCanceled,
       RunStatus.skipped => l10n.runSkipped,
+      RunStatus.notDeployed => l10n.runNotDeployed,
     };
 
 /// Status icon in the color of the status.
@@ -73,10 +78,53 @@ class RunStatusBadge extends StatelessWidget {
         children: [
           Icon(style.icon, color: style.color, size: 14),
           const SizedBox(width: 6),
-          Text(runStatusLabel(context.l10n, status),
-              style: Theme.of(context).textTheme.labelMedium),
+          Flexible(
+            child: Text(runStatusLabel(context.l10n, status),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: Theme.of(context).textTheme.labelMedium),
+          ),
         ],
       ),
+    );
+  }
+}
+
+/// Small pill per release stage, like the stages column in Azure DevOps.
+class StageChips extends StatelessWidget {
+  const StageChips(this.stages, {super.key});
+
+  final List<StageSummary> stages;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final scheme = theme.colorScheme;
+    return Wrap(
+      spacing: 6,
+      runSpacing: 6,
+      children: [
+        for (final stage in stages)
+          Tooltip(
+            message: runStatusLabel(context.l10n, stage.status),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+              decoration: BoxDecoration(
+                border: Border.all(color: scheme.outlineVariant),
+                borderRadius: BorderRadius.circular(6),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(RunStatusStyle.of(stage.status, scheme).icon,
+                      color: RunStatusStyle.of(stage.status, scheme).color, size: 12),
+                  const SizedBox(width: 4),
+                  Text(stage.name, style: theme.textTheme.labelSmall),
+                ],
+              ),
+            ),
+          ),
+      ],
     );
   }
 }

@@ -53,7 +53,12 @@ void main() {
     expect(find.text(en.runRunning), findsOneWidget);
     expect(find.text(en.runFailed), findsOneWidget);
     expect(find.text('main'), findsNWidgets(2));
-    expect(fake.requests.first.url.queryParameters['queryOrder'], 'queueTimeDescending');
+    expect(
+        fake.requests
+            .firstWhere((r) => r.url.path.endsWith('/_apis/build/builds'))
+            .url
+            .queryParameters['queryOrder'],
+        'queueTimeDescending');
   });
 
   testWidgets('searches and filters active runs', (tester) async {
@@ -189,5 +194,103 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byType(NavigationRail), findsOneWidget);
     expect(find.byType(NavigationBar), findsNothing);
+  });
+
+  group('releases', () {
+    setUp(() {
+      fake.releases[7] = releaseJson(7, pipeline: 'Deploy web', environments: [
+        environmentJson(1, 'Test', tasks: [('Download', 'succeeded'), ('Deploy', 'succeeded')]),
+        environmentJson(2, 'Production', rank: 2, status: 'notStarted',
+            pendingApprovers: ['Ann']),
+      ]);
+    });
+
+    int releaseRequests() =>
+        fake.requests.where((r) => r.url.path.contains('/_apis/release/')).length;
+
+    testWidgets('lists releases with their stages between the builds', (tester) async {
+      await pumpScreen(tester);
+
+      expect(find.text(en.runCount(3)), findsOneWidget);
+      expect(find.text('Deploy web'), findsOneWidget);
+      expect(find.text('Release-7'), findsOneWidget);
+      expect(find.byType(StageChips), findsOneWidget);
+      expect(find.text('Production'), findsOneWidget);
+      // Newest first: the release was created after the CI build.
+      expect(tester.getTopLeft(find.text('Deploy web')).dy,
+          lessThan(tester.getTopLeft(find.text('CI')).dy));
+    });
+
+    testWidgets('shows only builds or only releases', (tester) async {
+      await pumpScreen(tester);
+
+      await tester.tap(find.text(en.releases));
+      await tester.pumpAndSettle();
+      expect(find.text('Deploy web'), findsOneWidget);
+      expect(find.text('CI'), findsNothing);
+
+      await tester.tap(find.text(en.builds));
+      await tester.pumpAndSettle();
+      expect(find.text('Deploy web'), findsNothing);
+      expect(find.text('CI'), findsOneWidget);
+
+      await tester.tap(find.text(en.scopeAll));
+      await tester.pumpAndSettle();
+      expect(find.text(en.runCount(3)), findsOneWidget);
+    });
+
+    testWidgets('a release waiting for approval counts as active', (tester) async {
+      await pumpScreen(tester);
+      await tester.tap(find.text(en.activeOnly));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Deploy web'), findsOneWidget);
+      expect(find.text('CI'), findsOneWidget);
+      expect(find.text('Nightly'), findsNothing);
+    });
+
+    testWidgets('still shows the builds when the releases fail', (tester) async {
+      fake
+        ..failWith = 401
+        ..failPath = '/_apis/release/';
+      await pumpScreen(tester);
+
+      expect(find.text('CI'), findsOneWidget);
+      expect(find.text(en.loadReleasesFailed), findsOneWidget);
+      expect(find.textContaining(en.releaseScopeHint), findsOneWidget);
+
+      await tester.tap(find.text(en.builds));
+      await tester.pumpAndSettle();
+      expect(find.text(en.loadReleasesFailed), findsNothing);
+    });
+
+    testWidgets('follows a release and who has to approve it', (tester) async {
+      await pumpScreen(tester);
+      await tester.tap(find.text('Deploy web'));
+      await tester.pumpAndSettle();
+
+      expect(find.byType(PipelineRunScreen), findsOneWidget);
+      expect(find.text('Release-7'), findsWidgets);
+      expect(find.text('20261020.7'), findsOneWidget);
+      expect(find.text(en.waitingForApprovalBy('Ann')), findsOneWidget);
+      expect(find.text(en.tasksProgress(2, 2)), findsOneWidget);
+      expect(fake.requests.last.url.path, '/contoso/Contoso/_apis/release/releases/7');
+
+      // Approved and deployed: refreshing stops.
+      fake.releases[7] = releaseJson(7, pipeline: 'Deploy web', environments: [
+        environmentJson(1, 'Test', tasks: [('Deploy', 'succeeded')]),
+        environmentJson(2, 'Production', rank: 2, tasks: [('Deploy', 'succeeded')]),
+      ]);
+      final before = releaseRequests();
+      await tester.pump(PipelineRunScreen.refreshInterval);
+      await tester.pumpAndSettle();
+      expect(releaseRequests(), before + 1);
+      expect(find.text(en.waitingForApprovalBy('Ann')), findsNothing);
+      // The progress bar is left out once a release is done.
+      expect(find.text(en.progress), findsNothing);
+
+      await tester.pump(PipelineRunScreen.refreshInterval * 2);
+      expect(releaseRequests(), before + 1);
+    });
   });
 }

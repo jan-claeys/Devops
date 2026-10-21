@@ -11,12 +11,12 @@
   "organizationRequired": "Podaj swoją organizację",
   "personalAccessToken": "Personal Access Token",
   "tokenAlreadyStored": "Token jest już zapisany. Wpisz go ponownie, aby go zmienić.",
-  "tokenScopeHint": "Wymagany zakres: Work Items (Read), Build (Read) i Project and Team (Read)",
+  "tokenScopeHint": "Wymagany zakres: Work Items (Read), Build (Read), Release (Read) i Project and Team (Read)",
   "tokenRequired": "Podaj swój token",
   "tokenHelpTitle": "Jak utworzyć token?",
   "tokenHelpStep1": "W Azure DevOps otwórz User settings → Personal access tokens i wybierz New Token.",
   "tokenHelpStep2": "Wybierz organizację i datę wygaśnięcia.",
-  "tokenHelpStep3": "W sekcji Scopes wybierz Custom defined i zaznacz tylko Work Items: Read, Build: Read oraz Project and Team: Read.",
+  "tokenHelpStep3": "W sekcji Scopes wybierz Custom defined i zaznacz tylko Work Items: Read, Build: Read, Release: Read oraz Project and Team: Read.",
   "tokenHelpStep4": "Wybierz Create, skopiuj token i wklej go powyżej. Jest wyświetlany tylko raz.",
   "tokenHelpPermissions": "Token nigdy nie ma więcej uprawnień niż Twoje konto: potrzebujesz co najmniej dostępu Stakeholder i uprawnień do odczytu projektów, które chcesz widzieć.",
   "tokenHelpDocs": "Dokumentacja Microsoft",
@@ -128,5 +128,14 @@
   "finished": "Zakończono",
   "duration": "Czas trwania",
   "stages": "Etapy",
-  "noStagesYet": "Etapy pojawią się po rozpoczęciu uruchomienia."
+  "noStagesYet": "Etapy pojawią się po rozpoczęciu uruchomienia.",
+
+  "runWaitingForApproval": "Oczekuje na zatwierdzenie",
+  "runNotDeployed": "Nie wdrożono",
+  "builds": "Kompilacje",
+  "releases": "Wydania",
+  "loadReleasesFailed": "Nie udało się wczytać wydań",
+  "releaseScopeHint": "Wydania wymagają zakresu Release (Read) w tokenie.",
+  "artifact": "Artefakt",
+  "waitingForApprovalBy": "Oczekuje na zatwierdzenie przez: {names}"
 }

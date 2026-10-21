@@ -43,7 +43,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tokenScopeHint =>
-      'Required scope: Work Items (Read), Build (Read) and Project and Team (Read)';
+      'Required scope: Work Items (Read), Build (Read), Release (Read) and Project and Team (Read)';
 
   @override
   String get tokenRequired => 'Enter your token';
@@ -60,7 +60,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'Under Scopes, choose Custom defined and enable only Work Items: Read, Build: Read and Project and Team: Read.';
+      'Under Scopes, choose Custom defined and enable only Work Items: Read, Build: Read, Release: Read and Project and Team: Read.';
 
   @override
   String get tokenHelpStep4 =>
@@ -436,4 +436,31 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get noStagesYet => 'The stages appear once the run starts.';
+
+  @override
+  String get runWaitingForApproval => 'Waiting for approval';
+
+  @override
+  String get runNotDeployed => 'Not deployed';
+
+  @override
+  String get builds => 'Builds';
+
+  @override
+  String get releases => 'Releases';
+
+  @override
+  String get loadReleasesFailed => 'Couldn\'t load the releases';
+
+  @override
+  String get releaseScopeHint =>
+      'Releases need the Release (Read) scope on your token.';
+
+  @override
+  String get artifact => 'Artifact';
+
+  @override
+  String waitingForApprovalBy(String names) {
+    return 'Waiting for approval by $names';
+  }
 }

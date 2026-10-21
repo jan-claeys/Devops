@@ -11,12 +11,12 @@
   "organizationRequired": "Saisissez votre organisation",
   "personalAccessToken": "Personal Access Token",
   "tokenAlreadyStored": "Un jeton est déjà enregistré. Saisissez-le à nouveau pour le modifier.",
-  "tokenScopeHint": "Portée requise : Work Items (Read), Build (Read) et Project and Team (Read)",
+  "tokenScopeHint": "Portée requise : Work Items (Read), Build (Read), Release (Read) et Project and Team (Read)",
   "tokenRequired": "Saisissez votre jeton",
   "tokenHelpTitle": "Comment créer un token ?",
   "tokenHelpStep1": "Dans Azure DevOps, ouvrez User settings → Personal access tokens et sélectionnez New Token.",
   "tokenHelpStep2": "Choisissez votre organisation et une date d'expiration.",
-  "tokenHelpStep3": "Sous Scopes, choisissez Custom defined et activez uniquement Work Items: Read, Build: Read et Project and Team: Read.",
+  "tokenHelpStep3": "Sous Scopes, choisissez Custom defined et activez uniquement Work Items: Read, Build: Read, Release: Read et Project and Team: Read.",
   "tokenHelpStep4": "Sélectionnez Create, copiez le token et collez-le ci-dessus. Il n'est affiché qu'une seule fois.",
   "tokenHelpPermissions": "Un token n'a jamais plus de droits que votre compte : il vous faut au moins un accès Stakeholder et un accès en lecture aux projets à afficher.",
   "tokenHelpDocs": "Documentation Microsoft",
@@ -128,5 +128,14 @@
   "finished": "Terminée",
   "duration": "Durée",
   "stages": "Étapes",
-  "noStagesYet": "Les étapes apparaissent dès que l’exécution démarre."
+  "noStagesYet": "Les étapes apparaissent dès que l’exécution démarre.",
+
+  "runWaitingForApproval": "En attente d’approbation",
+  "runNotDeployed": "Non déployée",
+  "builds": "Builds",
+  "releases": "Releases",
+  "loadReleasesFailed": "Impossible de charger les releases",
+  "releaseScopeHint": "Les releases nécessitent la portée Release (Read) sur votre jeton.",
+  "artifact": "Artefact",
+  "waitingForApprovalBy": "En attente d’approbation de {names}"
 }

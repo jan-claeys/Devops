@@ -43,7 +43,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get tokenScopeHint =>
-      'النطاق المطلوب: Work Items (Read)، Build (Read) و Project and Team (Read)';
+      'النطاق المطلوب: Work Items (Read)، Build (Read)، Release (Read) و Project and Team (Read)';
 
   @override
   String get tokenRequired => 'أدخل الرمز';
@@ -60,7 +60,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'ضمن Scopes، اختر Custom defined وفعّل فقط Work Items: Read، Build: Read و Project and Team: Read.';
+      'ضمن Scopes، اختر Custom defined وفعّل فقط Work Items: Read، Build: Read، Release: Read و Project and Team: Read.';
 
   @override
   String get tokenHelpStep4 =>
@@ -346,7 +346,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get tickets => 'التذاكر';
 
   @override
-  String get pipelines => 'البنيات';
+  String get pipelines => 'المسارات';
 
   @override
   String get searchRunsHint => 'ابحث حسب البنية أو الفرع أو الشخص';
@@ -442,4 +442,31 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get noStagesYet => 'تظهر المراحل عند بدء التشغيل.';
+
+  @override
+  String get runWaitingForApproval => 'بانتظار الموافقة';
+
+  @override
+  String get runNotDeployed => 'لم يُنشر';
+
+  @override
+  String get builds => 'عمليات البناء';
+
+  @override
+  String get releases => 'الإصدارات';
+
+  @override
+  String get loadReleasesFailed => 'تعذّر تحميل الإصدارات';
+
+  @override
+  String get releaseScopeHint =>
+      'تحتاج الإصدارات إلى النطاق Release (Read) في الرمز المميز.';
+
+  @override
+  String get artifact => 'العنصر';
+
+  @override
+  String waitingForApprovalBy(String names) {
+    return 'بانتظار موافقة $names';
+  }
 }

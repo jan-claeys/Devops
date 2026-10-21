@@ -205,10 +205,47 @@ void main() {
       expect((await api.getTimeline('Contoso', 4)).roots, isEmpty);
     });
 
+    test('releaseBaseUrl points to release management', () {
+      expect(DevOpsApi.releaseBaseUrl('https://dev.azure.com/contoso'),
+          'https://vsrm.dev.azure.com/contoso');
+      expect(DevOpsApi.releaseBaseUrl('https://contoso.visualstudio.com'),
+          'https://contoso.vsrm.visualstudio.com');
+      expect(DevOpsApi.releaseBaseUrl('http://tfs.local:8080/tfs/Default'),
+          'http://tfs.local:8080/tfs/Default');
+    });
+
+    test('getReleases expands the stages, newest first', () async {
+      fake.releases
+        ..[1] = releaseJson(1, createdOn: '2026-10-20T08:00:00Z')
+        ..[2] = releaseJson(2, createdOn: '2026-10-20T09:00:00Z');
+      final releases = await api.getReleases(projects: ['My Project']);
+      expect(releases.map((r) => (r.id, r.project, r.kind)),
+          [(2, 'My Project', RunKind.release), (1, 'My Project', RunKind.release)]);
+      final url = fake.requests.single.url;
+      expect(url.host, 'vsrm.dev.azure.com');
+      expect(url.path, '/contoso/My%20Project/_apis/release/releases');
+      expect(url.queryParameters['\$expand'], 'environments,artifacts,approvals');
+    });
+
+    test('getRelease reads the release and its timeline', () async {
+      fake.releases[3] = releaseJson(3, environments: [
+        environmentJson(1, 'Test', status: 'inProgress', tasks: [('Deploy', 'inProgress')]),
+      ]);
+      final (run, timeline) = await api.getRelease('Contoso', 3);
+      expect(run.status, RunStatus.running);
+      expect(timeline.tasks.single.status, RunStatus.running);
+      expect(fake.requests.single.url.path, '/contoso/Contoso/_apis/release/releases/3');
+    });
+
     test('runWebUrl links to the results page', () {
       final run = PipelineRun.fromJson(runJson(4, project: 'My Project'));
       expect(api.runWebUrl(run),
           'https://dev.azure.com/contoso/My%20Project/_build/results?buildId=4');
+      final release = PipelineRun.fromRelease(releaseJson(5)..remove('_links'),
+          project: 'My Project');
+      expect(api.runWebUrl(release),
+          'https://dev.azure.com/contoso/My%20Project/_releaseProgress'
+          '?_a=release-pipeline-progress&releaseId=5');
     });
   });
 

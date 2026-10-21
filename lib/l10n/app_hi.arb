@@ -11,12 +11,12 @@
   "organizationRequired": "अपना संगठन दर्ज करें",
   "personalAccessToken": "Personal Access Token",
   "tokenAlreadyStored": "एक टोकन पहले से सहेजा गया है। बदलने के लिए फिर से दर्ज करें।",
-  "tokenScopeHint": "आवश्यक स्कोप: Work Items (Read), Build (Read) और Project and Team (Read)",
+  "tokenScopeHint": "आवश्यक स्कोप: Work Items (Read), Build (Read), Release (Read) और Project and Team (Read)",
   "tokenRequired": "अपना टोकन दर्ज करें",
   "tokenHelpTitle": "टोकन कैसे बनाएँ?",
   "tokenHelpStep1": "Azure DevOps में User settings → Personal access tokens खोलें और New Token चुनें।",
   "tokenHelpStep2": "अपना संगठन और समाप्ति तिथि चुनें।",
-  "tokenHelpStep3": "Scopes में Custom defined चुनें और केवल Work Items: Read, Build: Read और Project and Team: Read चालू करें।",
+  "tokenHelpStep3": "Scopes में Custom defined चुनें और केवल Work Items: Read, Build: Read, Release: Read और Project and Team: Read चालू करें।",
   "tokenHelpStep4": "Create चुनें, टोकन कॉपी करें और ऊपर पेस्ट करें। यह केवल एक बार दिखाया जाता है।",
   "tokenHelpPermissions": "टोकन के पास कभी भी आपके खाते से अधिक अधिकार नहीं होते: आपको कम से कम Stakeholder एक्सेस और जिन प्रोजेक्ट्स को देखना है उन पर पढ़ने की अनुमति चाहिए।",
   "tokenHelpDocs": "Microsoft दस्तावेज़",
@@ -128,5 +128,14 @@
   "finished": "समाप्त हुआ",
   "duration": "अवधि",
   "stages": "चरण",
-  "noStagesYet": "रन शुरू होने पर चरण दिखाई देंगे।"
+  "noStagesYet": "रन शुरू होने पर चरण दिखाई देंगे।",
+
+  "runWaitingForApproval": "अनुमोदन की प्रतीक्षा",
+  "runNotDeployed": "डिप्लॉय नहीं हुआ",
+  "builds": "बिल्ड",
+  "releases": "रिलीज़",
+  "loadReleasesFailed": "रिलीज़ लोड नहीं हो सके",
+  "releaseScopeHint": "रिलीज़ के लिए आपके टोकन में Release (Read) स्कोप चाहिए।",
+  "artifact": "आर्टिफ़ैक्ट",
+  "waitingForApprovalBy": "{names} के अनुमोदन की प्रतीक्षा"
 }
