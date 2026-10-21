@@ -5,25 +5,41 @@ import '../models/work_item.dart';
 import '../services/devops_api.dart';
 
 /// Lets the user tick the projects whose tickets are shown. Returns the
-/// chosen project names, or null when the sheet is dismissed.
+/// chosen project names, or null when the picker is dismissed. Shown as a
+/// bottom sheet on phones and as a dialog on wider screens.
 Future<List<String>?> showProjectPicker(
   BuildContext context, {
   required DevOpsApi api,
   List<String> current = const [],
-}) =>
-    showModalBottomSheet<List<String>>(
+}) {
+  if (MediaQuery.sizeOf(context).width >= _dialogBreakpoint) {
+    return showDialog<List<String>>(
       context: context,
-      isScrollControlled: true,
-      showDragHandle: true,
-      useSafeArea: true,
-      builder: (_) => ProjectPicker(api: api, current: current),
+      builder: (_) => ProjectPicker(api: api, current: current, dialog: true),
     );
+  }
+  return showModalBottomSheet<List<String>>(
+    context: context,
+    isScrollControlled: true,
+    showDragHandle: true,
+    useSafeArea: true,
+    builder: (_) => ProjectPicker(api: api, current: current),
+  );
+}
+
+const _dialogBreakpoint = 600.0;
 
 class ProjectPicker extends StatefulWidget {
-  const ProjectPicker({super.key, required this.api, this.current = const []});
+  const ProjectPicker({
+    super.key,
+    required this.api,
+    this.current = const [],
+    this.dialog = false,
+  });
 
   final DevOpsApi api;
   final List<String> current;
+  final bool dialog;
 
   @override
   State<ProjectPicker> createState() => _ProjectPickerState();
@@ -44,51 +60,71 @@ class _ProjectPickerState extends State<ProjectPicker> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final l10n = context.l10n;
     return FutureBuilder<List<Project>>(
       future: _projects,
-      builder: (context, snapshot) => DraggableScrollableSheet(
-        expand: false,
-        initialChildSize: 0.7,
-        minChildSize: 0.4,
-        maxChildSize: 0.95,
-        builder: (context, controller) => Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(24, 0, 16, 12),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(l10n.chooseProjects, style: theme.textTheme.titleLarge),
-                  ),
-                  FilledButton(
-                    onPressed: snapshot.hasData && _selected.isNotEmpty
-                        ? () => _apply(snapshot.data!)
-                        : null,
-                    child: Text(l10n.apply),
-                  ),
-                ],
+      builder: (context, snapshot) {
+        if (widget.dialog) {
+          final height = MediaQuery.sizeOf(context).height;
+          return Dialog(
+            clipBehavior: Clip.antiAlias,
+            child: SizedBox(
+              width: 560,
+              height: (height * 0.85).clamp(0.0, 800.0),
+              child: Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: _buildContent(snapshot, null),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: SearchBar(
-                hintText: l10n.searchProjectHint,
-                leading: const Icon(Icons.search),
-                elevation: const WidgetStatePropertyAll(0),
-                onChanged: (v) => setState(() => _query = v.toLowerCase()),
-              ),
-            ),
-            const SizedBox(height: 8),
-            Expanded(child: _buildList(snapshot, controller)),
-          ],
-        ),
-      ),
+          );
+        }
+        return DraggableScrollableSheet(
+          expand: false,
+          initialChildSize: 0.7,
+          minChildSize: 0.4,
+          maxChildSize: 0.95,
+          builder: (context, controller) => _buildContent(snapshot, controller),
+        );
+      },
     );
   }
 
-  Widget _buildList(AsyncSnapshot<List<Project>> snapshot, ScrollController controller) {
+  Widget _buildContent(AsyncSnapshot<List<Project>> snapshot, ScrollController? controller) {
+    final theme = Theme.of(context);
+    final l10n = context.l10n;
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(24, 0, 16, 12),
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(l10n.chooseProjects, style: theme.textTheme.titleLarge),
+              ),
+              FilledButton(
+                onPressed: snapshot.hasData && _selected.isNotEmpty
+                    ? () => _apply(snapshot.data!)
+                    : null,
+                child: Text(l10n.apply),
+              ),
+            ],
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: SearchBar(
+            hintText: l10n.searchProjectHint,
+            leading: const Icon(Icons.search),
+            elevation: const WidgetStatePropertyAll(0),
+            onChanged: (v) => setState(() => _query = v.toLowerCase()),
+          ),
+        ),
+        const SizedBox(height: 8),
+        Expanded(child: _buildList(snapshot, controller)),
+      ],
+    );
+  }
+
+  Widget _buildList(AsyncSnapshot<List<Project>> snapshot, ScrollController? controller) {
     final theme = Theme.of(context);
     final l10n = context.l10n;
     if (snapshot.hasError) {
