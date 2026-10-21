@@ -42,8 +42,7 @@ class AppLocalizationsId extends AppLocalizations {
       'Token sudah tersimpan. Masukkan lagi untuk mengubahnya.';
 
   @override
-  String get tokenScopeHint =>
-      'Cakupan yang diperlukan: Work Items (Read), Build (Read), Release (Read) dan Project and Team (Read)';
+  String get requiredScopes => 'Cakupan yang diperlukan';
 
   @override
   String get tokenRequired => 'Masukkan token Anda';
@@ -60,7 +59,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'Di Scopes, pilih Custom defined dan aktifkan hanya Work Items: Read, Build: Read, Release: Read dan Project and Team: Read.';
+      'Di Scopes, pilih Custom defined dan aktifkan hanya cakupan yang tercantum di atas, masing-masing dengan Read.';
 
   @override
   String get tokenHelpStep4 =>

@@ -136,9 +136,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           enableSuggestions: false,
                           decoration: InputDecoration(
                             labelText: l10n.personalAccessToken,
-                            helperText: state.hasPat
-                                ? l10n.tokenAlreadyStored
-                                : l10n.tokenScopeHint,
+                            helperText: state.hasPat ? l10n.tokenAlreadyStored : null,
                             helperMaxLines: 2,
                             prefixIcon: const Icon(Icons.key_outlined),
                             suffixIcon: IconButton(
@@ -152,6 +150,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           validator: (v) =>
                               (v == null || v.trim().isEmpty) ? l10n.tokenRequired : null,
                         ),
+                        const SizedBox(height: 16),
+                        const _RequiredScopes(),
                         if (_error != null) ...[
                           const SizedBox(height: 16),
                           Card.filled(
@@ -274,6 +274,67 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+/// Lists the token scopes the app needs, one per row, so they are easy to tick
+/// off in Azure DevOps. Names match the Azure DevOps UI and stay untranslated.
+class _RequiredScopes extends StatelessWidget {
+  const _RequiredScopes();
+
+  static const _scopes = [
+    (Icons.assignment_outlined, 'Work Items'),
+    (Icons.rocket_launch_outlined, 'Build'),
+    (Icons.account_tree_outlined, 'Release'),
+    (Icons.groups_outlined, 'Project and Team'),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final scheme = theme.colorScheme;
+    return Card.filled(
+      margin: EdgeInsets.zero,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(16, 12, 16, 4),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              children: [
+                Icon(Icons.verified_user_outlined, size: 20, color: scheme.primary),
+                const SizedBox(width: 8),
+                Text(context.l10n.requiredScopes, style: theme.textTheme.titleSmall),
+              ],
+            ),
+            const SizedBox(height: 4),
+            for (final (icon, name) in _scopes)
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 6),
+                child: Row(
+                  children: [
+                    Icon(icon, size: 20, color: scheme.onSurfaceVariant),
+                    const SizedBox(width: 12),
+                    Expanded(child: Text(name, style: theme.textTheme.bodyMedium)),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                      decoration: BoxDecoration(
+                        color: scheme.secondaryContainer,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Text(
+                        'Read',
+                        style: theme.textTheme.labelMedium
+                            ?.copyWith(color: scheme.onSecondaryContainer),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+          ],
+        ),
       ),
     );
   }

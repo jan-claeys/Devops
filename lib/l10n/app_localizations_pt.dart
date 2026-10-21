@@ -42,8 +42,7 @@ class AppLocalizationsPt extends AppLocalizations {
       'Já existe um token salvo. Informe-o novamente para alterá-lo.';
 
   @override
-  String get tokenScopeHint =>
-      'Escopo necessário: Work Items (Read), Build (Read), Release (Read) e Project and Team (Read)';
+  String get requiredScopes => 'Escopos necessários';
 
   @override
   String get tokenRequired => 'Informe seu token';
@@ -61,7 +60,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'Em Scopes, escolha Custom defined e ative apenas Work Items: Read, Build: Read, Release: Read e Project and Team: Read.';
+      'Em Scopes, escolha Custom defined e ative apenas os escopos indicados acima, cada um com Read.';
 
   @override
   String get tokenHelpStep4 =>

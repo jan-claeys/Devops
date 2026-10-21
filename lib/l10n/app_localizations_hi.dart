@@ -42,8 +42,7 @@ class AppLocalizationsHi extends AppLocalizations {
       'एक टोकन पहले से सहेजा गया है। बदलने के लिए फिर से दर्ज करें।';
 
   @override
-  String get tokenScopeHint =>
-      'आवश्यक स्कोप: Work Items (Read), Build (Read), Release (Read) और Project and Team (Read)';
+  String get requiredScopes => 'आवश्यक स्कोप';
 
   @override
   String get tokenRequired => 'अपना टोकन दर्ज करें';
@@ -60,7 +59,7 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'Scopes में Custom defined चुनें और केवल Work Items: Read, Build: Read, Release: Read और Project and Team: Read चालू करें।';
+      'Scopes में Custom defined चुनें और केवल ऊपर दिए गए स्कोप को Read के साथ चालू करें।';
 
   @override
   String get tokenHelpStep4 =>

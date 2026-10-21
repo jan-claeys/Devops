@@ -42,8 +42,7 @@ class AppLocalizationsUk extends AppLocalizations {
       'Токен уже збережено. Введіть його знову, щоб змінити.';
 
   @override
-  String get tokenScopeHint =>
-      'Потрібні права: Work Items (Read), Build (Read), Release (Read) і Project and Team (Read)';
+  String get requiredScopes => 'Потрібні права';
 
   @override
   String get tokenRequired => 'Введіть токен';
@@ -60,7 +59,7 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'У розділі Scopes виберіть Custom defined і ввімкніть лише Work Items: Read, Build: Read, Release: Read і Project and Team: Read.';
+      'У розділі Scopes виберіть Custom defined і ввімкніть лише права, перелічені вище, кожне з рівнем Read.';
 
   @override
   String get tokenHelpStep4 =>

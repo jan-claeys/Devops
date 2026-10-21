@@ -42,8 +42,7 @@ class AppLocalizationsTr extends AppLocalizations {
       'Zaten kayıtlı bir belirteç var. Değiştirmek için yeniden girin.';
 
   @override
-  String get tokenScopeHint =>
-      'Gerekli kapsam: Work Items (Read), Build (Read), Release (Read) ve Project and Team (Read)';
+  String get requiredScopes => 'Gerekli kapsamlar';
 
   @override
   String get tokenRequired => 'Belirtecinizi girin';
@@ -60,7 +59,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'Scopes altında Custom defined\'ı seçin ve yalnızca Work Items: Read, Build: Read, Release: Read ile Project and Team: Read\'i etkinleştirin.';
+      'Scopes altında Custom defined\'ı seçin ve yalnızca yukarıda listelenen kapsamları Read olarak etkinleştirin.';
 
   @override
   String get tokenHelpStep4 =>

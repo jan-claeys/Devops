@@ -41,8 +41,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get tokenAlreadyStored => '토큰이 이미 저장되어 있습니다. 변경하려면 다시 입력하세요.';
 
   @override
-  String get tokenScopeHint =>
-      '필요한 범위: Work Items (Read), Build (Read), Release (Read) 및 Project and Team (Read)';
+  String get requiredScopes => '필요한 범위';
 
   @override
   String get tokenRequired => '토큰을 입력하세요';
@@ -59,7 +58,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'Scopes에서 Custom defined를 선택하고 Work Items: Read, Build: Read, Release: Read와 Project and Team: Read만 켭니다.';
+      'Scopes에서 Custom defined를 선택하고 위에 나열된 범위만 각각 Read로 켭니다.';
 
   @override
   String get tokenHelpStep4 =>

@@ -42,8 +42,7 @@ class AppLocalizationsRu extends AppLocalizations {
       'Токен уже сохранён. Введите его снова, чтобы изменить.';
 
   @override
-  String get tokenScopeHint =>
-      'Нужные права: Work Items (Read), Build (Read), Release (Read) и Project and Team (Read)';
+  String get requiredScopes => 'Нужные права';
 
   @override
   String get tokenRequired => 'Введите токен';
@@ -60,7 +59,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'В разделе Scopes выберите Custom defined и включите только Work Items: Read, Build: Read, Release: Read и Project and Team: Read.';
+      'В разделе Scopes выберите Custom defined и включите только права, перечисленные выше, каждое с уровнем Read.';
 
   @override
   String get tokenHelpStep4 =>

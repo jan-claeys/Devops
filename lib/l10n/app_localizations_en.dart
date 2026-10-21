@@ -42,8 +42,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'A token is already stored. Enter it again to change it.';
 
   @override
-  String get tokenScopeHint =>
-      'Required scope: Work Items (Read), Build (Read), Release (Read) and Project and Team (Read)';
+  String get requiredScopes => 'Required scopes';
 
   @override
   String get tokenRequired => 'Enter your token';
@@ -60,7 +59,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'Under Scopes, choose Custom defined and enable only Work Items: Read, Build: Read, Release: Read and Project and Team: Read.';
+      'Under Scopes, choose Custom defined and enable only the scopes listed above, each with Read.';
 
   @override
   String get tokenHelpStep4 =>

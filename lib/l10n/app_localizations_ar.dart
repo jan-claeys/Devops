@@ -42,8 +42,7 @@ class AppLocalizationsAr extends AppLocalizations {
       'يوجد رمز محفوظ بالفعل. أدخله مرة أخرى لتغييره.';
 
   @override
-  String get tokenScopeHint =>
-      'النطاق المطلوب: Work Items (Read)، Build (Read)، Release (Read) و Project and Team (Read)';
+  String get requiredScopes => 'النطاقات المطلوبة';
 
   @override
   String get tokenRequired => 'أدخل الرمز';
@@ -60,7 +59,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'ضمن Scopes، اختر Custom defined وفعّل فقط Work Items: Read، Build: Read، Release: Read و Project and Team: Read.';
+      'ضمن Scopes، اختر Custom defined وفعّل فقط النطاقات المذكورة أعلاه، كلٌّ منها بصلاحية Read.';
 
   @override
   String get tokenHelpStep4 =>

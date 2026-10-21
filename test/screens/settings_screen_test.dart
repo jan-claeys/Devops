@@ -51,7 +51,9 @@ void main() {
     await pumpApp(tester, const SettingsScreen(isOnboarding: true), state: state);
     expect(find.text(en.welcome), findsWidgets);
     expect(find.text(en.onboardingIntro), findsOneWidget);
-    expect(find.text(en.tokenScopeHint), findsOneWidget);
+    expect(find.text(en.requiredScopes), findsOneWidget);
+    expect(find.text('Project and Team'), findsOneWidget);
+    expect(find.text('Read'), findsNWidgets(4));
     expect(find.text(en.appearance), findsNothing);
     expect(find.text(en.signOut), findsNothing);
   });

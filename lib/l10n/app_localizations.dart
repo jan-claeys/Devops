@@ -188,11 +188,11 @@ abstract class AppLocalizations {
   /// **'A token is already stored. Enter it again to change it.'**
   String get tokenAlreadyStored;
 
-  /// No description provided for @tokenScopeHint.
+  /// No description provided for @requiredScopes.
   ///
   /// In en, this message translates to:
-  /// **'Required scope: Work Items (Read), Build (Read), Release (Read) and Project and Team (Read)'**
-  String get tokenScopeHint;
+  /// **'Required scopes'**
+  String get requiredScopes;
 
   /// No description provided for @tokenRequired.
   ///
@@ -221,7 +221,7 @@ abstract class AppLocalizations {
   /// No description provided for @tokenHelpStep3.
   ///
   /// In en, this message translates to:
-  /// **'Under Scopes, choose Custom defined and enable only Work Items: Read, Build: Read, Release: Read and Project and Team: Read.'**
+  /// **'Under Scopes, choose Custom defined and enable only the scopes listed above, each with Read.'**
   String get tokenHelpStep3;
 
   /// No description provided for @tokenHelpStep4.

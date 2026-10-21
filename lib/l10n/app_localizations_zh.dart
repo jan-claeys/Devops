@@ -41,8 +41,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get tokenAlreadyStored => '已保存一个令牌。重新输入即可更改。';
 
   @override
-  String get tokenScopeHint =>
-      '所需范围：Work Items (Read)、Build (Read)、Release (Read) 和 Project and Team (Read)';
+  String get requiredScopes => '所需范围';
 
   @override
   String get tokenRequired => '请输入你的令牌';
@@ -58,8 +57,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get tokenHelpStep2 => '选择你的组织和过期日期。';
 
   @override
-  String get tokenHelpStep3 =>
-      '在 Scopes 下选择 Custom defined，并只启用 Work Items: Read、Build: Read、Release: Read 和 Project and Team: Read。';
+  String get tokenHelpStep3 => '在 Scopes 下选择 Custom defined，并只为上面列出的范围启用 Read。';
 
   @override
   String get tokenHelpStep4 => '选择 Create，复制令牌并粘贴到上方。令牌只显示一次。';

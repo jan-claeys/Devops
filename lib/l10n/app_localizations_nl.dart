@@ -42,8 +42,7 @@ class AppLocalizationsNl extends AppLocalizations {
       'Er is al een token opgeslagen. Vul opnieuw in om te wijzigen.';
 
   @override
-  String get tokenScopeHint =>
-      'Scope nodig: Work Items (Read), Build (Read), Release (Read) en Project and Team (Read)';
+  String get requiredScopes => 'Benodigde scopes';
 
   @override
   String get tokenRequired => 'Vul je token in';
@@ -60,7 +59,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'Kies bij Scopes voor Custom defined en vink alleen Work Items: Read, Build: Read, Release: Read en Project and Team: Read aan.';
+      'Kies bij Scopes voor Custom defined en vink alleen de scopes hierboven aan, telkens met Read.';
 
   @override
   String get tokenHelpStep4 =>

@@ -42,8 +42,7 @@ class AppLocalizationsFr extends AppLocalizations {
       'Un jeton est déjà enregistré. Saisissez-le à nouveau pour le modifier.';
 
   @override
-  String get tokenScopeHint =>
-      'Portée requise : Work Items (Read), Build (Read), Release (Read) et Project and Team (Read)';
+  String get requiredScopes => 'Portées requises';
 
   @override
   String get tokenRequired => 'Saisissez votre jeton';
@@ -61,7 +60,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'Sous Scopes, choisissez Custom defined et activez uniquement Work Items: Read, Build: Read, Release: Read et Project and Team: Read.';
+      'Sous Scopes, choisissez Custom defined et activez uniquement les portées indiquées ci-dessus, chacune avec Read.';
 
   @override
   String get tokenHelpStep4 =>

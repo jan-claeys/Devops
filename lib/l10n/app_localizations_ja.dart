@@ -41,8 +41,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get tokenAlreadyStored => 'トークンは保存済みです。変更するには再入力してください。';
 
   @override
-  String get tokenScopeHint =>
-      '必要なスコープ: Work Items (Read)、Build (Read)、Release (Read) と Project and Team (Read)';
+  String get requiredScopes => '必要なスコープ';
 
   @override
   String get tokenRequired => 'トークンを入力してください';
@@ -59,7 +58,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'Scopes で Custom defined を選び、Work Items: Read、Build: Read、Release: Read と Project and Team: Read のみを有効にします。';
+      'Scopes で Custom defined を選び、上記のスコープのみをそれぞれ Read で有効にします。';
 
   @override
   String get tokenHelpStep4 =>
