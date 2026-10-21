@@ -78,6 +78,29 @@ class AppLocalizationsJa extends AppLocalizations {
   String get languageSystem => 'システムの言語';
 
   @override
+  String get privacy => 'プライバシー';
+
+  @override
+  String get about => 'このアプリについて';
+
+  @override
+  String appVersion(String version) {
+    return 'バージョン $version';
+  }
+
+  @override
+  String madeBy(String name) {
+    return '作成者: $name';
+  }
+
+  @override
+  String get sendErrorReports => 'エラーレポートを送信';
+
+  @override
+  String get sendErrorReportsHint =>
+      '不具合を修正するため、クラッシュとエラーの匿名の詳細を送信します。トークンが送信されることはありません。';
+
+  @override
   String get signOut => 'サインアウト';
 
   @override
@@ -161,6 +184,18 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get acceptanceCriteria => '受け入れ基準';
+
+  @override
+  String get symptom => '症状';
+
+  @override
+  String get systemInfo => 'システム情報';
+
+  @override
+  String get proposedFix => '修正';
+
+  @override
+  String get emptyField => '内容なし';
 
   @override
   String get assignedTo => '担当者';

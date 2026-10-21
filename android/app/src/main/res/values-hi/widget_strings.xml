@@ -3,6 +3,7 @@
     <string name="tickets_widget_label">मेरे टिकट</string>
     <string name="tickets_widget_description">आपके खुले Azure DevOps टिकट एक नज़र में</string>
     <string name="tickets_widget_refresh">रीफ़्रेश करें</string>
+    <string name="tickets_widget_refreshing">रीफ़्रेश हो रहा है…</string>
     <string name="tickets_widget_not_loaded">लोड करने के लिए ऐप खोलें</string>
     <string name="tickets_widget_empty">कोई खुला टिकट नहीं</string>
     <string name="tickets_widget_open_count">%1$d खुले</string>

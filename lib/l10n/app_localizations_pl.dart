@@ -80,6 +80,29 @@ class AppLocalizationsPl extends AppLocalizations {
   String get languageSystem => 'Język systemu';
 
   @override
+  String get privacy => 'Prywatność';
+
+  @override
+  String get about => 'O aplikacji';
+
+  @override
+  String appVersion(String version) {
+    return 'Wersja $version';
+  }
+
+  @override
+  String madeBy(String name) {
+    return 'Autor: $name';
+  }
+
+  @override
+  String get sendErrorReports => 'Wysyłaj raporty o błędach';
+
+  @override
+  String get sendErrorReportsHint =>
+      'Wysyła anonimowe dane o awariach i błędach, aby można je było naprawić. Twój token nigdy nie jest wysyłany.';
+
+  @override
   String get signOut => 'Wyloguj';
 
   @override
@@ -167,6 +190,18 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get acceptanceCriteria => 'Kryteria akceptacji';
+
+  @override
+  String get symptom => 'Objaw';
+
+  @override
+  String get systemInfo => 'Informacje o systemie';
+
+  @override
+  String get proposedFix => 'Poprawka';
+
+  @override
+  String get emptyField => 'Brak treści';
 
   @override
   String get assignedTo => 'Przypisane do';

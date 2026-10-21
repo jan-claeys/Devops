@@ -1,4 +1,4 @@
-# Builds an Android APK and a Windows zip and publishes them as a GitHub release
+# Builds an Android APK and a Windows installer and publishes them as a GitHub release
 # for every push to main whose pubspec.yaml version has no release (tag) yet.
 name: Release
 
@@ -95,8 +95,10 @@ jobs:
           EOF
 
       - name: Build APK
+        env:
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
         run: |
-          flutter build apk --release --build-name="$VERSION" --build-number="${{ github.run_number }}"
+          flutter build apk --release --build-name="$VERSION" --build-number="${{ github.run_number }}" --dart-define=SENTRY_DSN="$SENTRY_DSN"
           mv build/app/outputs/flutter-apk/app-release.apk "DevOps-v$VERSION.apk"
 
       - uses: actions/upload-artifact@v5
@@ -122,15 +124,22 @@ jobs:
       - run: flutter pub get
 
       - name: Build Windows app
-        run: flutter build windows --release --build-name="$env:VERSION" --build-number="${{ github.run_number }}"
+        env:
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+        run: flutter build windows --release --build-name="$env:VERSION" --build-number="${{ github.run_number }}" --dart-define=SENTRY_DSN="$env:SENTRY_DSN"
 
-      - name: Zip Windows app
-        run: Compress-Archive -Path build/windows/x64/runner/Release/* -DestinationPath "DevOps-v$env:VERSION-windows-x64.zip"
+      - name: Build installer
+        run: |
+          $iscc = "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe"
+          if (-not (Test-Path $iscc)) { choco install innosetup --no-progress -y }
+          & $iscc /DAppVersion="$env:VERSION" windows/installer/devops.iss
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          Move-Item "build/installer/DevOps-v$env:VERSION-windows-x64-setup.exe" .
 
       - uses: actions/upload-artifact@v5
         with:
           name: windows
-          path: DevOps-v${{ env.VERSION }}-windows-x64.zip
+          path: DevOps-v${{ env.VERSION }}-windows-x64-setup.exe
           if-no-files-found: error
 
   release:
@@ -155,4 +164,4 @@ jobs:
             --title "v$VERSION" \
             --generate-notes \
             "DevOps-v$VERSION.apk" \
-            "DevOps-v$VERSION-windows-x64.zip"
+            "DevOps-v$VERSION-windows-x64-setup.exe"

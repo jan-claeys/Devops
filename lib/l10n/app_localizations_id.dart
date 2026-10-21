@@ -80,6 +80,29 @@ class AppLocalizationsId extends AppLocalizations {
   String get languageSystem => 'Bahasa sistem';
 
   @override
+  String get privacy => 'Privasi';
+
+  @override
+  String get about => 'Tentang';
+
+  @override
+  String appVersion(String version) {
+    return 'Versi $version';
+  }
+
+  @override
+  String madeBy(String name) {
+    return 'Dibuat oleh $name';
+  }
+
+  @override
+  String get sendErrorReports => 'Kirim laporan kesalahan';
+
+  @override
+  String get sendErrorReportsHint =>
+      'Mengirim detail anonim tentang crash dan kesalahan agar bug dapat diperbaiki. Token Anda tidak pernah dikirim.';
+
+  @override
   String get signOut => 'Keluar';
 
   @override
@@ -164,6 +187,18 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get acceptanceCriteria => 'Kriteria penerimaan';
+
+  @override
+  String get symptom => 'Gejala';
+
+  @override
+  String get systemInfo => 'Info sistem';
+
+  @override
+  String get proposedFix => 'Perbaikan';
+
+  @override
+  String get emptyField => 'Tidak ada konten';
 
   @override
   String get assignedTo => 'Ditugaskan ke';

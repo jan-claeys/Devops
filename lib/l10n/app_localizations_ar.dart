@@ -79,6 +79,29 @@ class AppLocalizationsAr extends AppLocalizations {
   String get languageSystem => 'لغة النظام';
 
   @override
+  String get privacy => 'الخصوصية';
+
+  @override
+  String get about => 'حول';
+
+  @override
+  String appVersion(String version) {
+    return 'الإصدار $version';
+  }
+
+  @override
+  String madeBy(String name) {
+    return 'من إنشاء $name';
+  }
+
+  @override
+  String get sendErrorReports => 'إرسال تقارير الأخطاء';
+
+  @override
+  String get sendErrorReportsHint =>
+      'يرسل تفاصيل مجهولة الهوية عن الأعطال والأخطاء لإصلاحها. لا يتم إرسال رمزك أبدًا.';
+
+  @override
   String get signOut => 'تسجيل الخروج';
 
   @override
@@ -167,6 +190,18 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get acceptanceCriteria => 'معايير القبول';
+
+  @override
+  String get symptom => 'العَرَض';
+
+  @override
+  String get systemInfo => 'معلومات النظام';
+
+  @override
+  String get proposedFix => 'الإصلاح';
+
+  @override
+  String get emptyField => 'لا يوجد محتوى';
 
   @override
   String get assignedTo => 'مسندة إلى';

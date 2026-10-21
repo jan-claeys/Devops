@@ -80,6 +80,29 @@ class AppLocalizationsTr extends AppLocalizations {
   String get languageSystem => 'Sistem dili';
 
   @override
+  String get privacy => 'Gizlilik';
+
+  @override
+  String get about => 'Hakkında';
+
+  @override
+  String appVersion(String version) {
+    return 'Sürüm $version';
+  }
+
+  @override
+  String madeBy(String name) {
+    return '$name tarafından yapıldı';
+  }
+
+  @override
+  String get sendErrorReports => 'Hata raporları gönder';
+
+  @override
+  String get sendErrorReportsHint =>
+      'Hataların düzeltilebilmesi için çökme ve hata ayrıntılarını anonim olarak gönderir. Belirteciniz asla gönderilmez.';
+
+  @override
   String get signOut => 'Oturumu kapat';
 
   @override
@@ -164,6 +187,18 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get acceptanceCriteria => 'Kabul kriterleri';
+
+  @override
+  String get symptom => 'Belirti';
+
+  @override
+  String get systemInfo => 'Sistem bilgisi';
+
+  @override
+  String get proposedFix => 'Düzeltme';
+
+  @override
+  String get emptyField => 'İçerik yok';
 
   @override
   String get assignedTo => 'Atanan';

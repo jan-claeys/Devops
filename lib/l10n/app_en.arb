@@ -23,6 +23,18 @@
   "colorSystem": "System color",
   "language": "Language",
   "languageSystem": "System language",
+  "privacy": "Privacy",
+  "about": "About",
+  "appVersion": "Version {version}",
+  "@appVersion": {
+    "placeholders": {"version": {"type": "String"}}
+  },
+  "madeBy": "Made by {name}",
+  "@madeBy": {
+    "placeholders": {"name": {"type": "String"}}
+  },
+  "sendErrorReports": "Send error reports",
+  "sendErrorReportsHint": "Sends anonymous crash and error details so bugs can be fixed. Your token is never sent.",
   "signOut": "Sign out",
 
   "selectTicketTitle": "Select a ticket",
@@ -54,6 +66,10 @@
   "description": "Description",
   "reproSteps": "Steps to reproduce",
   "acceptanceCriteria": "Acceptance criteria",
+  "symptom": "Symptom",
+  "systemInfo": "System info",
+  "proposedFix": "Fix",
+  "emptyField": "No content",
   "assignedTo": "Assigned to",
   "priority": "Priority",
   "effort": "Effort",

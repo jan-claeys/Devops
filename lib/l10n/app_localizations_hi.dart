@@ -80,6 +80,29 @@ class AppLocalizationsHi extends AppLocalizations {
   String get languageSystem => 'सिस्टम भाषा';
 
   @override
+  String get privacy => 'गोपनीयता';
+
+  @override
+  String get about => 'परिचय';
+
+  @override
+  String appVersion(String version) {
+    return 'संस्करण $version';
+  }
+
+  @override
+  String madeBy(String name) {
+    return '$name द्वारा निर्मित';
+  }
+
+  @override
+  String get sendErrorReports => 'त्रुटि रिपोर्ट भेजें';
+
+  @override
+  String get sendErrorReportsHint =>
+      'बग ठीक करने के लिए क्रैश और त्रुटियों का गुमनाम विवरण भेजता है। आपका टोकन कभी नहीं भेजा जाता।';
+
+  @override
   String get signOut => 'साइन आउट';
 
   @override
@@ -163,6 +186,18 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get acceptanceCriteria => 'स्वीकृति मानदंड';
+
+  @override
+  String get symptom => 'लक्षण';
+
+  @override
+  String get systemInfo => 'सिस्टम जानकारी';
+
+  @override
+  String get proposedFix => 'सुधार';
+
+  @override
+  String get emptyField => 'कोई सामग्री नहीं';
 
   @override
   String get assignedTo => 'सौंपा गया';

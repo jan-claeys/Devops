@@ -79,6 +79,29 @@ class AppLocalizationsEn extends AppLocalizations {
   String get languageSystem => 'System language';
 
   @override
+  String get privacy => 'Privacy';
+
+  @override
+  String get about => 'About';
+
+  @override
+  String appVersion(String version) {
+    return 'Version $version';
+  }
+
+  @override
+  String madeBy(String name) {
+    return 'Made by $name';
+  }
+
+  @override
+  String get sendErrorReports => 'Send error reports';
+
+  @override
+  String get sendErrorReportsHint =>
+      'Sends anonymous crash and error details so bugs can be fixed. Your token is never sent.';
+
+  @override
   String get signOut => 'Sign out';
 
   @override
@@ -164,6 +187,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get acceptanceCriteria => 'Acceptance criteria';
+
+  @override
+  String get symptom => 'Symptom';
+
+  @override
+  String get systemInfo => 'System info';
+
+  @override
+  String get proposedFix => 'Fix';
+
+  @override
+  String get emptyField => 'No content';
 
   @override
   String get assignedTo => 'Assigned to';

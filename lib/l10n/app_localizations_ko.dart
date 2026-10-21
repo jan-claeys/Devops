@@ -78,6 +78,29 @@ class AppLocalizationsKo extends AppLocalizations {
   String get languageSystem => '시스템 언어';
 
   @override
+  String get privacy => '개인정보';
+
+  @override
+  String get about => '정보';
+
+  @override
+  String appVersion(String version) {
+    return '버전 $version';
+  }
+
+  @override
+  String madeBy(String name) {
+    return '제작: $name';
+  }
+
+  @override
+  String get sendErrorReports => '오류 보고서 보내기';
+
+  @override
+  String get sendErrorReportsHint =>
+      '버그를 수정할 수 있도록 충돌 및 오류에 대한 익명 정보를 보냅니다. 토큰은 절대 전송되지 않습니다.';
+
+  @override
   String get signOut => '로그아웃';
 
   @override
@@ -161,6 +184,18 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get acceptanceCriteria => '수락 기준';
+
+  @override
+  String get symptom => '증상';
+
+  @override
+  String get systemInfo => '시스템 정보';
+
+  @override
+  String get proposedFix => '수정';
+
+  @override
+  String get emptyField => '내용 없음';
 
   @override
   String get assignedTo => '담당자';

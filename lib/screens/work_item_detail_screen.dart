@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:logging/logging.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../l10n/l10n.dart';
 import '../models/work_item.dart';
 import '../services/app_state.dart';
+import '../services/logging.dart';
 import '../widgets/work_item_visuals.dart';
+
+final _log = Logger('WorkItemDetailScreen');
 
 class WorkItemDetailScreen extends StatefulWidget {
   const WorkItemDetailScreen({
@@ -36,11 +40,23 @@ class _WorkItemDetailScreenState extends State<WorkItemDetailScreen> {
   }
 
   Future<_Detail> _load() async {
+    try {
+      return await _fetch();
+    } catch (e, st) {
+      logFailure(_log, 'Loading work item ${widget.id} failed', e, st);
+      rethrow;
+    }
+  }
+
+  Future<_Detail> _fetch() async {
     final api = AppScope.read(context).api!;
     final item = await api.getWorkItem(widget.id);
     final linkedIds = [?item.parentId, ...item.childIds];
     final results = await Future.wait([
-      api.getComments(item.project, item.id).catchError((_) => <WorkItemComment>[]),
+      api.getComments(item.project, item.id).catchError((Object e, StackTrace st) {
+        logFailure(_log, 'Loading comments of ${item.id} failed', e, st);
+        return <WorkItemComment>[];
+      }),
       api
           .getWorkItems(linkedIds, fields: const [
             'System.Id',
@@ -48,7 +64,10 @@ class _WorkItemDetailScreenState extends State<WorkItemDetailScreen> {
             'System.State',
             'System.WorkItemType',
           ])
-          .catchError((_) => <WorkItem>[]),
+          .catchError((Object e, StackTrace st) {
+            logFailure(_log, 'Loading linked items of ${item.id} failed', e, st);
+            return <WorkItem>[];
+          }),
     ]);
     final linked = {for (final w in results[1] as List<WorkItem>) w.id: w};
     return _Detail(
@@ -156,11 +175,19 @@ class _WorkItemDetailScreenState extends State<WorkItemDetailScreen> {
     final item = detail.item;
     final theme = Theme.of(context);
     final l10n = context.l10n;
+    // Bugs always show their tracking fields, like the DevOps bug form does.
     final sections = <(String, String?)>[
       (l10n.description, item.description),
-      (l10n.reproSteps, item.reproSteps),
+      if (!item.isBug) (l10n.reproSteps, item.reproSteps),
       (l10n.acceptanceCriteria, item.acceptanceCriteria),
-    ].where((s) => htmlToText(s.$2).isNotEmpty);
+    ].where((s) => htmlToText(s.$2).isNotEmpty).followedBy([
+      if (item.isBug) ...[
+        (l10n.reproSteps, item.reproSteps),
+        (l10n.symptom, item.symptom),
+        (l10n.systemInfo, item.systemInfo),
+        (l10n.proposedFix, item.proposedFix),
+      ],
+    ]);
 
     return [
       Row(
@@ -244,7 +271,12 @@ class _WorkItemDetailScreenState extends State<WorkItemDetailScreen> {
         const SizedBox(height: 16),
         _SectionCard(
           title: title,
-          child: SelectableText(htmlToText(html), style: theme.textTheme.bodyMedium),
+          child: htmlToText(html).isEmpty
+              ? Text(l10n.emptyField,
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                      color: theme.colorScheme.onSurfaceVariant,
+                      fontStyle: FontStyle.italic))
+              : SelectableText(htmlToText(html), style: theme.textTheme.bodyMedium),
         ),
       ],
       if (detail.parent != null || detail.children.isNotEmpty) ...[

@@ -260,6 +260,42 @@ abstract class AppLocalizations {
   /// **'System language'**
   String get languageSystem;
 
+  /// No description provided for @privacy.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy'**
+  String get privacy;
+
+  /// No description provided for @about.
+  ///
+  /// In en, this message translates to:
+  /// **'About'**
+  String get about;
+
+  /// No description provided for @appVersion.
+  ///
+  /// In en, this message translates to:
+  /// **'Version {version}'**
+  String appVersion(String version);
+
+  /// No description provided for @madeBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Made by {name}'**
+  String madeBy(String name);
+
+  /// No description provided for @sendErrorReports.
+  ///
+  /// In en, this message translates to:
+  /// **'Send error reports'**
+  String get sendErrorReports;
+
+  /// No description provided for @sendErrorReportsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Sends anonymous crash and error details so bugs can be fixed. Your token is never sent.'**
+  String get sendErrorReportsHint;
+
   /// No description provided for @signOut.
   ///
   /// In en, this message translates to:
@@ -415,6 +451,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Acceptance criteria'**
   String get acceptanceCriteria;
+
+  /// No description provided for @symptom.
+  ///
+  /// In en, this message translates to:
+  /// **'Symptom'**
+  String get symptom;
+
+  /// No description provided for @systemInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'System info'**
+  String get systemInfo;
+
+  /// No description provided for @proposedFix.
+  ///
+  /// In en, this message translates to:
+  /// **'Fix'**
+  String get proposedFix;
+
+  /// No description provided for @emptyField.
+  ///
+  /// In en, this message translates to:
+  /// **'No content'**
+  String get emptyField;
 
   /// No description provided for @assignedTo.
   ///

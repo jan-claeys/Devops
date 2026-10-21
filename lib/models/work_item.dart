@@ -73,6 +73,10 @@ class WorkItem {
   String? get reproSteps => fields['Microsoft.VSTS.TCM.ReproSteps'] as String?;
   String? get acceptanceCriteria =>
       fields['Microsoft.VSTS.Common.AcceptanceCriteria'] as String?;
+  String? get symptom => fields['Microsoft.VSTS.CMMI.Symptom'] as String?;
+  String? get systemInfo => fields['Microsoft.VSTS.TCM.SystemInfo'] as String?;
+  String? get proposedFix => fields['Microsoft.VSTS.CMMI.ProposedFix'] as String?;
+  bool get isBug => type == 'Bug';
 
   /// Id of the parent work item, if any.
   int? get parentId {

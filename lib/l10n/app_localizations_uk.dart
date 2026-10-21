@@ -80,6 +80,29 @@ class AppLocalizationsUk extends AppLocalizations {
   String get languageSystem => 'Мова системи';
 
   @override
+  String get privacy => 'Конфіденційність';
+
+  @override
+  String get about => 'Про застосунок';
+
+  @override
+  String appVersion(String version) {
+    return 'Версія $version';
+  }
+
+  @override
+  String madeBy(String name) {
+    return 'Автор: $name';
+  }
+
+  @override
+  String get sendErrorReports => 'Надсилати звіти про помилки';
+
+  @override
+  String get sendErrorReportsHint =>
+      'Надсилає анонімні дані про збої та помилки, щоб їх можна було виправити. Ваш токен ніколи не надсилається.';
+
+  @override
   String get signOut => 'Вийти';
 
   @override
@@ -167,6 +190,18 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get acceptanceCriteria => 'Критерії приймання';
+
+  @override
+  String get symptom => 'Симптом';
+
+  @override
+  String get systemInfo => 'Відомості про систему';
+
+  @override
+  String get proposedFix => 'Виправлення';
+
+  @override
+  String get emptyField => 'Немає вмісту';
 
   @override
   String get assignedTo => 'Призначено';

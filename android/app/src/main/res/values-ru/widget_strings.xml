@@ -3,6 +3,7 @@
     <string name="tickets_widget_label">Мои тикеты</string>
     <string name="tickets_widget_description">Ваши открытые тикеты Azure DevOps с первого взгляда</string>
     <string name="tickets_widget_refresh">Обновить</string>
+    <string name="tickets_widget_refreshing">Обновление…</string>
     <string name="tickets_widget_not_loaded">Откройте приложение для загрузки</string>
     <string name="tickets_widget_empty">Нет открытых тикетов</string>
     <string name="tickets_widget_open_count">Открыто: %1$d</string>

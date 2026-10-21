@@ -80,6 +80,29 @@ class AppLocalizationsNl extends AppLocalizations {
   String get languageSystem => 'Systeemtaal';
 
   @override
+  String get privacy => 'Privacy';
+
+  @override
+  String get about => 'Over';
+
+  @override
+  String appVersion(String version) {
+    return 'Versie $version';
+  }
+
+  @override
+  String madeBy(String name) {
+    return 'Gemaakt door $name';
+  }
+
+  @override
+  String get sendErrorReports => 'Foutrapporten versturen';
+
+  @override
+  String get sendErrorReportsHint =>
+      'Stuurt anonieme gegevens over crashes en fouten zodat bugs opgelost kunnen worden. Je token wordt nooit verstuurd.';
+
+  @override
   String get signOut => 'Afmelden';
 
   @override
@@ -166,6 +189,18 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get acceptanceCriteria => 'Acceptatiecriteria';
+
+  @override
+  String get symptom => 'Symptoom';
+
+  @override
+  String get systemInfo => 'Systeeminfo';
+
+  @override
+  String get proposedFix => 'Oplossing';
+
+  @override
+  String get emptyField => 'Geen inhoud';
 
   @override
   String get assignedTo => 'Toegewezen aan';

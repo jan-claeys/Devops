@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:logging/logging.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../l10n/l10n.dart';
 import '../services/app_state.dart';
 import '../services/devops_api.dart';
 import '../services/home_widget_service.dart';
+import '../services/logging.dart';
+
+final _log = Logger('SettingsScreen');
+
+const _author = 'Jan Claeys';
+final _repositoryUrl = Uri.parse('https://github.com/jan-claeys/Devops');
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key, this.isOnboarding = false});
@@ -56,7 +65,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text(context.l10n.connectionSaved)));
       }
-    } catch (e) {
+    } catch (e, st) {
+      logFailure(_log, 'Verifying the connection failed', e, st);
       setState(() => _error = context.l10n.error(e));
     } finally {
       if (mounted) setState(() => _busy = false);
@@ -194,6 +204,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           Text(l10n.language, style: theme.textTheme.titleMedium),
                           const SizedBox(height: 12),
                           const _LanguagePicker(),
+                          if (errorReportingAvailable) ...[
+                            const SizedBox(height: 32),
+                            Text(l10n.privacy, style: theme.textTheme.titleMedium),
+                            const SizedBox(height: 4),
+                            SwitchListTile(
+                              contentPadding: EdgeInsets.zero,
+                              secondary: const Icon(Icons.bug_report_outlined),
+                              title: Text(l10n.sendErrorReports),
+                              subtitle: Text(l10n.sendErrorReportsHint),
+                              value: state.sendErrorReports,
+                              onChanged: state.setSendErrorReports,
+                            ),
+                          ],
                           const SizedBox(height: 32),
                           OutlinedButton.icon(
                             style: OutlinedButton.styleFrom(
@@ -207,6 +230,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             icon: const Icon(Icons.logout),
                             label: Text(l10n.signOut),
                           ),
+                          const SizedBox(height: 32),
+                          Text(l10n.about, style: theme.textTheme.titleMedium),
+                          const SizedBox(height: 4),
+                          const _AboutTile(),
                         ],
                       ],
                     ),
@@ -242,6 +269,29 @@ class _LanguagePicker extends StatelessWidget {
       ],
       onSelected: (code) =>
           state.setLocale(code == null || code.isEmpty ? null : Locale(code)),
+    );
+  }
+}
+
+class _AboutTile extends StatelessWidget {
+  const _AboutTile();
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    return FutureBuilder<PackageInfo>(
+      future: PackageInfo.fromPlatform(),
+      builder: (context, snapshot) {
+        final version = snapshot.data?.version ?? '';
+        return ListTile(
+          contentPadding: EdgeInsets.zero,
+          leading: const Icon(Icons.info_outline),
+          title: Text(l10n.appVersion(version)),
+          subtitle: Text(l10n.madeBy(_author)),
+          trailing: const Icon(Icons.open_in_new),
+          onTap: () => launchUrl(_repositoryUrl, mode: LaunchMode.externalApplication),
+        );
+      },
     );
   }
 }

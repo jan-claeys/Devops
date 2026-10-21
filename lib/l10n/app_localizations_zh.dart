@@ -78,6 +78,28 @@ class AppLocalizationsZh extends AppLocalizations {
   String get languageSystem => '系统语言';
 
   @override
+  String get privacy => '隐私';
+
+  @override
+  String get about => '关于';
+
+  @override
+  String appVersion(String version) {
+    return '版本 $version';
+  }
+
+  @override
+  String madeBy(String name) {
+    return '由 $name 开发';
+  }
+
+  @override
+  String get sendErrorReports => '发送错误报告';
+
+  @override
+  String get sendErrorReportsHint => '发送匿名的崩溃和错误详情，以便修复问题。绝不会发送你的令牌。';
+
+  @override
   String get signOut => '退出登录';
 
   @override
@@ -161,6 +183,18 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get acceptanceCriteria => '验收标准';
+
+  @override
+  String get symptom => '症状';
+
+  @override
+  String get systemInfo => '系统信息';
+
+  @override
+  String get proposedFix => '修复';
+
+  @override
+  String get emptyField => '无内容';
 
   @override
   String get assignedTo => '分配给';

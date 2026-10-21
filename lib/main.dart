@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:home_widget/home_widget.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 import 'l10n/l10n.dart';
 import 'screens/settings_screen.dart';
@@ -12,14 +13,18 @@ import 'screens/work_item_detail_screen.dart';
 import 'screens/work_items_screen.dart';
 import 'services/app_state.dart';
 import 'services/home_widget_service.dart';
+import 'services/logging.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await initializeDateFormatting();
-  final state = AppState();
-  await state.load();
-  unawaited(TicketsHomeWidget.registerBackgroundRefresh());
-  runApp(AppScope(state: state, child: const DevOpsApp()));
+  await runWithErrorReporting(() async {
+    // Inside the error reporting zone, the same zone runApp uses.
+    WidgetsFlutterBinding.ensureInitialized();
+    await initializeDateFormatting();
+    final state = AppState();
+    await state.load();
+    unawaited(TicketsHomeWidget.registerBackgroundRefresh());
+    runApp(AppScope(state: state, child: const DevOpsApp()));
+  });
 }
 
 class DevOpsApp extends StatefulWidget {
@@ -38,7 +43,10 @@ class _DevOpsAppState extends State<DevOpsApp> {
   @override
   void initState() {
     super.initState();
-    // Tapping a ticket in the home screen widget opens its details.
+    // Tapping a ticket in the home screen widget opens its details. Elsewhere
+    // the event channel has no implementation and listening reports a
+    // MissingPluginException straight to FlutterError, bypassing onError.
+    if (!TicketsHomeWidget.isSupported) return;
     HomeWidget.initiallyLaunchedFromHomeWidget().then(_openFromWidget, onError: (_) {});
     _widgetClicks = HomeWidget.widgetClicked.listen(_openFromWidget, onError: (_) {});
   }
@@ -81,6 +89,8 @@ class _DevOpsAppState extends State<DevOpsApp> {
         final useDynamic = state.useDynamicColor;
         return MaterialApp(
           navigatorKey: _navigator,
+          // Records screen changes as breadcrumbs for error reports.
+          navigatorObservers: [SentryNavigatorObserver()],
           title: 'DevOps',
           // Without a chosen language Flutter picks the first supported system
           // language, falling back to English (first in supportedLocales).

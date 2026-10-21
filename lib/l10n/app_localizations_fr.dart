@@ -80,6 +80,29 @@ class AppLocalizationsFr extends AppLocalizations {
   String get languageSystem => 'Langue du système';
 
   @override
+  String get privacy => 'Confidentialité';
+
+  @override
+  String get about => 'À propos';
+
+  @override
+  String appVersion(String version) {
+    return 'Version $version';
+  }
+
+  @override
+  String madeBy(String name) {
+    return 'Créé par $name';
+  }
+
+  @override
+  String get sendErrorReports => 'Envoyer les rapports d\'erreur';
+
+  @override
+  String get sendErrorReportsHint =>
+      'Envoie des informations anonymes sur les plantages et les erreurs pour corriger les bugs. Votre jeton n\'est jamais envoyé.';
+
+  @override
   String get signOut => 'Se déconnecter';
 
   @override
@@ -165,6 +188,18 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get acceptanceCriteria => 'Critères d\'acceptation';
+
+  @override
+  String get symptom => 'Symptôme';
+
+  @override
+  String get systemInfo => 'Infos système';
+
+  @override
+  String get proposedFix => 'Correctif';
+
+  @override
+  String get emptyField => 'Aucun contenu';
 
   @override
   String get assignedTo => 'Attribué à';

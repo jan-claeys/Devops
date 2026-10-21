@@ -1,5 +1,6 @@
 import 'package:devops/screens/settings_screen.dart';
 import 'package:devops/services/app_state.dart';
+import 'package:devops/services/logging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -109,6 +110,22 @@ void main() {
     await tester.pumpAndSettle();
     expect(state.themeMode, ThemeMode.dark);
     expect(state.useDynamicColor, isTrue);
+  });
+
+  testWidgets('hides the error reports switch without Sentry', (tester) async {
+    await openSettings(tester);
+    expect(find.text(en.sendErrorReports), findsNothing);
+  });
+
+  testWidgets('turns error reports off', (tester) async {
+    errorReportingAvailable = true;
+    addTearDown(() => errorReportingAvailable = false);
+    await openSettings(tester);
+    expect(tester.widget<SwitchListTile>(find.byType(SwitchListTile)).value, isTrue);
+    await tester.tap(find.text(en.sendErrorReports));
+    await tester.pumpAndSettle();
+    expect(state.sendErrorReports, isFalse);
+    expect(sendErrorReports, isFalse);
   });
 
   testWidgets('changes the language', (tester) async {
