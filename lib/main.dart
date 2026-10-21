@@ -43,7 +43,10 @@ class _DevOpsAppState extends State<DevOpsApp> {
   @override
   void initState() {
     super.initState();
-    // Tapping a ticket in the home screen widget opens its details.
+    // Tapping a ticket in the home screen widget opens its details. Elsewhere
+    // the event channel has no implementation and listening reports a
+    // MissingPluginException straight to FlutterError, bypassing onError.
+    if (!TicketsHomeWidget.isSupported) return;
     HomeWidget.initiallyLaunchedFromHomeWidget().then(_openFromWidget, onError: (_) {});
     _widgetClicks = HomeWidget.widgetClicked.listen(_openFromWidget, onError: (_) {});
   }

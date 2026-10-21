@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:home_widget/home_widget.dart';
 import 'package:logging/logging.dart';
@@ -22,6 +23,9 @@ class TicketsHomeWidget {
 
   /// Max number of tickets handed to the widget.
   static const _maxItems = 50;
+
+  /// Only Android has a home screen widget (TicketsWidgetProvider.kt).
+  static bool get isSupported => !kIsWeb && defaultTargetPlatform == TargetPlatform.android;
 
   /// Opened when a ticket in the widget is tapped, e.g. devops://workitem/123.
   static int? workItemIdFromUri(Uri? uri) {
