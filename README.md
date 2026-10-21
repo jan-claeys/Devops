@@ -70,7 +70,7 @@ flutter gen-l10n
 
 ## Releases
 
-Every push to `main` runs [`.github/workflows/release.yml`](.github/workflows/release.yml). It reads the version from `pubspec.yaml` and, if there is no GitHub release `v<version>` yet, runs the tests, builds a signed APK and a Windows zip and publishes them as release `v<version>`. If that version is already released, the workflow does nothing, so regular pushes to `main` are fine.
+Every push to `main` runs [`.github/workflows/release.yml`](.github/workflows/release.yml). It reads the version from `pubspec.yaml` and, if there is no GitHub release `v<version>` yet, runs the tests, builds a signed APK and a Windows installer ([`windows/installer/devops.iss`](windows/installer/devops.iss), Inno Setup) and publishes them as release `v<version>`. If that version is already released, the workflow does nothing, so regular pushes to `main` are fine.
 
 To release a new version:
 
@@ -79,7 +79,7 @@ To release a new version:
    - `1.0.0` → `1.1.0` for new features
    - `1.0.0` → `2.0.0` for breaking changes
 2. Commit and push to `main`.
-3. Follow the build under *Actions*; when it is done, the APK and Windows zip are on the *Releases* page.
+3. Follow the build under *Actions*; when it is done, the APK and Windows installer (`DevOps-v<version>-windows-x64-setup.exe`) are on the *Releases* page.
 
 The build number (`+N`) in `pubspec.yaml` is only used for local builds; CI uses the workflow run number, so it always increases. A release can also be started manually with *Run workflow* on the *Release* workflow in *Actions*.
 
