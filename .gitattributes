@@ -1,0 +1,4 @@
+* text=auto
+
+# Flutter regenerates these with LF line endings on every build
+windows/flutter/generated_* text eol=lf

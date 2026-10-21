@@ -244,27 +244,30 @@ class _PipelinesScreenState extends State<PipelinesScreen> {
             ),
             SliverToBoxAdapter(
               child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                child: SegmentedButton<RunKind?>(
+                  showSelectedIcon: false,
+                  segments: [
+                    ButtonSegment(value: null, label: Text(l10n.scopeAll)),
+                    ButtonSegment(
+                        value: RunKind.build,
+                        icon: const Icon(Icons.construction),
+                        label: Text(l10n.builds)),
+                    ButtonSegment(
+                        value: RunKind.release,
+                        icon: const Icon(Icons.rocket_launch_outlined),
+                        label: Text(l10n.releases)),
+                  ],
+                  selected: {_kind},
+                  onSelectionChanged: (s) => setState(() => _kind = s.first),
+                ),
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                child: Wrap(
-                  spacing: 8,
-                  runSpacing: 8,
+                child: Row(
                   children: [
-                    SegmentedButton<RunKind?>(
-                      showSelectedIcon: false,
-                      segments: [
-                        ButtonSegment(value: null, label: Text(l10n.scopeAll)),
-                        ButtonSegment(
-                            value: RunKind.build,
-                            icon: const Icon(Icons.construction),
-                            label: Text(l10n.builds)),
-                        ButtonSegment(
-                            value: RunKind.release,
-                            icon: const Icon(Icons.rocket_launch_outlined),
-                            label: Text(l10n.releases)),
-                      ],
-                      selected: {_kind},
-                      onSelectionChanged: (s) => setState(() => _kind = s.first),
-                    ),
                     FilterChip(
                       label: Text(l10n.activeOnly),
                       selected: _activeOnly,
