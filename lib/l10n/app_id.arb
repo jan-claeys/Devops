@@ -23,6 +23,9 @@
   "colorSystem": "Warna sistem",
   "language": "Bahasa",
   "languageSystem": "Bahasa sistem",
+  "privacy": "Privasi",
+  "sendErrorReports": "Kirim laporan kesalahan",
+  "sendErrorReportsHint": "Mengirim detail anonim tentang crash dan kesalahan agar bug dapat diperbaiki. Token Anda tidak pernah dikirim.",
   "signOut": "Keluar",
 
   "selectTicketTitle": "Pilih tiket",

@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:logging/logging.dart';
 
 import '../l10n/l10n.dart';
 import '../models/work_item.dart';
 import '../services/app_state.dart';
 import '../services/devops_api.dart';
 import '../services/home_widget_service.dart';
+import '../services/logging.dart';
 import '../widgets/work_item_visuals.dart';
 import 'settings_screen.dart';
 import 'work_item_detail_screen.dart';
+
+final _log = Logger('WorkItemsScreen');
 
 class WorkItemsScreen extends StatefulWidget {
   const WorkItemsScreen({super.key});
@@ -71,7 +75,8 @@ class _WorkItemsScreenState extends State<WorkItemsScreen> {
       }
       if (!mounted) return;
       setState(() => _items = items);
-    } catch (e) {
+    } catch (e, st) {
+      logFailure(_log, 'Loading work items failed', e, st);
       if (mounted) setState(() => _error = e);
     } finally {
       if (mounted) setState(() => _loading = false);

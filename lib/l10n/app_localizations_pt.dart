@@ -80,6 +80,16 @@ class AppLocalizationsPt extends AppLocalizations {
   String get languageSystem => 'Idioma do sistema';
 
   @override
+  String get privacy => 'Privacidade';
+
+  @override
+  String get sendErrorReports => 'Enviar relatórios de erros';
+
+  @override
+  String get sendErrorReportsHint =>
+      'Envia dados anônimos sobre falhas e erros para que possam ser corrigidos. Seu token nunca é enviado.';
+
+  @override
   String get signOut => 'Sair';
 
   @override

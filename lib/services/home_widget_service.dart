@@ -2,11 +2,15 @@ import 'dart:convert';
 
 import 'package:flutter/widgets.dart';
 import 'package:home_widget/home_widget.dart';
+import 'package:logging/logging.dart';
 
 import '../l10n/l10n.dart';
 import '../models/work_item.dart';
 import 'app_state.dart';
 import 'devops_api.dart';
+import 'logging.dart';
+
+final _log = Logger('TicketsHomeWidget');
 
 /// Feeds the Android home screen widget with my open work items.
 ///
@@ -76,7 +80,8 @@ class TicketsHomeWidget {
       final items = await api.queryWorkItems(
           project: project, scope: WorkItemScope.assignedToMe, openOnly: true);
       await update(project: project, items: items);
-    } catch (e) {
+    } catch (e, st) {
+      logFailure(_log, 'Refreshing the home widget failed', e, st);
       await update(project: project, error: l10n.error(e));
     }
   }
@@ -87,5 +92,6 @@ class TicketsHomeWidget {
 @pragma('vm:entry-point')
 Future<void> homeWidgetBackgroundCallback(Uri? uri) async {
   WidgetsFlutterBinding.ensureInitialized();
+  setupLogging();
   await TicketsHomeWidget.refresh();
 }

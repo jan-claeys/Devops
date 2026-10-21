@@ -260,6 +260,24 @@ abstract class AppLocalizations {
   /// **'System language'**
   String get languageSystem;
 
+  /// No description provided for @privacy.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy'**
+  String get privacy;
+
+  /// No description provided for @sendErrorReports.
+  ///
+  /// In en, this message translates to:
+  /// **'Send error reports'**
+  String get sendErrorReports;
+
+  /// No description provided for @sendErrorReportsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Sends anonymous crash and error details so bugs can be fixed. Your token is never sent.'**
+  String get sendErrorReportsHint;
+
   /// No description provided for @signOut.
   ///
   /// In en, this message translates to:

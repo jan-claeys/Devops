@@ -80,6 +80,16 @@ class AppLocalizationsTr extends AppLocalizations {
   String get languageSystem => 'Sistem dili';
 
   @override
+  String get privacy => 'Gizlilik';
+
+  @override
+  String get sendErrorReports => 'Hata raporları gönder';
+
+  @override
+  String get sendErrorReportsHint =>
+      'Hataların düzeltilebilmesi için çökme ve hata ayrıntılarını anonim olarak gönderir. Belirteciniz asla gönderilmez.';
+
+  @override
   String get signOut => 'Oturumu kapat';
 
   @override

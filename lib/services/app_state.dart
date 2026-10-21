@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:logging/logging.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'devops_api.dart';
+import 'logging.dart' as reporting;
+
+final _log = Logger('AppState');
 
 /// Holds the connection settings and exposes a configured [DevOpsApi].
 class AppState extends ChangeNotifier {
@@ -17,6 +21,7 @@ class AppState extends ChangeNotifier {
   static const _themeKey = 'themeMode';
   static const _dynamicColorKey = 'useDynamicColor';
   static const _languageKey = 'language';
+  static const _errorReportsKey = 'sendErrorReports';
   static const _patKey = 'pat';
 
   final _secure = const FlutterSecureStorage();
@@ -31,6 +36,9 @@ class AppState extends ChangeNotifier {
 
   /// Language chosen in the settings; null follows the system language.
   Locale? locale;
+
+  /// Send crash and error reports to Sentry; on unless the user opts out.
+  bool sendErrorReports = true;
   DevOpsApi? api;
 
   bool get isConfigured => api != null;
@@ -43,9 +51,12 @@ class AppState extends ChangeNotifier {
     useDynamicColor = prefs.getBool(_dynamicColorKey) ?? false;
     final language = prefs.getString(_languageKey);
     locale = language == null ? null : Locale(language);
+    sendErrorReports = prefs.getBool(_errorReportsKey) ?? true;
+    reporting.sendErrorReports = sendErrorReports;
     try {
       _pat = await _secure.read(key: _patKey);
-    } catch (_) {
+    } catch (e, st) {
+      _log.warning('Reading the PAT from secure storage failed', e, st);
       _pat = null;
     }
     _buildApi();
@@ -94,6 +105,14 @@ class AppState extends ChangeNotifier {
     } else {
       await prefs.setString(_languageKey, value.languageCode);
     }
+    notifyListeners();
+  }
+
+  Future<void> setSendErrorReports(bool value) async {
+    sendErrorReports = value;
+    reporting.sendErrorReports = value;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(_errorReportsKey, value);
     notifyListeners();
   }
 

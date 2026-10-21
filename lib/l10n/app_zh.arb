@@ -23,6 +23,9 @@
   "colorSystem": "系统颜色",
   "language": "语言",
   "languageSystem": "系统语言",
+  "privacy": "隐私",
+  "sendErrorReports": "发送错误报告",
+  "sendErrorReportsHint": "发送匿名的崩溃和错误详情，以便修复问题。绝不会发送你的令牌。",
   "signOut": "退出登录",
 
   "selectTicketTitle": "选择一个工单",

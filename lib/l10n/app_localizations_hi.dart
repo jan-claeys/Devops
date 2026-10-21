@@ -80,6 +80,16 @@ class AppLocalizationsHi extends AppLocalizations {
   String get languageSystem => 'सिस्टम भाषा';
 
   @override
+  String get privacy => 'गोपनीयता';
+
+  @override
+  String get sendErrorReports => 'त्रुटि रिपोर्ट भेजें';
+
+  @override
+  String get sendErrorReportsHint =>
+      'बग ठीक करने के लिए क्रैश और त्रुटियों का गुमनाम विवरण भेजता है। आपका टोकन कभी नहीं भेजा जाता।';
+
+  @override
   String get signOut => 'साइन आउट';
 
   @override

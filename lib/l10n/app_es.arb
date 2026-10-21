@@ -23,6 +23,9 @@
   "colorSystem": "Color del sistema",
   "language": "Idioma",
   "languageSystem": "Idioma del sistema",
+  "privacy": "Privacidad",
+  "sendErrorReports": "Enviar informes de errores",
+  "sendErrorReportsHint": "Envía datos anónimos sobre cierres inesperados y errores para poder corregirlos. Tu token nunca se envía.",
   "signOut": "Cerrar sesión",
 
   "selectTicketTitle": "Selecciona un ticket",

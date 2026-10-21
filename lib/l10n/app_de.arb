@@ -23,6 +23,9 @@
   "colorSystem": "Systemfarbe",
   "language": "Sprache",
   "languageSystem": "Systemsprache",
+  "privacy": "Datenschutz",
+  "sendErrorReports": "Fehlerberichte senden",
+  "sendErrorReportsHint": "Sendet anonyme Angaben zu Abstürzen und Fehlern, damit Bugs behoben werden können. Dein Token wird nie gesendet.",
   "signOut": "Abmelden",
 
   "selectTicketTitle": "Ticket auswählen",

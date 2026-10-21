@@ -79,6 +79,16 @@ class AppLocalizationsAr extends AppLocalizations {
   String get languageSystem => 'لغة النظام';
 
   @override
+  String get privacy => 'الخصوصية';
+
+  @override
+  String get sendErrorReports => 'إرسال تقارير الأخطاء';
+
+  @override
+  String get sendErrorReportsHint =>
+      'يرسل تفاصيل مجهولة الهوية عن الأعطال والأخطاء لإصلاحها. لا يتم إرسال رمزك أبدًا.';
+
+  @override
   String get signOut => 'تسجيل الخروج';
 
   @override

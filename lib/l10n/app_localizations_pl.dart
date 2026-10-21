@@ -80,6 +80,16 @@ class AppLocalizationsPl extends AppLocalizations {
   String get languageSystem => 'Język systemu';
 
   @override
+  String get privacy => 'Prywatność';
+
+  @override
+  String get sendErrorReports => 'Wysyłaj raporty o błędach';
+
+  @override
+  String get sendErrorReportsHint =>
+      'Wysyła anonimowe dane o awariach i błędach, aby można je było naprawić. Twój token nigdy nie jest wysyłany.';
+
+  @override
   String get signOut => 'Wyloguj';
 
   @override

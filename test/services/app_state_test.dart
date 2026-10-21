@@ -20,6 +20,7 @@ void main() {
     expect(state.themeMode, ThemeMode.system);
     expect(state.useDynamicColor, isFalse);
     expect(state.locale, isNull);
+    expect(state.sendErrorReports, isTrue);
     expect(state.hasPat, isFalse);
     expect(state.isConfigured, isFalse);
   });
@@ -98,14 +99,16 @@ void main() {
     await state.setThemeMode(ThemeMode.light);
     await state.setUseDynamicColor(true);
     await state.setLocale(const Locale('de'));
+    await state.setSendErrorReports(false);
 
-    expect(notified, 4);
+    expect(notified, 5);
     final reloaded = AppState();
     await reloaded.load();
     expect(reloaded.project, 'Web');
     expect(reloaded.themeMode, ThemeMode.light);
     expect(reloaded.useDynamicColor, isTrue);
     expect(reloaded.locale, const Locale('de'));
+    expect(reloaded.sendErrorReports, isFalse);
 
     await state.setLocale(null);
     await reloaded.load();

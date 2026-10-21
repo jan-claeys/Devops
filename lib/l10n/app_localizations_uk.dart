@@ -80,6 +80,16 @@ class AppLocalizationsUk extends AppLocalizations {
   String get languageSystem => 'Мова системи';
 
   @override
+  String get privacy => 'Конфіденційність';
+
+  @override
+  String get sendErrorReports => 'Надсилати звіти про помилки';
+
+  @override
+  String get sendErrorReportsHint =>
+      'Надсилає анонімні дані про збої та помилки, щоб їх можна було виправити. Ваш токен ніколи не надсилається.';
+
+  @override
   String get signOut => 'Вийти';
 
   @override

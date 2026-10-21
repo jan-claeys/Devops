@@ -23,6 +23,9 @@
   "colorSystem": "Kolor systemowy",
   "language": "Język",
   "languageSystem": "Język systemu",
+  "privacy": "Prywatność",
+  "sendErrorReports": "Wysyłaj raporty o błędach",
+  "sendErrorReportsHint": "Wysyła anonimowe dane o awariach i błędach, aby można je było naprawić. Twój token nigdy nie jest wysyłany.",
   "signOut": "Wyloguj",
 
   "selectTicketTitle": "Wybierz zgłoszenie",
