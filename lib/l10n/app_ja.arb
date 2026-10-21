@@ -4,7 +4,7 @@
   "welcome": "ようこそ",
   "settings": "設定",
   "connectionSaved": "接続を保存しました",
-  "onboardingIntro": "Azure DevOps に接続してチケットを表示します。",
+  "onboardingIntro": "Azure DevOps に接続して始めましょう。",
   "connection": "接続",
   "organization": "組織",
   "organizationHint": "例: mycompany または https://dev.azure.com/mycompany",

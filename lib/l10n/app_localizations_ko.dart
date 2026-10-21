@@ -19,7 +19,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get connectionSaved => '연결이 저장되었습니다';
 
   @override
-  String get onboardingIntro => 'Azure DevOps에 연결하여 티켓을 확인하세요.';
+  String get onboardingIntro => '시작하려면 Azure DevOps에 연결하세요.';
 
   @override
   String get connection => '연결';

@@ -4,7 +4,7 @@
   "welcome": "환영합니다",
   "settings": "설정",
   "connectionSaved": "연결이 저장되었습니다",
-  "onboardingIntro": "Azure DevOps에 연결하여 티켓을 확인하세요.",
+  "onboardingIntro": "시작하려면 Azure DevOps에 연결하세요.",
   "connection": "연결",
   "organization": "조직",
   "organizationHint": "예: mycompany 또는 https://dev.azure.com/mycompany",

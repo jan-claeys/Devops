@@ -4,7 +4,7 @@
   "welcome": "Selamat datang",
   "settings": "Pengaturan",
   "connectionSaved": "Koneksi disimpan",
-  "onboardingIntro": "Hubungkan ke Azure DevOps untuk melihat tiket Anda.",
+  "onboardingIntro": "Hubungkan ke Azure DevOps untuk memulai.",
   "connection": "Koneksi",
   "organization": "Organisasi",
   "organizationHint": "mis. perusahaanku atau https://dev.azure.com/perusahaanku",

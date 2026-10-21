@@ -19,7 +19,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get connectionSaved => '接続を保存しました';
 
   @override
-  String get onboardingIntro => 'Azure DevOps に接続してチケットを表示します。';
+  String get onboardingIntro => 'Azure DevOps に接続して始めましょう。';
 
   @override
   String get connection => '接続';

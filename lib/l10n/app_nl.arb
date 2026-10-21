@@ -4,7 +4,7 @@
   "welcome": "Welkom",
   "settings": "Instellingen",
   "connectionSaved": "Verbinding opgeslagen",
-  "onboardingIntro": "Verbind met Azure DevOps om je tickets te bekijken.",
+  "onboardingIntro": "Verbind met Azure DevOps om te starten.",
   "connection": "Verbinding",
   "organization": "Organisatie",
   "organizationHint": "bv. mijnbedrijf of https://dev.azure.com/mijnbedrijf",

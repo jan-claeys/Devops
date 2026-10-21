@@ -4,7 +4,7 @@
   "welcome": "欢迎",
   "settings": "设置",
   "connectionSaved": "连接已保存",
-  "onboardingIntro": "连接到 Azure DevOps 以查看你的工单。",
+  "onboardingIntro": "连接到 Azure DevOps 以开始使用。",
   "connection": "连接",
   "organization": "组织",
   "organizationHint": "例如 mycompany 或 https://dev.azure.com/mycompany",

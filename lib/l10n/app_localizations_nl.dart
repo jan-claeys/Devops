@@ -19,8 +19,7 @@ class AppLocalizationsNl extends AppLocalizations {
   String get connectionSaved => 'Verbinding opgeslagen';
 
   @override
-  String get onboardingIntro =>
-      'Verbind met Azure DevOps om je tickets te bekijken.';
+  String get onboardingIntro => 'Verbind met Azure DevOps om te starten.';
 
   @override
   String get connection => 'Verbinding';

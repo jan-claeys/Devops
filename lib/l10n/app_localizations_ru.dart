@@ -19,8 +19,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get connectionSaved => 'Подключение сохранено';
 
   @override
-  String get onboardingIntro =>
-      'Подключитесь к Azure DevOps, чтобы видеть свои тикеты.';
+  String get onboardingIntro => 'Подключитесь к Azure DevOps, чтобы начать.';
 
   @override
   String get connection => 'Подключение';

@@ -4,7 +4,7 @@
   "welcome": "Willkommen",
   "settings": "Einstellungen",
   "connectionSaved": "Verbindung gespeichert",
-  "onboardingIntro": "Verbinde dich mit Azure DevOps, um deine Tickets zu sehen.",
+  "onboardingIntro": "Verbinde dich mit Azure DevOps, um loszulegen.",
   "connection": "Verbindung",
   "organization": "Organisation",
   "organizationHint": "z. B. meinefirma oder https://dev.azure.com/meinefirma",

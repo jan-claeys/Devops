@@ -4,7 +4,7 @@
   "welcome": "مرحبًا",
   "settings": "الإعدادات",
   "connectionSaved": "تم حفظ الاتصال",
-  "onboardingIntro": "اتصل بـ Azure DevOps لعرض تذاكرك.",
+  "onboardingIntro": "اتصل بـ Azure DevOps للبدء.",
   "connection": "الاتصال",
   "organization": "المؤسسة",
   "organizationHint": "مثال: mycompany أو https://dev.azure.com/mycompany",

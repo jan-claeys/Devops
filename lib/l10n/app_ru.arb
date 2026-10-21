@@ -4,7 +4,7 @@
   "welcome": "Добро пожаловать",
   "settings": "Настройки",
   "connectionSaved": "Подключение сохранено",
-  "onboardingIntro": "Подключитесь к Azure DevOps, чтобы видеть свои тикеты.",
+  "onboardingIntro": "Подключитесь к Azure DevOps, чтобы начать.",
   "connection": "Подключение",
   "organization": "Организация",
   "organizationHint": "напр. mycompany или https://dev.azure.com/mycompany",

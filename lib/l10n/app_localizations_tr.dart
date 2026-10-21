@@ -19,8 +19,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get connectionSaved => 'Bağlantı kaydedildi';
 
   @override
-  String get onboardingIntro =>
-      'Biletlerinizi görmek için Azure DevOps\'a bağlanın.';
+  String get onboardingIntro => 'Başlamak için Azure DevOps\'a bağlanın.';
 
   @override
   String get connection => 'Bağlantı';

@@ -19,7 +19,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get connectionSaved => '连接已保存';
 
   @override
-  String get onboardingIntro => '连接到 Azure DevOps 以查看你的工单。';
+  String get onboardingIntro => '连接到 Azure DevOps 以开始使用。';
 
   @override
   String get connection => '连接';

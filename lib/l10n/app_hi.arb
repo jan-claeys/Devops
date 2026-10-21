@@ -4,7 +4,7 @@
   "welcome": "स्वागत है",
   "settings": "सेटिंग्स",
   "connectionSaved": "कनेक्शन सहेजा गया",
-  "onboardingIntro": "अपने टिकट देखने के लिए Azure DevOps से कनेक्ट करें।",
+  "onboardingIntro": "शुरू करने के लिए Azure DevOps से कनेक्ट करें।",
   "connection": "कनेक्शन",
   "organization": "संगठन",
   "organizationHint": "जैसे mycompany या https://dev.azure.com/mycompany",

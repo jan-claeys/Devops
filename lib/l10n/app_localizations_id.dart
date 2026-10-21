@@ -19,8 +19,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get connectionSaved => 'Koneksi disimpan';
 
   @override
-  String get onboardingIntro =>
-      'Hubungkan ke Azure DevOps untuk melihat tiket Anda.';
+  String get onboardingIntro => 'Hubungkan ke Azure DevOps untuk memulai.';
 
   @override
   String get connection => 'Koneksi';

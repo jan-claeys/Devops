@@ -19,7 +19,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get connectionSaved => 'تم حفظ الاتصال';
 
   @override
-  String get onboardingIntro => 'اتصل بـ Azure DevOps لعرض تذاكرك.';
+  String get onboardingIntro => 'اتصل بـ Azure DevOps للبدء.';
 
   @override
   String get connection => 'الاتصال';

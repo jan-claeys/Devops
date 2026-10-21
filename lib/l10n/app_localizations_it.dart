@@ -19,8 +19,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get connectionSaved => 'Connessione salvata';
 
   @override
-  String get onboardingIntro =>
-      'Connettiti ad Azure DevOps per vedere i tuoi ticket.';
+  String get onboardingIntro => 'Connettiti ad Azure DevOps per iniziare.';
 
   @override
   String get connection => 'Connessione';

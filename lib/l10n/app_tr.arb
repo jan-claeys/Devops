@@ -4,7 +4,7 @@
   "welcome": "Hoş geldiniz",
   "settings": "Ayarlar",
   "connectionSaved": "Bağlantı kaydedildi",
-  "onboardingIntro": "Biletlerinizi görmek için Azure DevOps'a bağlanın.",
+  "onboardingIntro": "Başlamak için Azure DevOps'a bağlanın.",
   "connection": "Bağlantı",
   "organization": "Kuruluş",
   "organizationHint": "örn. sirketim veya https://dev.azure.com/sirketim",

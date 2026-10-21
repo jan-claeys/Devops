@@ -149,7 +149,7 @@ abstract class AppLocalizations {
   /// No description provided for @onboardingIntro.
   ///
   /// In en, this message translates to:
-  /// **'Connect to Azure DevOps to view your tickets.'**
+  /// **'Connect to Azure DevOps to get started.'**
   String get onboardingIntro;
 
   /// No description provided for @connection.
