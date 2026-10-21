@@ -138,7 +138,7 @@ class AppLocalizationsUk extends AppLocalizations {
       'Виберіть тікет ліворуч, щоб побачити подробиці.';
 
   @override
-  String get chooseProject => 'Вибрати проєкт';
+  String get chooseProjects => 'Виберіть проєкти';
 
   @override
   String get refresh => 'Оновити';
@@ -165,10 +165,11 @@ class AppLocalizationsUk extends AppLocalizations {
   String get retry => 'Повторити';
 
   @override
-  String get noProjectTitle => 'Проєкт не вибрано';
+  String get noProjectsTitle => 'Проєкти не вибрано';
 
   @override
-  String get noProjectMessage => 'Виберіть проєкт, щоб побачити тікети.';
+  String get noProjectsMessage =>
+      'Виберіть один або кілька проєктів, щоб побачити тікети.';
 
   @override
   String get noTicketsTitle => 'Немає тікетів';
@@ -193,7 +194,23 @@ class AppLocalizationsUk extends AppLocalizations {
   String get unassigned => 'Не призначено';
 
   @override
-  String get chooseAProject => 'Виберіть проєкт';
+  String get projects => 'Проєкти';
+
+  @override
+  String projectCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count проєкту',
+      many: '$count проєктів',
+      few: '$count проєкти',
+      one: '$count проєкт',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get apply => 'Застосувати';
 
   @override
   String get searchProjectHint => 'Пошук проєкту';

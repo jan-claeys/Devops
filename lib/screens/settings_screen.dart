@@ -8,6 +8,7 @@ import '../services/app_state.dart';
 import '../services/devops_api.dart';
 import '../services/home_widget_service.dart';
 import '../services/logging.dart';
+import '../widgets/project_picker.dart';
 
 final _log = Logger('SettingsScreen');
 
@@ -61,18 +62,27 @@ class _SettingsScreenState extends State<SettingsScreen> {
       await DevOpsApi(organization: org, pat: pat, client: client).getProjects();
       if (!mounted) return;
       await AppScope.read(context).saveConnection(organization: org, pat: pat);
-      if (!mounted) return;
-      if (!widget.isOnboarding) {
-        Navigator.of(context).pop();
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text(context.l10n.connectionSaved)));
-      }
     } catch (e, st) {
       logFailure(_log, 'Verifying the connection failed', e, st);
-      setState(() => _error = context.l10n.error(e));
+      if (mounted) setState(() => _error = context.l10n.error(e));
+      return;
     } finally {
       if (mounted) setState(() => _busy = false);
     }
+    if (!mounted) return;
+    // A new connection has no projects yet; tickets are shown once they are chosen.
+    if (AppScope.read(context).projects.isEmpty) await _pickProjects();
+    if (!mounted || widget.isOnboarding) return;
+    Navigator.of(context).pop();
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(context.l10n.connectionSaved)));
+  }
+
+  Future<void> _pickProjects() async {
+    final state = AppScope.read(context);
+    final picked =
+        await showProjectPicker(context, api: state.api!, current: state.projects);
+    if (picked != null) await state.setProjects(picked);
   }
 
   @override
@@ -167,6 +177,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                         const SizedBox(height: 16),
                         const _TokenHelp(),
+                        if (state.isConfigured) ...[
+                          const SizedBox(height: 32),
+                          Text(l10n.projects, style: theme.textTheme.titleMedium),
+                          const SizedBox(height: 4),
+                          ListTile(
+                            contentPadding: EdgeInsets.zero,
+                            leading: const Icon(Icons.folder_outlined),
+                            title: Text(state.projects.isEmpty
+                                ? l10n.noProjectsTitle
+                                : state.projects.join(', ')),
+                            subtitle: Text(state.projects.isEmpty
+                                ? l10n.noProjectsMessage
+                                : l10n.projectCount(state.projects.length)),
+                            trailing: const Icon(Icons.chevron_right),
+                            onTap: _pickProjects,
+                          ),
+                        ],
                         if (!widget.isOnboarding) ...[
                           const SizedBox(height: 32),
                           Text(l10n.appearance, style: theme.textTheme.titleMedium),

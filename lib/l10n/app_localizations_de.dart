@@ -138,7 +138,7 @@ class AppLocalizationsDe extends AppLocalizations {
       'Wähle links ein Ticket, um die Details zu sehen.';
 
   @override
-  String get chooseProject => 'Projekt wählen';
+  String get chooseProjects => 'Projekte wählen';
 
   @override
   String get refresh => 'Aktualisieren';
@@ -165,10 +165,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get retry => 'Erneut versuchen';
 
   @override
-  String get noProjectTitle => 'Kein Projekt ausgewählt';
+  String get noProjectsTitle => 'Keine Projekte ausgewählt';
 
   @override
-  String get noProjectMessage => 'Wähle ein Projekt, um Tickets zu sehen.';
+  String get noProjectsMessage =>
+      'Wähle ein oder mehrere Projekte, um Tickets zu sehen.';
 
   @override
   String get noTicketsTitle => 'Keine Tickets';
@@ -191,7 +192,21 @@ class AppLocalizationsDe extends AppLocalizations {
   String get unassigned => 'Nicht zugewiesen';
 
   @override
-  String get chooseAProject => 'Projekt wählen';
+  String get projects => 'Projekte';
+
+  @override
+  String projectCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Projekte',
+      one: '1 Projekt',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get apply => 'Übernehmen';
 
   @override
   String get searchProjectHint => 'Projekt suchen';

@@ -137,7 +137,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get selectTicketMessage => 'विवरण देखने के लिए बाईं ओर एक टिकट चुनें।';
 
   @override
-  String get chooseProject => 'प्रोजेक्ट चुनें';
+  String get chooseProjects => 'प्रोजेक्ट चुनें';
 
   @override
   String get refresh => 'रीफ़्रेश करें';
@@ -164,10 +164,11 @@ class AppLocalizationsHi extends AppLocalizations {
   String get retry => 'फिर से कोशिश करें';
 
   @override
-  String get noProjectTitle => 'कोई प्रोजेक्ट नहीं चुना गया';
+  String get noProjectsTitle => 'कोई प्रोजेक्ट नहीं चुना गया';
 
   @override
-  String get noProjectMessage => 'टिकट देखने के लिए एक प्रोजेक्ट चुनें।';
+  String get noProjectsMessage =>
+      'टिकट देखने के लिए एक या अधिक प्रोजेक्ट चुनें।';
 
   @override
   String get noTicketsTitle => 'कोई टिकट नहीं';
@@ -189,7 +190,20 @@ class AppLocalizationsHi extends AppLocalizations {
   String get unassigned => 'असाइन नहीं';
 
   @override
-  String get chooseAProject => 'एक प्रोजेक्ट चुनें';
+  String get projects => 'प्रोजेक्ट';
+
+  @override
+  String projectCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count प्रोजेक्ट',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get apply => 'लागू करें';
 
   @override
   String get searchProjectHint => 'प्रोजेक्ट खोजें';

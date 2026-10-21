@@ -76,14 +76,55 @@ void main() {
     expect(fake.requests, isEmpty);
   });
 
+  /// Ticks [names] in the project picker and applies the choice.
+  Future<void> pickProjects(WidgetTester tester, List<String> names) async {
+    for (final name in names) {
+      await tester.tap(find.widgetWithText(CheckboxListTile, name));
+      await tester.pumpAndSettle();
+    }
+    await tester.tap(find.text(en.apply));
+    await tester.pumpAndSettle();
+  }
+
   testWidgets('verifies and saves a working connection', (tester) async {
     await pumpApp(tester, const SettingsScreen(isOnboarding: true), state: state);
     await fillAndConnect(tester, org: '  contoso ', pat: ' secret ');
 
-    expect(fake.requests.single.url.host, 'dev.azure.com');
+    expect(fake.requests.first.url.host, 'dev.azure.com');
     expect(state.organization, 'contoso');
     expect(state.isConfigured, isTrue);
     expect(await const FlutterSecureStorage().read(key: 'pat'), 'secret');
+  });
+
+  testWidgets('onboarding asks for the projects after connecting', (tester) async {
+    fake.projects.add({'id': '2', 'name': 'Fabrikam'});
+    await pumpApp(tester, const SettingsScreen(isOnboarding: true), state: state);
+    await fillAndConnect(tester);
+
+    expect(find.text(en.chooseProjects), findsOneWidget);
+    final apply = find.widgetWithText(FilledButton, en.apply);
+    expect(tester.widget<FilledButton>(apply).onPressed, isNull);
+
+    await pickProjects(tester, ['Fabrikam', 'Contoso']);
+    // Sorted like the project list, not in the order they were ticked.
+    expect(state.projects, ['Contoso', 'Fabrikam']);
+  });
+
+  testWidgets('onboarding shows the projects when the picker is dismissed',
+      (tester) async {
+    await pumpApp(tester, const SettingsScreen(isOnboarding: true), state: state);
+    await fillAndConnect(tester);
+    await tester.tapAt(const Offset(200, 20));
+    await tester.pumpAndSettle();
+
+    expect(state.projects, isEmpty);
+    expect(find.text(en.projects), findsOneWidget);
+    expect(find.text(en.noProjectsTitle), findsOneWidget);
+
+    await tester.tap(find.text(en.noProjectsTitle));
+    await tester.pumpAndSettle();
+    await pickProjects(tester, ['Contoso']);
+    expect(state.projects, ['Contoso']);
   });
 
   testWidgets('shows the error and keeps the old connection when it fails',
@@ -98,12 +139,49 @@ void main() {
   });
 
   testWidgets('closes with a confirmation after saving from the app', (tester) async {
+    mockStorage(prefs: {
+      'organization': 'contoso',
+      'projects': ['Contoso'],
+    }, secure: {'pat': 'x'});
+    await state.load();
     await openSettings(tester);
     expect(find.text(en.settings), findsWidgets);
     await fillAndConnect(tester);
 
     expect(find.byType(SettingsScreen), findsNothing);
     expect(find.text(en.connectionSaved), findsOneWidget);
+    expect(fake.requests, hasLength(1));
+  });
+
+  testWidgets('asks for projects after connecting to another organization',
+      (tester) async {
+    await openSettings(tester);
+    await fillAndConnect(tester);
+    await pickProjects(tester, ['Contoso']);
+
+    expect(state.projects, ['Contoso']);
+    expect(find.byType(SettingsScreen), findsNothing);
+    expect(find.text(en.connectionSaved), findsOneWidget);
+  });
+
+  testWidgets('changes the projects', (tester) async {
+    fake.projects.add({'id': '2', 'name': 'Fabrikam'});
+    mockStorage(prefs: {
+      'organization': 'contoso',
+      'projects': ['Contoso'],
+    }, secure: {'pat': 'x'});
+    await state.load();
+    await openSettings(tester);
+    expect(find.text(en.projects), findsOneWidget);
+    expect(find.text(en.projectCount(1)), findsOneWidget);
+
+    await tester.tap(find.text(en.projectCount(1)));
+    await tester.pumpAndSettle();
+    await pickProjects(tester, ['Fabrikam']);
+
+    expect(state.projects, ['Contoso', 'Fabrikam']);
+    expect(find.text('Contoso, Fabrikam'), findsOneWidget);
+    expect(find.text(en.projectCount(2)), findsOneWidget);
   });
 
   testWidgets('prefills the organization and mentions a stored token', (tester) async {
@@ -149,14 +227,17 @@ void main() {
   });
 
   testWidgets('signs out and returns to the first screen', (tester) async {
-    mockStorage(prefs: {'organization': 'contoso', 'project': 'Web'}, secure: {'pat': 'x'});
+    mockStorage(prefs: {
+      'organization': 'contoso',
+      'projects': ['Web'],
+    }, secure: {'pat': 'x'});
     await state.load();
     await openSettings(tester);
     await tester.tap(find.text(en.signOut));
     await tester.pumpAndSettle();
 
     expect(state.isConfigured, isFalse);
-    expect(state.project, isNull);
+    expect(state.projects, isEmpty);
     expect(find.byType(SettingsScreen), findsNothing);
     expect(find.text('home'), findsOneWidget);
   });

@@ -138,7 +138,7 @@ class AppLocalizationsRu extends AppLocalizations {
       'Выберите тикет слева, чтобы увидеть подробности.';
 
   @override
-  String get chooseProject => 'Выбрать проект';
+  String get chooseProjects => 'Выберите проекты';
 
   @override
   String get refresh => 'Обновить';
@@ -165,10 +165,11 @@ class AppLocalizationsRu extends AppLocalizations {
   String get retry => 'Повторить';
 
   @override
-  String get noProjectTitle => 'Проект не выбран';
+  String get noProjectsTitle => 'Проекты не выбраны';
 
   @override
-  String get noProjectMessage => 'Выберите проект, чтобы увидеть тикеты.';
+  String get noProjectsMessage =>
+      'Выберите один или несколько проектов, чтобы увидеть тикеты.';
 
   @override
   String get noTicketsTitle => 'Нет тикетов';
@@ -193,7 +194,23 @@ class AppLocalizationsRu extends AppLocalizations {
   String get unassigned => 'Не назначен';
 
   @override
-  String get chooseAProject => 'Выберите проект';
+  String get projects => 'Проекты';
+
+  @override
+  String projectCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count проекта',
+      many: '$count проектов',
+      few: '$count проекта',
+      one: '$count проект',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get apply => 'Применить';
 
   @override
   String get searchProjectHint => 'Поиск проекта';

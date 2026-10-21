@@ -41,15 +41,16 @@ class TicketsHomeWidget {
     }
   }
 
-  /// Stores [items] for [project] and redraws the widget. Without [items]
+  /// Stores [items] for [projects] and redraws the widget. Without [items]
   /// the previously stored tickets stay visible, e.g. next to an [error].
   static Future<void> update({
-    required String? project,
+    required List<String> projects,
     List<WorkItem>? items,
     String? error,
   }) async {
     try {
-      await HomeWidget.saveWidgetData<String>('project', project);
+      await HomeWidget.saveWidgetData<String>(
+          'project', projects.isEmpty ? null : projects.join(', '));
       if (items != null) {
         final data = [
           for (final w in items.take(_maxItems))
@@ -74,19 +75,19 @@ class TicketsHomeWidget {
       await state.load();
     }
     final api = state.api;
-    final project = state.project;
+    final projects = state.projects;
     final l10n = lookupAppLocalizations(resolveLocale(state.locale));
-    if (api == null || project == null) {
-      await update(project: null, items: const [], error: l10n.widgetSetupRequired);
+    if (api == null || projects.isEmpty) {
+      await update(projects: const [], items: const [], error: l10n.widgetSetupRequired);
       return;
     }
     try {
       final items = await api.queryWorkItems(
-          project: project, scope: WorkItemScope.assignedToMe, openOnly: true);
-      await update(project: project, items: items);
+          projects: projects, scope: WorkItemScope.assignedToMe, openOnly: true);
+      await update(projects: projects, items: items);
     } catch (e, st) {
       logFailure(_log, 'Refreshing the home widget failed', e, st);
-      await update(project: project, error: l10n.error(e));
+      await update(projects: projects, error: l10n.error(e));
     }
   }
 }

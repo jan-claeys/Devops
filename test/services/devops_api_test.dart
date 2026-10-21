@@ -67,9 +67,9 @@ void main() {
     });
 
     test('defaults to my open items', () async {
-      final items = await api.queryWorkItems(project: 'Contoso');
+      final items = await api.queryWorkItems(projects: ['Contoso']);
       expect(items.map((w) => w.id), [1, 2]);
-      expect(wiql(), contains('[System.TeamProject] = @project'));
+      expect(wiql(), contains("[System.TeamProject] IN ('Contoso')"));
       expect(wiql(), contains('[System.AssignedTo] = @me'));
       expect(
           wiql(),
@@ -79,24 +79,34 @@ void main() {
     });
 
     test('filters on creator', () async {
-      await api.queryWorkItems(project: 'Contoso', scope: WorkItemScope.createdByMe);
+      await api.queryWorkItems(projects: ['Contoso'], scope: WorkItemScope.createdByMe);
       expect(wiql(), contains('[System.CreatedBy] = @me'));
       expect(wiql(), isNot(contains('[System.AssignedTo]')));
     });
 
     test('can include everything', () async {
       await api.queryWorkItems(
-          project: 'Contoso', scope: WorkItemScope.all, openOnly: false);
+          projects: ['Contoso'], scope: WorkItemScope.all, openOnly: false);
       expect(wiql(), isNot(contains('@me')));
       expect(wiql(), isNot(contains('NOT IN')));
     });
 
-    test('posts to the project with top and only fetches list fields', () async {
-      await api.queryWorkItems(project: 'My Project', top: 50);
+    test('queries several projects and escapes quotes', () async {
+      await api.queryWorkItems(projects: ['Contoso', "Bob's Project"]);
+      expect(wiql(), contains("[System.TeamProject] IN ('Contoso', 'Bob''s Project')"));
+    });
+
+    test('returns nothing without projects and without calling the server', () async {
+      expect(await api.queryWorkItems(projects: []), isEmpty);
+      expect(fake.requests, isEmpty);
+    });
+
+    test('posts to the organization with top and only fetches list fields', () async {
+      await api.queryWorkItems(projects: ['My Project'], top: 50);
       final wiqlRequest = fake.requests.first;
       expect(wiqlRequest.method, 'POST');
       expect(wiqlRequest.headers['Content-Type'], startsWith('application/json'));
-      expect(wiqlRequest.url.path, '/contoso/My%20Project/_apis/wit/wiql');
+      expect(wiqlRequest.url.path, '/contoso/_apis/wit/wiql');
       expect(wiqlRequest.url.queryParameters['\$top'], '50');
       final batch = jsonDecode(fake.requests.last.body);
       expect(batch['fields'], DevOpsApi.listFields);
@@ -105,7 +115,7 @@ void main() {
 
     test('returns nothing without a batch request when no ids match', () async {
       fake.queryResult = [];
-      expect(await api.queryWorkItems(project: 'Contoso'), isEmpty);
+      expect(await api.queryWorkItems(projects: ['Contoso']), isEmpty);
       expect(fake.requests, hasLength(1));
     });
   });

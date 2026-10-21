@@ -84,13 +84,17 @@ class DevOpsApi {
     return projects;
   }
 
+  /// Queries the work items of all [projects] at once.
   Future<List<WorkItem>> queryWorkItems({
-    required String project,
+    required List<String> projects,
     WorkItemScope scope = WorkItemScope.assignedToMe,
     bool openOnly = true,
     int top = 200,
   }) async {
-    final conditions = <String>['[System.TeamProject] = @project'];
+    if (projects.isEmpty) return const [];
+    final conditions = <String>[
+      '[System.TeamProject] IN (${projects.map(_quote).join(', ')})',
+    ];
     switch (scope) {
       case WorkItemScope.assignedToMe:
         conditions.add('[System.AssignedTo] = @me');
@@ -100,14 +104,15 @@ class DevOpsApi {
         break;
     }
     if (openOnly) {
-      conditions.add("[System.State] NOT IN (${closedStates.map((s) => "'$s'").join(', ')})");
+      conditions.add('[System.State] NOT IN (${closedStates.map(_quote).join(', ')})');
     }
     final wiql = 'SELECT [System.Id] FROM WorkItems '
         'WHERE ${conditions.join(' AND ')} '
         'ORDER BY [System.ChangedDate] DESC';
 
+    // At organization level, so the query can span several projects.
     final result = await _post(
-      '$baseUrl/${Uri.encodeComponent(project)}/_apis/wit/wiql?\$top=$top&api-version=$_apiVersion',
+      '$baseUrl/_apis/wit/wiql?\$top=$top&api-version=$_apiVersion',
       {'query': wiql},
     );
     final ids = (result['workItems'] as List)
@@ -115,6 +120,9 @@ class DevOpsApi {
         .toList();
     return getWorkItems(ids, fields: listFields);
   }
+
+  /// A WIQL string literal; quotes are escaped by doubling them.
+  static String _quote(String value) => "'${value.replaceAll("'", "''")}'";
 
   /// Fetches work items in batches of 200, preserving the order of [ids].
   Future<List<WorkItem>> getWorkItems(List<int> ids, {List<String>? fields}) async {

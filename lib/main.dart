@@ -106,7 +106,8 @@ class _DevOpsAppState extends State<DevOpsApp> {
           theme: _theme(Brightness.light, useDynamic ? lightDynamic : null),
           darkTheme: _theme(Brightness.dark, useDynamic ? darkDynamic : null),
           themeMode: state.themeMode,
-          home: state.isConfigured
+          // Onboarding also asks for the projects before showing tickets.
+          home: state.isConfigured && state.projects.isNotEmpty
               ? const WorkItemsScreen()
               : const SettingsScreen(isOnboarding: true),
         );

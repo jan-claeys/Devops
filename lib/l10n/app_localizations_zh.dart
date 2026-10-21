@@ -133,7 +133,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get selectTicketMessage => '在左侧选择一个工单以查看详情。';
 
   @override
-  String get chooseProject => '选择项目';
+  String get chooseProjects => '选择项目';
 
   @override
   String get refresh => '刷新';
@@ -160,10 +160,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get retry => '重试';
 
   @override
-  String get noProjectTitle => '未选择项目';
+  String get noProjectsTitle => '未选择项目';
 
   @override
-  String get noProjectMessage => '选择一个项目以查看工单。';
+  String get noProjectsMessage => '选择一个或多个项目以查看工单。';
 
   @override
   String get noTicketsTitle => '没有工单';
@@ -185,7 +185,20 @@ class AppLocalizationsZh extends AppLocalizations {
   String get unassigned => '未分配';
 
   @override
-  String get chooseAProject => '选择一个项目';
+  String get projects => '项目';
+
+  @override
+  String projectCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count 个项目',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get apply => '应用';
 
   @override
   String get searchProjectHint => '搜索项目';

@@ -106,11 +106,11 @@ void mockStorage({
   FlutterSecureStorage.setMockInitialValues(Map.of(secure));
 }
 
-/// An [AppState] connected to [fake] and pointing at the Contoso project.
-AppState connectedState(FakeDevOps fake, {String? project = 'Contoso'}) {
+/// An [AppState] connected to [fake] and showing the Contoso project.
+AppState connectedState(FakeDevOps fake, {List<String> projects = const ['Contoso']}) {
   return AppState(httpClient: fake.client)
     ..organization = 'contoso'
-    ..project = project
+    ..projects = projects
     ..api = DevOpsApi(organization: 'contoso', pat: 'secret', client: fake.client);
 }
 

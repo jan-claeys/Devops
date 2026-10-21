@@ -17,7 +17,10 @@ class AppState extends ChangeNotifier {
   final http.Client? httpClient;
 
   static const _orgKey = 'organization';
-  static const _projectKey = 'project';
+  static const _projectsKey = 'projects';
+
+  /// Single project stored by versions before multiple projects were supported.
+  static const _legacyProjectKey = 'project';
   static const _themeKey = 'themeMode';
   static const _dynamicColorKey = 'useDynamicColor';
   static const _languageKey = 'language';
@@ -27,7 +30,9 @@ class AppState extends ChangeNotifier {
   final _secure = const FlutterSecureStorage();
 
   String? organization;
-  String? project;
+
+  /// Projects whose tickets are shown.
+  List<String> projects = const [];
   String? _pat;
   ThemeMode themeMode = ThemeMode.system;
 
@@ -46,7 +51,9 @@ class AppState extends ChangeNotifier {
   Future<void> load() async {
     final prefs = await SharedPreferences.getInstance();
     organization = prefs.getString(_orgKey);
-    project = prefs.getString(_projectKey);
+    final legacyProject = prefs.getString(_legacyProjectKey);
+    projects = prefs.getStringList(_projectsKey) ??
+        (legacyProject == null ? const [] : [legacyProject]);
     themeMode = ThemeMode.values[prefs.getInt(_themeKey) ?? ThemeMode.system.index];
     useDynamicColor = prefs.getBool(_dynamicColorKey) ?? false;
     final language = prefs.getString(_languageKey);
@@ -65,8 +72,8 @@ class AppState extends ChangeNotifier {
   Future<void> saveConnection({required String organization, required String pat}) async {
     final prefs = await SharedPreferences.getInstance();
     if (organization != this.organization) {
-      project = null;
-      await prefs.remove(_projectKey);
+      projects = const [];
+      await _removeProjects(prefs);
     }
     this.organization = organization;
     _pat = pat;
@@ -76,11 +83,17 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> selectProject(String project) async {
-    this.project = project;
+  Future<void> setProjects(List<String> projects) async {
+    this.projects = List.unmodifiable(projects);
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(_projectKey, project);
+    await prefs.setStringList(_projectsKey, projects);
+    await prefs.remove(_legacyProjectKey);
     notifyListeners();
+  }
+
+  Future<void> _removeProjects(SharedPreferences prefs) async {
+    await prefs.remove(_projectsKey);
+    await prefs.remove(_legacyProjectKey);
   }
 
   Future<void> setThemeMode(ThemeMode mode) async {
@@ -118,10 +131,10 @@ class AppState extends ChangeNotifier {
 
   Future<void> signOut() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.remove(_projectKey);
+    await _removeProjects(prefs);
     await _secure.delete(key: _patKey);
     _pat = null;
-    project = null;
+    projects = const [];
     api = null;
     notifyListeners();
   }

@@ -136,7 +136,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get selectTicketMessage => 'اختر تذكرة من القائمة لعرض تفاصيلها.';
 
   @override
-  String get chooseProject => 'اختر مشروعًا';
+  String get chooseProjects => 'اختر المشاريع';
 
   @override
   String get refresh => 'تحديث';
@@ -163,10 +163,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get retry => 'إعادة المحاولة';
 
   @override
-  String get noProjectTitle => 'لم يتم اختيار مشروع';
+  String get noProjectsTitle => 'لم يتم اختيار مشاريع';
 
   @override
-  String get noProjectMessage => 'اختر مشروعًا لعرض التذاكر.';
+  String get noProjectsMessage => 'اختر مشروعًا واحدًا أو أكثر لعرض التذاكر.';
 
   @override
   String get noTicketsTitle => 'لا توجد تذاكر';
@@ -193,7 +193,25 @@ class AppLocalizationsAr extends AppLocalizations {
   String get unassigned => 'غير مسندة';
 
   @override
-  String get chooseAProject => 'اختر مشروعًا';
+  String get projects => 'المشاريع';
+
+  @override
+  String projectCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count مشروع',
+      many: '$count مشروعًا',
+      few: '$count مشاريع',
+      two: 'مشروعان',
+      one: 'مشروع واحد',
+      zero: 'لا توجد مشاريع',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get apply => 'تطبيق';
 
   @override
   String get searchProjectHint => 'ابحث عن مشروع';

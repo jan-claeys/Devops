@@ -46,7 +46,7 @@
 
   "selectTicketTitle": "Select a ticket",
   "selectTicketMessage": "Choose a ticket on the left to see its details.",
-  "chooseProject": "Choose project",
+  "chooseProjects": "Choose projects",
   "refresh": "Refresh",
   "searchTicketsHint": "Search by title, ID, tag or person",
   "scopeAssignedToMe": "Assigned to me",
@@ -55,8 +55,8 @@
   "openOnly": "Open only",
   "loadTicketsFailed": "Couldn't load tickets",
   "retry": "Try again",
-  "noProjectTitle": "No project selected",
-  "noProjectMessage": "Choose a project to view tickets.",
+  "noProjectsTitle": "No projects selected",
+  "noProjectsMessage": "Choose one or more projects to view tickets.",
   "noTicketsTitle": "No tickets",
   "noTicketsMessage": "There are no tickets matching the filters.",
   "ticketCount": "{count, plural, =1{1 ticket} other{{count} tickets}}",
@@ -64,7 +64,12 @@
     "placeholders": {"count": {"type": "int"}}
   },
   "unassigned": "Unassigned",
-  "chooseAProject": "Choose a project",
+  "projects": "Projects",
+  "projectCount": "{count, plural, =1{1 project} other{{count} projects}}",
+  "@projectCount": {
+    "placeholders": {"count": {"type": "int"}}
+  },
+  "apply": "Apply",
   "searchProjectHint": "Search project",
   "loadProjectsFailed": "Couldn't load projects",
 

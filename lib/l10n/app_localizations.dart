@@ -356,11 +356,11 @@ abstract class AppLocalizations {
   /// **'Choose a ticket on the left to see its details.'**
   String get selectTicketMessage;
 
-  /// No description provided for @chooseProject.
+  /// No description provided for @chooseProjects.
   ///
   /// In en, this message translates to:
-  /// **'Choose project'**
-  String get chooseProject;
+  /// **'Choose projects'**
+  String get chooseProjects;
 
   /// No description provided for @refresh.
   ///
@@ -410,17 +410,17 @@ abstract class AppLocalizations {
   /// **'Try again'**
   String get retry;
 
-  /// No description provided for @noProjectTitle.
+  /// No description provided for @noProjectsTitle.
   ///
   /// In en, this message translates to:
-  /// **'No project selected'**
-  String get noProjectTitle;
+  /// **'No projects selected'**
+  String get noProjectsTitle;
 
-  /// No description provided for @noProjectMessage.
+  /// No description provided for @noProjectsMessage.
   ///
   /// In en, this message translates to:
-  /// **'Choose a project to view tickets.'**
-  String get noProjectMessage;
+  /// **'Choose one or more projects to view tickets.'**
+  String get noProjectsMessage;
 
   /// No description provided for @noTicketsTitle.
   ///
@@ -446,11 +446,23 @@ abstract class AppLocalizations {
   /// **'Unassigned'**
   String get unassigned;
 
-  /// No description provided for @chooseAProject.
+  /// No description provided for @projects.
   ///
   /// In en, this message translates to:
-  /// **'Choose a project'**
-  String get chooseAProject;
+  /// **'Projects'**
+  String get projects;
+
+  /// No description provided for @projectCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 project} other{{count} projects}}'**
+  String projectCount(int count);
+
+  /// No description provided for @apply.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply'**
+  String get apply;
 
   /// No description provided for @searchProjectHint.
   ///

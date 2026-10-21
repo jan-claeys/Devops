@@ -8,6 +8,7 @@ import '../services/app_state.dart';
 import '../services/devops_api.dart';
 import '../services/home_widget_service.dart';
 import '../services/logging.dart';
+import '../widgets/project_picker.dart';
 import '../widgets/work_item_visuals.dart';
 import 'settings_screen.dart';
 import 'work_item_detail_screen.dart';
@@ -39,13 +40,13 @@ class _WorkItemsScreenState extends State<WorkItemsScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     final state = AppScope.of(context);
-    final key = '${state.organization}|${state.project}';
+    final key = '${state.organization}|${state.projects.join('|')}';
     if (key != _loadedFor) {
       _loadedFor = key;
       _selectedId = null;
       _types.clear();
-      if (state.project == null) {
-        WidgetsBinding.instance.addPostFrameCallback((_) => _pickProject());
+      if (state.projects.isEmpty) {
+        WidgetsBinding.instance.addPostFrameCallback((_) => _pickProjects());
       } else {
         _load();
       }
@@ -61,18 +62,18 @@ class _WorkItemsScreenState extends State<WorkItemsScreen> {
   Future<void> _load() async {
     final state = AppScope.read(context);
     final api = state.api;
-    final project = state.project;
-    if (api == null || project == null) return;
+    final projects = state.projects;
+    if (api == null || projects.isEmpty) return;
     setState(() {
       _loading = true;
       _error = null;
     });
     try {
       final items =
-          await api.queryWorkItems(project: project, scope: _scope, openOnly: _openOnly);
+          await api.queryWorkItems(projects: projects, scope: _scope, openOnly: _openOnly);
       // The home screen widget shows exactly this view, so reuse the result.
       if (_scope == WorkItemScope.assignedToMe && _openOnly) {
-        TicketsHomeWidget.update(project: project, items: items);
+        TicketsHomeWidget.update(projects: projects, items: items);
       }
       if (!mounted) return;
       setState(() => _items = items);
@@ -84,18 +85,13 @@ class _WorkItemsScreenState extends State<WorkItemsScreen> {
     }
   }
 
-  Future<void> _pickProject() async {
+  Future<void> _pickProjects() async {
     final state = AppScope.read(context);
-    final picked = await showModalBottomSheet<String>(
-      context: context,
-      isScrollControlled: true,
-      showDragHandle: true,
-      useSafeArea: true,
-      builder: (_) => _ProjectPicker(api: state.api!, current: state.project),
-    );
-    if (picked != null && picked != state.project) {
+    final picked =
+        await showProjectPicker(context, api: state.api!, current: state.projects);
+    if (picked != null && !listEquals(picked, state.projects)) {
       _items = null;
-      await state.selectProject(picked);
+      await state.setProjects(picked);
     }
   }
 
@@ -107,6 +103,7 @@ class _WorkItemsScreenState extends State<WorkItemsScreen> {
       return w.title.toLowerCase().contains(query) ||
           w.id.toString().contains(query) ||
           w.tags.any((t) => t.toLowerCase().contains(query)) ||
+          w.project.toLowerCase().contains(query) ||
           (w.assignedTo?.displayName.toLowerCase().contains(query) ?? false);
     }).toList();
   }
@@ -242,12 +239,17 @@ class _WorkItemsScreenState extends State<WorkItemsScreen> {
             SliverAppBar.medium(
               title: InkWell(
                 borderRadius: BorderRadius.circular(8),
-                onTap: _pickProject,
+                onTap: _pickProjects,
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Flexible(
-                      child: Text(state.project ?? l10n.chooseProject,
+                      child: Text(
+                          switch (state.projects) {
+                            [] => l10n.chooseProjects,
+                            [final project] => project,
+                            final projects => l10n.projectCount(projects.length),
+                          },
                           overflow: TextOverflow.ellipsis),
                     ),
                     const Icon(Icons.arrow_drop_down),
@@ -333,17 +335,17 @@ class _WorkItemsScreenState extends State<WorkItemsScreen> {
                   ),
                 ),
               )
-            else if (state.project == null)
+            else if (state.projects.isEmpty)
               SliverFillRemaining(
                 hasScrollBody: false,
                 child: _EmptyState(
                   icon: Icons.folder_open_outlined,
-                  title: l10n.noProjectTitle,
-                  message: l10n.noProjectMessage,
+                  title: l10n.noProjectsTitle,
+                  message: l10n.noProjectsMessage,
                   action: FilledButton.icon(
-                    onPressed: _pickProject,
+                    onPressed: _pickProjects,
                     icon: const Icon(Icons.folder_outlined),
-                    label: Text(l10n.chooseProject),
+                    label: Text(l10n.chooseProjects),
                   ),
                 ),
               )
@@ -373,6 +375,7 @@ class _WorkItemsScreenState extends State<WorkItemsScreen> {
                   separatorBuilder: (_, _) => const SizedBox(height: 8),
                   itemBuilder: (context, i) => _WorkItemCard(
                     item: items[i],
+                    showProject: state.projects.length > 1,
                     selected: wide && items[i].id == _selectedId,
                     onTap: () => _open(items[i], wide),
                   ),
@@ -387,11 +390,19 @@ class _WorkItemsScreenState extends State<WorkItemsScreen> {
 }
 
 class _WorkItemCard extends StatelessWidget {
-  const _WorkItemCard({required this.item, required this.onTap, this.selected = false});
+  const _WorkItemCard({
+    required this.item,
+    required this.onTap,
+    this.selected = false,
+    this.showProject = false,
+  });
 
   final WorkItem item;
   final VoidCallback onTap;
   final bool selected;
+
+  /// Shows the project name, for when tickets of several projects are listed.
+  final bool showProject;
 
   @override
   Widget build(BuildContext context) {
@@ -421,6 +432,13 @@ class _WorkItemCard extends StatelessWidget {
                         if (item.priority != null) ...[
                           const SizedBox(width: 8),
                           Text('P${item.priority}', style: muted),
+                        ],
+                        if (showProject) ...[
+                          const SizedBox(width: 8),
+                          Flexible(
+                            child: Text(item.project,
+                                maxLines: 1, overflow: TextOverflow.ellipsis, style: muted),
+                          ),
                         ],
                         const Spacer(),
                         Text(formatRelative(l10n, item.changedDate), style: muted),
@@ -458,97 +476,6 @@ class _WorkItemCard extends StatelessWidget {
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-class _ProjectPicker extends StatefulWidget {
-  const _ProjectPicker({required this.api, this.current});
-
-  final DevOpsApi api;
-  final String? current;
-
-  @override
-  State<_ProjectPicker> createState() => _ProjectPickerState();
-}
-
-class _ProjectPickerState extends State<_ProjectPicker> {
-  late final Future<List<Project>> _projects = widget.api.getProjects();
-  String _query = '';
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return DraggableScrollableSheet(
-      expand: false,
-      initialChildSize: 0.7,
-      minChildSize: 0.4,
-      maxChildSize: 0.95,
-      builder: (context, controller) => Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(24, 0, 24, 12),
-            child: Row(
-              children: [
-                Text(context.l10n.chooseAProject, style: theme.textTheme.titleLarge),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: SearchBar(
-              hintText: context.l10n.searchProjectHint,
-              leading: const Icon(Icons.search),
-              elevation: const WidgetStatePropertyAll(0),
-              onChanged: (v) => setState(() => _query = v.toLowerCase()),
-            ),
-          ),
-          const SizedBox(height: 8),
-          Expanded(
-            child: FutureBuilder<List<Project>>(
-              future: _projects,
-              builder: (context, snapshot) {
-                if (snapshot.hasError) {
-                  return _EmptyState(
-                    icon: Icons.error_outline,
-                    title: context.l10n.loadProjectsFailed,
-                    message: context.l10n.error(snapshot.error!),
-                  );
-                }
-                if (!snapshot.hasData) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-                final projects = snapshot.data!
-                    .where((p) => p.name.toLowerCase().contains(_query))
-                    .toList();
-                return ListView.builder(
-                  controller: controller,
-                  itemCount: projects.length,
-                  itemBuilder: (context, i) {
-                    final p = projects[i];
-                    final selected = p.name == widget.current;
-                    return ListTile(
-                      leading: CircleAvatar(
-                        backgroundColor: theme.colorScheme.primaryContainer,
-                        foregroundColor: theme.colorScheme.onPrimaryContainer,
-                        child: Text(p.name[0].toUpperCase()),
-                      ),
-                      title: Text(p.name),
-                      subtitle: p.description == null || p.description!.isEmpty
-                          ? null
-                          : Text(p.description!,
-                              maxLines: 1, overflow: TextOverflow.ellipsis),
-                      trailing: selected ? const Icon(Icons.check) : null,
-                      selected: selected,
-                      onTap: () => Navigator.of(context).pop(p.name),
-                    );
-                  },
-                );
-              },
-            ),
-          ),
-        ],
       ),
     );
   }

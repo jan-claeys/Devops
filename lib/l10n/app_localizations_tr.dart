@@ -138,7 +138,7 @@ class AppLocalizationsTr extends AppLocalizations {
       'Ayrıntıları görmek için soldan bir bilet seçin.';
 
   @override
-  String get chooseProject => 'Proje seç';
+  String get chooseProjects => 'Projeleri seç';
 
   @override
   String get refresh => 'Yenile';
@@ -165,10 +165,11 @@ class AppLocalizationsTr extends AppLocalizations {
   String get retry => 'Tekrar dene';
 
   @override
-  String get noProjectTitle => 'Proje seçilmedi';
+  String get noProjectsTitle => 'Proje seçilmedi';
 
   @override
-  String get noProjectMessage => 'Biletleri görmek için bir proje seçin.';
+  String get noProjectsMessage =>
+      'Biletleri görmek için bir veya daha fazla proje seçin.';
 
   @override
   String get noTicketsTitle => 'Bilet yok';
@@ -190,7 +191,20 @@ class AppLocalizationsTr extends AppLocalizations {
   String get unassigned => 'Atanmamış';
 
   @override
-  String get chooseAProject => 'Bir proje seçin';
+  String get projects => 'Projeler';
+
+  @override
+  String projectCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count proje',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get apply => 'Uygula';
 
   @override
   String get searchProjectHint => 'Proje ara';
