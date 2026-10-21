@@ -78,6 +78,16 @@ class AppLocalizationsJa extends AppLocalizations {
   String get languageSystem => 'システムの言語';
 
   @override
+  String get privacy => 'プライバシー';
+
+  @override
+  String get sendErrorReports => 'エラーレポートを送信';
+
+  @override
+  String get sendErrorReportsHint =>
+      '不具合を修正するため、クラッシュとエラーの匿名の詳細を送信します。トークンが送信されることはありません。';
+
+  @override
   String get signOut => 'サインアウト';
 
   @override

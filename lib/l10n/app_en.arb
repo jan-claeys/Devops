@@ -23,6 +23,9 @@
   "colorSystem": "System color",
   "language": "Language",
   "languageSystem": "System language",
+  "privacy": "Privacy",
+  "sendErrorReports": "Send error reports",
+  "sendErrorReportsHint": "Sends anonymous crash and error details so bugs can be fixed. Your token is never sent.",
   "signOut": "Sign out",
 
   "selectTicketTitle": "Select a ticket",

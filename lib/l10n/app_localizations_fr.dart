@@ -80,6 +80,16 @@ class AppLocalizationsFr extends AppLocalizations {
   String get languageSystem => 'Langue du système';
 
   @override
+  String get privacy => 'Confidentialité';
+
+  @override
+  String get sendErrorReports => 'Envoyer les rapports d\'erreur';
+
+  @override
+  String get sendErrorReportsHint =>
+      'Envoie des informations anonymes sur les plantages et les erreurs pour corriger les bugs. Votre jeton n\'est jamais envoyé.';
+
+  @override
   String get signOut => 'Se déconnecter';
 
   @override

@@ -80,6 +80,16 @@ class AppLocalizationsDe extends AppLocalizations {
   String get languageSystem => 'Systemsprache';
 
   @override
+  String get privacy => 'Datenschutz';
+
+  @override
+  String get sendErrorReports => 'Fehlerberichte senden';
+
+  @override
+  String get sendErrorReportsHint =>
+      'Sendet anonyme Angaben zu Abstürzen und Fehlern, damit Bugs behoben werden können. Dein Token wird nie gesendet.';
+
+  @override
   String get signOut => 'Abmelden';
 
   @override

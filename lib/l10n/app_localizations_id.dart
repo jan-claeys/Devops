@@ -80,6 +80,16 @@ class AppLocalizationsId extends AppLocalizations {
   String get languageSystem => 'Bahasa sistem';
 
   @override
+  String get privacy => 'Privasi';
+
+  @override
+  String get sendErrorReports => 'Kirim laporan kesalahan';
+
+  @override
+  String get sendErrorReportsHint =>
+      'Mengirim detail anonim tentang crash dan kesalahan agar bug dapat diperbaiki. Token Anda tidak pernah dikirim.';
+
+  @override
   String get signOut => 'Keluar';
 
   @override

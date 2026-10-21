@@ -80,6 +80,16 @@ class AppLocalizationsNl extends AppLocalizations {
   String get languageSystem => 'Systeemtaal';
 
   @override
+  String get privacy => 'Privacy';
+
+  @override
+  String get sendErrorReports => 'Foutrapporten versturen';
+
+  @override
+  String get sendErrorReportsHint =>
+      'Stuurt anonieme gegevens over crashes en fouten zodat bugs opgelost kunnen worden. Je token wordt nooit verstuurd.';
+
+  @override
   String get signOut => 'Afmelden';
 
   @override

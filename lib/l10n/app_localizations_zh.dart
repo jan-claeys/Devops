@@ -78,6 +78,15 @@ class AppLocalizationsZh extends AppLocalizations {
   String get languageSystem => '系统语言';
 
   @override
+  String get privacy => '隐私';
+
+  @override
+  String get sendErrorReports => '发送错误报告';
+
+  @override
+  String get sendErrorReportsHint => '发送匿名的崩溃和错误详情，以便修复问题。绝不会发送你的令牌。';
+
+  @override
   String get signOut => '退出登录';
 
   @override

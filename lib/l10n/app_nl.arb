@@ -23,6 +23,9 @@
   "colorSystem": "Systeemkleur",
   "language": "Taal",
   "languageSystem": "Systeemtaal",
+  "privacy": "Privacy",
+  "sendErrorReports": "Foutrapporten versturen",
+  "sendErrorReportsHint": "Stuurt anonieme gegevens over crashes en fouten zodat bugs opgelost kunnen worden. Je token wordt nooit verstuurd.",
   "signOut": "Afmelden",
 
   "selectTicketTitle": "Selecteer een ticket",

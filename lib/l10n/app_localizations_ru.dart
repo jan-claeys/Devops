@@ -80,6 +80,16 @@ class AppLocalizationsRu extends AppLocalizations {
   String get languageSystem => 'Язык системы';
 
   @override
+  String get privacy => 'Конфиденциальность';
+
+  @override
+  String get sendErrorReports => 'Отправлять отчёты об ошибках';
+
+  @override
+  String get sendErrorReportsHint =>
+      'Отправляет анонимные данные о сбоях и ошибках, чтобы их можно было исправить. Ваш токен никогда не отправляется.';
+
+  @override
   String get signOut => 'Выйти';
 
   @override

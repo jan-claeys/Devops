@@ -23,6 +23,9 @@
   "colorSystem": "सिस्टम रंग",
   "language": "भाषा",
   "languageSystem": "सिस्टम भाषा",
+  "privacy": "गोपनीयता",
+  "sendErrorReports": "त्रुटि रिपोर्ट भेजें",
+  "sendErrorReportsHint": "बग ठीक करने के लिए क्रैश और त्रुटियों का गुमनाम विवरण भेजता है। आपका टोकन कभी नहीं भेजा जाता।",
   "signOut": "साइन आउट",
 
   "selectTicketTitle": "एक टिकट चुनें",

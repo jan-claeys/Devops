@@ -23,6 +23,9 @@
   "colorSystem": "Sistem rengi",
   "language": "Dil",
   "languageSystem": "Sistem dili",
+  "privacy": "Gizlilik",
+  "sendErrorReports": "Hata raporları gönder",
+  "sendErrorReportsHint": "Hataların düzeltilebilmesi için çökme ve hata ayrıntılarını anonim olarak gönderir. Belirteciniz asla gönderilmez.",
   "signOut": "Oturumu kapat",
 
   "selectTicketTitle": "Bir bilet seçin",

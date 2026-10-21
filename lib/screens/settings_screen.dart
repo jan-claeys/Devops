@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:logging/logging.dart';
 
 import '../l10n/l10n.dart';
 import '../services/app_state.dart';
 import '../services/devops_api.dart';
 import '../services/home_widget_service.dart';
+import '../services/logging.dart';
+
+final _log = Logger('SettingsScreen');
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key, this.isOnboarding = false});
@@ -56,7 +60,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text(context.l10n.connectionSaved)));
       }
-    } catch (e) {
+    } catch (e, st) {
+      logFailure(_log, 'Verifying the connection failed', e, st);
       setState(() => _error = context.l10n.error(e));
     } finally {
       if (mounted) setState(() => _busy = false);
@@ -194,6 +199,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           Text(l10n.language, style: theme.textTheme.titleMedium),
                           const SizedBox(height: 12),
                           const _LanguagePicker(),
+                          if (errorReportingAvailable) ...[
+                            const SizedBox(height: 32),
+                            Text(l10n.privacy, style: theme.textTheme.titleMedium),
+                            const SizedBox(height: 4),
+                            SwitchListTile(
+                              contentPadding: EdgeInsets.zero,
+                              secondary: const Icon(Icons.bug_report_outlined),
+                              title: Text(l10n.sendErrorReports),
+                              subtitle: Text(l10n.sendErrorReportsHint),
+                              value: state.sendErrorReports,
+                              onChanged: state.setSendErrorReports,
+                            ),
+                          ],
                           const SizedBox(height: 32),
                           OutlinedButton.icon(
                             style: OutlinedButton.styleFrom(

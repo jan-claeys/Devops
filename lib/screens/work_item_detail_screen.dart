@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:logging/logging.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../l10n/l10n.dart';
 import '../models/work_item.dart';
 import '../services/app_state.dart';
+import '../services/logging.dart';
 import '../widgets/work_item_visuals.dart';
+
+final _log = Logger('WorkItemDetailScreen');
 
 class WorkItemDetailScreen extends StatefulWidget {
   const WorkItemDetailScreen({
@@ -36,11 +40,23 @@ class _WorkItemDetailScreenState extends State<WorkItemDetailScreen> {
   }
 
   Future<_Detail> _load() async {
+    try {
+      return await _fetch();
+    } catch (e, st) {
+      logFailure(_log, 'Loading work item ${widget.id} failed', e, st);
+      rethrow;
+    }
+  }
+
+  Future<_Detail> _fetch() async {
     final api = AppScope.read(context).api!;
     final item = await api.getWorkItem(widget.id);
     final linkedIds = [?item.parentId, ...item.childIds];
     final results = await Future.wait([
-      api.getComments(item.project, item.id).catchError((_) => <WorkItemComment>[]),
+      api.getComments(item.project, item.id).catchError((Object e, StackTrace st) {
+        logFailure(_log, 'Loading comments of ${item.id} failed', e, st);
+        return <WorkItemComment>[];
+      }),
       api
           .getWorkItems(linkedIds, fields: const [
             'System.Id',
@@ -48,7 +64,10 @@ class _WorkItemDetailScreenState extends State<WorkItemDetailScreen> {
             'System.State',
             'System.WorkItemType',
           ])
-          .catchError((_) => <WorkItem>[]),
+          .catchError((Object e, StackTrace st) {
+            logFailure(_log, 'Loading linked items of ${item.id} failed', e, st);
+            return <WorkItem>[];
+          }),
     ]);
     final linked = {for (final w in results[1] as List<WorkItem>) w.id: w};
     return _Detail(

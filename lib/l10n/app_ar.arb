@@ -23,6 +23,9 @@
   "colorSystem": "لون النظام",
   "language": "اللغة",
   "languageSystem": "لغة النظام",
+  "privacy": "الخصوصية",
+  "sendErrorReports": "إرسال تقارير الأخطاء",
+  "sendErrorReportsHint": "يرسل تفاصيل مجهولة الهوية عن الأعطال والأخطاء لإصلاحها. لا يتم إرسال رمزك أبدًا.",
   "signOut": "تسجيل الخروج",
 
   "selectTicketTitle": "اختر تذكرة",
