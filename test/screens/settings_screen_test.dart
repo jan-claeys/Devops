@@ -56,6 +56,17 @@ void main() {
     expect(find.text(en.signOut), findsNothing);
   });
 
+  testWidgets('explains how to create a token when expanded', (tester) async {
+    await pumpApp(tester, const SettingsScreen(isOnboarding: true), state: state);
+    expect(find.text(en.tokenHelpTitle), findsOneWidget);
+    expect(find.text(en.tokenHelpStep3), findsNothing);
+
+    await tester.tap(find.text(en.tokenHelpTitle));
+    await tester.pumpAndSettle();
+    expect(find.text(en.tokenHelpStep3), findsOneWidget);
+    expect(find.text(en.tokenHelpDocs), findsOneWidget);
+  });
+
   testWidgets('requires organization and token', (tester) async {
     await pumpApp(tester, const SettingsScreen(isOnboarding: true), state: state);
     await tester.tap(find.text(en.connect));

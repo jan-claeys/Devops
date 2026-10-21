@@ -200,6 +200,48 @@ abstract class AppLocalizations {
   /// **'Enter your token'**
   String get tokenRequired;
 
+  /// No description provided for @tokenHelpTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'How do I create a token?'**
+  String get tokenHelpTitle;
+
+  /// No description provided for @tokenHelpStep1.
+  ///
+  /// In en, this message translates to:
+  /// **'In Azure DevOps, open User settings → Personal access tokens and select New Token.'**
+  String get tokenHelpStep1;
+
+  /// No description provided for @tokenHelpStep2.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick your organization and an expiration date.'**
+  String get tokenHelpStep2;
+
+  /// No description provided for @tokenHelpStep3.
+  ///
+  /// In en, this message translates to:
+  /// **'Under Scopes, choose Custom defined and enable only Work Items: Read and Project and Team: Read.'**
+  String get tokenHelpStep3;
+
+  /// No description provided for @tokenHelpStep4.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Create, copy the token and paste it above. It is shown only once.'**
+  String get tokenHelpStep4;
+
+  /// No description provided for @tokenHelpPermissions.
+  ///
+  /// In en, this message translates to:
+  /// **'A token never has more rights than your account: you need at least Stakeholder access and read access to the projects you want to see.'**
+  String get tokenHelpPermissions;
+
+  /// No description provided for @tokenHelpDocs.
+  ///
+  /// In en, this message translates to:
+  /// **'Microsoft documentation'**
+  String get tokenHelpDocs;
+
   /// No description provided for @connecting.
   ///
   /// In en, this message translates to:

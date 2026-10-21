@@ -48,6 +48,30 @@ class AppLocalizationsZh extends AppLocalizations {
   String get tokenRequired => '请输入你的令牌';
 
   @override
+  String get tokenHelpTitle => '如何创建令牌？';
+
+  @override
+  String get tokenHelpStep1 =>
+      '在 Azure DevOps 中打开 User settings → Personal access tokens，然后选择 New Token。';
+
+  @override
+  String get tokenHelpStep2 => '选择你的组织和过期日期。';
+
+  @override
+  String get tokenHelpStep3 =>
+      '在 Scopes 下选择 Custom defined，并只启用 Work Items: Read 和 Project and Team: Read。';
+
+  @override
+  String get tokenHelpStep4 => '选择 Create，复制令牌并粘贴到上方。令牌只显示一次。';
+
+  @override
+  String get tokenHelpPermissions =>
+      '令牌的权限永远不会超过你的账户：你至少需要 Stakeholder 访问级别，以及要查看的项目的读取权限。';
+
+  @override
+  String get tokenHelpDocs => 'Microsoft 文档';
+
+  @override
   String get connecting => '正在连接…';
 
   @override

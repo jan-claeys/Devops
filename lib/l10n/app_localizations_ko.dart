@@ -48,6 +48,31 @@ class AppLocalizationsKo extends AppLocalizations {
   String get tokenRequired => '토큰을 입력하세요';
 
   @override
+  String get tokenHelpTitle => '토큰은 어떻게 만드나요?';
+
+  @override
+  String get tokenHelpStep1 =>
+      'Azure DevOps에서 User settings → Personal access tokens를 열고 New Token을 선택합니다.';
+
+  @override
+  String get tokenHelpStep2 => '조직과 만료 날짜를 선택합니다.';
+
+  @override
+  String get tokenHelpStep3 =>
+      'Scopes에서 Custom defined를 선택하고 Work Items: Read와 Project and Team: Read만 켭니다.';
+
+  @override
+  String get tokenHelpStep4 =>
+      'Create를 선택하고 토큰을 복사해 위에 붙여넣습니다. 토큰은 한 번만 표시됩니다.';
+
+  @override
+  String get tokenHelpPermissions =>
+      '토큰은 계정보다 많은 권한을 가질 수 없습니다. 최소 Stakeholder 액세스와 보려는 프로젝트에 대한 읽기 권한이 필요합니다.';
+
+  @override
+  String get tokenHelpDocs => 'Microsoft 문서';
+
+  @override
   String get connecting => '연결 중…';
 
   @override

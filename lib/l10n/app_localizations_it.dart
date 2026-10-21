@@ -50,6 +50,32 @@ class AppLocalizationsIt extends AppLocalizations {
   String get tokenRequired => 'Inserisci il tuo token';
 
   @override
+  String get tokenHelpTitle => 'Come creo un token?';
+
+  @override
+  String get tokenHelpStep1 =>
+      'In Azure DevOps apri User settings → Personal access tokens e seleziona New Token.';
+
+  @override
+  String get tokenHelpStep2 =>
+      'Scegli la tua organizzazione e una data di scadenza.';
+
+  @override
+  String get tokenHelpStep3 =>
+      'In Scopes scegli Custom defined e attiva solo Work Items: Read e Project and Team: Read.';
+
+  @override
+  String get tokenHelpStep4 =>
+      'Seleziona Create, copia il token e incollalo qui sopra. Viene mostrato una sola volta.';
+
+  @override
+  String get tokenHelpPermissions =>
+      'Un token non ha mai più diritti del tuo account: ti serve almeno l\'accesso Stakeholder e l\'accesso in lettura ai progetti che vuoi vedere.';
+
+  @override
+  String get tokenHelpDocs => 'Documentazione Microsoft';
+
+  @override
   String get connecting => 'Connessione…';
 
   @override

@@ -50,6 +50,31 @@ class AppLocalizationsUk extends AppLocalizations {
   String get tokenRequired => 'Введіть токен';
 
   @override
+  String get tokenHelpTitle => 'Як створити токен?';
+
+  @override
+  String get tokenHelpStep1 =>
+      'В Azure DevOps відкрийте User settings → Personal access tokens і виберіть New Token.';
+
+  @override
+  String get tokenHelpStep2 => 'Виберіть організацію та термін дії.';
+
+  @override
+  String get tokenHelpStep3 =>
+      'У розділі Scopes виберіть Custom defined і ввімкніть лише Work Items: Read і Project and Team: Read.';
+
+  @override
+  String get tokenHelpStep4 =>
+      'Натисніть Create, скопіюйте токен і вставте його вище. Він показується лише один раз.';
+
+  @override
+  String get tokenHelpPermissions =>
+      'Токен ніколи не має більше прав, ніж ваш обліковий запис: потрібен щонайменше доступ Stakeholder і право читання потрібних проєктів.';
+
+  @override
+  String get tokenHelpDocs => 'Документація Microsoft';
+
+  @override
   String get connecting => 'Підключення…';
 
   @override

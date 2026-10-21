@@ -50,6 +50,31 @@ class AppLocalizationsTr extends AppLocalizations {
   String get tokenRequired => 'Belirtecinizi girin';
 
   @override
+  String get tokenHelpTitle => 'Nasıl token oluştururum?';
+
+  @override
+  String get tokenHelpStep1 =>
+      'Azure DevOps\'ta User settings → Personal access tokens\'ı açın ve New Token\'ı seçin.';
+
+  @override
+  String get tokenHelpStep2 => 'Kuruluşunuzu ve bir son kullanma tarihi seçin.';
+
+  @override
+  String get tokenHelpStep3 =>
+      'Scopes altında Custom defined\'ı seçin ve yalnızca Work Items: Read ile Project and Team: Read\'i etkinleştirin.';
+
+  @override
+  String get tokenHelpStep4 =>
+      'Create\'i seçin, token\'ı kopyalayın ve yukarıya yapıştırın. Yalnızca bir kez gösterilir.';
+
+  @override
+  String get tokenHelpPermissions =>
+      'Bir token hiçbir zaman hesabınızdan fazla yetkiye sahip olmaz: en az Stakeholder erişimine ve görmek istediğiniz projelerde okuma iznine ihtiyacınız var.';
+
+  @override
+  String get tokenHelpDocs => 'Microsoft belgeleri';
+
+  @override
   String get connecting => 'Bağlanıyor…';
 
   @override
