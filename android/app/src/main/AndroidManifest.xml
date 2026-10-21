@@ -21,6 +21,13 @@
               android:name="io.flutter.embedding.android.NormalTheme"
               android:resource="@style/NormalTheme"
               />
+            <!-- Widget taps carry devops://workitem/<id>; home_widget hands those
+                 to Dart. Flutter's own deep linking would push them as named
+                 routes, which MaterialApp doesn't define, and crash. -->
+            <meta-data
+              android:name="flutter_deeplinking_enabled"
+              android:value="false"
+              />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
