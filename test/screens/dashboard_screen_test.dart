@@ -97,6 +97,16 @@ void main() {
     expect(find.text('Nightly'), findsOneWidget);
   });
 
+  testWidgets('keeps warning when many newer builds follow', (tester) async {
+    for (var id = 100; id < 160; id++) {
+      fake.addRun(build(id, pipeline: 'Busy', definition: 5, mine: false,
+          age: const Duration(minutes: 30)));
+    }
+    await pumpScreen(tester);
+
+    expect(find.text(en.failingOnMain(1)), findsOneWidget);
+  });
+
   testWidgets('shows the runs of the user with the progress of a running one', (tester) async {
     await pumpScreen(tester);
 

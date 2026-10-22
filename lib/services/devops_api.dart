@@ -225,6 +225,70 @@ class DevOpsApi {
     return runs.take(top).toList();
   }
 
+  /// Taken as the default branch when the repository of a build doesn't
+  /// tell, such as one on GitHub, or the code can't be read.
+  static const fallbackDefaultBranches = {'refs/heads/main', 'refs/heads/master'};
+
+  /// The latest completed builds of the pipelines in all [projects] on the
+  /// default branch of their repository, up to [perPipeline] of each that
+  /// finished since [minTime], newest first. Disabled pipelines are left out.
+  Future<List<PipelineRun>> getDefaultBranchRuns({
+    required List<String> projects,
+    DateTime? minTime,
+    int perPipeline = 5,
+  }) async {
+    final perProject = await Future.wait([
+      for (final project in projects) _defaultBranchRuns(project, minTime, perPipeline),
+    ]);
+    return [for (final runs in perProject) ...runs]
+      ..sort((a, b) => (b.finishTime ?? DateTime(0)).compareTo(a.finishTime ?? DateTime(0)));
+  }
+
+  Future<List<PipelineRun>> _defaultBranchRuns(
+      String project, DateTime? minTime, int perPipeline) async {
+    final apis = '$baseUrl/${Uri.encodeComponent(project)}/_apis';
+    // Without access to the code, the usual names will do.
+    final defaults = await _get('$apis/git/repositories?api-version=$_apiVersion').then(
+      (json) => {
+        for (final repo in (json['value'] as List).cast<Map<String, dynamic>>())
+          if (repo['defaultBranch'] case final String branch) repo['id'] as String: branch,
+      },
+      onError: (Object _) => <String, String>{},
+    );
+    final definitions = await _get('$apis/build/definitions?api-version=$_apiVersion');
+    final enabled = [
+      for (final d in (definitions['value'] as List).cast<Map<String, dynamic>>())
+        if (d['queueStatus'] != 'disabled') d['id'] as int,
+    ];
+    final since = minTime == null
+        ? ''
+        : '&minTime=${Uri.encodeQueryComponent(minTime.toUtc().toIso8601String())}';
+    // A build query takes one branch; the definitions keep the URL short.
+    const chunk = 100;
+    final pages = await Future.wait([
+      for (final branch in {...defaults.values, ...fallbackDefaultBranches})
+        for (var i = 0; i < enabled.length; i += chunk)
+          _get('$apis/build/builds'
+              '?definitions=${enabled.skip(i).take(chunk).join(',')}'
+              '&branchName=${Uri.encodeQueryComponent(branch)}&statusFilter=completed'
+              '&maxBuildsPerDefinition=$perPipeline&queryOrder=finishTimeDescending$since'
+              '&api-version=$_apiVersion'),
+    ]);
+    bool onDefaultBranch(Map<String, dynamic> build) {
+      final branch = build['sourceBranch'];
+      return switch (defaults[(build['repository'] as Map?)?['id']]) {
+        final defaultBranch? => branch == defaultBranch,
+        null => fallbackDefaultBranches.contains(branch),
+      };
+    }
+
+    return [
+      for (final page in pages)
+        for (final build in (page['value'] as List).cast<Map<String, dynamic>>())
+          if (onDefaultBranch(build)) PipelineRun.fromJson(build),
+    ];
+  }
+
   Future<PipelineRun> getPipelineRun(String project, int id) async {
     final json = await _get('$baseUrl/${Uri.encodeComponent(project)}/_apis/build/builds/$id'
         '?api-version=$_apiVersion');

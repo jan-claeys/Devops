@@ -49,6 +49,7 @@ Map<String, dynamic> runJson(
   String queueTime = '2026-10-20T10:00:00Z',
   String? startTime = '2026-10-20T10:00:05Z',
   String? finishTime = '2026-10-20T10:02:05Z',
+  String repository = 'repo-1',
 }) =>
     {
       'id': id,
@@ -57,6 +58,7 @@ Map<String, dynamic> runJson(
       'result': ?result,
       'definition': {'id': 1, 'name': pipeline},
       'project': {'id': '1', 'name': project},
+      'repository': {'id': repository, 'type': 'TfsGit'},
       'sourceBranch': branch,
       'requestedFor': {'displayName': 'Jan Claeys'},
       'queueTime': queueTime,
@@ -229,6 +231,12 @@ class FakeDevOps {
   final runs = <int, Map<String, dynamic>>{};
   final timelines = <int, List<Map<String, dynamic>>>{};
 
+  /// Git repositories, all in Contoso; the pipelines are those of [runs].
+  final repositories = <Map<String, dynamic>>[
+    {'id': 'repo-1', 'name': 'Contoso', 'defaultBranch': 'refs/heads/main'},
+  ];
+  final disabledDefinitions = <int>{};
+
   /// The text of logs, by the path of their URL.
   final logs = <String, String>{};
 
@@ -333,13 +341,37 @@ class FakeDevOps {
       final json = releases[int.parse(release[1]!)];
       return json == null ? http.Response('', 404) : _json(json);
     }
+    if (path.endsWith('/_apis/git/repositories')) {
+      return _json({'value': repositories});
+    }
+    final definitions = RegExp(r'/([^/]+)/_apis/build/definitions$').firstMatch(path);
+    if (definitions != null) {
+      final project = Uri.decodeComponent(definitions[1]!);
+      final ids = {
+        for (final run in runs.values)
+          if ((run['project'] as Map)['name'] == project) (run['definition'] as Map)['id'] as int,
+      };
+      return _json({
+        'value': [
+          for (final id in ids)
+            {'id': id, 'queueStatus': disabledDefinitions.contains(id) ? 'disabled' : 'enabled'},
+        ],
+      });
+    }
     final builds = RegExp(r'/([^/]+)/_apis/build/builds$').firstMatch(path);
     if (builds != null) {
       final project = Uri.decodeComponent(builds[1]!);
+      final query = request.url.queryParameters;
+      final branch = query['branchName'];
+      final ids = query['definitions']?.split(',').map(int.parse).toSet();
       return _json({
         'value': [
           for (final run in runs.values)
-            if ((run['project'] as Map)['name'] == project) run,
+            if ((run['project'] as Map)['name'] == project &&
+                (branch == null || run['sourceBranch'] == branch) &&
+                (ids == null || ids.contains((run['definition'] as Map)['id'])) &&
+                (query['statusFilter'] == null || run['status'] == query['statusFilter']))
+              run,
         ],
       });
     }

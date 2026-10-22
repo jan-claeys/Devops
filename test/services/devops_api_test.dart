@@ -196,6 +196,62 @@ void main() {
       expect(fake.requests.first.url.queryParameters['\$top'], '2');
     });
 
+    group('getDefaultBranchRuns', () {
+      Map<String, dynamic> run(int id, int definition, String branch,
+          {String repository = 'repo-1', String finishTime = '2026-10-20T10:02:05Z'}) {
+        final json = runJson(id, branch: branch, repository: repository, finishTime: finishTime);
+        (json['definition'] as Map)['id'] = definition;
+        return json;
+      }
+
+      test('keeps the builds on the default branch of their repository', () async {
+        fake
+          ..repositories.add({'id': 'repo-2', 'defaultBranch': 'refs/heads/develop'})
+          ..addRun(run(1, 1, 'refs/heads/main', finishTime: '2026-10-20T08:00:00Z'))
+          ..addRun(run(2, 1, 'refs/heads/feature/x'))
+          ..addRun(run(3, 2, 'refs/heads/develop', repository: 'repo-2',
+              finishTime: '2026-10-20T09:00:00Z'))
+          // Not the default branch of repo-2.
+          ..addRun(run(4, 2, 'refs/heads/main', repository: 'repo-2'))
+          // A repository outside Azure Repos falls back on main and master.
+          ..addRun(run(5, 3, 'refs/heads/master', repository: 'github',
+              finishTime: '2026-10-20T10:00:00Z'))
+          ..addRun(run(6, 3, 'refs/heads/develop', repository: 'github'));
+        final runs = await api.getDefaultBranchRuns(
+            projects: ['Contoso'], minTime: DateTime.utc(2026, 10, 1));
+        expect(runs.map((r) => r.id), [5, 3, 1]);
+
+        final builds = fake.requests.where((r) => r.url.path.endsWith('/builds'));
+        expect(builds.map((r) => r.url.queryParameters['branchName']),
+            unorderedEquals(['refs/heads/main', 'refs/heads/develop', 'refs/heads/master']));
+        final query = builds.first.url.queryParameters;
+        expect(query['definitions'], '1,2,3');
+        expect(query['statusFilter'], 'completed');
+        expect(query['maxBuildsPerDefinition'], '5');
+        expect(query['queryOrder'], 'finishTimeDescending');
+        expect(query['minTime'], '2026-10-01T00:00:00.000Z');
+      });
+
+      test('leaves out disabled pipelines', () async {
+        fake
+          ..addRun(run(1, 1, 'refs/heads/main'))
+          ..addRun(run(2, 2, 'refs/heads/main'))
+          ..disabledDefinitions.add(2);
+        final runs = await api.getDefaultBranchRuns(projects: ['Contoso']);
+        expect(runs.map((r) => r.id), [1]);
+      });
+
+      test('falls back on main and master without access to the code', () async {
+        fake
+          ..addRun(run(1, 1, 'refs/heads/main'))
+          ..addRun(run(2, 1, 'refs/heads/develop'))
+          ..failWith = 401
+          ..failPath = '/git/repositories';
+        final runs = await api.getDefaultBranchRuns(projects: ['Contoso']);
+        expect(runs.map((r) => r.id), [1]);
+      });
+    });
+
     test('getPipelineRun and getTimeline read one run', () async {
       fake.addRun(runJson(4, status: 'inProgress', result: null), [
         recordJson('s1', 'Stage', 'Build', state: 'inProgress', result: null),
