@@ -146,9 +146,14 @@ void main() {
       expect(run.startTime, DateTime.parse('2026-10-20T11:00:10Z').toLocal());
       expect(run.webUrl, contains('releaseId=9'));
       expect(run.stages, [
-        (name: 'Test', status: RunStatus.succeeded),
-        (name: 'Acceptance', status: RunStatus.waitingForApproval),
-        (name: 'Production', status: RunStatus.notDeployed),
+        (
+          name: 'Test',
+          status: RunStatus.succeeded,
+          startTime: DateTime.parse('2026-10-20T11:00:10Z').toLocal(),
+          finishTime: null,
+        ),
+        (name: 'Acceptance', status: RunStatus.waitingForApproval, startTime: null, finishTime: null),
+        (name: 'Production', status: RunStatus.notDeployed, startTime: null, finishTime: null),
       ]);
     });
 
