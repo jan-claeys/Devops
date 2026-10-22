@@ -149,7 +149,6 @@
   "pullRequests": "拉取请求",
   "searchPullRequestsHint": "按标题、ID、分支或人员搜索",
   "scopeReviewing": "待我审阅",
-  "scopeMine": "我的",
   "loadPullRequestsFailed": "无法加载拉取请求",
   "codeScopeHint": "拉取请求需要令牌具有 Code (Read) 范围。",
   "noPullRequestsTitle": "没有拉取请求",

@@ -149,7 +149,6 @@
   "pullRequests": "Pull request’ы",
   "searchPullRequestsHint": "Поиск по названию, ID, ветке или человеку",
   "scopeReviewing": "На проверку",
-  "scopeMine": "Мои",
   "loadPullRequestsFailed": "Не удалось загрузить pull request’ы",
   "codeScopeHint": "Для pull request’ов токену нужны права Code (Read).",
   "noPullRequestsTitle": "Нет pull request’ов",

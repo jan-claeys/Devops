@@ -505,9 +505,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get scopeReviewing => 'На проверку';
 
   @override
-  String get scopeMine => 'Мои';
-
-  @override
   String get loadPullRequestsFailed => 'Не удалось загрузить pull request’ы';
 
   @override

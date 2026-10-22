@@ -197,7 +197,6 @@
   "pullRequests": "Pull requests",
   "searchPullRequestsHint": "Search by title, ID, branch or person",
   "scopeReviewing": "Reviewing",
-  "scopeMine": "Mine",
   "loadPullRequestsFailed": "Couldn't load pull requests",
   "codeScopeHint": "Pull requests need the Code (Read) scope on your token.",
   "noPullRequestsTitle": "No pull requests",

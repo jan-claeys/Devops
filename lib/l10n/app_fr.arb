@@ -149,7 +149,6 @@
   "pullRequests": "Pull requests",
   "searchPullRequestsHint": "Rechercher par titre, ID, branche ou personne",
   "scopeReviewing": "À relire",
-  "scopeMine": "Les miennes",
   "loadPullRequestsFailed": "Impossible de charger les pull requests",
   "codeScopeHint": "Les pull requests nécessitent la portée Code (Read) sur votre jeton.",
   "noPullRequestsTitle": "Aucune pull request",

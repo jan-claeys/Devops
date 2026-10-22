@@ -484,9 +484,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get scopeReviewing => '待我审阅';
 
   @override
-  String get scopeMine => '我的';
-
-  @override
   String get loadPullRequestsFailed => '无法加载拉取请求';
 
   @override

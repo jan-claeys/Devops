@@ -494,9 +494,6 @@ class AppLocalizationsHi extends AppLocalizations {
   String get scopeReviewing => 'समीक्षा के लिए';
 
   @override
-  String get scopeMine => 'मेरे';
-
-  @override
   String get loadPullRequestsFailed => 'पुल रिक्वेस्ट लोड नहीं हो सके';
 
   @override

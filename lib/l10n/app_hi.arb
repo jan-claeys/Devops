@@ -149,7 +149,6 @@
   "pullRequests": "पुल रिक्वेस्ट",
   "searchPullRequestsHint": "शीर्षक, ID, ब्रांच या व्यक्ति से खोजें",
   "scopeReviewing": "समीक्षा के लिए",
-  "scopeMine": "मेरे",
   "loadPullRequestsFailed": "पुल रिक्वेस्ट लोड नहीं हो सके",
   "codeScopeHint": "पुल रिक्वेस्ट के लिए आपके टोकन में Code (Read) स्कोप चाहिए।",
   "noPullRequestsTitle": "कोई पुल रिक्वेस्ट नहीं",

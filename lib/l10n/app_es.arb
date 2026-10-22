@@ -149,7 +149,6 @@
   "pullRequests": "Pull requests",
   "searchPullRequestsHint": "Buscar por título, ID, rama o persona",
   "scopeReviewing": "Para revisar",
-  "scopeMine": "Mías",
   "loadPullRequestsFailed": "No se pudieron cargar las pull requests",
   "codeScopeHint": "Las pull requests necesitan el ámbito Code (Read) en tu token.",
   "noPullRequestsTitle": "No hay pull requests",

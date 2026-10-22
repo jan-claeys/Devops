@@ -488,9 +488,6 @@ class AppLocalizationsKo extends AppLocalizations {
   String get scopeReviewing => '검토 대상';
 
   @override
-  String get scopeMine => '내 항목';
-
-  @override
   String get loadPullRequestsFailed => '끌어오기 요청을 불러오지 못했습니다';
 
   @override

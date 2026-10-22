@@ -488,9 +488,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get scopeReviewing => 'レビュー担当';
 
   @override
-  String get scopeMine => '自分';
-
-  @override
   String get loadPullRequestsFailed => 'プル リクエストを読み込めませんでした';
 
   @override

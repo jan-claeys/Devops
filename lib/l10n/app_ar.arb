@@ -149,7 +149,6 @@
   "pullRequests": "طلبات السحب",
   "searchPullRequestsHint": "ابحث حسب العنوان أو المعرّف أو الفرع أو الشخص",
   "scopeReviewing": "للمراجعة",
-  "scopeMine": "الخاصة بي",
   "loadPullRequestsFailed": "تعذّر تحميل طلبات السحب",
   "codeScopeHint": "تحتاج طلبات السحب إلى النطاق Code (Read) في الرمز المميز.",
   "noPullRequestsTitle": "لا توجد طلبات سحب",

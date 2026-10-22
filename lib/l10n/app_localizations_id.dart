@@ -498,9 +498,6 @@ class AppLocalizationsId extends AppLocalizations {
   String get scopeReviewing => 'Untuk ditinjau';
 
   @override
-  String get scopeMine => 'Milik saya';
-
-  @override
   String get loadPullRequestsFailed => 'Tidak dapat memuat pull request';
 
   @override

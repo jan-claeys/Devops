@@ -149,7 +149,6 @@
   "pullRequests": "Çekme istekleri",
   "searchPullRequestsHint": "Başlık, kimlik, dal veya kişiye göre ara",
   "scopeReviewing": "İncelenecek",
-  "scopeMine": "Benim",
   "loadPullRequestsFailed": "Çekme istekleri yüklenemedi",
   "codeScopeHint": "Çekme istekleri için belirtecinizde Code (Read) kapsamı gerekir.",
   "noPullRequestsTitle": "Çekme isteği yok",

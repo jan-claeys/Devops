@@ -149,7 +149,6 @@
   "pullRequests": "プル リクエスト",
   "searchPullRequestsHint": "タイトル、ID、ブランチ、ユーザーで検索",
   "scopeReviewing": "レビュー担当",
-  "scopeMine": "自分",
   "loadPullRequestsFailed": "プル リクエストを読み込めませんでした",
   "codeScopeHint": "プル リクエストにはトークンの Code (Read) スコープが必要です。",
   "noPullRequestsTitle": "プル リクエストはありません",

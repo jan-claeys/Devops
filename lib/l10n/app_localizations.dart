@@ -974,12 +974,6 @@ abstract class AppLocalizations {
   /// **'Reviewing'**
   String get scopeReviewing;
 
-  /// No description provided for @scopeMine.
-  ///
-  /// In en, this message translates to:
-  /// **'Mine'**
-  String get scopeMine;
-
   /// No description provided for @loadPullRequestsFailed.
   ///
   /// In en, this message translates to:

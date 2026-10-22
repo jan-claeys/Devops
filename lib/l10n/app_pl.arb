@@ -149,7 +149,6 @@
   "pullRequests": "Pull requesty",
   "searchPullRequestsHint": "Szukaj według tytułu, ID, gałęzi lub osoby",
   "scopeReviewing": "Do przeglądu",
-  "scopeMine": "Moje",
   "loadPullRequestsFailed": "Nie udało się wczytać pull requestów",
   "codeScopeHint": "Pull requesty wymagają zakresu Code (Read) w tokenie.",
   "noPullRequestsTitle": "Brak pull requestów",

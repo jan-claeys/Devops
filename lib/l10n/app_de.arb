@@ -149,7 +149,6 @@
   "pullRequests": "Pull Requests",
   "searchPullRequestsHint": "Nach Titel, ID, Branch oder Person suchen",
   "scopeReviewing": "Zu prüfen",
-  "scopeMine": "Meine",
   "loadPullRequestsFailed": "Pull Requests konnten nicht geladen werden",
   "codeScopeHint": "Für Pull Requests braucht dein Token den Bereich Code (Read).",
   "noPullRequestsTitle": "Keine Pull Requests",

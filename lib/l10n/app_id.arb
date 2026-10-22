@@ -149,7 +149,6 @@
   "pullRequests": "Pull request",
   "searchPullRequestsHint": "Cari menurut judul, ID, branch, atau orang",
   "scopeReviewing": "Untuk ditinjau",
-  "scopeMine": "Milik saya",
   "loadPullRequestsFailed": "Tidak dapat memuat pull request",
   "codeScopeHint": "Pull request memerlukan cakupan Code (Read) pada token Anda.",
   "noPullRequestsTitle": "Tidak ada pull request",

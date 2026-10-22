@@ -499,9 +499,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get scopeReviewing => 'Reviewing';
 
   @override
-  String get scopeMine => 'Mine';
-
-  @override
   String get loadPullRequestsFailed => 'Couldn\'t load pull requests';
 
   @override

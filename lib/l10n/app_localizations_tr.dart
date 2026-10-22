@@ -496,9 +496,6 @@ class AppLocalizationsTr extends AppLocalizations {
   String get scopeReviewing => 'İncelenecek';
 
   @override
-  String get scopeMine => 'Benim';
-
-  @override
   String get loadPullRequestsFailed => 'Çekme istekleri yüklenemedi';
 
   @override

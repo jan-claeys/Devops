@@ -149,7 +149,6 @@
   "pullRequests": "Pull request",
   "searchPullRequestsHint": "Cerca per titolo, ID, branch o persona",
   "scopeReviewing": "Da revisionare",
-  "scopeMine": "Mie",
   "loadPullRequestsFailed": "Impossibile caricare le pull request",
   "codeScopeHint": "Le pull request richiedono l’ambito Code (Read) nel token.",
   "noPullRequestsTitle": "Nessuna pull request",

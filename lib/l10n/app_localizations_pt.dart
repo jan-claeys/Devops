@@ -502,9 +502,6 @@ class AppLocalizationsPt extends AppLocalizations {
   String get scopeReviewing => 'Para revisar';
 
   @override
-  String get scopeMine => 'Minhas';
-
-  @override
   String get loadPullRequestsFailed =>
       'Não foi possível carregar os pull requests';
 

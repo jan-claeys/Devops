@@ -149,7 +149,6 @@
   "pullRequests": "끌어오기 요청",
   "searchPullRequestsHint": "제목, ID, 분기 또는 사람으로 검색",
   "scopeReviewing": "검토 대상",
-  "scopeMine": "내 항목",
   "loadPullRequestsFailed": "끌어오기 요청을 불러오지 못했습니다",
   "codeScopeHint": "끌어오기 요청을 보려면 토큰에 Code (Read) 범위가 필요합니다.",
   "noPullRequestsTitle": "끌어오기 요청 없음",

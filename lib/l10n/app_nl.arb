@@ -149,7 +149,6 @@
   "pullRequests": "Pull requests",
   "searchPullRequestsHint": "Zoek op titel, ID, branch of persoon",
   "scopeReviewing": "Te reviewen",
-  "scopeMine": "Van mij",
   "loadPullRequestsFailed": "Kon de pull requests niet laden",
   "codeScopeHint": "Voor pull requests heeft je token de scope Code (Read) nodig.",
   "noPullRequestsTitle": "Geen pull requests",

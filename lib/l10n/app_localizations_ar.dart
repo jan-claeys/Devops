@@ -508,9 +508,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get scopeReviewing => 'للمراجعة';
 
   @override
-  String get scopeMine => 'الخاصة بي';
-
-  @override
   String get loadPullRequestsFailed => 'تعذّر تحميل طلبات السحب';
 
   @override

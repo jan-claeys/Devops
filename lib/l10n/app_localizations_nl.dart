@@ -500,9 +500,6 @@ class AppLocalizationsNl extends AppLocalizations {
   String get scopeReviewing => 'Te reviewen';
 
   @override
-  String get scopeMine => 'Van mij';
-
-  @override
   String get loadPullRequestsFailed => 'Kon de pull requests niet laden';
 
   @override
