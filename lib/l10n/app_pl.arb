@@ -142,6 +142,7 @@
   "pullRequests": "Pull requesty",
   "searchPullRequestsHint": "Szukaj według tytułu, ID, gałęzi lub osoby",
   "scopeReviewing": "Do przeglądu",
+  "scopeMine": "Moje",
   "loadPullRequestsFailed": "Nie udało się wczytać pull requestów",
   "codeScopeHint": "Pull requesty wymagają zakresu Code (Read) w tokenie.",
   "noPullRequestsTitle": "Brak pull requestów",
@@ -179,5 +180,20 @@
   "previousError": "Poprzedni błąd",
   "nextError": "Następny błąd",
   "errorPosition": "Błąd {current} z {total}",
-  "errorCount": "{count, plural, =1{1 błąd} few{{count} błędy} many{{count} błędów} other{{count} błędu}}"
+  "errorCount": "{count, plural, =1{1 błąd} few{{count} błędy} many{{count} błędów} other{{count} błędu}}",
+
+  "dashboard": "Przegląd",
+  "refreshFailed": "Nie udało się odświeżyć. Dane z: {time}.",
+  "loadDashboardFailed": "Nie udało się wczytać przeglądu",
+  "myPullRequests": "Moje pull requesty",
+  "myTickets": "Moje otwarte zgłoszenia",
+  "waitingForYourReview": "Czeka na twoją recenzję",
+  "waitingForYou": "Czeka na ciebie",
+  "nothingWaiting": "Nic teraz na ciebie nie czeka.",
+  "readyToComplete": "Zatwierdzony, gotowy do ukończenia",
+  "yourApproval": "Czeka na twoje zatwierdzenie",
+  "myRuns": "Moje uruchomienia",
+  "noRecentRuns": "Brak twoich ostatnich uruchomień.",
+  "failingOnMain": "{count, plural, =1{1 potok kończy się niepowodzeniem na gałęzi main} few{{count} potoki kończą się niepowodzeniem na gałęzi main} many{{count} potoków kończy się niepowodzeniem na gałęzi main} other{{count} potoku kończy się niepowodzeniem na gałęzi main}}",
+  "noChangesFor": "Bez zmian od {count} d"
 }

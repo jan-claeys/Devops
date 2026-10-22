@@ -142,6 +142,7 @@
   "pullRequests": "Pull requests",
   "searchPullRequestsHint": "Rechercher par titre, ID, branche ou personne",
   "scopeReviewing": "À relire",
+  "scopeMine": "Les miennes",
   "loadPullRequestsFailed": "Impossible de charger les pull requests",
   "codeScopeHint": "Les pull requests nécessitent la portée Code (Read) sur votre jeton.",
   "noPullRequestsTitle": "Aucune pull request",
@@ -179,5 +180,20 @@
   "previousError": "Erreur précédente",
   "nextError": "Erreur suivante",
   "errorPosition": "Erreur {current} sur {total}",
-  "errorCount": "{count, plural, =1{1 erreur} other{{count} erreurs}}"
+  "errorCount": "{count, plural, =1{1 erreur} other{{count} erreurs}}",
+
+  "dashboard": "Vue d’ensemble",
+  "refreshFailed": "Actualisation impossible. Données : {time}.",
+  "loadDashboardFailed": "Impossible de charger la vue d’ensemble",
+  "myPullRequests": "Mes pull requests",
+  "myTickets": "Mes tickets ouverts",
+  "waitingForYourReview": "En attente de votre revue",
+  "waitingForYou": "En attente de vous",
+  "nothingWaiting": "Rien ne vous attend pour le moment.",
+  "readyToComplete": "Approuvée, prête à être terminée",
+  "yourApproval": "En attente de votre approbation",
+  "myRuns": "Mes exécutions",
+  "noRecentRuns": "Vous n’avez lancé aucune exécution récemment.",
+  "failingOnMain": "{count, plural, =1{1 pipeline échoue sur la branche principale} other{{count} pipelines échouent sur la branche principale}}",
+  "noChangesFor": "Inchangé depuis {count} j"
 }

@@ -478,6 +478,9 @@ class AppLocalizationsUk extends AppLocalizations {
   String get scopeReviewing => 'На перевірку';
 
   @override
+  String get scopeMine => 'Мої';
+
+  @override
   String get loadPullRequestsFailed => 'Не вдалося завантажити pull request’и';
 
   @override
@@ -613,5 +616,61 @@ class AppLocalizationsUk extends AppLocalizations {
       one: '1 помилка',
     );
     return '$_temp0';
+  }
+
+  @override
+  String get dashboard => 'Огляд';
+
+  @override
+  String refreshFailed(String time) {
+    return 'Не вдалося оновити. Дані: $time.';
+  }
+
+  @override
+  String get loadDashboardFailed => 'Не вдалося завантажити огляд';
+
+  @override
+  String get myPullRequests => 'Мої pull request’и';
+
+  @override
+  String get myTickets => 'Мої відкриті тікети';
+
+  @override
+  String get waitingForYourReview => 'Чекає на ваше рев’ю';
+
+  @override
+  String get waitingForYou => 'Чекає на вас';
+
+  @override
+  String get nothingWaiting => 'Зараз на вас нічого не чекає.';
+
+  @override
+  String get readyToComplete => 'Схвалено, можна завершити';
+
+  @override
+  String get yourApproval => 'Чекає на ваше схвалення';
+
+  @override
+  String get myRuns => 'Мої запуски';
+
+  @override
+  String get noRecentRuns => 'Ви давно не запускали конвеєри.';
+
+  @override
+  String failingOnMain(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count конвеєра падають на основній гілці',
+      many: '$count конвеєрів падають на основній гілці',
+      few: '$count конвеєри падають на основній гілці',
+      one: '$count конвеєр падає на основній гілці',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String noChangesFor(int count) {
+    return 'Без змін $count дн.';
   }
 }

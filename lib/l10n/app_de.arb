@@ -142,6 +142,7 @@
   "pullRequests": "Pull Requests",
   "searchPullRequestsHint": "Nach Titel, ID, Branch oder Person suchen",
   "scopeReviewing": "Zu prüfen",
+  "scopeMine": "Meine",
   "loadPullRequestsFailed": "Pull Requests konnten nicht geladen werden",
   "codeScopeHint": "Für Pull Requests braucht dein Token den Bereich Code (Read).",
   "noPullRequestsTitle": "Keine Pull Requests",
@@ -179,5 +180,20 @@
   "previousError": "Vorheriger Fehler",
   "nextError": "Nächster Fehler",
   "errorPosition": "Fehler {current} von {total}",
-  "errorCount": "{count, plural, =1{1 Fehler} other{{count} Fehler}}"
+  "errorCount": "{count, plural, =1{1 Fehler} other{{count} Fehler}}",
+
+  "dashboard": "Übersicht",
+  "refreshFailed": "Aktualisierung fehlgeschlagen. Stand: {time}.",
+  "loadDashboardFailed": "Übersicht konnte nicht geladen werden",
+  "myPullRequests": "Meine Pull Requests",
+  "myTickets": "Meine offenen Tickets",
+  "waitingForYourReview": "Wartet auf dein Review",
+  "waitingForYou": "Wartet auf dich",
+  "nothingWaiting": "Gerade wartet nichts auf dich.",
+  "readyToComplete": "Genehmigt, bereit zum Abschließen",
+  "yourApproval": "Wartet auf deine Genehmigung",
+  "myRuns": "Meine Ausführungen",
+  "noRecentRuns": "Du hast in letzter Zeit keine Ausführungen gestartet.",
+  "failingOnMain": "{count, plural, =1{1 Pipeline schlägt auf dem Main-Branch fehl} other{{count} Pipelines schlagen auf dem Main-Branch fehl}}",
+  "noChangesFor": "Seit {count} T unverändert"
 }

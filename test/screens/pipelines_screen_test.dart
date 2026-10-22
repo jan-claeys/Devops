@@ -232,23 +232,28 @@ void main() {
   testWidgets('switches between tickets and pipelines', (tester) async {
     await pumpApp(tester, const HomeScreen(), state: connectedState(fake));
     await tester.pumpAndSettle();
-    expect(find.text(en.noTicketsTitle), findsOneWidget);
     expect(find.byType(NavigationBar), findsOneWidget);
+    // The overview also has a section called Tickets.
+    Finder tab(String label) =>
+        find.descendant(of: find.byType(NavigationBar), matching: find.text(label));
+    await tester.tap(tab(en.tickets));
+    await tester.pumpAndSettle();
+    expect(find.text(en.noTicketsTitle), findsOneWidget);
 
-    await tester.tap(find.text(en.pipelines));
+    await tester.tap(tab(en.pipelines));
     await tester.pumpAndSettle();
     expect(find.text('CI'), findsOneWidget);
     expect(find.text(en.noTicketsTitle), findsNothing);
 
     // Hidden behind the tickets tab, the pipelines aren't refreshed.
-    await tester.tap(find.text(en.tickets));
+    await tester.tap(tab(en.tickets));
     await tester.pumpAndSettle();
     final before = buildRequests();
     await tester.pump(PipelinesScreen.refreshInterval * 2);
     expect(buildRequests(), before);
 
     // Shown again, they are.
-    await tester.tap(find.text(en.pipelines));
+    await tester.tap(tab(en.pipelines));
     await tester.pumpAndSettle();
     expect(buildRequests(), before + 1);
   });

@@ -142,6 +142,7 @@
   "pullRequests": "Pull requests",
   "searchPullRequestsHint": "Zoek op titel, ID, branch of persoon",
   "scopeReviewing": "Te reviewen",
+  "scopeMine": "Van mij",
   "loadPullRequestsFailed": "Kon de pull requests niet laden",
   "codeScopeHint": "Voor pull requests heeft je token de scope Code (Read) nodig.",
   "noPullRequestsTitle": "Geen pull requests",
@@ -179,5 +180,20 @@
   "previousError": "Vorige fout",
   "nextError": "Volgende fout",
   "errorPosition": "Fout {current} van {total}",
-  "errorCount": "{count, plural, =1{1 fout} other{{count} fouten}}"
+  "errorCount": "{count, plural, =1{1 fout} other{{count} fouten}}",
+
+  "dashboard": "Overzicht",
+  "refreshFailed": "Kon niet verversen. Gegevens van {time}.",
+  "loadDashboardFailed": "Kon het overzicht niet laden",
+  "myPullRequests": "Mijn pull requests",
+  "myTickets": "Mijn open tickets",
+  "waitingForYourReview": "Wacht op jouw review",
+  "waitingForYou": "Wacht op jou",
+  "nothingWaiting": "Er wacht nu niets op jou.",
+  "readyToComplete": "Goedgekeurd, klaar om te voltooien",
+  "yourApproval": "Wacht op jouw goedkeuring",
+  "myRuns": "Mijn runs",
+  "noRecentRuns": "Je hebt de laatste tijd geen runs gestart.",
+  "failingOnMain": "{count, plural, =1{1 pipeline faalt op de main-branch} other{{count} pipelines falen op de main-branch}}",
+  "noChangesFor": "{count} d niet gewijzigd"
 }

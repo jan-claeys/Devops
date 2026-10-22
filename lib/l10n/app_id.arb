@@ -142,6 +142,7 @@
   "pullRequests": "Pull request",
   "searchPullRequestsHint": "Cari menurut judul, ID, branch, atau orang",
   "scopeReviewing": "Untuk ditinjau",
+  "scopeMine": "Milik saya",
   "loadPullRequestsFailed": "Tidak dapat memuat pull request",
   "codeScopeHint": "Pull request memerlukan cakupan Code (Read) pada token Anda.",
   "noPullRequestsTitle": "Tidak ada pull request",
@@ -179,5 +180,20 @@
   "previousError": "Kesalahan sebelumnya",
   "nextError": "Kesalahan berikutnya",
   "errorPosition": "Kesalahan {current} dari {total}",
-  "errorCount": "{count, plural, other{{count} kesalahan}}"
+  "errorCount": "{count, plural, other{{count} kesalahan}}",
+
+  "dashboard": "Ringkasan",
+  "refreshFailed": "Tidak dapat memperbarui. Data dari {time}.",
+  "loadDashboardFailed": "Tidak dapat memuat ringkasan",
+  "myPullRequests": "Pull request saya",
+  "myTickets": "Tiket terbuka saya",
+  "waitingForYourReview": "Menunggu tinjauan Anda",
+  "waitingForYou": "Menunggu Anda",
+  "nothingWaiting": "Tidak ada yang menunggu Anda saat ini.",
+  "readyToComplete": "Disetujui, siap diselesaikan",
+  "yourApproval": "Menunggu persetujuan Anda",
+  "myRuns": "Run saya",
+  "noRecentRuns": "Anda belum memulai run akhir-akhir ini.",
+  "failingOnMain": "{count, plural, other{{count} pipeline gagal di branch utama}}",
+  "noChangesFor": "Tidak berubah selama {count} h"
 }

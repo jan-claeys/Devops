@@ -475,6 +475,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get scopeReviewing => 'Para revisar';
 
   @override
+  String get scopeMine => 'Mías';
+
+  @override
   String get loadPullRequestsFailed =>
       'No se pudieron cargar las pull requests';
 
@@ -607,5 +610,59 @@ class AppLocalizationsEs extends AppLocalizations {
       one: '1 error',
     );
     return '$_temp0';
+  }
+
+  @override
+  String get dashboard => 'Resumen';
+
+  @override
+  String refreshFailed(String time) {
+    return 'No se pudo actualizar. Datos de $time.';
+  }
+
+  @override
+  String get loadDashboardFailed => 'No se pudo cargar el resumen';
+
+  @override
+  String get myPullRequests => 'Mis pull requests';
+
+  @override
+  String get myTickets => 'Mis tickets abiertos';
+
+  @override
+  String get waitingForYourReview => 'Esperando tu revisión';
+
+  @override
+  String get waitingForYou => 'Te espera';
+
+  @override
+  String get nothingWaiting => 'No hay nada esperándote ahora.';
+
+  @override
+  String get readyToComplete => 'Aprobada, lista para completar';
+
+  @override
+  String get yourApproval => 'Esperando tu aprobación';
+
+  @override
+  String get myRuns => 'Mis ejecuciones';
+
+  @override
+  String get noRecentRuns => 'No has iniciado ejecuciones recientemente.';
+
+  @override
+  String failingOnMain(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count pipelines fallan en la rama principal',
+      one: '1 pipeline falla en la rama principal',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String noChangesFor(int count) {
+    return 'Sin cambios desde hace $count d';
   }
 }

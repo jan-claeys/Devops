@@ -142,6 +142,7 @@
   "pullRequests": "Pull request",
   "searchPullRequestsHint": "Cerca per titolo, ID, branch o persona",
   "scopeReviewing": "Da revisionare",
+  "scopeMine": "Mie",
   "loadPullRequestsFailed": "Impossibile caricare le pull request",
   "codeScopeHint": "Le pull request richiedono l’ambito Code (Read) nel token.",
   "noPullRequestsTitle": "Nessuna pull request",
@@ -179,5 +180,20 @@
   "previousError": "Errore precedente",
   "nextError": "Errore successivo",
   "errorPosition": "Errore {current} di {total}",
-  "errorCount": "{count, plural, =1{1 errore} other{{count} errori}}"
+  "errorCount": "{count, plural, =1{1 errore} other{{count} errori}}",
+
+  "dashboard": "Panoramica",
+  "refreshFailed": "Impossibile aggiornare. Dati di {time}.",
+  "loadDashboardFailed": "Impossibile caricare la panoramica",
+  "myPullRequests": "Le mie pull request",
+  "myTickets": "I miei ticket aperti",
+  "waitingForYourReview": "In attesa della tua revisione",
+  "waitingForYou": "In attesa di te",
+  "nothingWaiting": "Al momento non c’è niente che ti aspetta.",
+  "readyToComplete": "Approvata, pronta per il completamento",
+  "yourApproval": "In attesa della tua approvazione",
+  "myRuns": "Le mie esecuzioni",
+  "noRecentRuns": "Non hai avviato esecuzioni di recente.",
+  "failingOnMain": "{count, plural, =1{1 pipeline non riesce sul branch principale} other{{count} pipeline non riescono sul branch principale}}",
+  "noChangesFor": "Nessuna modifica da {count} g"
 }

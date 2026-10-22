@@ -85,6 +85,7 @@ class PipelineRun {
     this.stages = const [],
     this.webUrl,
     this.issues = const [],
+    this.pendingApproverIds = const {},
   });
 
   final int id;
@@ -118,6 +119,9 @@ class PipelineRun {
   /// Problems with the pipeline itself, such as an invalid YAML file, that
   /// keep a build from starting.
   final List<RunIssue> issues;
+
+  /// Ids of the people and groups whose approval a release stage waits for.
+  final Set<String> pendingApproverIds;
 
   bool get isRelease => kind == RunKind.release;
 
@@ -172,6 +176,7 @@ class PipelineRun {
           (name: e.name, status: e.status, startTime: e.startTime, finishTime: e.finishTime),
       ],
       webUrl: (((json['_links'] as Map?)?['web']) as Map?)?['href'] as String?,
+      pendingApproverIds: {for (final e in environments) ...e.approverIds},
     );
   }
 
@@ -363,12 +368,14 @@ class _ReleaseEnvironment {
       ..sort((a, b) => attempt(a).compareTo(attempt(b)));
     _phases = ((steps.lastOrNull?['releaseDeployPhases'] as List?) ?? const [])
         .cast<Map<String, dynamic>>();
-    approvers = [
+    final pending = [
       for (final key in ['preDeployApprovals', 'postDeployApprovals'])
         for (final a in ((json[key] as List?) ?? const []).cast<Map<String, dynamic>>())
           if (a['status'] == 'pending' && a['isAutomated'] != true)
-            ?Identity.fromJson(a['approver'])?.displayName,
+            ?Identity.fromJson(a['approver']),
     ];
+    approvers = [for (final a in pending) a.displayName];
+    approverIds = {for (final a in pending) ?a.id};
     final raw = json['status'] as String?;
     status = approvers.isNotEmpty
         ? RunStatus.waitingForApproval
@@ -402,6 +409,7 @@ class _ReleaseEnvironment {
   final Map<String, dynamic> json;
   late final List<Map<String, dynamic>> _phases;
   late final List<String> approvers;
+  late final Set<String> approverIds;
   late final RunStatus status;
   late final DateTime? startTime;
   late final DateTime? finishTime;

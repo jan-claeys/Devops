@@ -477,6 +477,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get scopeReviewing => 'Zu prüfen';
 
   @override
+  String get scopeMine => 'Meine';
+
+  @override
   String get loadPullRequestsFailed =>
       'Pull Requests konnten nicht geladen werden';
 
@@ -609,5 +612,60 @@ class AppLocalizationsDe extends AppLocalizations {
       one: '1 Fehler',
     );
     return '$_temp0';
+  }
+
+  @override
+  String get dashboard => 'Übersicht';
+
+  @override
+  String refreshFailed(String time) {
+    return 'Aktualisierung fehlgeschlagen. Stand: $time.';
+  }
+
+  @override
+  String get loadDashboardFailed => 'Übersicht konnte nicht geladen werden';
+
+  @override
+  String get myPullRequests => 'Meine Pull Requests';
+
+  @override
+  String get myTickets => 'Meine offenen Tickets';
+
+  @override
+  String get waitingForYourReview => 'Wartet auf dein Review';
+
+  @override
+  String get waitingForYou => 'Wartet auf dich';
+
+  @override
+  String get nothingWaiting => 'Gerade wartet nichts auf dich.';
+
+  @override
+  String get readyToComplete => 'Genehmigt, bereit zum Abschließen';
+
+  @override
+  String get yourApproval => 'Wartet auf deine Genehmigung';
+
+  @override
+  String get myRuns => 'Meine Ausführungen';
+
+  @override
+  String get noRecentRuns =>
+      'Du hast in letzter Zeit keine Ausführungen gestartet.';
+
+  @override
+  String failingOnMain(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Pipelines schlagen auf dem Main-Branch fehl',
+      one: '1 Pipeline schlägt auf dem Main-Branch fehl',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String noChangesFor(int count) {
+    return 'Seit $count T unverändert';
   }
 }

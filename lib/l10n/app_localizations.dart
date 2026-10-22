@@ -932,6 +932,12 @@ abstract class AppLocalizations {
   /// **'Reviewing'**
   String get scopeReviewing;
 
+  /// No description provided for @scopeMine.
+  ///
+  /// In en, this message translates to:
+  /// **'Mine'**
+  String get scopeMine;
+
   /// No description provided for @loadPullRequestsFailed.
   ///
   /// In en, this message translates to:
@@ -1153,6 +1159,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count, plural, =1{1 error} other{{count} errors}}'**
   String errorCount(int count);
+
+  /// No description provided for @dashboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Overview'**
+  String get dashboard;
+
+  /// No description provided for @refreshFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t refresh. Showing data from {time}.'**
+  String refreshFailed(String time);
+
+  /// No description provided for @loadDashboardFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load the overview'**
+  String get loadDashboardFailed;
+
+  /// No description provided for @myPullRequests.
+  ///
+  /// In en, this message translates to:
+  /// **'My pull requests'**
+  String get myPullRequests;
+
+  /// No description provided for @myTickets.
+  ///
+  /// In en, this message translates to:
+  /// **'My open tickets'**
+  String get myTickets;
+
+  /// No description provided for @waitingForYourReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for your review'**
+  String get waitingForYourReview;
+
+  /// No description provided for @waitingForYou.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for you'**
+  String get waitingForYou;
+
+  /// No description provided for @nothingWaiting.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing is waiting for you right now.'**
+  String get nothingWaiting;
+
+  /// No description provided for @readyToComplete.
+  ///
+  /// In en, this message translates to:
+  /// **'Approved, ready to complete'**
+  String get readyToComplete;
+
+  /// No description provided for @yourApproval.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for your approval'**
+  String get yourApproval;
+
+  /// No description provided for @myRuns.
+  ///
+  /// In en, this message translates to:
+  /// **'My runs'**
+  String get myRuns;
+
+  /// No description provided for @noRecentRuns.
+  ///
+  /// In en, this message translates to:
+  /// **'You haven\'t started any runs recently.'**
+  String get noRecentRuns;
+
+  /// No description provided for @failingOnMain.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 pipeline fails on the main branch} other{{count} pipelines fail on the main branch}}'**
+  String failingOnMain(int count);
+
+  /// No description provided for @noChangesFor.
+  ///
+  /// In en, this message translates to:
+  /// **'No changes for {count} d'**
+  String noChangesFor(int count);
 }
 
 class _AppLocalizationsDelegate

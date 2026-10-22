@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../l10n/l10n.dart';
 import '../models/pipeline_log.dart';
 import '../models/pipeline_run.dart';
+import '../models/run_estimates.dart';
 
 /// Colors and icons that match the Azure DevOps pipeline statuses.
 class RunStatusStyle {
@@ -178,6 +181,50 @@ class LogLineView extends StatelessWidget {
           fontWeight: line.kind == LogLineKind.section || highlighted ? FontWeight.bold : null,
         ),
       ),
+    );
+  }
+}
+
+/// The share of the expected time that has passed, updated every second.
+/// Stops just short of full, as a run can take longer than the last one.
+class EstimatedProgress extends StatefulWidget {
+  const EstimatedProgress({super.key, required this.status, required this.estimate});
+
+  final RunStatus status;
+  final List<RunEstimate> estimate;
+
+  @override
+  State<EstimatedProgress> createState() => _EstimatedProgressState();
+}
+
+class _EstimatedProgressState extends State<EstimatedProgress> {
+  late final Timer _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _timer = Timer.periodic(const Duration(seconds: 1), (_) => setState(() {}));
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final now = DateTime.now();
+    var elapsed = 0, expected = 0;
+    for (final e in widget.estimate) {
+      elapsed += now.difference(e.start).inMilliseconds;
+      expected += e.expected.inMilliseconds;
+    }
+    final progress = expected <= 0 ? 0.99 : (elapsed / expected).clamp(0.0, 0.99);
+    return LinearProgressIndicator(
+      value: progress,
+      minHeight: 4,
+      color: RunStatusStyle.of(widget.status, Theme.of(context).colorScheme).color,
     );
   }
 }

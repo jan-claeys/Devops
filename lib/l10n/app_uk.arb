@@ -142,6 +142,7 @@
   "pullRequests": "Pull request’и",
   "searchPullRequestsHint": "Пошук за назвою, ID, гілкою або людиною",
   "scopeReviewing": "На перевірку",
+  "scopeMine": "Мої",
   "loadPullRequestsFailed": "Не вдалося завантажити pull request’и",
   "codeScopeHint": "Для pull request’ів токену потрібні права Code (Read).",
   "noPullRequestsTitle": "Немає pull request’ів",
@@ -179,5 +180,20 @@
   "previousError": "Попередня помилка",
   "nextError": "Наступна помилка",
   "errorPosition": "Помилка {current} з {total}",
-  "errorCount": "{count, plural, =1{1 помилка} few{{count} помилки} many{{count} помилок} other{{count} помилки}}"
+  "errorCount": "{count, plural, =1{1 помилка} few{{count} помилки} many{{count} помилок} other{{count} помилки}}",
+
+  "dashboard": "Огляд",
+  "refreshFailed": "Не вдалося оновити. Дані: {time}.",
+  "loadDashboardFailed": "Не вдалося завантажити огляд",
+  "myPullRequests": "Мої pull request’и",
+  "myTickets": "Мої відкриті тікети",
+  "waitingForYourReview": "Чекає на ваше рев’ю",
+  "waitingForYou": "Чекає на вас",
+  "nothingWaiting": "Зараз на вас нічого не чекає.",
+  "readyToComplete": "Схвалено, можна завершити",
+  "yourApproval": "Чекає на ваше схвалення",
+  "myRuns": "Мої запуски",
+  "noRecentRuns": "Ви давно не запускали конвеєри.",
+  "failingOnMain": "{count, plural, one{{count} конвеєр падає на основній гілці} few{{count} конвеєри падають на основній гілці} many{{count} конвеєрів падають на основній гілці} other{{count} конвеєра падають на основній гілці}}",
+  "noChangesFor": "Без змін {count} дн."
 }

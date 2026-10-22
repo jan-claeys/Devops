@@ -142,6 +142,7 @@
   "pullRequests": "Çekme istekleri",
   "searchPullRequestsHint": "Başlık, kimlik, dal veya kişiye göre ara",
   "scopeReviewing": "İncelenecek",
+  "scopeMine": "Benim",
   "loadPullRequestsFailed": "Çekme istekleri yüklenemedi",
   "codeScopeHint": "Çekme istekleri için belirtecinizde Code (Read) kapsamı gerekir.",
   "noPullRequestsTitle": "Çekme isteği yok",
@@ -179,5 +180,20 @@
   "previousError": "Önceki hata",
   "nextError": "Sonraki hata",
   "errorPosition": "Hata {current} / {total}",
-  "errorCount": "{count, plural, other{{count} hata}}"
+  "errorCount": "{count, plural, other{{count} hata}}",
+
+  "dashboard": "Genel bakış",
+  "refreshFailed": "Yenilenemedi. Veriler: {time}.",
+  "loadDashboardFailed": "Genel bakış yüklenemedi",
+  "myPullRequests": "Çekme isteklerim",
+  "myTickets": "Açık biletlerim",
+  "waitingForYourReview": "İncelemenizi bekliyor",
+  "waitingForYou": "Sizi bekleyenler",
+  "nothingWaiting": "Şu anda sizi bekleyen bir şey yok.",
+  "readyToComplete": "Onaylandı, tamamlanmaya hazır",
+  "yourApproval": "Onayınızı bekliyor",
+  "myRuns": "Çalıştırmalarım",
+  "noRecentRuns": "Son zamanlarda çalıştırma başlatmadınız.",
+  "failingOnMain": "{count, plural, other{{count} işlem hattı ana dalda başarısız}}",
+  "noChangesFor": "{count} gündür değişmedi"
 }

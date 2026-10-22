@@ -474,6 +474,9 @@ class AppLocalizationsNl extends AppLocalizations {
   String get scopeReviewing => 'Te reviewen';
 
   @override
+  String get scopeMine => 'Van mij';
+
+  @override
   String get loadPullRequestsFailed => 'Kon de pull requests niet laden';
 
   @override
@@ -605,5 +608,59 @@ class AppLocalizationsNl extends AppLocalizations {
       one: '1 fout',
     );
     return '$_temp0';
+  }
+
+  @override
+  String get dashboard => 'Overzicht';
+
+  @override
+  String refreshFailed(String time) {
+    return 'Kon niet verversen. Gegevens van $time.';
+  }
+
+  @override
+  String get loadDashboardFailed => 'Kon het overzicht niet laden';
+
+  @override
+  String get myPullRequests => 'Mijn pull requests';
+
+  @override
+  String get myTickets => 'Mijn open tickets';
+
+  @override
+  String get waitingForYourReview => 'Wacht op jouw review';
+
+  @override
+  String get waitingForYou => 'Wacht op jou';
+
+  @override
+  String get nothingWaiting => 'Er wacht nu niets op jou.';
+
+  @override
+  String get readyToComplete => 'Goedgekeurd, klaar om te voltooien';
+
+  @override
+  String get yourApproval => 'Wacht op jouw goedkeuring';
+
+  @override
+  String get myRuns => 'Mijn runs';
+
+  @override
+  String get noRecentRuns => 'Je hebt de laatste tijd geen runs gestart.';
+
+  @override
+  String failingOnMain(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count pipelines falen op de main-branch',
+      one: '1 pipeline faalt op de main-branch',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String noChangesFor(int count) {
+    return '$count d niet gewijzigd';
   }
 }

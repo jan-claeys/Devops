@@ -478,6 +478,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get scopeReviewing => 'На проверку';
 
   @override
+  String get scopeMine => 'Мои';
+
+  @override
   String get loadPullRequestsFailed => 'Не удалось загрузить pull request’ы';
 
   @override
@@ -613,5 +616,61 @@ class AppLocalizationsRu extends AppLocalizations {
       one: '1 ошибка',
     );
     return '$_temp0';
+  }
+
+  @override
+  String get dashboard => 'Обзор';
+
+  @override
+  String refreshFailed(String time) {
+    return 'Не удалось обновить. Данные: $time.';
+  }
+
+  @override
+  String get loadDashboardFailed => 'Не удалось загрузить обзор';
+
+  @override
+  String get myPullRequests => 'Мои pull request’ы';
+
+  @override
+  String get myTickets => 'Мои открытые тикеты';
+
+  @override
+  String get waitingForYourReview => 'Ждёт вашего ревью';
+
+  @override
+  String get waitingForYou => 'Ждёт вас';
+
+  @override
+  String get nothingWaiting => 'Сейчас вас ничего не ждёт.';
+
+  @override
+  String get readyToComplete => 'Одобрен, можно завершить';
+
+  @override
+  String get yourApproval => 'Ждёт вашего одобрения';
+
+  @override
+  String get myRuns => 'Мои запуски';
+
+  @override
+  String get noRecentRuns => 'Вы давно не запускали конвейеры.';
+
+  @override
+  String failingOnMain(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count конвейера падают на основной ветке',
+      many: '$count конвейеров падают на основной ветке',
+      few: '$count конвейера падают на основной ветке',
+      one: '$count конвейер падает на основной ветке',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String noChangesFor(int count) {
+    return 'Без изменений $count дн.';
   }
 }

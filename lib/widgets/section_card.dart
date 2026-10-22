@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
 
-/// Outlined card with an optional title, for a section of a detail screen.
+/// Outlined card with an optional title, for a section of a detail screen;
+/// [filled] like the cards in the lists.
 class SectionCard extends StatelessWidget {
-  const SectionCard({super.key, required this.child, this.title, this.padding, this.color});
+  const SectionCard({
+    super.key,
+    required this.child,
+    this.title,
+    this.padding,
+    this.color,
+    this.filled = false,
+  });
 
   final String? title;
   final Widget child;
@@ -10,26 +18,27 @@ class SectionCard extends StatelessWidget {
 
   /// Background of the card, to make it stand out.
   final Color? color;
+  final bool filled;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Card.outlined(
-      color: color,
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            if (title != null) ...[
-              Text(title!, style: theme.textTheme.titleMedium),
-              const SizedBox(height: 8),
-            ],
-            Padding(padding: padding ?? EdgeInsets.zero, child: child),
+    final content = Padding(
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (title != null) ...[
+            Text(title!, style: theme.textTheme.titleMedium),
+            const SizedBox(height: 8),
           ],
-        ),
+          Padding(padding: padding ?? EdgeInsets.zero, child: child),
+        ],
       ),
     );
+    return filled
+        ? Card.filled(color: color ?? theme.colorScheme.surfaceContainerLow, child: content)
+        : Card.outlined(color: color, child: content);
   }
 }
 

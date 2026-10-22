@@ -470,6 +470,9 @@ class AppLocalizationsTr extends AppLocalizations {
   String get scopeReviewing => 'İncelenecek';
 
   @override
+  String get scopeMine => 'Benim';
+
+  @override
   String get loadPullRequestsFailed => 'Çekme istekleri yüklenemedi';
 
   @override
@@ -598,5 +601,58 @@ class AppLocalizationsTr extends AppLocalizations {
       other: '$count hata',
     );
     return '$_temp0';
+  }
+
+  @override
+  String get dashboard => 'Genel bakış';
+
+  @override
+  String refreshFailed(String time) {
+    return 'Yenilenemedi. Veriler: $time.';
+  }
+
+  @override
+  String get loadDashboardFailed => 'Genel bakış yüklenemedi';
+
+  @override
+  String get myPullRequests => 'Çekme isteklerim';
+
+  @override
+  String get myTickets => 'Açık biletlerim';
+
+  @override
+  String get waitingForYourReview => 'İncelemenizi bekliyor';
+
+  @override
+  String get waitingForYou => 'Sizi bekleyenler';
+
+  @override
+  String get nothingWaiting => 'Şu anda sizi bekleyen bir şey yok.';
+
+  @override
+  String get readyToComplete => 'Onaylandı, tamamlanmaya hazır';
+
+  @override
+  String get yourApproval => 'Onayınızı bekliyor';
+
+  @override
+  String get myRuns => 'Çalıştırmalarım';
+
+  @override
+  String get noRecentRuns => 'Son zamanlarda çalıştırma başlatmadınız.';
+
+  @override
+  String failingOnMain(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count işlem hattı ana dalda başarısız',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String noChangesFor(int count) {
+    return '$count gündür değişmedi';
   }
 }

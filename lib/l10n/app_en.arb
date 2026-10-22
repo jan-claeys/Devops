@@ -184,6 +184,7 @@
   "pullRequests": "Pull requests",
   "searchPullRequestsHint": "Search by title, ID, branch or person",
   "scopeReviewing": "Reviewing",
+  "scopeMine": "Mine",
   "loadPullRequestsFailed": "Couldn't load pull requests",
   "codeScopeHint": "Pull requests need the Code (Read) scope on your token.",
   "noPullRequestsTitle": "No pull requests",
@@ -232,6 +233,30 @@
   },
   "errorCount": "{count, plural, =1{1 error} other{{count} errors}}",
   "@errorCount": {
+    "placeholders": {"count": {"type": "int"}}
+  },
+
+  "dashboard": "Overview",
+  "refreshFailed": "Couldn't refresh. Showing data from {time}.",
+  "@refreshFailed": {
+    "placeholders": {"time": {"type": "String"}}
+  },
+  "loadDashboardFailed": "Couldn't load the overview",
+  "myPullRequests": "My pull requests",
+  "myTickets": "My open tickets",
+  "waitingForYourReview": "Waiting for your review",
+  "waitingForYou": "Waiting for you",
+  "nothingWaiting": "Nothing is waiting for you right now.",
+  "readyToComplete": "Approved, ready to complete",
+  "yourApproval": "Waiting for your approval",
+  "myRuns": "My runs",
+  "noRecentRuns": "You haven't started any runs recently.",
+  "failingOnMain": "{count, plural, =1{1 pipeline fails on the main branch} other{{count} pipelines fail on the main branch}}",
+  "@failingOnMain": {
+    "placeholders": {"count": {"type": "int"}}
+  },
+  "noChangesFor": "No changes for {count} d",
+  "@noChangesFor": {
     "placeholders": {"count": {"type": "int"}}
   }
 }

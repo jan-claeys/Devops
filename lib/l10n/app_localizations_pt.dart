@@ -475,6 +475,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get scopeReviewing => 'Para revisar';
 
   @override
+  String get scopeMine => 'Minhas';
+
+  @override
   String get loadPullRequestsFailed =>
       'Não foi possível carregar os pull requests';
 
@@ -607,5 +610,59 @@ class AppLocalizationsPt extends AppLocalizations {
       one: '1 erro',
     );
     return '$_temp0';
+  }
+
+  @override
+  String get dashboard => 'Visão geral';
+
+  @override
+  String refreshFailed(String time) {
+    return 'Não foi possível atualizar. Dados de $time.';
+  }
+
+  @override
+  String get loadDashboardFailed => 'Não foi possível carregar a visão geral';
+
+  @override
+  String get myPullRequests => 'Meus pull requests';
+
+  @override
+  String get myTickets => 'Meus tickets abertos';
+
+  @override
+  String get waitingForYourReview => 'Aguardando sua revisão';
+
+  @override
+  String get waitingForYou => 'Aguardando você';
+
+  @override
+  String get nothingWaiting => 'Nada está aguardando você agora.';
+
+  @override
+  String get readyToComplete => 'Aprovado, pronto para concluir';
+
+  @override
+  String get yourApproval => 'Aguardando sua aprovação';
+
+  @override
+  String get myRuns => 'Minhas execuções';
+
+  @override
+  String get noRecentRuns => 'Você não iniciou execuções recentemente.';
+
+  @override
+  String failingOnMain(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count pipelines falham na branch principal',
+      one: '1 pipeline falha na branch principal',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String noChangesFor(int count) {
+    return 'Sem alterações há $count d';
   }
 }
