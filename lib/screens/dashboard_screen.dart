@@ -38,7 +38,10 @@ class DashboardScreen extends StatefulWidget {
   });
 
   /// How often the overview is refreshed while it is shown.
-  static const refreshInterval = Duration(minutes: 1);
+  static const refreshInterval = Duration(minutes: 5);
+
+  /// How often it is refreshed while a run of the user is going.
+  static const busyRefreshInterval = Duration(minutes: 1);
 
   /// The most open tickets that are loaded.
   static const ticketLimit = 500;
@@ -72,6 +75,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
   String? _loadedFor;
   Timer? _refresh;
   bool _visible = true;
+  late final AppLifecycleListener _lifecycle;
+
+  @override
+  void initState() {
+    super.initState();
+    // Back from the background: what waits may have changed meanwhile.
+    _lifecycle = AppLifecycleListener(onResume: () {
+      if (mounted && _visible) _load(silent: true);
+    });
+  }
 
   @override
   void didChangeDependencies() {
@@ -93,6 +106,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   void dispose() {
     _refresh?.cancel();
+    _lifecycle.dispose();
     super.dispose();
   }
 
@@ -165,7 +179,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
       _estimates = RunEstimates(runs);
       if (!failed) _updated = DateTime.now();
     });
-    _refresh = Timer(DashboardScreen.refreshInterval, () {
+    final busy = _summary?.myRuns.any((r) => !r.status.isFinished) ?? false;
+    _refresh = Timer(
+        busy ? DashboardScreen.busyRefreshInterval : DashboardScreen.refreshInterval, () {
       if (mounted && _visible) _load(silent: true);
     });
   }

@@ -198,6 +198,47 @@ void main() {
     expect(find.text(en.refreshFailed(en.justNow)), findsNothing);
   });
 
+  group('refreshes', () {
+    int loads() => fake.requests.where((r) => r.url.path.endsWith('/_apis/wit/wiql')).length;
+
+    testWidgets('every minute while a run of the user is going', (tester) async {
+      await pumpScreen(tester);
+
+      await tester.pump(DashboardScreen.busyRefreshInterval);
+      await tester.pumpAndSettle();
+      expect(loads(), 2);
+    });
+
+    testWidgets('less often when no run of the user is going', (tester) async {
+      fake.runs.remove(3);
+      await pumpScreen(tester);
+
+      await tester.pump(DashboardScreen.busyRefreshInterval);
+      await tester.pumpAndSettle();
+      expect(loads(), 1);
+      await tester.pump(DashboardScreen.refreshInterval);
+      await tester.pumpAndSettle();
+      expect(loads(), 2);
+    });
+
+    testWidgets('when the app comes back from the background', (tester) async {
+      await pumpScreen(tester);
+
+      for (final state in [
+        AppLifecycleState.inactive,
+        AppLifecycleState.hidden,
+        AppLifecycleState.paused,
+        AppLifecycleState.hidden,
+        AppLifecycleState.inactive,
+        AppLifecycleState.resumed,
+      ]) {
+        tester.binding.handleAppLifecycleStateChanged(state);
+      }
+      await tester.pumpAndSettle();
+      expect(loads(), 2);
+    });
+  });
+
   testWidgets('shows an error when nothing loads', (tester) async {
     fake.failWith = 401;
     await pumpScreen(tester);
