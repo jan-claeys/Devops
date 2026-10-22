@@ -88,6 +88,12 @@
   "child": "Enfant",
   "commentsCount": "Commentaires ({count})",
   "noComments": "Aucun commentaire pour l'instant.",
+  "attachmentsCount": "Pièces jointes ({count})",
+  "openFile": "Ouvrir le fichier",
+  "download": "Télécharger",
+  "downloadLargeTitle": "Télécharger un fichier volumineux ?",
+  "downloadLargeBody": "{name} fait {size}. Le téléchargement peut prendre du temps et consommer des données mobiles.",
+  "noAppForFile": "Aucune application de cet appareil ne peut ouvrir ce fichier.",
   "unknownPerson": "Inconnu",
 
   "justNow": "à l'instant",

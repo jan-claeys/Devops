@@ -8,6 +8,7 @@ import 'package:re_highlight/styles/atom-one-light.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../l10n/l10n.dart';
+import 'attachments.dart';
 
 /// Renders the Markdown that Azure DevOps stores in work item fields and
 /// comments, including GitHub flavored tables, task lists, strikethrough and
@@ -29,9 +30,8 @@ class DevOpsMarkdown extends StatelessWidget {
   /// Opens `#123` work item references. Without it they stay plain text.
   final ValueChanged<int>? onOpenWorkItem;
 
-  /// Headers to load an image with, to authenticate attachments. Only images
-  /// it returns headers for are loaded: any other image could tell its server
-  /// who opened the item and when. Those show their alt text instead.
+  /// Headers to load an image with, to authenticate attachments; see
+  /// [InlineImage.headers].
   final Map<String, String>? Function(Uri uri)? imageHeaders;
 
   /// Schemes a link may open. Anyone who can edit an item can write a link,
@@ -92,18 +92,7 @@ class DevOpsMarkdown extends StatelessWidget {
         if (onOpenWorkItem != null) _WorkItemSyntax(),
       ],
       onTapLink: (text, href, title) => _openLink(context, href),
-      imageBuilder: (uri, title, alt) {
-        final placeholder =
-            Text(alt ?? uri.toString(), style: body?.copyWith(color: scheme.onSurfaceVariant));
-        final headers = imageHeaders?.call(uri);
-        if (headers == null) return placeholder;
-        return Image.network(
-          uri.toString(),
-          headers: headers,
-          semanticLabel: alt,
-          errorBuilder: (context, error, stackTrace) => placeholder,
-        );
-      },
+      imageBuilder: (uri, title, alt) => InlineImage(uri, alt: alt, headers: imageHeaders),
     );
   }
 }

@@ -305,6 +305,29 @@ class AppLocalizationsRu extends AppLocalizations {
   String get noComments => 'Комментариев пока нет.';
 
   @override
+  String attachmentsCount(int count) {
+    return 'Вложения ($count)';
+  }
+
+  @override
+  String get openFile => 'Открыть файл';
+
+  @override
+  String get download => 'Скачать';
+
+  @override
+  String get downloadLargeTitle => 'Скачать большой файл?';
+
+  @override
+  String downloadLargeBody(String name, String size) {
+    return '$name занимает $size. Загрузка может занять время и расходовать мобильный трафик.';
+  }
+
+  @override
+  String get noAppForFile =>
+      'На этом устройстве нет приложения, которое может открыть этот файл.';
+
+  @override
   String get unknownPerson => 'Неизвестно';
 
   @override

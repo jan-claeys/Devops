@@ -69,6 +69,40 @@ void main() {
     });
   });
 
+  group('splitHtmlImages', () {
+    test('splits the text at images', () {
+      final parts = splitHtmlImages('<div>Before<img src="https://dev.azure.com/contoso/_apis/'
+          'wit/attachments/g1?fileName=shot.png&amp;download=false" alt=Image></div>'
+          "<p>After<IMG alt='second' SRC='https://x.test/b.png'/></p>");
+      expect(parts, hasLength(5));
+      expect((parts[0] as HtmlText).html, '<div>Before');
+      final first = parts[1] as HtmlImage;
+      expect(first.src.queryParameters, {'fileName': 'shot.png', 'download': 'false'});
+      expect(first.alt, 'Image');
+      expect((parts[2] as HtmlText).html, '</div><p>After');
+      expect((parts[3] as HtmlImage).src.toString(), 'https://x.test/b.png');
+      expect((parts[3] as HtmlImage).alt, 'second');
+      expect((parts[4] as HtmlText).html, '</p>');
+    });
+
+    test('leaves out images without an absolute URL', () {
+      final parts = splitHtmlImages('a<img data-src="https://x.test/a.png"><img src="b.png">c');
+      expect(parts.whereType<HtmlImage>(), isEmpty);
+      expect(parts.whereType<HtmlText>().map((p) => p.html).join(), 'ac');
+    });
+
+    test('handles null and text without images', () {
+      expect(splitHtmlImages(null), isEmpty);
+      expect(splitHtmlImages('<p>text</p>').single, isA<HtmlText>());
+    });
+  });
+
+  test('isBlankContent counts an image as content', () {
+    expect(isBlankContent('<p>&nbsp;</p>'), isTrue);
+    expect(isBlankContent('<p><img src="https://x.test/a.png"></p>'), isFalse);
+    expect(isBlankContent('  ', markdown: true), isTrue);
+  });
+
   test('htmlToSpan highlights mentions', () {
     const mention = TextStyle(fontWeight: FontWeight.bold);
     final span = htmlToSpan(

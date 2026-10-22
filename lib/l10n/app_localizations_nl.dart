@@ -302,6 +302,28 @@ class AppLocalizationsNl extends AppLocalizations {
   String get noComments => 'Nog geen opmerkingen.';
 
   @override
+  String attachmentsCount(int count) {
+    return 'Bijlagen ($count)';
+  }
+
+  @override
+  String get openFile => 'Bestand openen';
+
+  @override
+  String get download => 'Downloaden';
+
+  @override
+  String get downloadLargeTitle => 'Groot bestand downloaden?';
+
+  @override
+  String downloadLargeBody(String name, String size) {
+    return '$name is $size. Downloaden kan even duren en mobiele data verbruiken.';
+  }
+
+  @override
+  String get noAppForFile => 'Geen app op dit toestel kan dit bestand openen.';
+
+  @override
   String get unknownPerson => 'Onbekend';
 
   @override

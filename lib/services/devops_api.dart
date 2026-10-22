@@ -349,6 +349,30 @@ class DevOpsApi {
     return utf8.decode(response.bodyBytes, allowMalformed: true);
   }
 
+  /// The content of [attachment], streamed: a video may not fit in memory.
+  Future<http.StreamedResponse> downloadAttachment(WorkItemAttachment attachment) async {
+    final uri = Uri.parse(attachment.url);
+    // The URL comes from the API; still, the PAT only goes to the organization.
+    if (!_isOrganization(uri, [baseUrl])) {
+      throw DevOpsException(DevOpsError.unexpectedResponse);
+    }
+    final request = http.Request(
+        'GET', uri.replace(queryParameters: {...uri.queryParameters, 'download': 'true'}))
+      ..headers['Authorization'] = _auth;
+    final response = await _client.send(request);
+    final code = response.statusCode;
+    if (code < 200 || code >= 300 || code == 203) {
+      _check(await http.Response.fromStream(response));
+    }
+    // A sign-in page instead of the file when the PAT is invalid.
+    final html = response.headers['content-type']?.contains('html') ?? false;
+    if (html && !{'htm', 'html'}.contains(attachment.extension)) {
+      await response.stream.drain<void>();
+      throw DevOpsException(DevOpsError.unauthorized, statusCode: code);
+    }
+    return response;
+  }
+
   /// Id of the user the token belongs to.
   Future<String> getCurrentUserId() async {
     if (_currentUserId case final id?) return id;

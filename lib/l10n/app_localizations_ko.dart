@@ -296,6 +296,28 @@ class AppLocalizationsKo extends AppLocalizations {
   String get noComments => '아직 댓글이 없습니다.';
 
   @override
+  String attachmentsCount(int count) {
+    return '첨부 파일 ($count)';
+  }
+
+  @override
+  String get openFile => '파일 열기';
+
+  @override
+  String get download => '다운로드';
+
+  @override
+  String get downloadLargeTitle => '큰 파일을 다운로드할까요?';
+
+  @override
+  String downloadLargeBody(String name, String size) {
+    return '$name의 크기는 $size입니다. 다운로드에 시간이 걸리고 모바일 데이터가 사용될 수 있습니다.';
+  }
+
+  @override
+  String get noAppForFile => '이 기기에 이 파일을 열 수 있는 앱이 없습니다.';
+
+  @override
   String get unknownPerson => '알 수 없음';
 
   @override

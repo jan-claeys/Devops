@@ -119,7 +119,8 @@ plain text
         },
       ),
     );
-    final image = tester.widget<Image>(find.byType(Image)).image as NetworkImage;
+    final image = (tester.widget<Image>(find.byType(Image)).image as ResizeImage).imageProvider
+        as NetworkImage;
     expect(image.headers, {'Authorization': 'x'});
     expect(asked.toString(), 'https://dev.azure.com/contoso/_apis/wit/attachments/1');
   });

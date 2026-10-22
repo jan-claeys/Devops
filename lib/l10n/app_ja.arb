@@ -88,6 +88,12 @@
   "child": "子",
   "commentsCount": "コメント（{count}）",
   "noComments": "コメントはまだありません。",
+  "attachmentsCount": "添付ファイル ({count})",
+  "openFile": "ファイルを開く",
+  "download": "ダウンロード",
+  "downloadLargeTitle": "大きなファイルをダウンロードしますか？",
+  "downloadLargeBody": "{name} は {size} です。ダウンロードに時間がかかり、モバイルデータを使用する場合があります。",
+  "noAppForFile": "このファイルを開けるアプリがこのデバイスにありません。",
   "unknownPerson": "不明",
 
   "justNow": "たった今",

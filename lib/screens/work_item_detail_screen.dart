@@ -6,6 +6,8 @@ import '../l10n/l10n.dart';
 import '../models/work_item.dart';
 import '../services/app_state.dart';
 import '../services/logging.dart';
+import '../widgets/attachments.dart';
+import '../widgets/devops_html.dart';
 import '../widgets/devops_markdown.dart';
 import '../widgets/error_action.dart';
 import '../widgets/section_card.dart';
@@ -285,8 +287,10 @@ class _WorkItemDetailScreenState extends State<WorkItemDetailScreen> {
                       onOpenWorkItem: _openLinked,
                       imageHeaders: AppScope.read(context).api?.headersFor,
                     )
-                  : SelectableText(htmlToText(item.fields[field] as String?),
-                      style: theme.textTheme.bodyMedium),
+                  : DevOpsHtml(
+                      item.fields[field] as String?,
+                      imageHeaders: AppScope.read(context).api?.headersFor,
+                    ),
         ),
       ],
       if (detail.parent != null || detail.children.isNotEmpty) ...[
@@ -305,6 +309,16 @@ class _WorkItemDetailScreenState extends State<WorkItemDetailScreen> {
                 _LinkedTile(
                     item: child, relation: l10n.child, onTap: () => _openLinked(child.id)),
             ],
+          ),
+        ),
+      ],
+      if (item.attachments case final attachments when attachments.isNotEmpty) ...[
+        const SizedBox(height: 16),
+        SectionCard(
+          title: l10n.attachmentsCount(attachments.length),
+          padding: const EdgeInsets.symmetric(vertical: 8),
+          child: Column(
+            children: [for (final a in attachments) AttachmentTile(a)],
           ),
         ),
       ],
@@ -400,12 +414,12 @@ class _CommentView extends StatelessWidget {
                   imageHeaders: AppScope.read(context).api?.headersFor,
                 )
               else
-                SelectableText.rich(htmlToSpan(
+                DevOpsHtml(
                   comment.text,
-                  style: theme.textTheme.bodyMedium,
                   mentionStyle: TextStyle(
                       color: theme.colorScheme.primary, fontWeight: FontWeight.w600),
-                )),
+                  imageHeaders: AppScope.read(context).api?.headersFor,
+                ),
             ],
           ),
         ),

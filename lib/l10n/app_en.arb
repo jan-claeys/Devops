@@ -109,6 +109,18 @@
     "placeholders": {"count": {"type": "int"}}
   },
   "noComments": "No comments yet.",
+  "attachmentsCount": "Attachments ({count})",
+  "@attachmentsCount": {
+    "placeholders": {"count": {"type": "int"}}
+  },
+  "openFile": "Open file",
+  "download": "Download",
+  "downloadLargeTitle": "Download large file?",
+  "downloadLargeBody": "{name} is {size}. Downloading it can take a while and use mobile data.",
+  "@downloadLargeBody": {
+    "placeholders": {"name": {"type": "String"}, "size": {"type": "String"}}
+  },
+  "noAppForFile": "No app on this device can open this file.",
   "unknownPerson": "Unknown",
 
   "justNow": "just now",

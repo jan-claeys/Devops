@@ -88,6 +88,12 @@
   "child": "فرعي",
   "commentsCount": "التعليقات ({count})",
   "noComments": "لا توجد تعليقات بعد.",
+  "attachmentsCount": "المرفقات ({count})",
+  "openFile": "فتح الملف",
+  "download": "تنزيل",
+  "downloadLargeTitle": "تنزيل ملف كبير؟",
+  "downloadLargeBody": "حجم {name} هو {size}. قد يستغرق التنزيل وقتًا ويستهلك بيانات الجوال.",
+  "noAppForFile": "لا يوجد تطبيق على هذا الجهاز يمكنه فتح هذا الملف.",
   "unknownPerson": "غير معروف",
 
   "justNow": "الآن",

@@ -88,6 +88,12 @@
   "child": "Filho",
   "commentsCount": "Comentários ({count})",
   "noComments": "Nenhum comentário ainda.",
+  "attachmentsCount": "Anexos ({count})",
+  "openFile": "Abrir arquivo",
+  "download": "Baixar",
+  "downloadLargeTitle": "Baixar arquivo grande?",
+  "downloadLargeBody": "{name} tem {size}. O download pode demorar e usar dados móveis.",
+  "noAppForFile": "Nenhum app neste dispositivo pode abrir este arquivo.",
   "unknownPerson": "Desconhecido",
 
   "justNow": "agora mesmo",

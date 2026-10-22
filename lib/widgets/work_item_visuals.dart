@@ -133,6 +133,19 @@ String formatRelative(AppLocalizations l10n, DateTime? date) {
 String formatDateTime(AppLocalizations l10n, DateTime? date) =>
     date == null ? '-' : DateFormat.yMMMd(l10n.localeName).add_Hm().format(date);
 
+/// A size in bytes as B, KB, MB or GB.
+String formatFileSize(AppLocalizations l10n, int bytes) {
+  const units = ['B', 'KB', 'MB', 'GB'];
+  var value = bytes.toDouble();
+  var unit = 0;
+  while (value >= 1024 && unit < units.length - 1) {
+    value /= 1024;
+    unit++;
+  }
+  final number = NumberFormat(unit < 2 ? '0' : '0.#', l10n.localeName).format(value);
+  return '$number ${units[unit]}';
+}
+
 /// Converts the HTML that Azure DevOps stores into readable plain text.
 String htmlToText(String? html) {
   if (html == null) return '';
@@ -140,20 +153,70 @@ String htmlToText(String? html) {
       .replaceAll(RegExp(r'<br\s*/?>', caseSensitive: false), '\n')
       .replaceAll(RegExp(r'</(p|div|h[1-6]|tr)>', caseSensitive: false), '\n')
       .replaceAll(RegExp(r'<li[^>]*>', caseSensitive: false), '\n• ')
-      .replaceAll(RegExp(r'<[^>]+>'), '')
-      .replaceAll('&nbsp;', ' ')
-      .replaceAll('&lt;', '<')
-      .replaceAll('&gt;', '>')
-      .replaceAll('&quot;', '"')
-      .replaceAll('&#39;', "'")
-      .replaceAll('&amp;', '&');
-  text = text.replaceAll(RegExp(r'[ \t]+\n'), '\n').replaceAll(RegExp(r'\n{3,}'), '\n\n');
+      .replaceAll(RegExp(r'<[^>]+>'), '');
+  text = _decodeEntities(text)
+      .replaceAll(RegExp(r'[ \t]+\n'), '\n')
+      .replaceAll(RegExp(r'\n{3,}'), '\n\n');
   return text.trim();
 }
 
+String _decodeEntities(String text) => text
+    .replaceAll('&nbsp;', ' ')
+    .replaceAll('&lt;', '<')
+    .replaceAll('&gt;', '>')
+    .replaceAll('&quot;', '"')
+    .replaceAll('&#39;', "'")
+    .replaceAll('&amp;', '&');
+
+final _imageTag = RegExp(r'<img\b[^>]*>', caseSensitive: false);
+
 /// Whether a field or comment has nothing to show, as Markdown or as HTML.
-bool isBlankContent(String? text, {bool markdown = false}) =>
-    markdown ? (text?.trim().isEmpty ?? true) : htmlToText(text).isEmpty;
+bool isBlankContent(String? text, {bool markdown = false}) => markdown
+    ? (text?.trim().isEmpty ?? true)
+    : htmlToText(text).isEmpty && !_imageTag.hasMatch(text ?? '');
+
+/// A piece of HTML: text, or an image in between.
+sealed class HtmlPart {
+  const HtmlPart();
+}
+
+final class HtmlText extends HtmlPart {
+  const HtmlText(this.html);
+
+  final String html;
+}
+
+final class HtmlImage extends HtmlPart {
+  const HtmlImage(this.src, {this.alt});
+
+  final Uri src;
+  final String? alt;
+}
+
+/// Splits [html] at its images, such as screenshots pasted into a field.
+/// Images without an absolute URL are left out.
+List<HtmlPart> splitHtmlImages(String? html) {
+  if (html == null) return const [];
+  final parts = <HtmlPart>[];
+  var start = 0;
+  for (final m in _imageTag.allMatches(html)) {
+    parts.add(HtmlText(html.substring(start, m.start)));
+    final src = Uri.tryParse(_attribute(m[0]!, 'src') ?? '');
+    if (src != null && src.hasScheme) parts.add(HtmlImage(src, alt: _attribute(m[0]!, 'alt')));
+    start = m.end;
+  }
+  parts.add(HtmlText(html.substring(start)));
+  return parts;
+}
+
+/// The value of attribute [name] of an HTML [tag], quoted or not.
+String? _attribute(String tag, String name) {
+  final m = RegExp('\\s$name\\s*=\\s*(?:"([^"]*)"|\'([^\']*)\'|([^\\s"\'>]+))',
+          caseSensitive: false)
+      .firstMatch(tag);
+  final value = m == null ? null : m[1] ?? m[2] ?? m[3];
+  return value == null ? null : _decodeEntities(value);
+}
 
 /// Like [htmlToText], but renders @mentions with [mentionStyle].
 TextSpan htmlToSpan(String? html, {TextStyle? style, TextStyle? mentionStyle}) {

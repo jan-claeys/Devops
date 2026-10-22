@@ -302,6 +302,29 @@ class AppLocalizationsPt extends AppLocalizations {
   String get noComments => 'Nenhum comentário ainda.';
 
   @override
+  String attachmentsCount(int count) {
+    return 'Anexos ($count)';
+  }
+
+  @override
+  String get openFile => 'Abrir arquivo';
+
+  @override
+  String get download => 'Baixar';
+
+  @override
+  String get downloadLargeTitle => 'Baixar arquivo grande?';
+
+  @override
+  String downloadLargeBody(String name, String size) {
+    return '$name tem $size. O download pode demorar e usar dados móveis.';
+  }
+
+  @override
+  String get noAppForFile =>
+      'Nenhum app neste dispositivo pode abrir este arquivo.';
+
+  @override
   String get unknownPerson => 'Desconhecido';
 
   @override

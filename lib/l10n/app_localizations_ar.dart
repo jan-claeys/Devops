@@ -307,6 +307,29 @@ class AppLocalizationsAr extends AppLocalizations {
   String get noComments => 'لا توجد تعليقات بعد.';
 
   @override
+  String attachmentsCount(int count) {
+    return 'المرفقات ($count)';
+  }
+
+  @override
+  String get openFile => 'فتح الملف';
+
+  @override
+  String get download => 'تنزيل';
+
+  @override
+  String get downloadLargeTitle => 'تنزيل ملف كبير؟';
+
+  @override
+  String downloadLargeBody(String name, String size) {
+    return 'حجم $name هو $size. قد يستغرق التنزيل وقتًا ويستهلك بيانات الجوال.';
+  }
+
+  @override
+  String get noAppForFile =>
+      'لا يوجد تطبيق على هذا الجهاز يمكنه فتح هذا الملف.';
+
+  @override
   String get unknownPerson => 'غير معروف';
 
   @override

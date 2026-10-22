@@ -638,6 +638,42 @@ abstract class AppLocalizations {
   /// **'No comments yet.'**
   String get noComments;
 
+  /// No description provided for @attachmentsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Attachments ({count})'**
+  String attachmentsCount(int count);
+
+  /// No description provided for @openFile.
+  ///
+  /// In en, this message translates to:
+  /// **'Open file'**
+  String get openFile;
+
+  /// No description provided for @download.
+  ///
+  /// In en, this message translates to:
+  /// **'Download'**
+  String get download;
+
+  /// No description provided for @downloadLargeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Download large file?'**
+  String get downloadLargeTitle;
+
+  /// No description provided for @downloadLargeBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} is {size}. Downloading it can take a while and use mobile data.'**
+  String downloadLargeBody(String name, String size);
+
+  /// No description provided for @noAppForFile.
+  ///
+  /// In en, this message translates to:
+  /// **'No app on this device can open this file.'**
+  String get noAppForFile;
+
   /// No description provided for @unknownPerson.
   ///
   /// In en, this message translates to:

@@ -88,6 +88,12 @@
   "child": "Podrzędny",
   "commentsCount": "Komentarze ({count})",
   "noComments": "Brak komentarzy.",
+  "attachmentsCount": "Załączniki ({count})",
+  "openFile": "Otwórz plik",
+  "download": "Pobierz",
+  "downloadLargeTitle": "Pobrać duży plik?",
+  "downloadLargeBody": "{name} ma {size}. Pobieranie może chwilę potrwać i zużyć dane komórkowe.",
+  "noAppForFile": "Żadna aplikacja na tym urządzeniu nie może otworzyć tego pliku.",
   "unknownPerson": "Nieznany",
 
   "justNow": "przed chwilą",

@@ -88,6 +88,12 @@
   "child": "Untergeordnet",
   "commentsCount": "Kommentare ({count})",
   "noComments": "Noch keine Kommentare.",
+  "attachmentsCount": "Anhänge ({count})",
+  "openFile": "Datei öffnen",
+  "download": "Herunterladen",
+  "downloadLargeTitle": "Große Datei herunterladen?",
+  "downloadLargeBody": "{name} ist {size} groß. Das Herunterladen kann dauern und mobile Daten verbrauchen.",
+  "noAppForFile": "Keine App auf diesem Gerät kann diese Datei öffnen.",
   "unknownPerson": "Unbekannt",
 
   "justNow": "gerade eben",

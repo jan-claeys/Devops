@@ -292,6 +292,28 @@ class AppLocalizationsZh extends AppLocalizations {
   String get noComments => '暂无评论。';
 
   @override
+  String attachmentsCount(int count) {
+    return '附件 ($count)';
+  }
+
+  @override
+  String get openFile => '打开文件';
+
+  @override
+  String get download => '下载';
+
+  @override
+  String get downloadLargeTitle => '下载大文件？';
+
+  @override
+  String downloadLargeBody(String name, String size) {
+    return '$name 大小为 $size。下载可能需要一些时间并消耗移动数据。';
+  }
+
+  @override
+  String get noAppForFile => '此设备上没有可以打开此文件的应用。';
+
+  @override
   String get unknownPerson => '未知';
 
   @override

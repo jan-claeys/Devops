@@ -88,6 +88,12 @@
   "child": "Alt",
   "commentsCount": "Yorumlar ({count})",
   "noComments": "Henüz yorum yok.",
+  "attachmentsCount": "Ekler ({count})",
+  "openFile": "Dosyayı aç",
+  "download": "İndir",
+  "downloadLargeTitle": "Büyük dosya indirilsin mi?",
+  "downloadLargeBody": "{name} {size} boyutunda. İndirme biraz sürebilir ve mobil veri kullanabilir.",
+  "noAppForFile": "Bu cihazda bu dosyayı açabilecek uygulama yok.",
   "unknownPerson": "Bilinmiyor",
 
   "justNow": "az önce",

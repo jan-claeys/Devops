@@ -88,6 +88,12 @@
   "child": "चाइल्ड",
   "commentsCount": "टिप्पणियाँ ({count})",
   "noComments": "अभी कोई टिप्पणी नहीं।",
+  "attachmentsCount": "अटैचमेंट ({count})",
+  "openFile": "फ़ाइल खोलें",
+  "download": "डाउनलोड करें",
+  "downloadLargeTitle": "बड़ी फ़ाइल डाउनलोड करें?",
+  "downloadLargeBody": "{name} का आकार {size} है। डाउनलोड में समय लग सकता है और मोबाइल डेटा खर्च हो सकता है।",
+  "noAppForFile": "इस डिवाइस पर कोई ऐप यह फ़ाइल नहीं खोल सकता।",
   "unknownPerson": "अज्ञात",
 
   "justNow": "अभी",

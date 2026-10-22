@@ -88,6 +88,12 @@
   "child": "Дочірній",
   "commentsCount": "Коментарі ({count})",
   "noComments": "Коментарів ще немає.",
+  "attachmentsCount": "Вкладення ({count})",
+  "openFile": "Відкрити файл",
+  "download": "Завантажити",
+  "downloadLargeTitle": "Завантажити великий файл?",
+  "downloadLargeBody": "{name} має розмір {size}. Завантаження може тривати довго й витрачати мобільний трафік.",
+  "noAppForFile": "На цьому пристрої немає застосунку, який може відкрити цей файл.",
   "unknownPerson": "Невідомо",
 
   "justNow": "щойно",

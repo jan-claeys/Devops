@@ -296,6 +296,28 @@ class AppLocalizationsJa extends AppLocalizations {
   String get noComments => 'コメントはまだありません。';
 
   @override
+  String attachmentsCount(int count) {
+    return '添付ファイル ($count)';
+  }
+
+  @override
+  String get openFile => 'ファイルを開く';
+
+  @override
+  String get download => 'ダウンロード';
+
+  @override
+  String get downloadLargeTitle => '大きなファイルをダウンロードしますか？';
+
+  @override
+  String downloadLargeBody(String name, String size) {
+    return '$name は $size です。ダウンロードに時間がかかり、モバイルデータを使用する場合があります。';
+  }
+
+  @override
+  String get noAppForFile => 'このファイルを開けるアプリがこのデバイスにありません。';
+
+  @override
   String get unknownPerson => '不明';
 
   @override

@@ -286,6 +286,47 @@ void main() {
       expect(fake.requests, isEmpty);
     });
 
+    group('downloadAttachment', () {
+      final attachment = WorkItem.fromJson(workItemJson(1, relations: [
+        attachmentRelation('crash.mp4', id: 'g1'),
+      ])).attachments.single;
+
+      test('streams the file with the token', () async {
+        fake.attachments['g1'] = [1, 2, 3];
+        final response = await api.downloadAttachment(attachment);
+        expect(await response.stream.toBytes(), [1, 2, 3]);
+        final request = fake.requests.single;
+        expect(request.url.queryParameters['download'], 'true');
+        expect(request.headers['Authorization'], startsWith('Basic '));
+      });
+
+      test('sends the token only to the organization', () async {
+        const elsewhere =
+            WorkItemAttachment(url: 'https://example.com/_apis/wit/attachments/g1', name: 'x.png');
+        await expectLater(api.downloadAttachment(elsewhere), throwsA(isA<DevOpsException>()));
+        expect(fake.requests, isEmpty);
+      });
+
+      test('fails like other requests', () async {
+        await expectLater(api.downloadAttachment(attachment),
+            throwsA(isA<DevOpsException>().having((e) => e.kind, 'kind', DevOpsError.notFound)));
+      });
+
+      test('a sign-in page means unauthorized, unless an HTML file was asked', () async {
+        final signIn = DevOpsApi(
+          organization: 'contoso',
+          pat: 'secret',
+          client: MockClient((_) async => http.Response('<html>Sign in</html>', 200,
+              headers: {'content-type': 'text/html; charset=utf-8'})),
+        );
+        await expectLater(signIn.downloadAttachment(attachment),
+            throwsA(isA<DevOpsException>().having((e) => e.kind, 'kind', DevOpsError.unauthorized)));
+        final page = WorkItemAttachment(url: attachment.url, name: 'report.html');
+        expect(await (await signIn.downloadAttachment(page)).stream.bytesToString(),
+            '<html>Sign in</html>');
+      });
+    });
+
     test('releaseBaseUrl points to release management', () {
       expect(DevOpsApi.releaseBaseUrl('https://dev.azure.com/contoso'),
           'https://vsrm.dev.azure.com/contoso');

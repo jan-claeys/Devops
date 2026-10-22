@@ -299,6 +299,28 @@ class AppLocalizationsTr extends AppLocalizations {
   String get noComments => 'Henüz yorum yok.';
 
   @override
+  String attachmentsCount(int count) {
+    return 'Ekler ($count)';
+  }
+
+  @override
+  String get openFile => 'Dosyayı aç';
+
+  @override
+  String get download => 'İndir';
+
+  @override
+  String get downloadLargeTitle => 'Büyük dosya indirilsin mi?';
+
+  @override
+  String downloadLargeBody(String name, String size) {
+    return '$name $size boyutunda. İndirme biraz sürebilir ve mobil veri kullanabilir.';
+  }
+
+  @override
+  String get noAppForFile => 'Bu cihazda bu dosyayı açabilecek uygulama yok.';
+
+  @override
   String get unknownPerson => 'Bilinmiyor';
 
   @override

@@ -88,6 +88,12 @@
   "child": "Onderliggend",
   "commentsCount": "Opmerkingen ({count})",
   "noComments": "Nog geen opmerkingen.",
+  "attachmentsCount": "Bijlagen ({count})",
+  "openFile": "Bestand openen",
+  "download": "Downloaden",
+  "downloadLargeTitle": "Groot bestand downloaden?",
+  "downloadLargeBody": "{name} is {size}. Downloaden kan even duren en mobiele data verbruiken.",
+  "noAppForFile": "Geen app op dit toestel kan dit bestand openen.",
   "unknownPerson": "Onbekend",
 
   "justNow": "zojuist",

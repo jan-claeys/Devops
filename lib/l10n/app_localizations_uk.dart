@@ -305,6 +305,29 @@ class AppLocalizationsUk extends AppLocalizations {
   String get noComments => 'Коментарів ще немає.';
 
   @override
+  String attachmentsCount(int count) {
+    return 'Вкладення ($count)';
+  }
+
+  @override
+  String get openFile => 'Відкрити файл';
+
+  @override
+  String get download => 'Завантажити';
+
+  @override
+  String get downloadLargeTitle => 'Завантажити великий файл?';
+
+  @override
+  String downloadLargeBody(String name, String size) {
+    return '$name має розмір $size. Завантаження може тривати довго й витрачати мобільний трафік.';
+  }
+
+  @override
+  String get noAppForFile =>
+      'На цьому пристрої немає застосунку, який може відкрити цей файл.';
+
+  @override
   String get unknownPerson => 'Невідомо';
 
   @override

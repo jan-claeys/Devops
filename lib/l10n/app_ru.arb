@@ -88,6 +88,12 @@
   "child": "Дочерний",
   "commentsCount": "Комментарии ({count})",
   "noComments": "Комментариев пока нет.",
+  "attachmentsCount": "Вложения ({count})",
+  "openFile": "Открыть файл",
+  "download": "Скачать",
+  "downloadLargeTitle": "Скачать большой файл?",
+  "downloadLargeBody": "{name} занимает {size}. Загрузка может занять время и расходовать мобильный трафик.",
+  "noAppForFile": "На этом устройстве нет приложения, которое может открыть этот файл.",
   "unknownPerson": "Неизвестно",
 
   "justNow": "только что",

@@ -213,4 +213,41 @@ void main() {
     expect(project.description, 'Main');
     expect(Project.fromJson({'id': 'x', 'name': 'Y'}).description, isNull);
   });
+
+  group('attachments', () {
+    test('reads the attached files and skips other relations', () {
+      final item = WorkItem.fromJson(workItemJson(1, relations: [
+        relation('System.LinkTypes.Hierarchy-Forward', 2),
+        attachmentRelation('screenshot.PNG', size: 2048, comment: '  Login screen '),
+        attachmentRelation('crash.mp4', id: 'b2'),
+        {'rel': 'AttachedFile'},
+      ]));
+      final [image, video] = item.attachments;
+      expect(image.name, 'screenshot.PNG');
+      expect(image.size, 2048);
+      expect(image.comment, 'Login screen');
+      expect(image.date, DateTime.utc(2026, 10, 20, 10).toLocal());
+      expect(image.id, 'a1b2c3d4-0000-0000-0000-000000000001');
+      expect(image.kind, AttachmentKind.image);
+      expect(video.id, 'b2');
+      expect(video.kind, AttachmentKind.video);
+      expect(video.size, isNull);
+      expect(video.comment, isNull);
+    });
+
+    test('tells the kind from the extension', () {
+      AttachmentKind kind(String name) =>
+          WorkItemAttachment(url: 'https://x/a', name: name).kind;
+      expect(kind('photo.jpeg'), AttachmentKind.image);
+      expect(kind('clip.MOV'), AttachmentKind.video);
+      expect(kind('report.pdf'), AttachmentKind.file);
+      expect(kind('README'), AttachmentKind.file);
+    });
+
+    test('falls back to the guid without a name', () {
+      final attachment = WorkItemAttachment.fromRelation(
+          {'rel': 'AttachedFile', 'url': 'https://dev.azure.com/contoso/_apis/wit/attachments/g1'})!;
+      expect(attachment.name, 'g1');
+    });
+  });
 }

@@ -88,6 +88,12 @@
   "child": "하위",
   "commentsCount": "댓글 ({count})",
   "noComments": "아직 댓글이 없습니다.",
+  "attachmentsCount": "첨부 파일 ({count})",
+  "openFile": "파일 열기",
+  "download": "다운로드",
+  "downloadLargeTitle": "큰 파일을 다운로드할까요?",
+  "downloadLargeBody": "{name}의 크기는 {size}입니다. 다운로드에 시간이 걸리고 모바일 데이터가 사용될 수 있습니다.",
+  "noAppForFile": "이 기기에 이 파일을 열 수 있는 앱이 없습니다.",
   "unknownPerson": "알 수 없음",
 
   "justNow": "방금",

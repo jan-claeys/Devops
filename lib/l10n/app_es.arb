@@ -88,6 +88,12 @@
   "child": "Secundario",
   "commentsCount": "Comentarios ({count})",
   "noComments": "Aún no hay comentarios.",
+  "attachmentsCount": "Adjuntos ({count})",
+  "openFile": "Abrir archivo",
+  "download": "Descargar",
+  "downloadLargeTitle": "¿Descargar archivo grande?",
+  "downloadLargeBody": "{name} ocupa {size}. La descarga puede tardar y consumir datos móviles.",
+  "noAppForFile": "Ninguna aplicación de este dispositivo puede abrir este archivo.",
   "unknownPerson": "Desconocido",
 
   "justNow": "ahora mismo",
