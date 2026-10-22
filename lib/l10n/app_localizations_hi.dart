@@ -35,6 +35,10 @@ class AppLocalizationsHi extends AppLocalizations {
   String get organizationRequired => 'अपना संगठन दर्ज करें';
 
   @override
+  String get organizationInsecure =>
+      'https:// पता उपयोग करें ताकि आपका टोकन बिना एन्क्रिप्शन के न भेजा जाए';
+
+  @override
   String get personalAccessToken => 'Personal Access Token';
 
   @override

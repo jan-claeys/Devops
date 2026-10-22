@@ -35,6 +35,10 @@ class AppLocalizationsTr extends AppLocalizations {
   String get organizationRequired => 'Kuruluşunuzu girin';
 
   @override
+  String get organizationInsecure =>
+      'Belirtecinizin şifrelenmeden gönderilmemesi için https:// adresi kullanın';
+
+  @override
   String get personalAccessToken => 'Personal Access Token';
 
   @override

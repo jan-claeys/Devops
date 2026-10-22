@@ -9,6 +9,7 @@
   "organization": "المؤسسة",
   "organizationHint": "مثال: mycompany أو https://dev.azure.com/mycompany",
   "organizationRequired": "أدخل مؤسستك",
+  "organizationInsecure": "استخدم عنوان https:// حتى لا يُرسل رمزك بدون تشفير",
   "personalAccessToken": "Personal Access Token",
   "tokenAlreadyStored": "يوجد رمز محفوظ بالفعل. أدخله مرة أخرى لتغييره.",
   "requiredScopes": "النطاقات المطلوبة",

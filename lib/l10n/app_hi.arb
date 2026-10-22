@@ -9,6 +9,7 @@
   "organization": "संगठन",
   "organizationHint": "जैसे mycompany या https://dev.azure.com/mycompany",
   "organizationRequired": "अपना संगठन दर्ज करें",
+  "organizationInsecure": "https:// पता उपयोग करें ताकि आपका टोकन बिना एन्क्रिप्शन के न भेजा जाए",
   "personalAccessToken": "Personal Access Token",
   "tokenAlreadyStored": "एक टोकन पहले से सहेजा गया है। बदलने के लिए फिर से दर्ज करें।",
   "requiredScopes": "आवश्यक स्कोप",

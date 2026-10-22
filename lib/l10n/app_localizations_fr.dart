@@ -35,6 +35,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get organizationRequired => 'Saisissez votre organisation';
 
   @override
+  String get organizationInsecure =>
+      'Utilisez une adresse https:// pour que votre jeton ne soit pas envoyé en clair';
+
+  @override
   String get personalAccessToken => 'Personal Access Token';
 
   @override

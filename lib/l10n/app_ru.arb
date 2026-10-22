@@ -9,6 +9,7 @@
   "organization": "Организация",
   "organizationHint": "напр. mycompany или https://dev.azure.com/mycompany",
   "organizationRequired": "Введите организацию",
+  "organizationInsecure": "Используйте адрес https://, чтобы токен не передавался без шифрования",
   "personalAccessToken": "Personal Access Token",
   "tokenAlreadyStored": "Токен уже сохранён. Введите его снова, чтобы изменить.",
   "requiredScopes": "Нужные права",

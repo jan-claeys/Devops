@@ -10,6 +10,12 @@ import 'package:http/testing.dart';
 import '../helpers.dart';
 
 void main() {
+  test('isSecure only accepts https organizations', () {
+    expect(DevOpsApi.isSecure('contoso'), isTrue);
+    expect(DevOpsApi.isSecure('https://tfs.local/tfs/Default'), isTrue);
+    expect(DevOpsApi.isSecure('http://tfs.local:8080/tfs/Default'), isFalse);
+  });
+
   group('normalizeOrganization', () {
     test('accepts several formats', () {
       expect(DevOpsApi.normalizeOrganization('contoso'), 'https://dev.azure.com/contoso');
@@ -214,6 +220,12 @@ void main() {
 
     test('getLog sends the token only to the organization', () async {
       await expectLater(api.getLog('https://example.com/logs/5'),
+          throwsA(isA<DevOpsException>()));
+      expect(fake.requests, isEmpty);
+    });
+
+    test('getLog sends the token only over https', () async {
+      await expectLater(api.getLog('http://dev.azure.com/contoso/1/_apis/build/builds/4/logs/5'),
           throwsA(isA<DevOpsException>()));
       expect(fake.requests, isEmpty);
     });

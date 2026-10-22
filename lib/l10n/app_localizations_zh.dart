@@ -35,6 +35,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get organizationRequired => '请输入你的组织';
 
   @override
+  String get organizationInsecure => '请使用 https:// 地址，以免令牌以未加密方式发送';
+
+  @override
   String get personalAccessToken => 'Personal Access Token';
 
   @override

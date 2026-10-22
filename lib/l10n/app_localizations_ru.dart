@@ -35,6 +35,10 @@ class AppLocalizationsRu extends AppLocalizations {
   String get organizationRequired => 'Введите организацию';
 
   @override
+  String get organizationInsecure =>
+      'Используйте адрес https://, чтобы токен не передавался без шифрования';
+
+  @override
   String get personalAccessToken => 'Personal Access Token';
 
   @override

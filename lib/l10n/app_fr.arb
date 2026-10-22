@@ -9,6 +9,7 @@
   "organization": "Organisation",
   "organizationHint": "ex. monentreprise ou https://dev.azure.com/monentreprise",
   "organizationRequired": "Saisissez votre organisation",
+  "organizationInsecure": "Utilisez une adresse https:// pour que votre jeton ne soit pas envoyé en clair",
   "personalAccessToken": "Personal Access Token",
   "tokenAlreadyStored": "Un jeton est déjà enregistré. Saisissez-le à nouveau pour le modifier.",
   "requiredScopes": "Portées requises",

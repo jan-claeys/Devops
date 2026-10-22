@@ -144,7 +144,9 @@ class AppState extends ChangeNotifier {
   void _buildApi() {
     final org = organization;
     final pat = _pat;
-    api = (org != null && org.isNotEmpty && pat != null && pat.isNotEmpty)
+    // An http organization saved by an earlier version asks for a new connection.
+    api = (org != null && org.isNotEmpty && DevOpsApi.isSecure(org) &&
+            pat != null && pat.isNotEmpty)
         ? DevOpsApi(organization: org, pat: pat, client: httpClient)
         : null;
   }

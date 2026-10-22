@@ -9,6 +9,7 @@
   "organization": "组织",
   "organizationHint": "例如 mycompany 或 https://dev.azure.com/mycompany",
   "organizationRequired": "请输入你的组织",
+  "organizationInsecure": "请使用 https:// 地址，以免令牌以未加密方式发送",
   "personalAccessToken": "Personal Access Token",
   "tokenAlreadyStored": "已保存一个令牌。重新输入即可更改。",
   "requiredScopes": "所需范围",

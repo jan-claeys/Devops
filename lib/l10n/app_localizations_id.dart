@@ -35,6 +35,10 @@ class AppLocalizationsId extends AppLocalizations {
   String get organizationRequired => 'Masukkan organisasi Anda';
 
   @override
+  String get organizationInsecure =>
+      'Gunakan alamat https:// agar token Anda tidak dikirim tanpa enkripsi';
+
+  @override
   String get personalAccessToken => 'Personal Access Token';
 
   @override

@@ -9,6 +9,7 @@
   "organization": "組織",
   "organizationHint": "例: mycompany または https://dev.azure.com/mycompany",
   "organizationRequired": "組織を入力してください",
+  "organizationInsecure": "トークンが暗号化されずに送信されないよう、https:// のアドレスを使用してください",
   "personalAccessToken": "Personal Access Token",
   "tokenAlreadyStored": "トークンは保存済みです。変更するには再入力してください。",
   "requiredScopes": "必要なスコープ",

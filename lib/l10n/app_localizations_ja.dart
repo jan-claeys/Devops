@@ -35,6 +35,10 @@ class AppLocalizationsJa extends AppLocalizations {
   String get organizationRequired => '組織を入力してください';
 
   @override
+  String get organizationInsecure =>
+      'トークンが暗号化されずに送信されないよう、https:// のアドレスを使用してください';
+
+  @override
   String get personalAccessToken => 'Personal Access Token';
 
   @override

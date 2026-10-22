@@ -176,6 +176,12 @@ abstract class AppLocalizations {
   /// **'Enter your organization'**
   String get organizationRequired;
 
+  /// No description provided for @organizationInsecure.
+  ///
+  /// In en, this message translates to:
+  /// **'Use an https:// address so your token isn\'t sent unencrypted'**
+  String get organizationInsecure;
+
   /// No description provided for @personalAccessToken.
   ///
   /// In en, this message translates to:

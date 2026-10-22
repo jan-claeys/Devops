@@ -9,6 +9,7 @@
   "organization": "Kuruluş",
   "organizationHint": "örn. sirketim veya https://dev.azure.com/sirketim",
   "organizationRequired": "Kuruluşunuzu girin",
+  "organizationInsecure": "Belirtecinizin şifrelenmeden gönderilmemesi için https:// adresi kullanın",
   "personalAccessToken": "Personal Access Token",
   "tokenAlreadyStored": "Zaten kayıtlı bir belirteç var. Değiştirmek için yeniden girin.",
   "requiredScopes": "Gerekli kapsamlar",

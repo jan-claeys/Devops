@@ -9,6 +9,7 @@
   "organization": "Organisasi",
   "organizationHint": "mis. perusahaanku atau https://dev.azure.com/perusahaanku",
   "organizationRequired": "Masukkan organisasi Anda",
+  "organizationInsecure": "Gunakan alamat https:// agar token Anda tidak dikirim tanpa enkripsi",
   "personalAccessToken": "Personal Access Token",
   "tokenAlreadyStored": "Token sudah tersimpan. Masukkan lagi untuk mengubahnya.",
   "requiredScopes": "Cakupan yang diperlukan",

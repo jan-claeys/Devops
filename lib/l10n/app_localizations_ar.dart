@@ -35,6 +35,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get organizationRequired => 'أدخل مؤسستك';
 
   @override
+  String get organizationInsecure =>
+      'استخدم عنوان https:// حتى لا يُرسل رمزك بدون تشفير';
+
+  @override
   String get personalAccessToken => 'Personal Access Token';
 
   @override

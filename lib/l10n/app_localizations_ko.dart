@@ -35,6 +35,10 @@ class AppLocalizationsKo extends AppLocalizations {
   String get organizationRequired => '조직을 입력하세요';
 
   @override
+  String get organizationInsecure =>
+      '토큰이 암호화되지 않은 채 전송되지 않도록 https:// 주소를 사용하세요';
+
+  @override
   String get personalAccessToken => 'Personal Access Token';
 
   @override

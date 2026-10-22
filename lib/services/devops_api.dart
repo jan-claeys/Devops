@@ -72,6 +72,12 @@ class DevOpsApi {
     return 'https://dev.azure.com/$value';
   }
 
+  /// Whether [organization] is reached over https. The PAT travels in a
+  /// header with every request, so over plain http anyone on the network can
+  /// read it.
+  static bool isSecure(String organization) =>
+      Uri.parse(normalizeOrganization(organization)).scheme == 'https';
+
   String webUrl(WorkItem item) =>
       '$baseUrl/${Uri.encodeComponent(item.project)}/_workitems/edit/${item.id}';
 
@@ -102,12 +108,12 @@ class DevOpsApi {
 
   /// Headers to load [uri] with, such as an attachment image in a field.
   /// The PAT is only sent to the organization itself.
-  Map<String, String>? headersFor(Uri uri) {
-    final base = Uri.parse(baseUrl);
-    return uri.scheme == base.scheme && uri.host == base.host && uri.port == base.port
-        ? {'Authorization': _auth}
-        : null;
-  }
+  Map<String, String>? headersFor(Uri uri) =>
+      _isOrganization(uri, [baseUrl]) ? {'Authorization': _auth} : null;
+
+  /// Whether [uri] has the same scheme, host and port as one of [bases].
+  static bool _isOrganization(Uri uri, List<String> bases) => bases.map(Uri.parse).any(
+      (base) => uri.scheme == base.scheme && uri.host == base.host && uri.port == base.port);
 
   Future<List<Project>> getProjects() async {
     final json = await _get('$baseUrl/_apis/projects?\$top=500&api-version=$_apiVersion');
@@ -266,7 +272,7 @@ class DevOpsApi {
   Future<String> getLog(String url) async {
     final uri = Uri.parse(url);
     // The URL comes from the API; still, the PAT only goes to the organization.
-    if (![baseUrl, releaseUrl].any((base) => Uri.parse(base).host == uri.host)) {
+    if (!_isOrganization(uri, [baseUrl, releaseUrl])) {
       throw DevOpsException(DevOpsError.unexpectedResponse);
     }
     final response =

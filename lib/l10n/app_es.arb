@@ -9,6 +9,7 @@
   "organization": "Organización",
   "organizationHint": "p. ej. miempresa o https://dev.azure.com/miempresa",
   "organizationRequired": "Introduce tu organización",
+  "organizationInsecure": "Usa una dirección https:// para que tu token no se envíe sin cifrar",
   "personalAccessToken": "Personal Access Token",
   "tokenAlreadyStored": "Ya hay un token guardado. Introdúcelo de nuevo para cambiarlo.",
   "requiredScopes": "Ámbitos necesarios",

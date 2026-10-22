@@ -36,6 +36,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get organizationRequired => 'Gib deine Organisation ein';
 
   @override
+  String get organizationInsecure =>
+      'Verwende eine https://-Adresse, damit dein Token nicht unverschlüsselt gesendet wird';
+
+  @override
   String get personalAccessToken => 'Personal Access Token';
 
   @override
