@@ -201,5 +201,8 @@
   "myRuns": "我的运行",
   "noRecentRuns": "你最近没有启动任何运行。",
   "failingOnMain": "{count, plural, other{{count} 个管道在主分支上失败}}",
-  "noChangesFor": "{count} 天未更改"
+  "noChangesFor": "{count} 天未更改",
+
+  "linkNotSupported": "无法在应用中打开此链接。",
+  "linkOtherOrganization": "此链接属于其他组织，而不是你当前连接的组织。"
 }

@@ -201,5 +201,8 @@
   "myRuns": "Run saya",
   "noRecentRuns": "Anda belum memulai run akhir-akhir ini.",
   "failingOnMain": "{count, plural, other{{count} pipeline gagal di branch utama}}",
-  "noChangesFor": "Tidak berubah selama {count} h"
+  "noChangesFor": "Tidak berubah selama {count} h",
+
+  "linkNotSupported": "Tautan ini tidak dapat dibuka di aplikasi.",
+  "linkOtherOrganization": "Tautan ini berasal dari organisasi lain, bukan organisasi yang Anda hubungkan."
 }

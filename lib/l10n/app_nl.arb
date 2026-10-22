@@ -201,5 +201,8 @@
   "myRuns": "Mijn runs",
   "noRecentRuns": "Je hebt de laatste tijd geen runs gestart.",
   "failingOnMain": "{count, plural, =1{1 pipeline faalt op de main-branch} other{{count} pipelines falen op de main-branch}}",
-  "noChangesFor": "{count} d niet gewijzigd"
+  "noChangesFor": "{count} d niet gewijzigd",
+
+  "linkNotSupported": "Deze link kan niet in de app geopend worden.",
+  "linkOtherOrganization": "Deze link hoort bij een andere organisatie dan die waarmee je verbonden bent."
 }

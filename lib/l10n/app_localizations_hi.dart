@@ -680,4 +680,11 @@ class AppLocalizationsHi extends AppLocalizations {
   String noChangesFor(int count) {
     return '$count दिन से कोई बदलाव नहीं';
   }
+
+  @override
+  String get linkNotSupported => 'यह लिंक ऐप में नहीं खोला जा सकता।';
+
+  @override
+  String get linkOtherOrganization =>
+      'यह लिंक उस संगठन का नहीं है जिससे आप जुड़े हैं।';
 }

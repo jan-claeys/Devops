@@ -201,5 +201,8 @@
   "myRuns": "自分の実行",
   "noRecentRuns": "最近開始した実行はありません。",
   "failingOnMain": "{count, plural, other{{count} 件のパイプラインがメイン ブランチで失敗しています}}",
-  "noChangesFor": "{count} 日間変更なし"
+  "noChangesFor": "{count} 日間変更なし",
+
+  "linkNotSupported": "このリンクはアプリで開けません。",
+  "linkOtherOrganization": "このリンクは、接続中のものとは別の組織のものです。"
 }

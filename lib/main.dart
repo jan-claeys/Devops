@@ -8,11 +8,15 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 import 'l10n/l10n.dart';
+import 'models/devops_link.dart';
 import 'screens/home_screen.dart';
+import 'screens/pipeline_run_screen.dart';
+import 'screens/pull_request_screen.dart';
 import 'screens/settings_screen.dart';
 import 'screens/work_item_detail_screen.dart';
 import 'services/app_state.dart';
 import 'services/home_widget_service.dart';
+import 'services/links.dart';
 import 'services/logging.dart';
 
 Future<void> main() async {
@@ -38,11 +42,14 @@ class _DevOpsAppState extends State<DevOpsApp> {
   static const _seed = Color(0xFF0078D4); // Azure blue
 
   final _navigator = GlobalKey<NavigatorState>();
+  final _messenger = GlobalKey<ScaffoldMessengerState>();
   StreamSubscription<Uri?>? _widgetClicks;
+  StreamSubscription<String>? _links;
 
   @override
   void initState() {
     super.initState();
+    if (Links.isSupported) _links = Links.incoming().listen(_openLink);
     // Tapping a ticket in the home screen widget opens its details. Elsewhere
     // the event channel has no implementation and listening reports a
     // MissingPluginException straight to FlutterError, bypassing onError.
@@ -54,16 +61,50 @@ class _DevOpsAppState extends State<DevOpsApp> {
   @override
   void dispose() {
     _widgetClicks?.cancel();
+    _links?.cancel();
     super.dispose();
   }
 
   void _openFromWidget(Uri? uri) {
     final id = TicketsHomeWidget.workItemIdFromUri(uri);
-    if (id == null || !AppScope.read(context).isConfigured) return;
+    if (id == null) return;
+    _open(DevOpsLink(DevOpsLinkKind.workItem, id));
+  }
+
+  /// Opens the work item, pull request or run a link opened with the app, or
+  /// shared to it, points to.
+  void _openLink(String text) {
+    final api = AppScope.read(context).api;
+    if (api == null) return;
+    switch (ParsedLink.parse(text, baseUrl: api.baseUrl)) {
+      case final DevOpsLink link:
+        _open(link);
+      case ForeignLink():
+        _showMessage((l10n) => l10n.linkOtherOrganization);
+      case null:
+        _showMessage((l10n) => l10n.linkNotSupported);
+    }
+  }
+
+  void _open(DevOpsLink link) {
+    if (!AppScope.read(context).isConfigured) return;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _navigator.currentState?.push(MaterialPageRoute(
-        builder: (_) => WorkItemDetailScreen(id: id),
+        builder: (_) => switch (link) {
+          DevOpsLink(kind: DevOpsLinkKind.workItem) => WorkItemDetailScreen(id: link.id),
+          DevOpsLink(kind: DevOpsLinkKind.pullRequest) =>
+            PullRequestScreen(project: link.project!, id: link.id),
+          _ => PipelineRunScreen(project: link.project!, id: link.id, kind: link.runKind),
+        },
       ));
+    });
+  }
+
+  void _showMessage(String Function(AppLocalizations) message) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final context = _navigator.currentContext;
+      if (context == null) return;
+      _messenger.currentState?.showSnackBar(SnackBar(content: Text(message(context.l10n))));
     });
   }
 
@@ -89,6 +130,7 @@ class _DevOpsAppState extends State<DevOpsApp> {
         final useDynamic = state.useDynamicColor;
         return MaterialApp(
           navigatorKey: _navigator,
+          scaffoldMessengerKey: _messenger,
           // Records screen changes as breadcrumbs for error reports.
           navigatorObservers: [SentryNavigatorObserver()],
           title: 'DevOps',

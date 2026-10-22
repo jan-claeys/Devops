@@ -201,5 +201,8 @@
   "myRuns": "Meine Ausführungen",
   "noRecentRuns": "Du hast in letzter Zeit keine Ausführungen gestartet.",
   "failingOnMain": "{count, plural, =1{1 Pipeline schlägt auf dem Main-Branch fehl} other{{count} Pipelines schlagen auf dem Main-Branch fehl}}",
-  "noChangesFor": "Seit {count} T unverändert"
+  "noChangesFor": "Seit {count} T unverändert",
+
+  "linkNotSupported": "Dieser Link kann nicht in der App geöffnet werden.",
+  "linkOtherOrganization": "Dieser Link gehört zu einer anderen Organisation als der, mit der du verbunden bist."
 }

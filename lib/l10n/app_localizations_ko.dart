@@ -668,4 +668,10 @@ class AppLocalizationsKo extends AppLocalizations {
   String noChangesFor(int count) {
     return '$count일 동안 변경 없음';
   }
+
+  @override
+  String get linkNotSupported => '이 링크는 앱에서 열 수 없습니다.';
+
+  @override
+  String get linkOtherOrganization => '이 링크는 연결된 조직이 아닌 다른 조직의 링크입니다.';
 }

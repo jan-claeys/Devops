@@ -2,12 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../l10n/l10n.dart';
 import '../models/pipeline_log.dart';
 import '../models/pipeline_run.dart';
 import '../services/app_state.dart';
+import '../services/links.dart';
 import '../services/logging.dart';
 import '../widgets/error_action.dart';
 import '../widgets/pipeline_visuals.dart';
@@ -144,7 +144,7 @@ class _PipelineRunScreenState extends State<PipelineRunScreen> {
 
   Future<void> _openInBrowser(PipelineRun run) async {
     final url = AppScope.read(context).api!.runWebUrl(run);
-    if (!await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication) && mounted) {
+    if (!await Links.openInBrowser(Uri.parse(url)) && mounted) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(context.l10n.browserOpenFailed)));
     }

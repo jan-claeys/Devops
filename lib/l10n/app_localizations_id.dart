@@ -681,4 +681,11 @@ class AppLocalizationsId extends AppLocalizations {
   String noChangesFor(int count) {
     return 'Tidak berubah selama $count h';
   }
+
+  @override
+  String get linkNotSupported => 'Tautan ini tidak dapat dibuka di aplikasi.';
+
+  @override
+  String get linkOtherOrganization =>
+      'Tautan ini berasal dari organisasi lain, bukan organisasi yang Anda hubungkan.';
 }

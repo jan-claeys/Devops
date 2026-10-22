@@ -36,6 +36,38 @@
             <intent-filter>
                 <action android:name="es.antonborri.home_widget.action.LAUNCH"/>
             </intent-filter>
+            <!-- Azure DevOps links of work items, pull requests, builds and
+                 releases. The domains can't be verified for this app, so
+                 Android 12+ only opens them here once the user adds them under
+                 Open by default. The pattern matcher doesn't backtrack: each
+                 ".*" runs to the next "/", so every segment is spelled out,
+                 with and without the organization in the path. -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="https"/>
+                <data android:host="dev.azure.com"/>
+                <data android:host="*.visualstudio.com"/>
+                <data android:pathPattern="/..*/_workitems/edit/..*"/>
+                <data android:pathPattern="/..*/..*/_workitems/edit/..*"/>
+                <data android:pathPattern="/..*/..*/..*/_workitems/edit/..*"/>
+                <data android:pathPattern="/..*/_git/..*/pullrequest/..*"/>
+                <data android:pathPattern="/..*/..*/_git/..*/pullrequest/..*"/>
+                <data android:pathPattern="/..*/..*/..*/_git/..*/pullrequest/..*"/>
+                <data android:pathPattern="/..*/..*/_build/results"/>
+                <data android:pathPattern="/..*/..*/..*/_build/results"/>
+                <data android:pathPattern="/..*/..*/_release"/>
+                <data android:pathPattern="/..*/..*/..*/_release"/>
+                <data android:pathPattern="/..*/..*/_releaseProgress"/>
+                <data android:pathPattern="/..*/..*/..*/_releaseProgress"/>
+            </intent-filter>
+            <!-- Text shared to the app, such as a link from Teams. -->
+            <intent-filter>
+                <action android:name="android.intent.action.SEND"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:mimeType="text/plain"/>
+            </intent-filter>
         </activity>
         <!-- Home screen widget with my open tickets. -->
         <receiver
@@ -73,6 +105,12 @@
 
          In particular, this is used by the Flutter engine in io.flutter.plugin.text.ProcessTextPlugin. -->
     <queries>
+        <!-- Finding the default browser, see MainActivity.openInBrowser. -->
+        <intent>
+            <action android:name="android.intent.action.VIEW"/>
+            <category android:name="android.intent.category.BROWSABLE"/>
+            <data android:scheme="https"/>
+        </intent>
         <intent>
             <action android:name="android.intent.action.PROCESS_TEXT"/>
             <data android:mimeType="text/plain"/>

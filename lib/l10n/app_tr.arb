@@ -201,5 +201,8 @@
   "myRuns": "Çalıştırmalarım",
   "noRecentRuns": "Son zamanlarda çalıştırma başlatmadınız.",
   "failingOnMain": "{count, plural, other{{count} işlem hattı ana dalda başarısız}}",
-  "noChangesFor": "{count} gündür değişmedi"
+  "noChangesFor": "{count} gündür değişmedi",
+
+  "linkNotSupported": "Bu bağlantı uygulamada açılamıyor.",
+  "linkOtherOrganization": "Bu bağlantı, bağlı olduğunuz kuruluştan farklı bir kuruluşa ait."
 }

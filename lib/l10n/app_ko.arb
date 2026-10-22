@@ -201,5 +201,8 @@
   "myRuns": "내 실행",
   "noRecentRuns": "최근에 시작한 실행이 없습니다.",
   "failingOnMain": "{count, plural, other{파이프라인 {count}개가 기본 분기에서 실패 중}}",
-  "noChangesFor": "{count}일 동안 변경 없음"
+  "noChangesFor": "{count}일 동안 변경 없음",
+
+  "linkNotSupported": "이 링크는 앱에서 열 수 없습니다.",
+  "linkOtherOrganization": "이 링크는 연결된 조직이 아닌 다른 조직의 링크입니다."
 }

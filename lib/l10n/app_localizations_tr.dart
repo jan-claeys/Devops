@@ -678,4 +678,11 @@ class AppLocalizationsTr extends AppLocalizations {
   String noChangesFor(int count) {
     return '$count gündür değişmedi';
   }
+
+  @override
+  String get linkNotSupported => 'Bu bağlantı uygulamada açılamıyor.';
+
+  @override
+  String get linkOtherOrganization =>
+      'Bu bağlantı, bağlı olduğunuz kuruluştan farklı bir kuruluşa ait.';
 }

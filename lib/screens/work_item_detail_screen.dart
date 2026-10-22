@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../l10n/l10n.dart';
 import '../models/work_item.dart';
 import '../services/app_state.dart';
+import '../services/links.dart';
 import '../services/logging.dart';
 import '../widgets/attachments.dart';
 import '../widgets/devops_html.dart';
@@ -99,7 +99,7 @@ class _WorkItemDetailScreenState extends State<WorkItemDetailScreen> {
 
   Future<void> _openInBrowser(WorkItem item) async {
     final url = AppScope.read(context).api!.webUrl(item);
-    if (!await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication) &&
+    if (!await Links.openInBrowser(Uri.parse(url)) &&
         mounted) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(context.l10n.browserOpenFailed)));

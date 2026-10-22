@@ -698,4 +698,11 @@ class AppLocalizationsPl extends AppLocalizations {
   String noChangesFor(int count) {
     return 'Bez zmian od $count d';
   }
+
+  @override
+  String get linkNotSupported => 'Tego linku nie można otworzyć w aplikacji.';
+
+  @override
+  String get linkOtherOrganization =>
+      'Ten link pochodzi z innej organizacji niż ta, z którą masz połączenie.';
 }

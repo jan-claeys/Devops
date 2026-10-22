@@ -201,5 +201,8 @@
   "myRuns": "Minhas execuções",
   "noRecentRuns": "Você não iniciou execuções recentemente.",
   "failingOnMain": "{count, plural, =1{1 pipeline falha na branch principal} other{{count} pipelines falham na branch principal}}",
-  "noChangesFor": "Sem alterações há {count} d"
+  "noChangesFor": "Sem alterações há {count} d",
+
+  "linkNotSupported": "Este link não pode ser aberto no aplicativo.",
+  "linkOtherOrganization": "Este link é de outra organização, não daquela em que você está conectado."
 }

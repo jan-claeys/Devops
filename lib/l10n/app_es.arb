@@ -201,5 +201,8 @@
   "myRuns": "Mis ejecuciones",
   "noRecentRuns": "No has iniciado ejecuciones recientemente.",
   "failingOnMain": "{count, plural, =1{1 pipeline falla en la rama principal} other{{count} pipelines fallan en la rama principal}}",
-  "noChangesFor": "Sin cambios desde hace {count} d"
+  "noChangesFor": "Sin cambios desde hace {count} d",
+
+  "linkNotSupported": "Este enlace no se puede abrir en la aplicación.",
+  "linkOtherOrganization": "Este enlace es de una organización distinta a la que estás conectado."
 }

@@ -664,4 +664,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String noChangesFor(int count) {
     return '$count 天未更改';
   }
+
+  @override
+  String get linkNotSupported => '无法在应用中打开此链接。';
+
+  @override
+  String get linkOtherOrganization => '此链接属于其他组织，而不是你当前连接的组织。';
 }

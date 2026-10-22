@@ -270,5 +270,8 @@
   "noChangesFor": "No changes for {count} d",
   "@noChangesFor": {
     "placeholders": {"count": {"type": "int"}}
-  }
+  },
+
+  "linkNotSupported": "This link can't be opened in the app.",
+  "linkOtherOrganization": "This link is from another organization than the one you're signed in to."
 }

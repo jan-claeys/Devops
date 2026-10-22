@@ -697,4 +697,11 @@ class AppLocalizationsUk extends AppLocalizations {
   String noChangesFor(int count) {
     return 'Без змін $count дн.';
   }
+
+  @override
+  String get linkNotSupported => 'Це посилання не можна відкрити в застосунку.';
+
+  @override
+  String get linkOtherOrganization =>
+      'Це посилання належить іншій організації, а не тій, до якої ви підключені.';
 }

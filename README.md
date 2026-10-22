@@ -27,6 +27,9 @@ A Flutter app for viewing your Azure DevOps work items (tickets) and pull reques
 - **Pipeline logs**: the log of each step, opened at its first error; show only errors and warnings, jump to the previous / next error and copy the log
 - **Wide screens** (tablet, desktop, web): a navigation rail instead of the bottom bar, and lists show the selected item side by side with its details
 - **Android home screen widget** showing your open work items; tapping a ticket opens it in the app
+- **Open Azure DevOps links in the app** (Android): share a link to a work item, pull request, build or release to *DevOps* (for example from Teams or the browser), or let Android open those links with the app directly
+  - Works for `dev.azure.com/{organization}`, `{organization}.visualstudio.com` and, when shared, on-premises collection URLs; links of another organization show a message instead
+  - Opening links directly needs to be turned on once, since the app can't verify these domains: *Settings → Apps → DevOps → Open by default → Add link*, select `dev.azure.com` and `*.visualstudio.com`. *Open in DevOps* then still opens the browser
 - **Theming**: light/dark/system mode and optional dynamic colour (Material You)
 - **17 languages**: ar, de, en, es, fr, hi, id, it, ja, ko, nl, pl, pt, ru, tr, uk, zh (follows the system language by default, can be chosen in the settings, English as fallback)
 - **Error reporting**: crashes and errors are sent anonymously to Sentry (never the token); can be turned off under *Settings → Privacy*. Only builds made with `--dart-define=SENTRY_DSN=...` send anything
@@ -105,12 +108,14 @@ lib/
 │   ├── pipeline_log.dart         Log lines with their errors and warnings
 │   ├── run_estimates.dart        Expected duration of running builds and release stages
 │   ├── pull_request.dart         Pull requests, reviewers and comment threads
+│   ├── devops_link.dart          Reading Azure DevOps links of work items, pull requests and runs
 │   └── dashboard_summary.dart    What waits for the user, for the overview
 ├── services/
 │   ├── app_state.dart            Settings, connection and theme state
 │   ├── devops_api.dart           Azure DevOps REST API client (v7.1, WIQL, pull requests, builds, releases, logs, attachments)
 │   ├── attachment_opener*.dart   Downloading and opening attachments (device and web)
 │   ├── logging.dart              Logging and optional Sentry error reporting
+│   ├── links.dart                Links opened with or shared to the app, opening the browser (Android)
 │   └── home_widget_service.dart  Data feed for the Android home screen widget
 ├── screens/
 │   ├── home_screen.dart          Tabs for the overview, tickets, pull requests and pipelines

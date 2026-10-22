@@ -201,5 +201,8 @@
   "myRuns": "मेरे रन",
   "noRecentRuns": "आपने हाल में कोई रन शुरू नहीं किया।",
   "failingOnMain": "{count, plural, =1{1 पाइपलाइन मुख्य ब्रांच पर विफल है} other{{count} पाइपलाइन मुख्य ब्रांच पर विफल हैं}}",
-  "noChangesFor": "{count} दिन से कोई बदलाव नहीं"
+  "noChangesFor": "{count} दिन से कोई बदलाव नहीं",
+
+  "linkNotSupported": "यह लिंक ऐप में नहीं खोला जा सकता।",
+  "linkOtherOrganization": "यह लिंक उस संगठन का नहीं है जिससे आप जुड़े हैं।"
 }

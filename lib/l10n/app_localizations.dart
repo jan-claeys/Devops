@@ -1279,6 +1279,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No changes for {count} d'**
   String noChangesFor(int count);
+
+  /// No description provided for @linkNotSupported.
+  ///
+  /// In en, this message translates to:
+  /// **'This link can\'t be opened in the app.'**
+  String get linkNotSupported;
+
+  /// No description provided for @linkOtherOrganization.
+  ///
+  /// In en, this message translates to:
+  /// **'This link is from another organization than the one you\'re signed in to.'**
+  String get linkOtherOrganization;
 }
 
 class _AppLocalizationsDelegate

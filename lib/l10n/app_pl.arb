@@ -201,5 +201,8 @@
   "myRuns": "Moje uruchomienia",
   "noRecentRuns": "Brak twoich ostatnich uruchomień.",
   "failingOnMain": "{count, plural, =1{1 potok kończy się niepowodzeniem na gałęzi main} few{{count} potoki kończą się niepowodzeniem na gałęzi main} many{{count} potoków kończy się niepowodzeniem na gałęzi main} other{{count} potoku kończy się niepowodzeniem na gałęzi main}}",
-  "noChangesFor": "Bez zmian od {count} d"
+  "noChangesFor": "Bez zmian od {count} d",
+
+  "linkNotSupported": "Tego linku nie można otworzyć w aplikacji.",
+  "linkOtherOrganization": "Ten link pochodzi z innej organizacji niż ta, z którą masz połączenie."
 }

@@ -668,4 +668,10 @@ class AppLocalizationsJa extends AppLocalizations {
   String noChangesFor(int count) {
     return '$count 日間変更なし';
   }
+
+  @override
+  String get linkNotSupported => 'このリンクはアプリで開けません。';
+
+  @override
+  String get linkOtherOrganization => 'このリンクは、接続中のものとは別の組織のものです。';
 }
