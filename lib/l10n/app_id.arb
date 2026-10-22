@@ -9,6 +9,7 @@
   "organization": "Organisasi",
   "organizationHint": "mis. perusahaanku atau https://dev.azure.com/perusahaanku",
   "organizationRequired": "Masukkan organisasi Anda",
+  "organizationInsecure": "Gunakan alamat https:// agar token Anda tidak dikirim tanpa enkripsi",
   "personalAccessToken": "Personal Access Token",
   "tokenAlreadyStored": "Token sudah tersimpan. Masukkan lagi untuk mengubahnya.",
   "requiredScopes": "Cakupan yang diperlukan",
@@ -94,7 +95,7 @@
   "hoursAgo": "{count} jam lalu",
   "daysAgo": "{count} hr lalu",
 
-  "errorUnauthorized": "Tidak diizinkan. Periksa Personal Access Token Anda.",
+  "errorUnauthorized": "Personal Access Token Anda tidak valid atau sudah kedaluwarsa. Buat yang baru di pengaturan.",
   "errorNotFound": "Tidak ditemukan. Periksa organisasi atau proyek.",
   "errorHttp": "Kesalahan {code} dari Azure DevOps",
   "errorUnexpectedResponse": "Respons tidak terduga. Periksa organisasi dan token Anda.",

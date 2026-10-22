@@ -35,6 +35,10 @@ class AppLocalizationsTr extends AppLocalizations {
   String get organizationRequired => 'Kuruluşunuzu girin';
 
   @override
+  String get organizationInsecure =>
+      'Belirtecinizin şifrelenmeden gönderilmemesi için https:// adresi kullanın';
+
+  @override
   String get personalAccessToken => 'Personal Access Token';
 
   @override
@@ -317,7 +321,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get errorUnauthorized =>
-      'Yetkisiz. Personal Access Token\'ınızı kontrol edin.';
+      'Personal Access Token\'ınız geçersiz veya süresi dolmuş. Ayarlarda yeni bir tane oluşturun.';
 
   @override
   String get errorNotFound => 'Bulunamadı. Kuruluşu veya projeyi kontrol edin.';

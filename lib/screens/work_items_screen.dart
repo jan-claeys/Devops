@@ -9,6 +9,7 @@ import '../services/devops_api.dart';
 import '../services/home_widget_service.dart';
 import '../services/logging.dart';
 import '../widgets/empty_state.dart';
+import '../widgets/error_action.dart';
 import '../widgets/work_item_visuals.dart';
 import 'settings_screen.dart';
 import 'work_item_detail_screen.dart';
@@ -297,11 +298,7 @@ class _WorkItemsScreenState extends State<WorkItemsScreen> {
                   icon: Icons.cloud_off_outlined,
                   title: l10n.loadTicketsFailed,
                   message: l10n.error(_error!),
-                  action: FilledButton.tonalIcon(
-                    onPressed: _load,
-                    icon: const Icon(Icons.refresh),
-                    label: Text(l10n.retry),
-                  ),
+                  action: ErrorAction(error: _error!, onRetry: _load),
                 ),
               )
             else if (_items != null && items.isEmpty)

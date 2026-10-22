@@ -35,6 +35,10 @@ class AppLocalizationsHi extends AppLocalizations {
   String get organizationRequired => 'अपना संगठन दर्ज करें';
 
   @override
+  String get organizationInsecure =>
+      'https:// पता उपयोग करें ताकि आपका टोकन बिना एन्क्रिप्शन के न भेजा जाए';
+
+  @override
   String get personalAccessToken => 'Personal Access Token';
 
   @override
@@ -316,7 +320,7 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get errorUnauthorized =>
-      'अधिकृत नहीं। अपना Personal Access Token जाँचें।';
+      'आपका Personal Access Token अमान्य है या उसकी समय-सीमा समाप्त हो गई है। सेटिंग्स में नया बनाएँ।';
 
   @override
   String get errorNotFound => 'नहीं मिला। संगठन या प्रोजेक्ट जाँचें।';

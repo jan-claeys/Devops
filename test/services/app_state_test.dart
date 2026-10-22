@@ -47,6 +47,13 @@ void main() {
     expect(state.api!.baseUrl, 'https://dev.azure.com/contoso');
   });
 
+  test('load ignores an http organization saved by an earlier version', () async {
+    mockStorage(prefs: {'organization': 'http://tfs.local/tfs/Default'}, secure: {'pat': 'secret'});
+    final state = AppState();
+    await state.load();
+    expect(state.isConfigured, isFalse);
+  });
+
   test('load migrates the single project of older versions', () async {
     mockStorage(prefs: {'organization': 'contoso', 'project': 'Web'});
     final state = AppState();

@@ -29,8 +29,14 @@ class DevOpsMarkdown extends StatelessWidget {
   /// Opens `#123` work item references. Without it they stay plain text.
   final ValueChanged<int>? onOpenWorkItem;
 
-  /// Headers to load an image with, to authenticate attachments.
+  /// Headers to load an image with, to authenticate attachments. Only images
+  /// it returns headers for are loaded: any other image could tell its server
+  /// who opened the item and when. Those show their alt text instead.
   final Map<String, String>? Function(Uri uri)? imageHeaders;
+
+  /// Schemes a link may open. Anyone who can edit an item can write a link,
+  /// so others such as file: or a custom protocol handler are ignored.
+  static const _linkSchemes = {'https', 'http', 'mailto'};
 
   Future<void> _openLink(BuildContext context, String? href) async {
     final uri = href == null ? null : Uri.tryParse(href);
@@ -39,6 +45,7 @@ class DevOpsMarkdown extends StatelessWidget {
       onOpenWorkItem?.call(int.parse(uri.path));
       return;
     }
+    if (!_linkSchemes.contains(uri.scheme.toLowerCase())) return;
     if (!await launchUrl(uri, mode: LaunchMode.externalApplication) && context.mounted) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(context.l10n.browserOpenFailed)));
@@ -85,13 +92,18 @@ class DevOpsMarkdown extends StatelessWidget {
         if (onOpenWorkItem != null) _WorkItemSyntax(),
       ],
       onTapLink: (text, href, title) => _openLink(context, href),
-      imageBuilder: (uri, title, alt) => Image.network(
-        uri.toString(),
-        headers: imageHeaders?.call(uri),
-        semanticLabel: alt,
-        errorBuilder: (context, error, stackTrace) =>
-            Text(alt ?? uri.toString(), style: body?.copyWith(color: scheme.onSurfaceVariant)),
-      ),
+      imageBuilder: (uri, title, alt) {
+        final placeholder =
+            Text(alt ?? uri.toString(), style: body?.copyWith(color: scheme.onSurfaceVariant));
+        final headers = imageHeaders?.call(uri);
+        if (headers == null) return placeholder;
+        return Image.network(
+          uri.toString(),
+          headers: headers,
+          semanticLabel: alt,
+          errorBuilder: (context, error, stackTrace) => placeholder,
+        );
+      },
     );
   }
 }

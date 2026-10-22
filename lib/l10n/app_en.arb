@@ -9,6 +9,7 @@
   "organization": "Organization",
   "organizationHint": "e.g. mycompany or https://dev.azure.com/mycompany",
   "organizationRequired": "Enter your organization",
+  "organizationInsecure": "Use an https:// address so your token isn't sent unencrypted",
   "personalAccessToken": "Personal Access Token",
   "tokenAlreadyStored": "A token is already stored. Enter it again to change it.",
   "requiredScopes": "Required scopes",
@@ -124,7 +125,7 @@
     "placeholders": {"count": {"type": "int"}}
   },
 
-  "errorUnauthorized": "Not authorized. Check your Personal Access Token.",
+  "errorUnauthorized": "Your Personal Access Token is invalid or has expired. Create a new one in the settings.",
   "errorNotFound": "Not found. Check the organization or the project.",
   "errorHttp": "Error {code} from Azure DevOps",
   "@errorHttp": {

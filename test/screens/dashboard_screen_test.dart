@@ -2,6 +2,7 @@ import 'package:devops/screens/dashboard_screen.dart';
 import 'package:devops/screens/home_screen.dart';
 import 'package:devops/screens/pipeline_run_screen.dart';
 import 'package:devops/screens/pull_request_screen.dart';
+import 'package:devops/screens/settings_screen.dart';
 import 'package:devops/screens/work_item_detail_screen.dart';
 import 'package:devops/services/devops_api.dart';
 import 'package:devops/widgets/pipeline_visuals.dart';
@@ -194,8 +195,13 @@ void main() {
     expect(find.text(en.loadDashboardFailed), findsOneWidget);
     expect(find.text(en.errorUnauthorized), findsOneWidget);
 
+    // Trying again won't help with an expired token: a new one is made in the settings.
+    expect(find.text(en.retry), findsNothing);
     fake.failWith = null;
-    await tester.tap(find.text(en.retry));
+    await tester.tap(find.widgetWithText(FilledButton, en.settings));
+    await tester.pumpAndSettle();
+    expect(find.byType(SettingsScreen), findsOneWidget);
+    await tester.pageBack();
     await tester.pumpAndSettle();
     expect(find.text('${en.waitingForYou} (6)'), findsOneWidget);
   });

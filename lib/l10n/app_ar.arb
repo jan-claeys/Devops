@@ -9,6 +9,7 @@
   "organization": "المؤسسة",
   "organizationHint": "مثال: mycompany أو https://dev.azure.com/mycompany",
   "organizationRequired": "أدخل مؤسستك",
+  "organizationInsecure": "استخدم عنوان https:// حتى لا يُرسل رمزك بدون تشفير",
   "personalAccessToken": "Personal Access Token",
   "tokenAlreadyStored": "يوجد رمز محفوظ بالفعل. أدخله مرة أخرى لتغييره.",
   "requiredScopes": "النطاقات المطلوبة",
@@ -94,7 +95,7 @@
   "hoursAgo": "منذ {count} س",
   "daysAgo": "منذ {count} ي",
 
-  "errorUnauthorized": "غير مصرّح. تحقّق من Personal Access Token.",
+  "errorUnauthorized": "Personal Access Token غير صالح أو منتهي الصلاحية. أنشئ رمزًا جديدًا في الإعدادات.",
   "errorNotFound": "غير موجود. تحقّق من المؤسسة أو المشروع.",
   "errorHttp": "خطأ {code} من Azure DevOps",
   "errorUnexpectedResponse": "استجابة غير متوقعة. تحقّق من المؤسسة والرمز.",

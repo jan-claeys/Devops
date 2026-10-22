@@ -9,6 +9,7 @@ import '../models/run_estimates.dart';
 import '../services/app_state.dart';
 import '../services/logging.dart';
 import '../widgets/empty_state.dart';
+import '../widgets/error_action.dart';
 import '../widgets/pipeline_visuals.dart';
 import '../widgets/work_item_visuals.dart';
 import 'pipeline_run_screen.dart';
@@ -342,11 +343,7 @@ class _PipelinesScreenState extends State<PipelinesScreen> {
                   icon: Icons.cloud_off_outlined,
                   title: l10n.loadRunsFailed,
                   message: l10n.error(_error!),
-                  action: FilledButton.tonalIcon(
-                    onPressed: _load,
-                    icon: const Icon(Icons.refresh),
-                    label: Text(l10n.retry),
-                  ),
+                  action: ErrorAction(error: _error!, onRetry: _load),
                 ),
               )
             else if (_runs != null && runs.isEmpty)

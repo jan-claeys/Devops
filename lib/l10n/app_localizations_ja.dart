@@ -35,6 +35,10 @@ class AppLocalizationsJa extends AppLocalizations {
   String get organizationRequired => '組織を入力してください';
 
   @override
+  String get organizationInsecure =>
+      'トークンが暗号化されずに送信されないよう、https:// のアドレスを使用してください';
+
+  @override
   String get personalAccessToken => 'Personal Access Token';
 
   @override
@@ -313,7 +317,8 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get errorUnauthorized => '認証されていません。Personal Access Token を確認してください。';
+  String get errorUnauthorized =>
+      'Personal Access Token が無効か、有効期限が切れています。設定で新しいトークンを作成してください。';
 
   @override
   String get errorNotFound => '見つかりません。組織またはプロジェクトを確認してください。';

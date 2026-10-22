@@ -6,6 +6,7 @@ import '../l10n/l10n.dart';
 import '../models/pipeline_log.dart';
 import '../services/app_state.dart';
 import '../services/logging.dart';
+import '../widgets/error_action.dart';
 import '../widgets/pipeline_visuals.dart';
 
 final _log = Logger('PipelineLogScreen');
@@ -195,7 +196,7 @@ class _PipelineLogScreenState extends State<PipelineLogScreen> {
                   const SizedBox(height: 12),
                   Text(l10n.error(error), textAlign: TextAlign.center),
                   const SizedBox(height: 16),
-                  FilledButton.tonal(onPressed: _load, child: Text(l10n.retry)),
+                  ErrorAction(error: error, onRetry: _load),
                 ],
               ),
             ),

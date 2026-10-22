@@ -125,8 +125,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           ),
                           textInputAction: TextInputAction.next,
                           autocorrect: false,
-                          validator: (v) =>
-                              (v == null || v.trim().isEmpty) ? l10n.organizationRequired : null,
+                          validator: (v) => switch (v?.trim()) {
+                            null || '' => l10n.organizationRequired,
+                            final org when !DevOpsApi.isSecure(org) => l10n.organizationInsecure,
+                            _ => null,
+                          },
                         ),
                         const SizedBox(height: 16),
                         TextFormField(

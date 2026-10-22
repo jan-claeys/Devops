@@ -123,4 +123,13 @@ plain text
     expect(image.headers, {'Authorization': 'x'});
     expect(asked.toString(), 'https://dev.azure.com/contoso/_apis/wit/attachments/1');
   });
+
+  testWidgets('shows the alt text instead of loading other images', (tester) async {
+    await pump(
+      tester,
+      DevOpsMarkdown('![tracker](https://example.com/pixel.png)', imageHeaders: (_) => null),
+    );
+    expect(find.byType(Image), findsNothing);
+    expect(find.text('tracker'), findsOneWidget);
+  });
 }

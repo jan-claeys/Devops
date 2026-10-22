@@ -35,6 +35,10 @@ class AppLocalizationsPl extends AppLocalizations {
   String get organizationRequired => 'Podaj swoją organizację';
 
   @override
+  String get organizationInsecure =>
+      'Użyj adresu https://, aby token nie był wysyłany bez szyfrowania';
+
+  @override
   String get personalAccessToken => 'Personal Access Token';
 
   @override
@@ -323,7 +327,7 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get errorUnauthorized =>
-      'Brak autoryzacji. Sprawdź swój Personal Access Token.';
+      'Twój Personal Access Token jest nieprawidłowy lub wygasł. Utwórz nowy w ustawieniach.';
 
   @override
   String get errorNotFound =>

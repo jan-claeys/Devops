@@ -10,6 +10,12 @@ import 'package:http/testing.dart';
 import '../helpers.dart';
 
 void main() {
+  test('isSecure only accepts https organizations', () {
+    expect(DevOpsApi.isSecure('contoso'), isTrue);
+    expect(DevOpsApi.isSecure('https://tfs.local/tfs/Default'), isTrue);
+    expect(DevOpsApi.isSecure('http://tfs.local:8080/tfs/Default'), isFalse);
+  });
+
   group('normalizeOrganization', () {
     test('accepts several formats', () {
       expect(DevOpsApi.normalizeOrganization('contoso'), 'https://dev.azure.com/contoso');
@@ -218,6 +224,12 @@ void main() {
       expect(fake.requests, isEmpty);
     });
 
+    test('getLog sends the token only over https', () async {
+      await expectLater(api.getLog('http://dev.azure.com/contoso/1/_apis/build/builds/4/logs/5'),
+          throwsA(isA<DevOpsException>()));
+      expect(fake.requests, isEmpty);
+    });
+
     test('releaseBaseUrl points to release management', () {
       expect(DevOpsApi.releaseBaseUrl('https://dev.azure.com/contoso'),
           'https://vsrm.dev.azure.com/contoso');
@@ -318,6 +330,15 @@ void main() {
     test('a non-JSON success response is unexpected', () {
       expect(apiAnswering(http.Response('<html>Sign in</html>', 200)).getProjects(),
           throwsDevOps(DevOpsError.unexpectedResponse, code: 200));
+    });
+
+    test('a sign-in page means unauthorized', () {
+      final signIn = http.Response('<html>Sign in</html>', 200,
+          headers: {'content-type': 'text/html; charset=utf-8'});
+      expect(apiAnswering(signIn).getProjects(),
+          throwsDevOps(DevOpsError.unauthorized, code: 200));
+      expect(apiAnswering(signIn).getLog('https://dev.azure.com/contoso/1/_apis/build/builds/4/logs/5'),
+          throwsDevOps(DevOpsError.unauthorized, code: 200));
     });
 
     test('toString prefers the server message', () {

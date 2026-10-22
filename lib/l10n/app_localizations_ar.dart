@@ -35,6 +35,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get organizationRequired => 'أدخل مؤسستك';
 
   @override
+  String get organizationInsecure =>
+      'استخدم عنوان https:// حتى لا يُرسل رمزك بدون تشفير';
+
+  @override
   String get personalAccessToken => 'Personal Access Token';
 
   @override
@@ -324,7 +328,8 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get errorUnauthorized => 'غير مصرّح. تحقّق من Personal Access Token.';
+  String get errorUnauthorized =>
+      'Personal Access Token غير صالح أو منتهي الصلاحية. أنشئ رمزًا جديدًا في الإعدادات.';
 
   @override
   String get errorNotFound => 'غير موجود. تحقّق من المؤسسة أو المشروع.';

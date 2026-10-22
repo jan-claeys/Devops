@@ -9,6 +9,7 @@
   "organization": "Organisation",
   "organizationHint": "z. B. meinefirma oder https://dev.azure.com/meinefirma",
   "organizationRequired": "Gib deine Organisation ein",
+  "organizationInsecure": "Verwende eine https://-Adresse, damit dein Token nicht unverschlüsselt gesendet wird",
   "personalAccessToken": "Personal Access Token",
   "tokenAlreadyStored": "Es ist bereits ein Token gespeichert. Gib es erneut ein, um es zu ändern.",
   "requiredScopes": "Benötigte Bereiche",
@@ -94,7 +95,7 @@
   "hoursAgo": "vor {count} Std.",
   "daysAgo": "vor {count} T.",
 
-  "errorUnauthorized": "Nicht autorisiert. Prüfe dein Personal Access Token.",
+  "errorUnauthorized": "Dein Personal Access Token ist ungültig oder abgelaufen. Erstelle ein neues in den Einstellungen.",
   "errorNotFound": "Nicht gefunden. Prüfe die Organisation oder das Projekt.",
   "errorHttp": "Fehler {code} von Azure DevOps",
   "errorUnexpectedResponse": "Unerwartete Antwort. Prüfe die Organisation und dein Token.",

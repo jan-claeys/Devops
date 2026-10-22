@@ -9,6 +9,7 @@
   "organization": "संगठन",
   "organizationHint": "जैसे mycompany या https://dev.azure.com/mycompany",
   "organizationRequired": "अपना संगठन दर्ज करें",
+  "organizationInsecure": "https:// पता उपयोग करें ताकि आपका टोकन बिना एन्क्रिप्शन के न भेजा जाए",
   "personalAccessToken": "Personal Access Token",
   "tokenAlreadyStored": "एक टोकन पहले से सहेजा गया है। बदलने के लिए फिर से दर्ज करें।",
   "requiredScopes": "आवश्यक स्कोप",
@@ -94,7 +95,7 @@
   "hoursAgo": "{count} घंटे पहले",
   "daysAgo": "{count} दिन पहले",
 
-  "errorUnauthorized": "अधिकृत नहीं। अपना Personal Access Token जाँचें।",
+  "errorUnauthorized": "आपका Personal Access Token अमान्य है या उसकी समय-सीमा समाप्त हो गई है। सेटिंग्स में नया बनाएँ।",
   "errorNotFound": "नहीं मिला। संगठन या प्रोजेक्ट जाँचें।",
   "errorHttp": "Azure DevOps से त्रुटि {code}",
   "errorUnexpectedResponse": "अप्रत्याशित प्रतिक्रिया। संगठन और अपना टोकन जाँचें।",

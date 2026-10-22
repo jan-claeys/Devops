@@ -122,13 +122,29 @@ void main() {
   });
 
   testWidgets('shows errors and retries', (tester) async {
-    fake.failWith = 401;
+    fake.failWith = 500;
     await pumpScreen(tester);
     expect(find.text(en.loadTicketsFailed), findsOneWidget);
-    expect(find.text(en.errorUnauthorized), findsOneWidget);
+    expect(find.text(en.errorHttp(500)), findsOneWidget);
 
     fake.failWith = null;
     await tester.tap(find.text(en.retry));
+    await tester.pumpAndSettle();
+    expect(find.text('Login fails'), findsOneWidget);
+  });
+
+  testWidgets('leads to the settings when the token is invalid', (tester) async {
+    fake.failWith = 401;
+    await pumpScreen(tester);
+    expect(find.text(en.errorUnauthorized), findsOneWidget);
+    expect(find.text(en.retry), findsNothing);
+
+    fake.failWith = null;
+    await tester.tap(find.widgetWithText(FilledButton, en.settings));
+    await tester.pumpAndSettle();
+    expect(find.byType(SettingsScreen), findsOneWidget);
+    // Back with a new token: the tickets load again.
+    await tester.pageBack();
     await tester.pumpAndSettle();
     expect(find.text('Login fails'), findsOneWidget);
   });

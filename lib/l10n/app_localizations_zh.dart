@@ -35,6 +35,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get organizationRequired => '请输入你的组织';
 
   @override
+  String get organizationInsecure => '请使用 https:// 地址，以免令牌以未加密方式发送';
+
+  @override
   String get personalAccessToken => 'Personal Access Token';
 
   @override
@@ -310,7 +313,8 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get errorUnauthorized => '未授权。请检查你的 Personal Access Token。';
+  String get errorUnauthorized =>
+      '你的 Personal Access Token 无效或已过期。请在设置中创建一个新的。';
 
   @override
   String get errorNotFound => '未找到。请检查组织或项目。';

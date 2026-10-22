@@ -79,6 +79,16 @@ void main() {
     expect(fake.requests, isEmpty);
   });
 
+  testWidgets('refuses an http organization', (tester) async {
+    await pumpApp(tester, const SettingsScreen(isOnboarding: true), state: state);
+    await tester.enterText(
+        find.widgetWithText(TextFormField, en.organization), 'http://tfs.local/tfs/Default');
+    await tester.tap(find.text(en.connect));
+    await tester.pumpAndSettle();
+    expect(find.text(en.organizationInsecure), findsOneWidget);
+    expect(fake.requests, isEmpty);
+  });
+
   /// Ticks [names] in the project picker and applies the choice.
   Future<void> pickProjects(WidgetTester tester, List<String> names) async {
     for (final name in names) {

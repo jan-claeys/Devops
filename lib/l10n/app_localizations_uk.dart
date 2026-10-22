@@ -35,6 +35,10 @@ class AppLocalizationsUk extends AppLocalizations {
   String get organizationRequired => 'Введіть організацію';
 
   @override
+  String get organizationInsecure =>
+      'Використовуйте адресу https://, щоб токен не надсилався без шифрування';
+
+  @override
   String get personalAccessToken => 'Personal Access Token';
 
   @override
@@ -323,7 +327,7 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get errorUnauthorized =>
-      'Немає доступу. Перевірте Personal Access Token.';
+      'Personal Access Token недійсний або його термін дії минув. Створіть новий у налаштуваннях.';
 
   @override
   String get errorNotFound => 'Не знайдено. Перевірте організацію або проєкт.';

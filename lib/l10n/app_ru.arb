@@ -9,6 +9,7 @@
   "organization": "Организация",
   "organizationHint": "напр. mycompany или https://dev.azure.com/mycompany",
   "organizationRequired": "Введите организацию",
+  "organizationInsecure": "Используйте адрес https://, чтобы токен не передавался без шифрования",
   "personalAccessToken": "Personal Access Token",
   "tokenAlreadyStored": "Токен уже сохранён. Введите его снова, чтобы изменить.",
   "requiredScopes": "Нужные права",
@@ -94,7 +95,7 @@
   "hoursAgo": "{count} ч назад",
   "daysAgo": "{count} дн. назад",
 
-  "errorUnauthorized": "Нет доступа. Проверьте Personal Access Token.",
+  "errorUnauthorized": "Personal Access Token недействителен или истёк. Создайте новый в настройках.",
   "errorNotFound": "Не найдено. Проверьте организацию или проект.",
   "errorHttp": "Ошибка {code} от Azure DevOps",
   "errorUnexpectedResponse": "Неожиданный ответ. Проверьте организацию и токен.",

@@ -9,6 +9,7 @@
   "organization": "Organisatie",
   "organizationHint": "bv. mijnbedrijf of https://dev.azure.com/mijnbedrijf",
   "organizationRequired": "Vul je organisatie in",
+  "organizationInsecure": "Gebruik een https://-adres zodat je token niet onversleuteld wordt verstuurd",
   "personalAccessToken": "Personal Access Token",
   "tokenAlreadyStored": "Er is al een token opgeslagen. Vul opnieuw in om te wijzigen.",
   "requiredScopes": "Benodigde scopes",
@@ -94,7 +95,7 @@
   "hoursAgo": "{count} u geleden",
   "daysAgo": "{count} d geleden",
 
-  "errorUnauthorized": "Niet geautoriseerd. Controleer je Personal Access Token.",
+  "errorUnauthorized": "Je Personal Access Token is ongeldig of verlopen. Maak een nieuwe aan in de instellingen.",
   "errorNotFound": "Niet gevonden. Controleer de organisatie of het project.",
   "errorHttp": "Fout {code} van Azure DevOps",
   "errorUnexpectedResponse": "Onverwacht antwoord. Controleer de organisatie en je token.",

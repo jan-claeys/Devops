@@ -13,6 +13,7 @@ import '../services/app_state.dart';
 import '../services/devops_api.dart';
 import '../services/logging.dart';
 import '../widgets/empty_state.dart';
+import '../widgets/error_action.dart';
 import '../widgets/pipeline_visuals.dart';
 import '../widgets/pull_request_visuals.dart';
 import '../widgets/section_card.dart';
@@ -225,11 +226,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   icon: Icons.cloud_off_outlined,
                   title: l10n.loadDashboardFailed,
                   message: l10n.error(_errors.values.first),
-                  action: FilledButton.tonalIcon(
-                    onPressed: _load,
-                    icon: const Icon(Icons.refresh),
-                    label: Text(l10n.retry),
-                  ),
+                  action: ErrorAction(error: _errors.values.first, onRetry: _load),
                 ),
               )
             else if (summary != null)
