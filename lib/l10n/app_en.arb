@@ -209,5 +209,29 @@
   "voteNone": "No vote",
   "voteWaitingForAuthor": "Waiting for author",
   "voteRejected": "Rejected",
-  "threadResolved": "Resolved"
+  "threadResolved": "Resolved",
+
+  "runErrors": "Errors",
+  "viewLog": "View log",
+  "showAll": "Show all ({count})",
+  "@showAll": {
+    "placeholders": {"count": {"type": "int"}}
+  },
+  "copyLog": "Copy log",
+  "logCopied": "Log copied",
+  "logEmpty": "This log is empty.",
+  "showMore": "Show more",
+  "showLess": "Show less",
+  "onlyErrorsAndWarnings": "Only errors and warnings",
+  "noLogIssues": "No errors or warnings in this log.",
+  "previousError": "Previous error",
+  "nextError": "Next error",
+  "errorPosition": "Error {current} of {total}",
+  "@errorPosition": {
+    "placeholders": {"current": {"type": "int"}, "total": {"type": "int"}}
+  },
+  "errorCount": "{count, plural, =1{1 error} other{{count} errors}}",
+  "@errorCount": {
+    "placeholders": {"count": {"type": "int"}}
+  }
 }

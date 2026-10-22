@@ -164,5 +164,20 @@
   "voteNone": "Pas de vote",
   "voteWaitingForAuthor": "En attente de l’auteur",
   "voteRejected": "Refusé",
-  "threadResolved": "Résolu"
+  "threadResolved": "Résolu",
+
+  "runErrors": "Erreurs",
+  "viewLog": "Voir le journal",
+  "showAll": "Tout afficher ({count})",
+  "copyLog": "Copier le journal",
+  "logCopied": "Journal copié",
+  "logEmpty": "Ce journal est vide.",
+  "showMore": "Afficher plus",
+  "showLess": "Afficher moins",
+  "onlyErrorsAndWarnings": "Erreurs et avertissements uniquement",
+  "noLogIssues": "Aucune erreur ni aucun avertissement dans ce journal.",
+  "previousError": "Erreur précédente",
+  "nextError": "Erreur suivante",
+  "errorPosition": "Erreur {current} sur {total}",
+  "errorCount": "{count, plural, =1{1 erreur} other{{count} erreurs}}"
 }

@@ -558,4 +558,60 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get threadResolved => 'Решено';
+
+  @override
+  String get runErrors => 'Ошибки';
+
+  @override
+  String get viewLog => 'Показать журнал';
+
+  @override
+  String showAll(int count) {
+    return 'Показать все ($count)';
+  }
+
+  @override
+  String get copyLog => 'Копировать журнал';
+
+  @override
+  String get logCopied => 'Журнал скопирован';
+
+  @override
+  String get logEmpty => 'Этот журнал пуст.';
+
+  @override
+  String get showMore => 'Показать больше';
+
+  @override
+  String get showLess => 'Показать меньше';
+
+  @override
+  String get onlyErrorsAndWarnings => 'Только ошибки и предупреждения';
+
+  @override
+  String get noLogIssues => 'В этом журнале нет ошибок и предупреждений.';
+
+  @override
+  String get previousError => 'Предыдущая ошибка';
+
+  @override
+  String get nextError => 'Следующая ошибка';
+
+  @override
+  String errorPosition(int current, int total) {
+    return 'Ошибка $current из $total';
+  }
+
+  @override
+  String errorCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count ошибки',
+      many: '$count ошибок',
+      few: '$count ошибки',
+      one: '1 ошибка',
+    );
+    return '$_temp0';
+  }
 }

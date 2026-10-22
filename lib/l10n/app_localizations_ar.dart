@@ -561,4 +561,58 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get threadResolved => 'تم الحل';
+
+  @override
+  String get runErrors => 'الأخطاء';
+
+  @override
+  String get viewLog => 'عرض السجل';
+
+  @override
+  String showAll(int count) {
+    return 'عرض الكل ($count)';
+  }
+
+  @override
+  String get copyLog => 'نسخ السجل';
+
+  @override
+  String get logCopied => 'تم نسخ السجل';
+
+  @override
+  String get logEmpty => 'هذا السجل فارغ.';
+
+  @override
+  String get showMore => 'عرض المزيد';
+
+  @override
+  String get showLess => 'عرض أقل';
+
+  @override
+  String get onlyErrorsAndWarnings => 'الأخطاء والتحذيرات فقط';
+
+  @override
+  String get noLogIssues => 'لا توجد أخطاء أو تحذيرات في هذا السجل.';
+
+  @override
+  String get previousError => 'الخطأ السابق';
+
+  @override
+  String get nextError => 'الخطأ التالي';
+
+  @override
+  String errorPosition(int current, int total) {
+    return 'الخطأ $current من $total';
+  }
+
+  @override
+  String errorCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count أخطاء',
+      one: 'خطأ واحد',
+    );
+    return '$_temp0';
+  }
 }

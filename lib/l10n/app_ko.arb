@@ -164,5 +164,20 @@
   "voteNone": "투표 없음",
   "voteWaitingForAuthor": "작성자 대기 중",
   "voteRejected": "거부됨",
-  "threadResolved": "해결됨"
+  "threadResolved": "해결됨",
+
+  "runErrors": "오류",
+  "viewLog": "로그 보기",
+  "showAll": "모두 보기 ({count})",
+  "copyLog": "로그 복사",
+  "logCopied": "로그를 복사했습니다",
+  "logEmpty": "이 로그는 비어 있습니다.",
+  "showMore": "더 보기",
+  "showLess": "간략히 보기",
+  "onlyErrorsAndWarnings": "오류 및 경고만",
+  "noLogIssues": "이 로그에는 오류나 경고가 없습니다.",
+  "previousError": "이전 오류",
+  "nextError": "다음 오류",
+  "errorPosition": "오류 {current}/{total}",
+  "errorCount": "{count, plural, other{오류 {count}개}}"
 }

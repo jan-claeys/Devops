@@ -546,4 +546,58 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get threadResolved => 'हल किया गया';
+
+  @override
+  String get runErrors => 'त्रुटियाँ';
+
+  @override
+  String get viewLog => 'लॉग देखें';
+
+  @override
+  String showAll(int count) {
+    return 'सभी दिखाएँ ($count)';
+  }
+
+  @override
+  String get copyLog => 'लॉग कॉपी करें';
+
+  @override
+  String get logCopied => 'लॉग कॉपी किया गया';
+
+  @override
+  String get logEmpty => 'यह लॉग खाली है।';
+
+  @override
+  String get showMore => 'और दिखाएँ';
+
+  @override
+  String get showLess => 'कम दिखाएँ';
+
+  @override
+  String get onlyErrorsAndWarnings => 'केवल त्रुटियाँ और चेतावनियाँ';
+
+  @override
+  String get noLogIssues => 'इस लॉग में कोई त्रुटि या चेतावनी नहीं है।';
+
+  @override
+  String get previousError => 'पिछली त्रुटि';
+
+  @override
+  String get nextError => 'अगली त्रुटि';
+
+  @override
+  String errorPosition(int current, int total) {
+    return 'त्रुटि $current / $total';
+  }
+
+  @override
+  String errorCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count त्रुटियाँ',
+      one: '1 त्रुटि',
+    );
+    return '$_temp0';
+  }
 }

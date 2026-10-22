@@ -552,4 +552,58 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get threadResolved => 'Opgelost';
+
+  @override
+  String get runErrors => 'Fouten';
+
+  @override
+  String get viewLog => 'Log bekijken';
+
+  @override
+  String showAll(int count) {
+    return 'Alles tonen ($count)';
+  }
+
+  @override
+  String get copyLog => 'Log kopiëren';
+
+  @override
+  String get logCopied => 'Log gekopieerd';
+
+  @override
+  String get logEmpty => 'Deze log is leeg.';
+
+  @override
+  String get showMore => 'Meer tonen';
+
+  @override
+  String get showLess => 'Minder tonen';
+
+  @override
+  String get onlyErrorsAndWarnings => 'Alleen fouten en waarschuwingen';
+
+  @override
+  String get noLogIssues => 'Geen fouten of waarschuwingen in deze log.';
+
+  @override
+  String get previousError => 'Vorige fout';
+
+  @override
+  String get nextError => 'Volgende fout';
+
+  @override
+  String errorPosition(int current, int total) {
+    return 'Fout $current van $total';
+  }
+
+  @override
+  String errorCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count fouten',
+      one: '1 fout',
+    );
+    return '$_temp0';
+  }
 }

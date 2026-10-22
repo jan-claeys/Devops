@@ -535,4 +535,57 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get threadResolved => '해결됨';
+
+  @override
+  String get runErrors => '오류';
+
+  @override
+  String get viewLog => '로그 보기';
+
+  @override
+  String showAll(int count) {
+    return '모두 보기 ($count)';
+  }
+
+  @override
+  String get copyLog => '로그 복사';
+
+  @override
+  String get logCopied => '로그를 복사했습니다';
+
+  @override
+  String get logEmpty => '이 로그는 비어 있습니다.';
+
+  @override
+  String get showMore => '더 보기';
+
+  @override
+  String get showLess => '간략히 보기';
+
+  @override
+  String get onlyErrorsAndWarnings => '오류 및 경고만';
+
+  @override
+  String get noLogIssues => '이 로그에는 오류나 경고가 없습니다.';
+
+  @override
+  String get previousError => '이전 오류';
+
+  @override
+  String get nextError => '다음 오류';
+
+  @override
+  String errorPosition(int current, int total) {
+    return '오류 $current/$total';
+  }
+
+  @override
+  String errorCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '오류 $count개',
+    );
+    return '$_temp0';
+  }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../l10n/l10n.dart';
+import '../models/pipeline_log.dart';
 import '../models/pipeline_run.dart';
 
 /// Colors and icons that match the Azure DevOps pipeline statuses.
@@ -135,4 +136,48 @@ String formatDuration(Duration? duration) {
   String two(int n) => n.toString().padLeft(2, '0');
   final h = duration.inHours, m = duration.inMinutes % 60, s = duration.inSeconds % 60;
   return h > 0 ? '$h:${two(m)}:${two(s)}' : '$m:${two(s)}';
+}
+
+/// A line of a log in a monospaced font, colored by its kind.
+class LogLineView extends StatelessWidget {
+  const LogLineView(this.line, {super.key, this.highlighted = false, this.maxLines});
+
+  final LogLine line;
+
+  /// Marks the error that was jumped to.
+  final bool highlighted;
+
+  /// Cuts the line off with an ellipsis after this many lines.
+  final int? maxLines;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final scheme = theme.colorScheme;
+    final (color, background) = switch (line.kind) {
+      LogLineKind.error => (scheme.onErrorContainer, scheme.errorContainer),
+      LogLineKind.warning => (const Color(0xFFFF9D00), null),
+      LogLineKind.section => (scheme.primary, null),
+      LogLineKind.command => (scheme.onSurfaceVariant, null),
+      LogLineKind.plain => (null, null),
+    };
+    return Container(
+      decoration: BoxDecoration(
+        color: background,
+        border: highlighted ? Border(left: BorderSide(color: scheme.error, width: 3)) : null,
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
+      child: Text(
+        line.text,
+        maxLines: maxLines,
+        overflow: maxLines == null ? null : TextOverflow.ellipsis,
+        style: theme.textTheme.bodySmall?.copyWith(
+          fontFamily: 'monospace',
+          fontFamilyFallback: const ['Consolas', 'Menlo', 'Courier New'],
+          color: color,
+          fontWeight: line.kind == LogLineKind.section || highlighted ? FontWeight.bold : null,
+        ),
+      ),
+    );
+  }
 }

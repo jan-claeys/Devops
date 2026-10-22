@@ -2,16 +2,20 @@ import 'package:flutter/material.dart';
 
 /// Outlined card with an optional title, for a section of a detail screen.
 class SectionCard extends StatelessWidget {
-  const SectionCard({super.key, required this.child, this.title, this.padding});
+  const SectionCard({super.key, required this.child, this.title, this.padding, this.color});
 
   final String? title;
   final Widget child;
   final EdgeInsetsGeometry? padding;
 
+  /// Background of the card, to make it stand out.
+  final Color? color;
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Card.outlined(
+      color: color,
       child: Padding(
         padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
         child: Column(

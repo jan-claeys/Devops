@@ -1069,6 +1069,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Resolved'**
   String get threadResolved;
+
+  /// No description provided for @runErrors.
+  ///
+  /// In en, this message translates to:
+  /// **'Errors'**
+  String get runErrors;
+
+  /// No description provided for @viewLog.
+  ///
+  /// In en, this message translates to:
+  /// **'View log'**
+  String get viewLog;
+
+  /// No description provided for @showAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Show all ({count})'**
+  String showAll(int count);
+
+  /// No description provided for @copyLog.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy log'**
+  String get copyLog;
+
+  /// No description provided for @logCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Log copied'**
+  String get logCopied;
+
+  /// No description provided for @logEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'This log is empty.'**
+  String get logEmpty;
+
+  /// No description provided for @showMore.
+  ///
+  /// In en, this message translates to:
+  /// **'Show more'**
+  String get showMore;
+
+  /// No description provided for @showLess.
+  ///
+  /// In en, this message translates to:
+  /// **'Show less'**
+  String get showLess;
+
+  /// No description provided for @onlyErrorsAndWarnings.
+  ///
+  /// In en, this message translates to:
+  /// **'Only errors and warnings'**
+  String get onlyErrorsAndWarnings;
+
+  /// No description provided for @noLogIssues.
+  ///
+  /// In en, this message translates to:
+  /// **'No errors or warnings in this log.'**
+  String get noLogIssues;
+
+  /// No description provided for @previousError.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous error'**
+  String get previousError;
+
+  /// No description provided for @nextError.
+  ///
+  /// In en, this message translates to:
+  /// **'Next error'**
+  String get nextError;
+
+  /// No description provided for @errorPosition.
+  ///
+  /// In en, this message translates to:
+  /// **'Error {current} of {total}'**
+  String errorPosition(int current, int total);
+
+  /// No description provided for @errorCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 error} other{{count} errors}}'**
+  String errorCount(int count);
 }
 
 class _AppLocalizationsDelegate

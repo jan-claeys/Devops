@@ -164,5 +164,20 @@
   "voteNone": "कोई वोट नहीं",
   "voteWaitingForAuthor": "लेखक की प्रतीक्षा",
   "voteRejected": "अस्वीकृत",
-  "threadResolved": "हल किया गया"
+  "threadResolved": "हल किया गया",
+
+  "runErrors": "त्रुटियाँ",
+  "viewLog": "लॉग देखें",
+  "showAll": "सभी दिखाएँ ({count})",
+  "copyLog": "लॉग कॉपी करें",
+  "logCopied": "लॉग कॉपी किया गया",
+  "logEmpty": "यह लॉग खाली है।",
+  "showMore": "और दिखाएँ",
+  "showLess": "कम दिखाएँ",
+  "onlyErrorsAndWarnings": "केवल त्रुटियाँ और चेतावनियाँ",
+  "noLogIssues": "इस लॉग में कोई त्रुटि या चेतावनी नहीं है।",
+  "previousError": "पिछली त्रुटि",
+  "nextError": "अगली त्रुटि",
+  "errorPosition": "त्रुटि {current} / {total}",
+  "errorCount": "{count, plural, =1{1 त्रुटि} other{{count} त्रुटियाँ}}"
 }

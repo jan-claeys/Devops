@@ -558,4 +558,60 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get threadResolved => 'Вирішено';
+
+  @override
+  String get runErrors => 'Помилки';
+
+  @override
+  String get viewLog => 'Показати журнал';
+
+  @override
+  String showAll(int count) {
+    return 'Показати всі ($count)';
+  }
+
+  @override
+  String get copyLog => 'Копіювати журнал';
+
+  @override
+  String get logCopied => 'Журнал скопійовано';
+
+  @override
+  String get logEmpty => 'Цей журнал порожній.';
+
+  @override
+  String get showMore => 'Показати більше';
+
+  @override
+  String get showLess => 'Показати менше';
+
+  @override
+  String get onlyErrorsAndWarnings => 'Лише помилки та попередження';
+
+  @override
+  String get noLogIssues => 'У цьому журналі немає помилок і попереджень.';
+
+  @override
+  String get previousError => 'Попередня помилка';
+
+  @override
+  String get nextError => 'Наступна помилка';
+
+  @override
+  String errorPosition(int current, int total) {
+    return 'Помилка $current з $total';
+  }
+
+  @override
+  String errorCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count помилки',
+      many: '$count помилок',
+      few: '$count помилки',
+      one: '1 помилка',
+    );
+    return '$_temp0';
+  }
 }

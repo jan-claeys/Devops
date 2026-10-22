@@ -205,6 +205,19 @@ void main() {
       expect((await api.getTimeline('Contoso', 4)).roots, isEmpty);
     });
 
+    test('getLog reads the text of a log', () async {
+      fake.logs['/contoso/1/_apis/build/builds/4/logs/5'] = 'line 1\nline 2';
+      expect(await api.getLog('https://dev.azure.com/contoso/1/_apis/build/builds/4/logs/5'),
+          'line 1\nline 2');
+      expect(fake.requests.single.headers['Accept'], 'text/plain');
+    });
+
+    test('getLog sends the token only to the organization', () async {
+      await expectLater(api.getLog('https://example.com/logs/5'),
+          throwsA(isA<DevOpsException>()));
+      expect(fake.requests, isEmpty);
+    });
+
     test('releaseBaseUrl points to release management', () {
       expect(DevOpsApi.releaseBaseUrl('https://dev.azure.com/contoso'),
           'https://vsrm.dev.azure.com/contoso');

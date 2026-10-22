@@ -546,4 +546,57 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get threadResolved => 'Çözüldü';
+
+  @override
+  String get runErrors => 'Hatalar';
+
+  @override
+  String get viewLog => 'Günlüğü görüntüle';
+
+  @override
+  String showAll(int count) {
+    return 'Tümünü göster ($count)';
+  }
+
+  @override
+  String get copyLog => 'Günlüğü kopyala';
+
+  @override
+  String get logCopied => 'Günlük kopyalandı';
+
+  @override
+  String get logEmpty => 'Bu günlük boş.';
+
+  @override
+  String get showMore => 'Daha fazla göster';
+
+  @override
+  String get showLess => 'Daha az göster';
+
+  @override
+  String get onlyErrorsAndWarnings => 'Yalnızca hatalar ve uyarılar';
+
+  @override
+  String get noLogIssues => 'Bu günlükte hata veya uyarı yok.';
+
+  @override
+  String get previousError => 'Önceki hata';
+
+  @override
+  String get nextError => 'Sonraki hata';
+
+  @override
+  String errorPosition(int current, int total) {
+    return 'Hata $current / $total';
+  }
+
+  @override
+  String errorCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count hata',
+    );
+    return '$_temp0';
+  }
 }

@@ -164,5 +164,20 @@
   "voteNone": "Oy yok",
   "voteWaitingForAuthor": "Yazar bekleniyor",
   "voteRejected": "Reddedildi",
-  "threadResolved": "Çözüldü"
+  "threadResolved": "Çözüldü",
+
+  "runErrors": "Hatalar",
+  "viewLog": "Günlüğü görüntüle",
+  "showAll": "Tümünü göster ({count})",
+  "copyLog": "Günlüğü kopyala",
+  "logCopied": "Günlük kopyalandı",
+  "logEmpty": "Bu günlük boş.",
+  "showMore": "Daha fazla göster",
+  "showLess": "Daha az göster",
+  "onlyErrorsAndWarnings": "Yalnızca hatalar ve uyarılar",
+  "noLogIssues": "Bu günlükte hata veya uyarı yok.",
+  "previousError": "Önceki hata",
+  "nextError": "Sonraki hata",
+  "errorPosition": "Hata {current} / {total}",
+  "errorCount": "{count, plural, other{{count} hata}}"
 }

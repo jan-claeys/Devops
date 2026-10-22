@@ -164,5 +164,20 @@
   "voteNone": "投票なし",
   "voteWaitingForAuthor": "作成者を待機中",
   "voteRejected": "却下",
-  "threadResolved": "解決済み"
+  "threadResolved": "解決済み",
+
+  "runErrors": "エラー",
+  "viewLog": "ログを表示",
+  "showAll": "すべて表示 ({count})",
+  "copyLog": "ログをコピー",
+  "logCopied": "ログをコピーしました",
+  "logEmpty": "このログは空です。",
+  "showMore": "もっと見る",
+  "showLess": "表示を減らす",
+  "onlyErrorsAndWarnings": "エラーと警告のみ",
+  "noLogIssues": "このログにエラーや警告はありません。",
+  "previousError": "前のエラー",
+  "nextError": "次のエラー",
+  "errorPosition": "エラー {current}/{total}",
+  "errorCount": "{count, plural, other{{count} 件のエラー}}"
 }

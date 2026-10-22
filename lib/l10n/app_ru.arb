@@ -164,5 +164,20 @@
   "voteNone": "Нет голоса",
   "voteWaitingForAuthor": "Ожидает автора",
   "voteRejected": "Отклонено",
-  "threadResolved": "Решено"
+  "threadResolved": "Решено",
+
+  "runErrors": "Ошибки",
+  "viewLog": "Показать журнал",
+  "showAll": "Показать все ({count})",
+  "copyLog": "Копировать журнал",
+  "logCopied": "Журнал скопирован",
+  "logEmpty": "Этот журнал пуст.",
+  "showMore": "Показать больше",
+  "showLess": "Показать меньше",
+  "onlyErrorsAndWarnings": "Только ошибки и предупреждения",
+  "noLogIssues": "В этом журнале нет ошибок и предупреждений.",
+  "previousError": "Предыдущая ошибка",
+  "nextError": "Следующая ошибка",
+  "errorPosition": "Ошибка {current} из {total}",
+  "errorCount": "{count, plural, =1{1 ошибка} few{{count} ошибки} many{{count} ошибок} other{{count} ошибки}}"
 }

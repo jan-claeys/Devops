@@ -535,4 +535,57 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get threadResolved => '解決済み';
+
+  @override
+  String get runErrors => 'エラー';
+
+  @override
+  String get viewLog => 'ログを表示';
+
+  @override
+  String showAll(int count) {
+    return 'すべて表示 ($count)';
+  }
+
+  @override
+  String get copyLog => 'ログをコピー';
+
+  @override
+  String get logCopied => 'ログをコピーしました';
+
+  @override
+  String get logEmpty => 'このログは空です。';
+
+  @override
+  String get showMore => 'もっと見る';
+
+  @override
+  String get showLess => '表示を減らす';
+
+  @override
+  String get onlyErrorsAndWarnings => 'エラーと警告のみ';
+
+  @override
+  String get noLogIssues => 'このログにエラーや警告はありません。';
+
+  @override
+  String get previousError => '前のエラー';
+
+  @override
+  String get nextError => '次のエラー';
+
+  @override
+  String errorPosition(int current, int total) {
+    return 'エラー $current/$total';
+  }
+
+  @override
+  String errorCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count 件のエラー',
+    );
+    return '$_temp0';
+  }
 }

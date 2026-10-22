@@ -164,5 +164,20 @@
   "voteNone": "Geen stem",
   "voteWaitingForAuthor": "Wacht op auteur",
   "voteRejected": "Afgewezen",
-  "threadResolved": "Opgelost"
+  "threadResolved": "Opgelost",
+
+  "runErrors": "Fouten",
+  "viewLog": "Log bekijken",
+  "showAll": "Alles tonen ({count})",
+  "copyLog": "Log kopiëren",
+  "logCopied": "Log gekopieerd",
+  "logEmpty": "Deze log is leeg.",
+  "showMore": "Meer tonen",
+  "showLess": "Minder tonen",
+  "onlyErrorsAndWarnings": "Alleen fouten en waarschuwingen",
+  "noLogIssues": "Geen fouten of waarschuwingen in deze log.",
+  "previousError": "Vorige fout",
+  "nextError": "Volgende fout",
+  "errorPosition": "Fout {current} van {total}",
+  "errorCount": "{count, plural, =1{1 fout} other{{count} fouten}}"
 }

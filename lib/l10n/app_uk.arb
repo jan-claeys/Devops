@@ -164,5 +164,20 @@
   "voteNone": "Немає голосу",
   "voteWaitingForAuthor": "Очікує автора",
   "voteRejected": "Відхилено",
-  "threadResolved": "Вирішено"
+  "threadResolved": "Вирішено",
+
+  "runErrors": "Помилки",
+  "viewLog": "Показати журнал",
+  "showAll": "Показати всі ({count})",
+  "copyLog": "Копіювати журнал",
+  "logCopied": "Журнал скопійовано",
+  "logEmpty": "Цей журнал порожній.",
+  "showMore": "Показати більше",
+  "showLess": "Показати менше",
+  "onlyErrorsAndWarnings": "Лише помилки та попередження",
+  "noLogIssues": "У цьому журналі немає помилок і попереджень.",
+  "previousError": "Попередня помилка",
+  "nextError": "Наступна помилка",
+  "errorPosition": "Помилка {current} з {total}",
+  "errorCount": "{count, plural, =1{1 помилка} few{{count} помилки} many{{count} помилок} other{{count} помилки}}"
 }

@@ -554,4 +554,58 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get threadResolved => 'Resuelto';
+
+  @override
+  String get runErrors => 'Errores';
+
+  @override
+  String get viewLog => 'Ver registro';
+
+  @override
+  String showAll(int count) {
+    return 'Mostrar todo ($count)';
+  }
+
+  @override
+  String get copyLog => 'Copiar registro';
+
+  @override
+  String get logCopied => 'Registro copiado';
+
+  @override
+  String get logEmpty => 'Este registro está vacío.';
+
+  @override
+  String get showMore => 'Mostrar más';
+
+  @override
+  String get showLess => 'Mostrar menos';
+
+  @override
+  String get onlyErrorsAndWarnings => 'Solo errores y advertencias';
+
+  @override
+  String get noLogIssues => 'No hay errores ni advertencias en este registro.';
+
+  @override
+  String get previousError => 'Error anterior';
+
+  @override
+  String get nextError => 'Error siguiente';
+
+  @override
+  String errorPosition(int current, int total) {
+    return 'Error $current de $total';
+  }
+
+  @override
+  String errorCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count errores',
+      one: '1 error',
+    );
+    return '$_temp0';
+  }
 }

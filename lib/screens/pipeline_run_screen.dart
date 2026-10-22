@@ -5,12 +5,14 @@ import 'package:logging/logging.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../l10n/l10n.dart';
+import '../models/pipeline_log.dart';
 import '../models/pipeline_run.dart';
 import '../services/app_state.dart';
 import '../services/logging.dart';
 import '../widgets/pipeline_visuals.dart';
 import '../widgets/section_card.dart';
 import '../widgets/work_item_visuals.dart';
+import 'pipeline_log_screen.dart';
 
 final _log = Logger('PipelineRunScreen');
 
@@ -44,6 +46,13 @@ class _PipelineRunScreenState extends State<PipelineRunScreen> {
   Object? _error;
   Timer? _refresh;
   bool _visible = true;
+
+  /// The lines around the first error in the logs of failed tasks, by log
+  /// URL; empty while loading or when the log couldn't be loaded.
+  final _excerpts = <String, List<LogLine>>{};
+
+  /// Logs are fetched for this many failed tasks at most.
+  static const _maxExcerpts = 5;
 
   @override
   void didChangeDependencies() {
@@ -89,6 +98,7 @@ class _PipelineRunScreenState extends State<PipelineRunScreen> {
         _timeline = records;
         _error = null;
       });
+      unawaited(_loadExcerpts(records));
     } catch (e, st) {
       logFailure(_log, 'Loading run ${widget.id} failed', e, st);
       if (mounted) setState(() => _error = e);
@@ -98,6 +108,26 @@ class _PipelineRunScreenState extends State<PipelineRunScreen> {
         if (mounted && _visible) _load();
       });
     }
+  }
+
+  /// The log of a task is complete once it finished, so it is fetched once.
+  Future<void> _loadExcerpts(Timeline timeline) async {
+    final api = AppScope.read(context).api!;
+    final urls = {
+      for (final (record, _) in timeline.errors)
+        if (record.isTask && record.status.isFinished) ?record.logUrl,
+    }.take(_maxExcerpts).where((url) => !_excerpts.containsKey(url)).toList();
+    for (final url in urls) {
+      _excerpts[url] = const [];
+    }
+    await Future.wait([
+      for (final url in urls)
+        api.getLog(url).then((text) {
+          if (mounted) setState(() => _excerpts[url] = LogLine.excerpt(LogLine.parse(text)));
+        }, onError: (Object e, StackTrace st) {
+          logFailure(_log, 'Loading log $url failed', e, st);
+        }),
+    ]);
   }
 
   Future<void> _openInBrowser(PipelineRun run) async {
@@ -174,6 +204,11 @@ class _PipelineRunScreenState extends State<PipelineRunScreen> {
     // Determinate, also before the tasks are known, so it doesn't animate.
     final progress = run.status.isFinished ? 1.0 : timeline.progress ?? 0;
     final roots = timeline.roots;
+    final errors = [
+      for (final issue in run.issues)
+        if (issue.isError) (null, issue),
+      ...timeline.errors,
+    ];
     return [
       Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -185,6 +220,10 @@ class _PipelineRunScreenState extends State<PipelineRunScreen> {
       ),
       const SizedBox(height: 16),
       Row(children: [RunStatusBadge(run.status)]),
+      if (errors.isNotEmpty) ...[
+        const SizedBox(height: 16),
+        _ErrorsCard(errors: errors, timeline: timeline, excerpts: _excerpts),
+      ],
       // A finished release often has stages that are never deployed, so a
       // full bar would say little.
       if (!run.isRelease || !run.status.isFinished) ...[
@@ -321,6 +360,7 @@ class _RecordTile extends StatelessWidget {
         title: Text(record.name),
         subtitle: approval == null ? null : Text(approval),
         trailing: trailing,
+        onTap: record.logUrl == null ? null : () => _openLog(context, record),
       );
     }
     return ExpansionTile(
@@ -339,6 +379,223 @@ class _RecordTile extends StatelessWidget {
       ],
     );
   }
+}
+
+void _openLog(BuildContext context, TimelineRecord record) => Navigator.of(context).push(
+      MaterialPageRoute(builder: (_) => PipelineLogScreen(title: record.name, url: record.logUrl!)),
+    );
+
+/// The errors that made a run fail, each with the step that logged it and a
+/// link to the log of that step.
+class _ErrorsCard extends StatefulWidget {
+  const _ErrorsCard({required this.errors, required this.timeline, required this.excerpts});
+
+  /// The record is null for an error of the pipeline itself.
+  final List<(TimelineRecord?, RunIssue)> errors;
+  final Timeline timeline;
+
+  /// Log excerpts by log URL, shown with the first error of each task.
+  final Map<String, List<LogLine>> excerpts;
+
+  /// How many errors are shown before "show all".
+  static const collapsedCount = 5;
+
+  @override
+  State<_ErrorsCard> createState() => _ErrorsCardState();
+}
+
+class _ErrorsCardState extends State<_ErrorsCard> {
+  bool _showAll = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final l10n = context.l10n;
+    final errors = widget.errors;
+    final shown = _showAll ? errors : errors.take(_ErrorsCard.collapsedCount);
+    // The errors of a step are listed under its path, which is shown once.
+    final groups = <(TimelineRecord?, List<RunIssue>)>[];
+    for (final (record, issue) in shown) {
+      if (groups.isNotEmpty && groups.last.$1 == record) {
+        groups.last.$2.add(issue);
+      } else {
+        groups.add((record, [issue]));
+      }
+    }
+    return SectionCard(
+      title: l10n.runErrors,
+      color: theme.colorScheme.errorContainer.withValues(alpha: 0.35),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          for (final (i, (record, issues)) in groups.indexed) ...[
+            if (record != null)
+              Padding(
+                padding: EdgeInsets.only(top: i == 0 ? 0 : 12, bottom: 2),
+                child: Text(
+                  widget.timeline.path(record).join(' › '),
+                  style: theme.textTheme.labelMedium?.copyWith(
+                    color: theme.colorScheme.onSurfaceVariant,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            for (final (j, issue) in issues.indexed)
+              _ErrorEntry(
+                message: issue.message,
+                // The excerpt leads up to the first error of the step.
+                excerpt: switch (record?.logUrl) {
+                  final url? when j == 0 => widget.excerpts[url] ?? const [],
+                  _ => const [],
+                },
+                onViewLog: record?.logUrl == null ? null : () => _openLog(context, record!),
+              ),
+          ],
+          if (!_showAll && errors.length > _ErrorsCard.collapsedCount)
+            TextButton(
+              onPressed: () => setState(() => _showAll = true),
+              child: Text(l10n.showAll(errors.length)),
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+/// One error, collapsed to the start of its first line so long messages
+/// don't push the rest of the card, and its log button, out of view.
+class _ErrorEntry extends StatefulWidget {
+  const _ErrorEntry({required this.message, this.excerpt = const [], this.onViewLog});
+
+  final String message;
+
+  /// The lines of the log that lead up to the error, shown once expanded: a
+  /// glimpse of the cause, the whole log is one tap away.
+  final List<LogLine> excerpt;
+  final VoidCallback? onViewLog;
+
+  /// Lines of the first line of the message shown while collapsed.
+  static const collapsedLines = 2;
+
+  @override
+  State<_ErrorEntry> createState() => _ErrorEntryState();
+}
+
+class _ErrorEntryState extends State<_ErrorEntry> {
+  bool _expanded = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final l10n = context.l10n;
+    final style = theme.textTheme.bodyMedium;
+    final title = widget.message.split('\n').first.trim();
+    return LayoutBuilder(builder: (context, constraints) {
+      final painter = TextPainter(
+        text: TextSpan(text: title, style: style),
+        maxLines: _ErrorEntry.collapsedLines,
+        textDirection: Directionality.of(context),
+        textScaler: MediaQuery.textScalerOf(context),
+      )..layout(maxWidth: constraints.maxWidth - _iconWidth - _toggleWidth);
+      // The log is only offered once expanded, so a step with a log can
+      // always be expanded.
+      final expandable = title != widget.message ||
+          painter.didExceedMaxLines ||
+          widget.excerpt.isNotEmpty ||
+          widget.onViewLog != null;
+      painter.dispose();
+      void toggle() => setState(() => _expanded = !_expanded);
+      return InkWell(
+        onTap: expandable ? toggle : null,
+        borderRadius: BorderRadius.circular(8),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 4),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                width: _iconWidth,
+                child: Align(
+                  alignment: AlignmentDirectional.topStart,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 2),
+                    child: Icon(Icons.cancel, size: 20, color: theme.colorScheme.error),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    if (_expanded)
+                      SelectableText(widget.message, style: style)
+                    else
+                      Text(
+                        title,
+                        style: style,
+                        maxLines: _ErrorEntry.collapsedLines,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    if (_expanded && widget.excerpt.isNotEmpty)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8),
+                        child: Material(
+                          color: theme.colorScheme.surface,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(6),
+                            side: BorderSide(color: theme.colorScheme.outlineVariant),
+                          ),
+                          clipBehavior: Clip.antiAlias,
+                          child: InkWell(
+                            onTap: widget.onViewLog,
+                            child: Padding(
+                              padding: const EdgeInsets.all(6),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  for (final line in widget.excerpt)
+                                    LogLineView(line, maxLines: 2),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    if (_expanded && widget.onViewLog != null)
+                      TextButton.icon(
+                        style: TextButton.styleFrom(
+                          padding: EdgeInsets.zero,
+                          visualDensity: VisualDensity.compact,
+                        ),
+                        onPressed: widget.onViewLog,
+                        icon: const Icon(Icons.article_outlined, size: 18),
+                        label: Text(l10n.viewLog),
+                      ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                width: _toggleWidth,
+                child: expandable
+                    ? IconButton(
+                        visualDensity: VisualDensity.compact,
+                        padding: EdgeInsets.zero,
+                        tooltip: _expanded ? l10n.showLess : l10n.showMore,
+                        onPressed: toggle,
+                        icon: Icon(_expanded ? Icons.expand_less : Icons.expand_more),
+                      )
+                    : null,
+              ),
+            ],
+          ),
+        ),
+      );
+    });
+  }
+
+  /// The width of the status icon and of the expand button beside the text.
+  static const _iconWidth = 32.0;
+  static const _toggleWidth = 36.0;
 }
 
 class _Count extends StatelessWidget {

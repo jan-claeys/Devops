@@ -164,5 +164,20 @@
   "voteNone": "لا يوجد تصويت",
   "voteWaitingForAuthor": "بانتظار المؤلف",
   "voteRejected": "مرفوض",
-  "threadResolved": "تم الحل"
+  "threadResolved": "تم الحل",
+
+  "runErrors": "الأخطاء",
+  "viewLog": "عرض السجل",
+  "showAll": "عرض الكل ({count})",
+  "copyLog": "نسخ السجل",
+  "logCopied": "تم نسخ السجل",
+  "logEmpty": "هذا السجل فارغ.",
+  "showMore": "عرض المزيد",
+  "showLess": "عرض أقل",
+  "onlyErrorsAndWarnings": "الأخطاء والتحذيرات فقط",
+  "noLogIssues": "لا توجد أخطاء أو تحذيرات في هذا السجل.",
+  "previousError": "الخطأ السابق",
+  "nextError": "الخطأ التالي",
+  "errorPosition": "الخطأ {current} من {total}",
+  "errorCount": "{count, plural, =1{خطأ واحد} other{{count} أخطاء}}"
 }

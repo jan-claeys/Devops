@@ -164,5 +164,20 @@
   "voteNone": "Nessun voto",
   "voteWaitingForAuthor": "In attesa dell’autore",
   "voteRejected": "Rifiutato",
-  "threadResolved": "Risolto"
+  "threadResolved": "Risolto",
+
+  "runErrors": "Errori",
+  "viewLog": "Visualizza log",
+  "showAll": "Mostra tutti ({count})",
+  "copyLog": "Copia log",
+  "logCopied": "Log copiato",
+  "logEmpty": "Questo log è vuoto.",
+  "showMore": "Mostra di più",
+  "showLess": "Mostra meno",
+  "onlyErrorsAndWarnings": "Solo errori e avvisi",
+  "noLogIssues": "Nessun errore o avviso in questo log.",
+  "previousError": "Errore precedente",
+  "nextError": "Errore successivo",
+  "errorPosition": "Errore {current} di {total}",
+  "errorCount": "{count, plural, =1{1 errore} other{{count} errori}}"
 }

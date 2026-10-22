@@ -257,6 +257,23 @@ class DevOpsApi {
     ]);
   }
 
+  /// The text of the log of a step, from [TimelineRecord.logUrl].
+  Future<String> getLog(String url) async {
+    final uri = Uri.parse(url);
+    // The URL comes from the API; still, the PAT only goes to the organization.
+    if (![baseUrl, releaseUrl].any((base) => Uri.parse(base).host == uri.host)) {
+      throw DevOpsException(DevOpsError.unexpectedResponse);
+    }
+    final response =
+        await _client.get(uri, headers: {..._headers, 'Accept': 'text/plain'});
+    _check(response);
+    // A sign-in page instead of the log when the PAT is invalid.
+    if (response.headers['content-type']?.contains('html') ?? false) {
+      throw DevOpsException(DevOpsError.unexpectedResponse, statusCode: response.statusCode);
+    }
+    return utf8.decode(response.bodyBytes, allowMalformed: true);
+  }
+
   /// Id of the user the token belongs to.
   Future<String> getCurrentUserId() async {
     if (_currentUserId case final id?) return id;
@@ -340,6 +357,21 @@ class DevOpsApi {
       };
 
   Map<String, dynamic> _decode(http.Response response) {
+    _check(response);
+    final code = response.statusCode;
+    // The timeline of a run that hasn't started yet is empty or null.
+    if (code == 204 || response.bodyBytes.isEmpty) return const {};
+    try {
+      return (jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>?) ??
+          const {};
+    } on FormatException {
+      // Azure DevOps answers with an HTML sign-in page when the PAT is invalid.
+      throw DevOpsException(DevOpsError.unexpectedResponse, statusCode: code);
+    }
+  }
+
+  /// Throws when [response] is an error.
+  void _check(http.Response response) {
     final code = response.statusCode;
     if (code == 401 || code == 203 || code == 302) {
       throw DevOpsException(DevOpsError.unauthorized, statusCode: code);
@@ -354,15 +386,6 @@ class DevOpsApi {
         if (body['message'] is String) message = body['message'] as String;
       } catch (_) {}
       throw DevOpsException(DevOpsError.http, statusCode: code, serverMessage: message);
-    }
-    // The timeline of a run that hasn't started yet is empty or null.
-    if (code == 204 || response.bodyBytes.isEmpty) return const {};
-    try {
-      return (jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>?) ??
-          const {};
-    } on FormatException {
-      // Azure DevOps answers with an HTML sign-in page when the PAT is invalid.
-      throw DevOpsException(DevOpsError.unexpectedResponse, statusCode: code);
     }
   }
 }
