@@ -46,7 +46,12 @@ enum RunStatus {
 enum RunKind { build, release }
 
 /// A stage of a release with its status, as shown in the list of runs.
-typedef StageSummary = ({String name, RunStatus status});
+typedef StageSummary = ({
+  String name,
+  RunStatus status,
+  DateTime? startTime,
+  DateTime? finishTime,
+});
 
 /// An error or warning logged by a step of a run, or found while validating
 /// the pipeline before the run started.
@@ -70,6 +75,7 @@ class PipelineRun {
     required this.pipelineName,
     required this.project,
     this.kind = RunKind.build,
+    this.definitionId,
     this.sourceBranch,
     this.requestedFor,
     this.queueTime,
@@ -89,6 +95,9 @@ class PipelineRun {
   final String pipelineName;
   final String project;
   final RunKind kind;
+
+  /// The pipeline the run belongs to, within its [project].
+  final int? definitionId;
   final String? sourceBranch;
   final Identity? requestedFor;
 
@@ -123,6 +132,7 @@ class PipelineRun {
         },
         pipelineName: (json['definition'] as Map?)?['name'] as String? ?? '',
         project: (json['project'] as Map?)?['name'] as String? ?? '',
+        definitionId: (json['definition'] as Map?)?['id'] as int?,
         sourceBranch: json['sourceBranch'] as String?,
         requestedFor: Identity.fromJson(json['requestedFor']),
         queueTime: _date(json['queueTime']),
@@ -156,7 +166,11 @@ class PipelineRun {
       startTime: starts.firstOrNull,
       finishTime: status.isFinished ? finishes.lastOrNull : null,
       artifactVersion: (reference?['version'] as Map?)?['name'] as String?,
-      stages: [for (final e in environments) (name: e.name, status: e.status)],
+      definitionId: (json['releaseDefinition'] as Map?)?['id'] as int?,
+      stages: [
+        for (final e in environments)
+          (name: e.name, status: e.status, startTime: e.startTime, finishTime: e.finishTime),
+      ],
       webUrl: (((json['_links'] as Map?)?['web']) as Map?)?['href'] as String?,
     );
   }
@@ -318,6 +332,25 @@ class Timeline {
 
   /// Share of the tasks that finished, or null before the tasks are known.
   double? get progress => tasks.isEmpty ? null : finishedTasks / tasks.length;
+
+  /// Share of the tasks of the running stages that finished, or null when no
+  /// stage with tasks is running.
+  double? get runningStagesProgress {
+    final stages = {
+      for (final r in roots)
+        if (r.status == RunStatus.running) r.id,
+    };
+    bool inRunningStage(TimelineRecord task) {
+      for (TimelineRecord? r = task; r != null; r = _records[r.parentId]) {
+        if (stages.contains(r.id)) return true;
+      }
+      return false;
+    }
+
+    final running = tasks.where(inRunningStage).toList();
+    if (running.isEmpty) return null;
+    return running.where((t) => t.status.isFinished).length / running.length;
+  }
 }
 
 /// An environment (stage) of a release.
@@ -353,7 +386,11 @@ class _ReleaseEnvironment {
     ]..sort();
     final finishes = [for (final job in jobs) ?_date(job['finishTime'])]..sort();
     startTime = starts.firstOrNull;
-    finishTime = status.isFinished ? finishes.lastOrNull : null;
+    // The list of releases leaves out the jobs; the last change to a finished
+    // deployment is when it finished.
+    finishTime = status.isFinished
+        ? finishes.lastOrNull ?? _date(steps.lastOrNull?['lastModifiedOn'])
+        : null;
   }
 
   static List<_ReleaseEnvironment> all(Map<String, dynamic> release) =>
