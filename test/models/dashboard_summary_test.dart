@@ -34,11 +34,13 @@ PipelineRun build(
 
 DashboardSummary summary({
   List<PipelineRun> runs = const [],
+  List<PipelineRun> defaultBranchRuns = const [],
   List<Map<String, dynamic>> pullRequests = const [],
   List<WorkItem> tickets = const [],
 }) =>
     DashboardSummary(
       runs: runs,
+      defaultBranchRuns: defaultBranchRuns,
       pullRequests: [for (final pr in pullRequests) PullRequest.fromJson(pr)],
       tickets: tickets,
       me: meId,
@@ -81,15 +83,28 @@ void main() {
       expect(summary(runs: [build(1, result: 'failed', day: 14)]).myFailedRuns, isEmpty);
     });
 
-    test('finds the pipelines failing on the main branch', () {
-      final s = summary(runs: [
+    test('finds the pipelines whose last result on the default branch failed', () {
+      final s = summary(defaultBranchRuns: [
         build(4, pipeline: 'Nightly', definition: 2, branch: 'refs/heads/main', result: 'failed',
             mine: false),
         build(3, branch: 'refs/heads/main', hour: 11),
         build(2, branch: 'refs/heads/main', result: 'failed', hour: 9),
-        build(1, pipeline: 'Docs', definition: 3, result: 'failed'),
+        // Canceled doesn't count as a result.
+        build(5, pipeline: 'Docs', definition: 3, branch: 'refs/heads/develop', result: 'canceled',
+            hour: 8),
+        build(1, pipeline: 'Docs', definition: 3, branch: 'refs/heads/develop', result: 'failed',
+            hour: 7),
       ]);
-      expect(s.failingOnMain.map((r) => r.pipelineName), ['Nightly']);
+      expect(s.failingOnMain.map((r) => r.pipelineName), ['Nightly', 'Docs']);
+    });
+
+    test('forgets pipelines failing on the default branch after a month', () {
+      final failed = [build(2, branch: 'refs/heads/main', result: 'failed')];
+      expect(DashboardSummary(defaultBranchRuns: failed, now: now).failingOnMain, hasLength(1));
+      expect(
+          DashboardSummary(defaultBranchRuns: failed, now: now.add(const Duration(days: 31)))
+              .failingOnMain,
+          isEmpty);
     });
 
     test('finds the releases waiting for the approval of the user', () {

@@ -15,7 +15,8 @@ final _log = Logger('SettingsScreen');
 const _author = 'Jan Claeys';
 final _repositoryUrl = Uri.parse('https://github.com/jan-claeys/Devops');
 final _patDocsUrl = Uri.parse(
-    'https://learn.microsoft.com/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate');
+  'https://learn.microsoft.com/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate',
+);
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key, this.isOnboarding = false});
@@ -80,205 +81,233 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Future<void> _pickProjects() async {
     final state = AppScope.read(context);
-    final picked =
-        await showProjectPicker(context, api: state.api!, current: state.projects);
+    final picked = await showProjectPicker(context, api: state.api!, current: state.projects);
     if (picked != null) await state.setProjects(picked);
   }
 
   @override
   Widget build(BuildContext context) {
-    final state = AppScope.of(context);
     final l10n = context.l10n;
-    final theme = Theme.of(context);
+    final connection = _buildConnection(context);
+    final preferences = widget.isOnboarding ? null : _buildPreferences(context);
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          SliverAppBar.large(
-            title: Text(widget.isOnboarding ? l10n.welcome : l10n.settings),
-          ),
+          SliverAppBar.large(title: Text(widget.isOnboarding ? l10n.welcome : l10n.settings)),
           SliverToBoxAdapter(
-            child: Center(
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 600),
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 32),
-                  child: Form(
-                    key: _formKey,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        if (widget.isOnboarding) ...[
-                          Text(
-                            l10n.onboardingIntro,
-                            style: theme.textTheme.bodyLarge,
-                          ),
-                          const SizedBox(height: 24),
-                        ],
-                        Text(l10n.connection, style: theme.textTheme.titleMedium),
-                        const SizedBox(height: 12),
-                        TextFormField(
-                          controller: _org,
-                          decoration: InputDecoration(
-                            labelText: l10n.organization,
-                            hintText: l10n.organizationHint,
-                            prefixIcon: const Icon(Icons.business_outlined),
-                          ),
-                          textInputAction: TextInputAction.next,
-                          autocorrect: false,
-                          validator: (v) => switch (v?.trim()) {
-                            null || '' => l10n.organizationRequired,
-                            final org when !DevOpsApi.isSecure(org) => l10n.organizationInsecure,
-                            _ => null,
-                          },
-                        ),
-                        const SizedBox(height: 16),
-                        TextFormField(
-                          controller: _pat,
-                          obscureText: _obscure,
-                          autocorrect: false,
-                          enableSuggestions: false,
-                          decoration: InputDecoration(
-                            labelText: l10n.personalAccessToken,
-                            helperText: state.hasPat ? l10n.tokenAlreadyStored : null,
-                            helperMaxLines: 2,
-                            prefixIcon: const Icon(Icons.key_outlined),
-                            suffixIcon: IconButton(
-                              icon: Icon(_obscure
-                                  ? Icons.visibility_outlined
-                                  : Icons.visibility_off_outlined),
-                              onPressed: () => setState(() => _obscure = !_obscure),
-                            ),
-                          ),
-                          onFieldSubmitted: (_) => _save(),
-                          validator: (v) =>
-                              (v == null || v.trim().isEmpty) ? l10n.tokenRequired : null,
-                        ),
-                        const SizedBox(height: 16),
-                        const _RequiredScopes(),
-                        if (_error != null) ...[
-                          const SizedBox(height: 16),
-                          Card.filled(
-                            color: theme.colorScheme.errorContainer,
-                            child: ListTile(
-                              leading: Icon(Icons.error_outline,
-                                  color: theme.colorScheme.onErrorContainer),
-                              title: Text(_error!,
-                                  style:
-                                      TextStyle(color: theme.colorScheme.onErrorContainer)),
-                            ),
-                          ),
-                        ],
-                        const SizedBox(height: 24),
-                        FilledButton.icon(
-                          onPressed: _busy ? null : _save,
-                          icon: _busy
-                              ? const SizedBox.square(
-                                  dimension: 18,
-                                  child: CircularProgressIndicator(strokeWidth: 2))
-                              : const Icon(Icons.link),
-                          label: Text(_busy ? l10n.connecting : l10n.connect),
-                        ),
-                        const SizedBox(height: 16),
-                        const _TokenHelp(),
-                        if (state.isConfigured) ...[
-                          const SizedBox(height: 32),
-                          Text(l10n.projects, style: theme.textTheme.titleMedium),
-                          const SizedBox(height: 4),
-                          ListTile(
-                            contentPadding: EdgeInsets.zero,
-                            leading: const Icon(Icons.folder_outlined),
-                            title: Text(state.projects.isEmpty
-                                ? l10n.noProjectsTitle
-                                : state.projects.join(', ')),
-                            subtitle: Text(state.projects.isEmpty
-                                ? l10n.noProjectsMessage
-                                : l10n.projectCount(state.projects.length)),
-                            trailing: const Icon(Icons.chevron_right),
-                            onTap: _pickProjects,
-                          ),
-                        ],
-                        if (!widget.isOnboarding) ...[
-                          const SizedBox(height: 32),
-                          Text(l10n.appearance, style: theme.textTheme.titleMedium),
-                          const SizedBox(height: 12),
-                          SegmentedButton<ThemeMode>(
-                            segments: [
-                              ButtonSegment(
-                                  value: ThemeMode.light,
-                                  icon: const Icon(Icons.light_mode_outlined),
-                                  label: Text(l10n.themeLight)),
-                              ButtonSegment(
-                                  value: ThemeMode.system,
-                                  icon: const Icon(Icons.brightness_auto_outlined),
-                                  label: Text(l10n.themeSystem)),
-                              ButtonSegment(
-                                  value: ThemeMode.dark,
-                                  icon: const Icon(Icons.dark_mode_outlined),
-                                  label: Text(l10n.themeDark)),
-                            ],
-                            selected: {state.themeMode},
-                            onSelectionChanged: (s) => state.setThemeMode(s.first),
-                          ),
-                          const SizedBox(height: 12),
-                          SegmentedButton<bool>(
-                            segments: [
-                              ButtonSegment(
-                                  value: false,
-                                  icon: const Icon(Icons.water_drop_outlined),
-                                  label: Text(l10n.colorAzureBlue)),
-                              ButtonSegment(
-                                  value: true,
-                                  icon: const Icon(Icons.palette_outlined),
-                                  label: Text(l10n.colorSystem)),
-                            ],
-                            selected: {state.useDynamicColor},
-                            onSelectionChanged: (s) => state.setUseDynamicColor(s.first),
-                          ),
-                          const SizedBox(height: 32),
-                          Text(l10n.language, style: theme.textTheme.titleMedium),
-                          const SizedBox(height: 12),
-                          const _LanguagePicker(),
-                          if (errorReportingAvailable) ...[
-                            const SizedBox(height: 32),
-                            Text(l10n.privacy, style: theme.textTheme.titleMedium),
-                            const SizedBox(height: 4),
-                            SwitchListTile(
-                              contentPadding: EdgeInsets.zero,
-                              secondary: const Icon(Icons.bug_report_outlined),
-                              title: Text(l10n.sendErrorReports),
-                              subtitle: Text(l10n.sendErrorReportsHint),
-                              value: state.sendErrorReports,
-                              onChanged: state.setSendErrorReports,
-                            ),
-                          ],
-                          const SizedBox(height: 32),
-                          OutlinedButton.icon(
-                            style: OutlinedButton.styleFrom(
-                                foregroundColor: theme.colorScheme.error),
-                            onPressed: () async {
-                              final nav = Navigator.of(context);
-                              await state.signOut();
-                              TicketsHomeWidget.refresh(state);
-                              nav.popUntil((r) => r.isFirst);
-                            },
-                            icon: const Icon(Icons.logout),
-                            label: Text(l10n.signOut),
-                          ),
-                          const SizedBox(height: 32),
-                          Text(l10n.about, style: theme.textTheme.titleMedium),
-                          const SizedBox(height: 4),
-                          const _AboutTile(),
-                        ],
-                      ],
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                // Side by side on wide screens; onboarding only has the connection.
+                final wide = preferences != null && constraints.maxWidth >= _wideBreakpoint;
+                final gutter = wide ? 24.0 : 16.0;
+                return Center(
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(maxWidth: wide ? 1200 : 600),
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(gutter, 0, gutter, 32),
+                      child: Form(
+                        key: _formKey,
+                        child: wide
+                            ? Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Expanded(child: _column(connection)),
+                                  const SizedBox(width: 48),
+                                  Expanded(child: _column(preferences)),
+                                ],
+                              )
+                            : _column([
+                                ...connection,
+                                if (preferences != null) ...[
+                                  const SizedBox(height: 32),
+                                  ...preferences,
+                                ],
+                              ]),
+                      ),
                     ),
                   ),
-                ),
-              ),
+                );
+              },
             ),
           ),
         ],
       ),
     );
+  }
+
+  static const _wideBreakpoint = 840.0;
+
+  Widget _column(List<Widget> children) =>
+      Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: children);
+
+  /// The connection form and the chosen projects.
+  List<Widget> _buildConnection(BuildContext context) {
+    final state = AppScope.of(context);
+    final l10n = context.l10n;
+    final theme = Theme.of(context);
+    return [
+      if (widget.isOnboarding) ...[
+        Text(l10n.onboardingIntro, style: theme.textTheme.bodyLarge),
+        const SizedBox(height: 24),
+      ],
+      Text(l10n.connection, style: theme.textTheme.titleMedium),
+      const SizedBox(height: 12),
+      TextFormField(
+        controller: _org,
+        decoration: InputDecoration(
+          labelText: l10n.organization,
+          hintText: l10n.organizationHint,
+          prefixIcon: const Icon(Icons.business_outlined),
+        ),
+        textInputAction: TextInputAction.next,
+        autocorrect: false,
+        validator: (v) => switch (v?.trim()) {
+          null || '' => l10n.organizationRequired,
+          final org when !DevOpsApi.isSecure(org) => l10n.organizationInsecure,
+          _ => null,
+        },
+      ),
+      const SizedBox(height: 16),
+      TextFormField(
+        controller: _pat,
+        obscureText: _obscure,
+        autocorrect: false,
+        enableSuggestions: false,
+        decoration: InputDecoration(
+          labelText: l10n.personalAccessToken,
+          helperText: state.hasPat ? l10n.tokenAlreadyStored : null,
+          helperMaxLines: 2,
+          prefixIcon: const Icon(Icons.key_outlined),
+          suffixIcon: IconButton(
+            icon: Icon(_obscure ? Icons.visibility_outlined : Icons.visibility_off_outlined),
+            onPressed: () => setState(() => _obscure = !_obscure),
+          ),
+        ),
+        onFieldSubmitted: (_) => _save(),
+        validator: (v) => (v == null || v.trim().isEmpty) ? l10n.tokenRequired : null,
+      ),
+      const SizedBox(height: 16),
+      const _RequiredScopes(),
+      if (_error != null) ...[
+        const SizedBox(height: 16),
+        Card.filled(
+          color: theme.colorScheme.errorContainer,
+          child: ListTile(
+            leading: Icon(Icons.error_outline, color: theme.colorScheme.onErrorContainer),
+            title: Text(_error!, style: TextStyle(color: theme.colorScheme.onErrorContainer)),
+          ),
+        ),
+      ],
+      const SizedBox(height: 24),
+      FilledButton.icon(
+        onPressed: _busy ? null : _save,
+        icon: _busy
+            ? const SizedBox.square(dimension: 18, child: CircularProgressIndicator(strokeWidth: 2))
+            : const Icon(Icons.link),
+        label: Text(_busy ? l10n.connecting : l10n.connect),
+      ),
+      const SizedBox(height: 16),
+      const _TokenHelp(),
+      if (state.isConfigured) ...[
+        const SizedBox(height: 32),
+        Text(l10n.projects, style: theme.textTheme.titleMedium),
+        const SizedBox(height: 4),
+        ListTile(
+          contentPadding: EdgeInsets.zero,
+          leading: const Icon(Icons.folder_outlined),
+          title: Text(state.projects.isEmpty ? l10n.noProjectsTitle : state.projects.join(', ')),
+          subtitle: Text(
+            state.projects.isEmpty
+                ? l10n.noProjectsMessage
+                : l10n.projectCount(state.projects.length),
+          ),
+          trailing: const Icon(Icons.chevron_right),
+          onTap: _pickProjects,
+        ),
+      ],
+    ];
+  }
+
+  /// Appearance, language, privacy, sign out and about.
+  List<Widget> _buildPreferences(BuildContext context) {
+    final state = AppScope.of(context);
+    final l10n = context.l10n;
+    final theme = Theme.of(context);
+    return [
+      Text(l10n.appearance, style: theme.textTheme.titleMedium),
+      const SizedBox(height: 12),
+      SegmentedButton<ThemeMode>(
+        segments: [
+          ButtonSegment(
+            value: ThemeMode.light,
+            icon: const Icon(Icons.light_mode_outlined),
+            label: Text(l10n.themeLight),
+          ),
+          ButtonSegment(
+            value: ThemeMode.system,
+            icon: const Icon(Icons.brightness_auto_outlined),
+            label: Text(l10n.themeSystem),
+          ),
+          ButtonSegment(
+            value: ThemeMode.dark,
+            icon: const Icon(Icons.dark_mode_outlined),
+            label: Text(l10n.themeDark),
+          ),
+        ],
+        selected: {state.themeMode},
+        onSelectionChanged: (s) => state.setThemeMode(s.first),
+      ),
+      const SizedBox(height: 12),
+      SegmentedButton<bool>(
+        segments: [
+          ButtonSegment(
+            value: false,
+            icon: const Icon(Icons.water_drop_outlined),
+            label: Text(l10n.colorAzureBlue),
+          ),
+          ButtonSegment(
+            value: true,
+            icon: const Icon(Icons.palette_outlined),
+            label: Text(l10n.colorSystem),
+          ),
+        ],
+        selected: {state.useDynamicColor},
+        onSelectionChanged: (s) => state.setUseDynamicColor(s.first),
+      ),
+      const SizedBox(height: 32),
+      Text(l10n.language, style: theme.textTheme.titleMedium),
+      const SizedBox(height: 12),
+      const _LanguagePicker(),
+      if (errorReportingAvailable) ...[
+        const SizedBox(height: 32),
+        Text(l10n.privacy, style: theme.textTheme.titleMedium),
+        const SizedBox(height: 4),
+        SwitchListTile(
+          contentPadding: EdgeInsets.zero,
+          secondary: const Icon(Icons.bug_report_outlined),
+          title: Text(l10n.sendErrorReports),
+          subtitle: Text(l10n.sendErrorReportsHint),
+          value: state.sendErrorReports,
+          onChanged: state.setSendErrorReports,
+        ),
+      ],
+      const SizedBox(height: 32),
+      OutlinedButton.icon(
+        style: OutlinedButton.styleFrom(foregroundColor: theme.colorScheme.error),
+        onPressed: () async {
+          final nav = Navigator.of(context);
+          await state.signOut();
+          TicketsHomeWidget.refresh(state);
+          nav.popUntil((r) => r.isFirst);
+        },
+        icon: const Icon(Icons.logout),
+        label: Text(l10n.signOut),
+      ),
+      const SizedBox(height: 32),
+      Text(l10n.about, style: theme.textTheme.titleMedium),
+      const SizedBox(height: 4),
+      const _AboutTile(),
+    ];
   }
 }
 
@@ -330,8 +359,9 @@ class _RequiredScopes extends StatelessWidget {
                       ),
                       child: Text(
                         'Read',
-                        style: theme.textTheme.labelMedium
-                            ?.copyWith(color: scheme.onSecondaryContainer),
+                        style: theme.textTheme.labelMedium?.copyWith(
+                          color: scheme.onSecondaryContainer,
+                        ),
                       ),
                     ),
                   ],
@@ -380,8 +410,7 @@ class _TokenHelp extends StatelessWidget {
             ),
           Text(
             l10n.tokenHelpPermissions,
-            style: theme.textTheme.bodySmall
-                ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+            style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurfaceVariant),
           ),
           const SizedBox(height: 4),
           TextButton.icon(
@@ -414,8 +443,7 @@ class _LanguagePicker extends StatelessWidget {
         for (final MapEntry(key: code, value: name) in languageNames.entries)
           DropdownMenuEntry(value: code, label: name),
       ],
-      onSelected: (code) =>
-          state.setLocale(code == null || code.isEmpty ? null : Locale(code)),
+      onSelected: (code) => state.setLocale(code == null || code.isEmpty ? null : Locale(code)),
     );
   }
 }

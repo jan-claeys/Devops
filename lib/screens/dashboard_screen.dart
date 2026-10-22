@@ -38,7 +38,10 @@ class DashboardScreen extends StatefulWidget {
   });
 
   /// How often the overview is refreshed while it is shown.
-  static const refreshInterval = Duration(minutes: 1);
+  static const refreshInterval = Duration(minutes: 5);
+
+  /// How often it is refreshed while a run of the user is going.
+  static const busyRefreshInterval = Duration(minutes: 1);
 
   /// The most open tickets that are loaded.
   static const ticketLimit = 500;
@@ -72,6 +75,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
   String? _loadedFor;
   Timer? _refresh;
   bool _visible = true;
+  late final AppLifecycleListener _lifecycle;
+
+  @override
+  void initState() {
+    super.initState();
+    // Back from the background: what waits may have changed meanwhile.
+    _lifecycle = AppLifecycleListener(onResume: () {
+      if (mounted && _visible) _load(silent: true);
+    });
+  }
 
   @override
   void didChangeDependencies() {
@@ -93,6 +106,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   void dispose() {
     _refresh?.cancel();
+    _lifecycle.dispose();
     super.dispose();
   }
 
@@ -114,7 +128,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           return <T>[];
         });
     final me = await api.getCurrentUserId().then<String?>((id) => id, onError: (Object _) => null);
-    final (builds, myBuilds, releases, pullRequests, tickets) = await (
+    final (builds, myBuilds, defaultBranchBuilds, releases, pullRequests, tickets) = await (
       // The latest builds of everyone tell whether a failed build of the
       // user has been fixed since, and how long a running one will take.
       guard(_Source.builds, api.getPipelineRuns(projects: projects)),
@@ -124,6 +138,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ? Future.value(<PipelineRun>[])
               : api.getPipelineRuns(
                   projects: projects, requestedFor: me, top: DashboardScreen.myRunLimit)),
+      // Asked apart, so the other builds don't push a failing one out.
+      guard(
+          _Source.builds,
+          api.getDefaultBranchRuns(
+              projects: projects,
+              minTime: DateTime.now().subtract(DashboardSummary.failingOnMainAge))),
       guard(_Source.releases, api.getReleases(projects: projects)),
       guard(_Source.pullRequests,
           api.getPullRequests(projects: projects, scope: PullRequestScope.mine)),
@@ -150,11 +170,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
       _errors = errors;
       _summary = failed
           ? null
-          : DashboardSummary(runs: runs, pullRequests: pullRequests, tickets: tickets, me: me);
+          : DashboardSummary(
+              runs: runs,
+              defaultBranchRuns: defaultBranchBuilds,
+              pullRequests: pullRequests,
+              tickets: tickets,
+              me: me);
       _estimates = RunEstimates(runs);
       if (!failed) _updated = DateTime.now();
     });
-    _refresh = Timer(DashboardScreen.refreshInterval, () {
+    final busy = _summary?.myRuns.any((r) => !r.status.isFinished) ?? false;
+    _refresh = Timer(
+        busy ? DashboardScreen.busyRefreshInterval : DashboardScreen.refreshInterval, () {
       if (mounted && _visible) _load(silent: true);
     });
   }
@@ -250,37 +277,72 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget _buildOverview(DashboardSummary summary) {
     return LayoutBuilder(builder: (context, constraints) {
       final wide = constraints.maxWidth >= _wideBreakpoint;
-      final left = [
-        _buildWaiting(summary),
-        if (!_errors.containsKey(_Source.pullRequests)) _buildPullRequests(summary),
-      ];
-      final right = [
-        if (!_errors.containsKey(_Source.builds)) _buildRuns(summary),
-        if (!_errors.containsKey(_Source.tickets)) _buildTickets(summary),
+      // The sections by importance, each with about how many rows it is high.
+      final runs = summary.myRuns.length;
+      final prs = summary.openPullRequests.length;
+      final tickets = summary.tickets.length;
+      final sections = <(Widget, double)>[
+        if (summary.failingOnMain.isNotEmpty)
+          (_buildFailingOnMain(summary), _rows(summary.failingOnMain.length)),
+        (_buildWaiting(summary), _rows(summary.waitingCount)),
+        if (!_errors.containsKey(_Source.builds))
+          (_buildRuns(summary), _rows(runs, limit: _maxRuns)),
+        if (!_errors.containsKey(_Source.pullRequests))
+          (_buildPullRequests(summary), _rows(prs, limit: _maxPullRequests)),
+        if (!_errors.containsKey(_Source.tickets))
+          (_buildTickets(summary), _rows(tickets, limit: _maxTickets)),
       ];
       return _spaced([
         if ((_refreshError, _updated) case (final error?, final updated?))
           _StaleWarning(error: error, updated: updated),
-        if (summary.failingOnMain.isNotEmpty) _buildFailingOnMain(summary),
         for (final MapEntry(key: source, value: error) in _errors.entries)
           _ErrorCard(source: source, error: error),
         if (wide)
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(child: _spaced(left)),
-              const SizedBox(width: 12),
-              Expanded(child: _spaced(right)),
-            ],
-          )
-        else ...[
-          left.first,
-          ...right.take(1),
-          ...left.skip(1),
-          ...right.skip(1),
-        ],
+          _columns(sections)
+        else
+          for (final (section, _) in sections) section,
       ]);
     });
+  }
+
+  /// About how many rows high a section with [count] items is, of which it
+  /// shows at most [limit].
+  static double _rows(int count, {int? limit}) {
+    final shown = limit == null || count <= limit ? count : limit;
+    // The title, and the empty line or the "show all" button.
+    return 1 + (shown == 0 ? 0.5 : shown) + (shown < count ? 0.6 : 0);
+  }
+
+  /// [sections] split over two columns as evenly high as can be, each column
+  /// keeping their order of importance.
+  static Widget _columns(List<(Widget, double)> sections) {
+    var best = 0;
+    var bestHeight = double.infinity;
+    // Few sections: try every split, the most important one on the left.
+    for (var mask = 0; mask < 1 << sections.length; mask += 2) {
+      var left = 0.0, right = 0.0;
+      for (final (i, (_, rows)) in sections.indexed) {
+        if (mask & (1 << i) == 0) {
+          left += rows;
+        } else {
+          right += rows;
+        }
+      }
+      final height = left > right ? left : right;
+      if (height < bestHeight) (best, bestHeight) = (mask, height);
+    }
+    List<Widget> column(bool right) => [
+          for (final (i, (section, _)) in sections.indexed)
+            if ((best & (1 << i) != 0) == right) section,
+        ];
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(child: _spaced(column(false))),
+        const SizedBox(width: 12),
+        Expanded(child: _spaced(column(true))),
+      ],
+    );
   }
 
   /// [children] below each other, 12 pixels apart.

@@ -47,6 +47,7 @@ class _PipelineRunScreenState extends State<PipelineRunScreen> {
   Object? _error;
   Timer? _refresh;
   bool _visible = true;
+  late final AppLifecycleListener _lifecycle;
 
   /// The lines around the first error in the logs of failed tasks, by log
   /// URL; empty while loading or when the log couldn't be loaded.
@@ -54,6 +55,15 @@ class _PipelineRunScreenState extends State<PipelineRunScreen> {
 
   /// Logs are fetched for this many failed tasks at most.
   static const _maxExcerpts = 5;
+
+  @override
+  void initState() {
+    super.initState();
+    // Back from the background: the run may have moved on meanwhile.
+    _lifecycle = AppLifecycleListener(onResume: () {
+      if (mounted && _visible) _load();
+    });
+  }
 
   @override
   void didChangeDependencies() {
@@ -71,6 +81,7 @@ class _PipelineRunScreenState extends State<PipelineRunScreen> {
   @override
   void dispose() {
     _refresh?.cancel();
+    _lifecycle.dispose();
     super.dispose();
   }
 

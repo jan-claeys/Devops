@@ -7,6 +7,7 @@ import 'work_item.dart';
 class DashboardSummary {
   DashboardSummary({
     this.runs = const [],
+    this.defaultBranchRuns = const [],
     this.pullRequests = const [],
     this.tickets = const [],
     this.me,
@@ -15,6 +16,10 @@ class DashboardSummary {
 
   /// Builds and releases, newest first.
   final List<PipelineRun> runs;
+
+  /// The latest completed builds on the default branch of their repository,
+  /// newest first.
+  final List<PipelineRun> defaultBranchRuns;
   final List<PullRequest> pullRequests;
   final List<WorkItem> tickets;
 
@@ -28,7 +33,9 @@ class DashboardSummary {
   /// After how long without changes a ticket counts as stale.
   static const staleAfter = Duration(days: 14);
 
-  static const mainBranches = {'main', 'master'};
+  /// How long a pipeline failing on the default branch stays on the list, so
+  /// one nobody runs anymore doesn't stay forever.
+  static const failingOnMainAge = Duration(days: 30);
 
   static const _results = {
     RunStatus.succeeded,
@@ -69,13 +76,15 @@ class DashboardSummary {
       if (r.status == RunStatus.waitingForApproval && r.pendingApproverIds.contains(me)) r,
   ];
 
-  /// Builds whose last result on the main branch failed.
+  /// Pipelines whose last result on the default branch failed.
   late final List<PipelineRun> failingOnMain = () {
     final seen = <Object>{};
     return [
-      for (final r in runs)
-        if (!r.isRelease && mainBranches.contains(r.branch) && _results.contains(r.status))
-          if (seen.add(_pipelineBranch(r)) && r.status == RunStatus.failed) r,
+      for (final r in defaultBranchRuns)
+        if (_results.contains(r.status) && seen.add(_pipelineBranch(r)))
+          if (r.status == RunStatus.failed &&
+              now.difference(r.finishTime ?? r.queueTime ?? now) < failingOnMainAge)
+            r,
     ];
   }();
 

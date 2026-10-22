@@ -56,6 +56,16 @@ class _PipelinesScreenState extends State<PipelinesScreen> {
   String? _loadedFor;
   Timer? _refresh;
   bool _visible = true;
+  late final AppLifecycleListener _lifecycle;
+
+  @override
+  void initState() {
+    super.initState();
+    // Back from the background: runs may have started or finished meanwhile.
+    _lifecycle = AppLifecycleListener(onResume: () {
+      if (mounted && _visible) _load(silent: true);
+    });
+  }
 
   @override
   void didChangeDependencies() {
@@ -78,6 +88,7 @@ class _PipelinesScreenState extends State<PipelinesScreen> {
   @override
   void dispose() {
     _refresh?.cancel();
+    _lifecycle.dispose();
     _search.dispose();
     super.dispose();
   }
