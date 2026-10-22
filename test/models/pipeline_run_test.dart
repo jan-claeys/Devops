@@ -37,6 +37,20 @@ void main() {
           const Duration(seconds: 30));
     });
 
+    test('reads the validation errors of a run', () {
+      final run = PipelineRun.fromJson({
+        ...runJson(1, result: 'failed'),
+        'validationResults': [
+          {'result': 'error', 'message': '/azure-pipelines.yml: Unexpected value'},
+          {'result': 'warning', 'message': 'Deprecated'},
+        ],
+      });
+      expect(run.issues, [
+        (isError: true, message: '/azure-pipelines.yml: Unexpected value'),
+        (isError: false, message: 'Deprecated'),
+      ]);
+    });
+
     test('keeps branches outside refs/heads', () {
       expect(PipelineRun.fromJson(runJson(1, branch: 'refs/pull/4/merge')).branch,
           'refs/pull/4/merge');
@@ -76,6 +90,31 @@ void main() {
       expect(timeline.children('j1').map((r) => r.status),
           [RunStatus.succeeded, RunStatus.running, RunStatus.skipped]);
       expect(timeline.roots[1].status, RunStatus.pending);
+    });
+
+    test('collects the errors of all steps, once each', () {
+      final failed = Timeline([
+        for (final json in [
+          recordJson('s1', 'Stage', 'Build', result: 'failed', errors: ['Stage failed']),
+          recordJson('p1', 'Phase', 'Phase', parent: 's1', errors: ['No agent']),
+          recordJson('j1', 'Job', 'Build job', parent: 'p1', result: 'failed',
+              errors: ['Bash exited with code 1']),
+          recordJson('t1', 'Task', 'Compile', parent: 'j1', result: 'failed',
+              errors: ['error CS1002: ; expected', 'Bash exited with code 1'],
+              log: 'https://dev.azure.com/contoso/1/_apis/build/builds/1/logs/5'),
+        ])
+          TimelineRecord.fromJson(json),
+      ]);
+      expect([for (final (r, i) in failed.errors) (r.id, i.message)], [
+        ('t1', 'error CS1002: ; expected'),
+        ('t1', 'Bash exited with code 1'),
+        ('p1', 'No agent'),
+        ('s1', 'Stage failed'),
+      ]);
+      final task = failed.tasks.single;
+      expect(failed.path(task), ['Build', 'Build job', 'Compile']);
+      expect(task.logUrl, endsWith('/logs/5'));
+      expect(timeline.errors, isEmpty);
     });
 
     test('counts finished tasks', () {
@@ -157,13 +196,19 @@ void main() {
           .single['tasks'] as List)
           .single as Map<String, dynamic>;
       task['issues'] = [
-        {'issueType': 'Error'},
+        {'issueType': 'Error', 'message': 'Deployment failed'},
         {'issueType': 'Warning'},
         {'issueType': 'Warning'},
       ];
-      final record = Timeline.fromRelease(releaseJson(1, environments: [env])).tasks.single;
+      task['logUrl'] = 'https://vsrm.dev.azure.com/contoso/logs/1';
+      final timeline = Timeline.fromRelease(releaseJson(1, environments: [env]));
+      final record = timeline.tasks.single;
       expect((record.errorCount, record.warningCount), (1, 2));
       expect(record.status, RunStatus.failed);
+      expect(record.logUrl, 'https://vsrm.dev.azure.com/contoso/logs/1');
+      expect([for (final (r, i) in timeline.errors) (r.name, i.message)],
+          [('Deploy', 'Deployment failed')]);
+      expect(timeline.path(record), ['Test', 'Agent job', 'Deploy']);
     });
   });
 }

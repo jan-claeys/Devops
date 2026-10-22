@@ -461,6 +461,9 @@ class AppLocalizationsJa extends AppLocalizations {
   String get scopeReviewing => 'レビュー担当';
 
   @override
+  String get scopeMine => '自分';
+
+  @override
   String get loadPullRequestsFailed => 'プル リクエストを読み込めませんでした';
 
   @override
@@ -535,4 +538,110 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get threadResolved => '解決済み';
+
+  @override
+  String get runErrors => 'エラー';
+
+  @override
+  String get viewLog => 'ログを表示';
+
+  @override
+  String showAll(int count) {
+    return 'すべて表示 ($count)';
+  }
+
+  @override
+  String get copyLog => 'ログをコピー';
+
+  @override
+  String get logCopied => 'ログをコピーしました';
+
+  @override
+  String get logEmpty => 'このログは空です。';
+
+  @override
+  String get showMore => 'もっと見る';
+
+  @override
+  String get showLess => '表示を減らす';
+
+  @override
+  String get onlyErrorsAndWarnings => 'エラーと警告のみ';
+
+  @override
+  String get noLogIssues => 'このログにエラーや警告はありません。';
+
+  @override
+  String get previousError => '前のエラー';
+
+  @override
+  String get nextError => '次のエラー';
+
+  @override
+  String errorPosition(int current, int total) {
+    return 'エラー $current/$total';
+  }
+
+  @override
+  String errorCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count 件のエラー',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get dashboard => '概要';
+
+  @override
+  String refreshFailed(String time) {
+    return '更新できませんでした。データ: $time';
+  }
+
+  @override
+  String get loadDashboardFailed => '概要を読み込めませんでした';
+
+  @override
+  String get myPullRequests => '自分のプル リクエスト';
+
+  @override
+  String get myTickets => '自分の未完了チケット';
+
+  @override
+  String get waitingForYourReview => 'あなたのレビュー待ち';
+
+  @override
+  String get waitingForYou => 'あなた待ち';
+
+  @override
+  String get nothingWaiting => '現在あなたを待っているものはありません。';
+
+  @override
+  String get readyToComplete => '承認済み、完了できます';
+
+  @override
+  String get yourApproval => 'あなたの承認待ち';
+
+  @override
+  String get myRuns => '自分の実行';
+
+  @override
+  String get noRecentRuns => '最近開始した実行はありません。';
+
+  @override
+  String failingOnMain(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count 件のパイプラインがメイン ブランチで失敗しています',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String noChangesFor(int count) {
+    return '$count 日間変更なし';
+  }
 }

@@ -474,6 +474,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get scopeReviewing => 'Da revisionare';
 
   @override
+  String get scopeMine => 'Mie';
+
+  @override
   String get loadPullRequestsFailed => 'Impossibile caricare le pull request';
 
   @override
@@ -552,4 +555,112 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get threadResolved => 'Risolto';
+
+  @override
+  String get runErrors => 'Errori';
+
+  @override
+  String get viewLog => 'Visualizza log';
+
+  @override
+  String showAll(int count) {
+    return 'Mostra tutti ($count)';
+  }
+
+  @override
+  String get copyLog => 'Copia log';
+
+  @override
+  String get logCopied => 'Log copiato';
+
+  @override
+  String get logEmpty => 'Questo log è vuoto.';
+
+  @override
+  String get showMore => 'Mostra di più';
+
+  @override
+  String get showLess => 'Mostra meno';
+
+  @override
+  String get onlyErrorsAndWarnings => 'Solo errori e avvisi';
+
+  @override
+  String get noLogIssues => 'Nessun errore o avviso in questo log.';
+
+  @override
+  String get previousError => 'Errore precedente';
+
+  @override
+  String get nextError => 'Errore successivo';
+
+  @override
+  String errorPosition(int current, int total) {
+    return 'Errore $current di $total';
+  }
+
+  @override
+  String errorCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count errori',
+      one: '1 errore',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get dashboard => 'Panoramica';
+
+  @override
+  String refreshFailed(String time) {
+    return 'Impossibile aggiornare. Dati di $time.';
+  }
+
+  @override
+  String get loadDashboardFailed => 'Impossibile caricare la panoramica';
+
+  @override
+  String get myPullRequests => 'Le mie pull request';
+
+  @override
+  String get myTickets => 'I miei ticket aperti';
+
+  @override
+  String get waitingForYourReview => 'In attesa della tua revisione';
+
+  @override
+  String get waitingForYou => 'In attesa di te';
+
+  @override
+  String get nothingWaiting => 'Al momento non c’è niente che ti aspetta.';
+
+  @override
+  String get readyToComplete => 'Approvata, pronta per il completamento';
+
+  @override
+  String get yourApproval => 'In attesa della tua approvazione';
+
+  @override
+  String get myRuns => 'Le mie esecuzioni';
+
+  @override
+  String get noRecentRuns => 'Non hai avviato esecuzioni di recente.';
+
+  @override
+  String failingOnMain(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count pipeline non riescono sul branch principale',
+      one: '1 pipeline non riesce sul branch principale',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String noChangesFor(int count) {
+    return 'Nessuna modifica da $count g';
+  }
 }

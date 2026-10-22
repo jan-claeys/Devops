@@ -473,6 +473,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get scopeReviewing => 'Reviewing';
 
   @override
+  String get scopeMine => 'Mine';
+
+  @override
   String get loadPullRequestsFailed => 'Couldn\'t load pull requests';
 
   @override
@@ -551,4 +554,112 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get threadResolved => 'Resolved';
+
+  @override
+  String get runErrors => 'Errors';
+
+  @override
+  String get viewLog => 'View log';
+
+  @override
+  String showAll(int count) {
+    return 'Show all ($count)';
+  }
+
+  @override
+  String get copyLog => 'Copy log';
+
+  @override
+  String get logCopied => 'Log copied';
+
+  @override
+  String get logEmpty => 'This log is empty.';
+
+  @override
+  String get showMore => 'Show more';
+
+  @override
+  String get showLess => 'Show less';
+
+  @override
+  String get onlyErrorsAndWarnings => 'Only errors and warnings';
+
+  @override
+  String get noLogIssues => 'No errors or warnings in this log.';
+
+  @override
+  String get previousError => 'Previous error';
+
+  @override
+  String get nextError => 'Next error';
+
+  @override
+  String errorPosition(int current, int total) {
+    return 'Error $current of $total';
+  }
+
+  @override
+  String errorCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count errors',
+      one: '1 error',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get dashboard => 'Overview';
+
+  @override
+  String refreshFailed(String time) {
+    return 'Couldn\'t refresh. Showing data from $time.';
+  }
+
+  @override
+  String get loadDashboardFailed => 'Couldn\'t load the overview';
+
+  @override
+  String get myPullRequests => 'My pull requests';
+
+  @override
+  String get myTickets => 'My open tickets';
+
+  @override
+  String get waitingForYourReview => 'Waiting for your review';
+
+  @override
+  String get waitingForYou => 'Waiting for you';
+
+  @override
+  String get nothingWaiting => 'Nothing is waiting for you right now.';
+
+  @override
+  String get readyToComplete => 'Approved, ready to complete';
+
+  @override
+  String get yourApproval => 'Waiting for your approval';
+
+  @override
+  String get myRuns => 'My runs';
+
+  @override
+  String get noRecentRuns => 'You haven\'t started any runs recently.';
+
+  @override
+  String failingOnMain(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count pipelines fail on the main branch',
+      one: '1 pipeline fails on the main branch',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String noChangesFor(int count) {
+    return 'No changes for $count d';
+  }
 }

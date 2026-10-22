@@ -19,10 +19,10 @@ class PullRequestsScreen extends StatefulWidget {
   const PullRequestsScreen({super.key});
 
   @override
-  State<PullRequestsScreen> createState() => _PullRequestsScreenState();
+  State<PullRequestsScreen> createState() => PullRequestsScreenState();
 }
 
-class _PullRequestsScreenState extends State<PullRequestsScreen> {
+class PullRequestsScreenState extends State<PullRequestsScreen> {
   static const _wideBreakpoint = 840.0;
 
   final _search = TextEditingController();
@@ -51,6 +51,17 @@ class _PullRequestsScreenState extends State<PullRequestsScreen> {
   void dispose() {
     _search.dispose();
     super.dispose();
+  }
+
+  /// Shows the open pull requests of the user, as counted on the overview.
+  void showMine() {
+    _search.clear();
+    setState(() {
+      _scope = PullRequestScope.mine;
+      _openOnly = true;
+      _selected = null;
+    });
+    _load();
   }
 
   Future<void> _load() async {
@@ -214,6 +225,10 @@ class _PullRequestsScreenState extends State<PullRequestsScreen> {
                 child: SegmentedButton<PullRequestScope>(
                   showSelectedIcon: false,
                   segments: [
+                    ButtonSegment(
+                        value: PullRequestScope.mine,
+                        icon: const Icon(Icons.person_outline),
+                        label: Text(l10n.scopeMine)),
                     ButtonSegment(
                         value: PullRequestScope.reviewing,
                         icon: const Icon(Icons.rate_review_outlined),

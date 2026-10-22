@@ -468,6 +468,9 @@ class AppLocalizationsHi extends AppLocalizations {
   String get scopeReviewing => 'समीक्षा के लिए';
 
   @override
+  String get scopeMine => 'मेरे';
+
+  @override
   String get loadPullRequestsFailed => 'पुल रिक्वेस्ट लोड नहीं हो सके';
 
   @override
@@ -546,4 +549,112 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get threadResolved => 'हल किया गया';
+
+  @override
+  String get runErrors => 'त्रुटियाँ';
+
+  @override
+  String get viewLog => 'लॉग देखें';
+
+  @override
+  String showAll(int count) {
+    return 'सभी दिखाएँ ($count)';
+  }
+
+  @override
+  String get copyLog => 'लॉग कॉपी करें';
+
+  @override
+  String get logCopied => 'लॉग कॉपी किया गया';
+
+  @override
+  String get logEmpty => 'यह लॉग खाली है।';
+
+  @override
+  String get showMore => 'और दिखाएँ';
+
+  @override
+  String get showLess => 'कम दिखाएँ';
+
+  @override
+  String get onlyErrorsAndWarnings => 'केवल त्रुटियाँ और चेतावनियाँ';
+
+  @override
+  String get noLogIssues => 'इस लॉग में कोई त्रुटि या चेतावनी नहीं है।';
+
+  @override
+  String get previousError => 'पिछली त्रुटि';
+
+  @override
+  String get nextError => 'अगली त्रुटि';
+
+  @override
+  String errorPosition(int current, int total) {
+    return 'त्रुटि $current / $total';
+  }
+
+  @override
+  String errorCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count त्रुटियाँ',
+      one: '1 त्रुटि',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get dashboard => 'अवलोकन';
+
+  @override
+  String refreshFailed(String time) {
+    return 'रीफ़्रेश नहीं हो सका। डेटा: $time।';
+  }
+
+  @override
+  String get loadDashboardFailed => 'अवलोकन लोड नहीं हो सका';
+
+  @override
+  String get myPullRequests => 'मेरे पुल रिक्वेस्ट';
+
+  @override
+  String get myTickets => 'मेरे खुले टिकट';
+
+  @override
+  String get waitingForYourReview => 'आपकी समीक्षा की प्रतीक्षा में';
+
+  @override
+  String get waitingForYou => 'आपकी प्रतीक्षा में';
+
+  @override
+  String get nothingWaiting => 'अभी कुछ भी आपकी प्रतीक्षा में नहीं है।';
+
+  @override
+  String get readyToComplete => 'स्वीकृत, पूरा करने के लिए तैयार';
+
+  @override
+  String get yourApproval => 'आपकी स्वीकृति की प्रतीक्षा में';
+
+  @override
+  String get myRuns => 'मेरे रन';
+
+  @override
+  String get noRecentRuns => 'आपने हाल में कोई रन शुरू नहीं किया।';
+
+  @override
+  String failingOnMain(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count पाइपलाइन मुख्य ब्रांच पर विफल हैं',
+      one: '1 पाइपलाइन मुख्य ब्रांच पर विफल है',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String noChangesFor(int count) {
+    return '$count दिन से कोई बदलाव नहीं';
+  }
 }

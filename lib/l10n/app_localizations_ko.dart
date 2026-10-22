@@ -461,6 +461,9 @@ class AppLocalizationsKo extends AppLocalizations {
   String get scopeReviewing => '검토 대상';
 
   @override
+  String get scopeMine => '내 항목';
+
+  @override
   String get loadPullRequestsFailed => '끌어오기 요청을 불러오지 못했습니다';
 
   @override
@@ -535,4 +538,110 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get threadResolved => '해결됨';
+
+  @override
+  String get runErrors => '오류';
+
+  @override
+  String get viewLog => '로그 보기';
+
+  @override
+  String showAll(int count) {
+    return '모두 보기 ($count)';
+  }
+
+  @override
+  String get copyLog => '로그 복사';
+
+  @override
+  String get logCopied => '로그를 복사했습니다';
+
+  @override
+  String get logEmpty => '이 로그는 비어 있습니다.';
+
+  @override
+  String get showMore => '더 보기';
+
+  @override
+  String get showLess => '간략히 보기';
+
+  @override
+  String get onlyErrorsAndWarnings => '오류 및 경고만';
+
+  @override
+  String get noLogIssues => '이 로그에는 오류나 경고가 없습니다.';
+
+  @override
+  String get previousError => '이전 오류';
+
+  @override
+  String get nextError => '다음 오류';
+
+  @override
+  String errorPosition(int current, int total) {
+    return '오류 $current/$total';
+  }
+
+  @override
+  String errorCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '오류 $count개',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get dashboard => '개요';
+
+  @override
+  String refreshFailed(String time) {
+    return '새로 고치지 못했습니다. 데이터: $time';
+  }
+
+  @override
+  String get loadDashboardFailed => '개요를 불러오지 못했습니다';
+
+  @override
+  String get myPullRequests => '내 끌어오기 요청';
+
+  @override
+  String get myTickets => '내 열린 티켓';
+
+  @override
+  String get waitingForYourReview => '내 검토 대기 중';
+
+  @override
+  String get waitingForYou => '나를 기다리는 항목';
+
+  @override
+  String get nothingWaiting => '지금은 기다리는 항목이 없습니다.';
+
+  @override
+  String get readyToComplete => '승인됨, 완료 가능';
+
+  @override
+  String get yourApproval => '내 승인 대기 중';
+
+  @override
+  String get myRuns => '내 실행';
+
+  @override
+  String get noRecentRuns => '최근에 시작한 실행이 없습니다.';
+
+  @override
+  String failingOnMain(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '파이프라인 $count개가 기본 분기에서 실패 중',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String noChangesFor(int count) {
+    return '$count일 동안 변경 없음';
+  }
 }

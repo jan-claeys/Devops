@@ -73,6 +73,8 @@ Map<String, dynamic> recordJson(
   String state = 'completed',
   String? result = 'succeeded',
   int order = 1,
+  List<String> errors = const [],
+  String? log,
 }) =>
     {
       'id': id,
@@ -82,6 +84,11 @@ Map<String, dynamic> recordJson(
       'state': state,
       'result': result,
       'order': order,
+      'errorCount': errors.length,
+      'issues': [
+        for (final message in errors) {'type': 'error', 'category': 'General', 'message': message},
+      ],
+      if (log != null) 'log': {'id': 1, 'type': 'Container', 'url': log},
     };
 
 /// Raw release JSON as returned by Azure DevOps, with [environments] from
@@ -222,6 +229,9 @@ class FakeDevOps {
   final runs = <int, Map<String, dynamic>>{};
   final timelines = <int, List<Map<String, dynamic>>>{};
 
+  /// The text of logs, by the path of their URL.
+  final logs = <String, String>{};
+
   /// Releases of classic release pipelines, by id, all in Contoso.
   final releases = <int, Map<String, dynamic>>{};
 
@@ -250,6 +260,9 @@ class FakeDevOps {
     final path = request.url.path;
     if (failWith != null && (failPath == null || path.contains(failPath!))) {
       return http.Response('{}', failWith!);
+    }
+    if (logs[path] case final log?) {
+      return http.Response.bytes(utf8.encode(log), 200, headers: {'content-type': 'text/plain'});
     }
     if (path.endsWith('/_apis/projects')) {
       return _json({'value': projects});

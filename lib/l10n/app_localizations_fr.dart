@@ -476,6 +476,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get scopeReviewing => 'À relire';
 
   @override
+  String get scopeMine => 'Les miennes';
+
+  @override
   String get loadPullRequestsFailed =>
       'Impossible de charger les pull requests';
 
@@ -555,4 +558,113 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get threadResolved => 'Résolu';
+
+  @override
+  String get runErrors => 'Erreurs';
+
+  @override
+  String get viewLog => 'Voir le journal';
+
+  @override
+  String showAll(int count) {
+    return 'Tout afficher ($count)';
+  }
+
+  @override
+  String get copyLog => 'Copier le journal';
+
+  @override
+  String get logCopied => 'Journal copié';
+
+  @override
+  String get logEmpty => 'Ce journal est vide.';
+
+  @override
+  String get showMore => 'Afficher plus';
+
+  @override
+  String get showLess => 'Afficher moins';
+
+  @override
+  String get onlyErrorsAndWarnings => 'Erreurs et avertissements uniquement';
+
+  @override
+  String get noLogIssues =>
+      'Aucune erreur ni aucun avertissement dans ce journal.';
+
+  @override
+  String get previousError => 'Erreur précédente';
+
+  @override
+  String get nextError => 'Erreur suivante';
+
+  @override
+  String errorPosition(int current, int total) {
+    return 'Erreur $current sur $total';
+  }
+
+  @override
+  String errorCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count erreurs',
+      one: '1 erreur',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get dashboard => 'Vue d’ensemble';
+
+  @override
+  String refreshFailed(String time) {
+    return 'Actualisation impossible. Données : $time.';
+  }
+
+  @override
+  String get loadDashboardFailed => 'Impossible de charger la vue d’ensemble';
+
+  @override
+  String get myPullRequests => 'Mes pull requests';
+
+  @override
+  String get myTickets => 'Mes tickets ouverts';
+
+  @override
+  String get waitingForYourReview => 'En attente de votre revue';
+
+  @override
+  String get waitingForYou => 'En attente de vous';
+
+  @override
+  String get nothingWaiting => 'Rien ne vous attend pour le moment.';
+
+  @override
+  String get readyToComplete => 'Approuvée, prête à être terminée';
+
+  @override
+  String get yourApproval => 'En attente de votre approbation';
+
+  @override
+  String get myRuns => 'Mes exécutions';
+
+  @override
+  String get noRecentRuns => 'Vous n’avez lancé aucune exécution récemment.';
+
+  @override
+  String failingOnMain(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count pipelines échouent sur la branche principale',
+      one: '1 pipeline échoue sur la branche principale',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String noChangesFor(int count) {
+    return 'Inchangé depuis $count j';
+  }
 }

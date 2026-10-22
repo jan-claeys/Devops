@@ -478,6 +478,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get scopeReviewing => 'На проверку';
 
   @override
+  String get scopeMine => 'Мои';
+
+  @override
   String get loadPullRequestsFailed => 'Не удалось загрузить pull request’ы';
 
   @override
@@ -558,4 +561,116 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get threadResolved => 'Решено';
+
+  @override
+  String get runErrors => 'Ошибки';
+
+  @override
+  String get viewLog => 'Показать журнал';
+
+  @override
+  String showAll(int count) {
+    return 'Показать все ($count)';
+  }
+
+  @override
+  String get copyLog => 'Копировать журнал';
+
+  @override
+  String get logCopied => 'Журнал скопирован';
+
+  @override
+  String get logEmpty => 'Этот журнал пуст.';
+
+  @override
+  String get showMore => 'Показать больше';
+
+  @override
+  String get showLess => 'Показать меньше';
+
+  @override
+  String get onlyErrorsAndWarnings => 'Только ошибки и предупреждения';
+
+  @override
+  String get noLogIssues => 'В этом журнале нет ошибок и предупреждений.';
+
+  @override
+  String get previousError => 'Предыдущая ошибка';
+
+  @override
+  String get nextError => 'Следующая ошибка';
+
+  @override
+  String errorPosition(int current, int total) {
+    return 'Ошибка $current из $total';
+  }
+
+  @override
+  String errorCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count ошибки',
+      many: '$count ошибок',
+      few: '$count ошибки',
+      one: '1 ошибка',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get dashboard => 'Обзор';
+
+  @override
+  String refreshFailed(String time) {
+    return 'Не удалось обновить. Данные: $time.';
+  }
+
+  @override
+  String get loadDashboardFailed => 'Не удалось загрузить обзор';
+
+  @override
+  String get myPullRequests => 'Мои pull request’ы';
+
+  @override
+  String get myTickets => 'Мои открытые тикеты';
+
+  @override
+  String get waitingForYourReview => 'Ждёт вашего ревью';
+
+  @override
+  String get waitingForYou => 'Ждёт вас';
+
+  @override
+  String get nothingWaiting => 'Сейчас вас ничего не ждёт.';
+
+  @override
+  String get readyToComplete => 'Одобрен, можно завершить';
+
+  @override
+  String get yourApproval => 'Ждёт вашего одобрения';
+
+  @override
+  String get myRuns => 'Мои запуски';
+
+  @override
+  String get noRecentRuns => 'Вы давно не запускали конвейеры.';
+
+  @override
+  String failingOnMain(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count конвейера падают на основной ветке',
+      many: '$count конвейеров падают на основной ветке',
+      few: '$count конвейера падают на основной ветке',
+      one: '$count конвейер падает на основной ветке',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String noChangesFor(int count) {
+    return 'Без изменений $count дн.';
+  }
 }

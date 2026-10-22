@@ -471,6 +471,9 @@ class AppLocalizationsId extends AppLocalizations {
   String get scopeReviewing => 'Untuk ditinjau';
 
   @override
+  String get scopeMine => 'Milik saya';
+
+  @override
   String get loadPullRequestsFailed => 'Tidak dapat memuat pull request';
 
   @override
@@ -548,4 +551,110 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get threadResolved => 'Terselesaikan';
+
+  @override
+  String get runErrors => 'Kesalahan';
+
+  @override
+  String get viewLog => 'Lihat log';
+
+  @override
+  String showAll(int count) {
+    return 'Tampilkan semua ($count)';
+  }
+
+  @override
+  String get copyLog => 'Salin log';
+
+  @override
+  String get logCopied => 'Log disalin';
+
+  @override
+  String get logEmpty => 'Log ini kosong.';
+
+  @override
+  String get showMore => 'Tampilkan lebih banyak';
+
+  @override
+  String get showLess => 'Tampilkan lebih sedikit';
+
+  @override
+  String get onlyErrorsAndWarnings => 'Hanya kesalahan dan peringatan';
+
+  @override
+  String get noLogIssues => 'Tidak ada kesalahan atau peringatan di log ini.';
+
+  @override
+  String get previousError => 'Kesalahan sebelumnya';
+
+  @override
+  String get nextError => 'Kesalahan berikutnya';
+
+  @override
+  String errorPosition(int current, int total) {
+    return 'Kesalahan $current dari $total';
+  }
+
+  @override
+  String errorCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count kesalahan',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get dashboard => 'Ringkasan';
+
+  @override
+  String refreshFailed(String time) {
+    return 'Tidak dapat memperbarui. Data dari $time.';
+  }
+
+  @override
+  String get loadDashboardFailed => 'Tidak dapat memuat ringkasan';
+
+  @override
+  String get myPullRequests => 'Pull request saya';
+
+  @override
+  String get myTickets => 'Tiket terbuka saya';
+
+  @override
+  String get waitingForYourReview => 'Menunggu tinjauan Anda';
+
+  @override
+  String get waitingForYou => 'Menunggu Anda';
+
+  @override
+  String get nothingWaiting => 'Tidak ada yang menunggu Anda saat ini.';
+
+  @override
+  String get readyToComplete => 'Disetujui, siap diselesaikan';
+
+  @override
+  String get yourApproval => 'Menunggu persetujuan Anda';
+
+  @override
+  String get myRuns => 'Run saya';
+
+  @override
+  String get noRecentRuns => 'Anda belum memulai run akhir-akhir ini.';
+
+  @override
+  String failingOnMain(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count pipeline gagal di branch utama',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String noChangesFor(int count) {
+    return 'Tidak berubah selama $count h';
+  }
 }

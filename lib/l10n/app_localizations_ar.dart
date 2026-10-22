@@ -480,6 +480,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get scopeReviewing => 'للمراجعة';
 
   @override
+  String get scopeMine => 'الخاصة بي';
+
+  @override
   String get loadPullRequestsFailed => 'تعذّر تحميل طلبات السحب';
 
   @override
@@ -561,4 +564,112 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get threadResolved => 'تم الحل';
+
+  @override
+  String get runErrors => 'الأخطاء';
+
+  @override
+  String get viewLog => 'عرض السجل';
+
+  @override
+  String showAll(int count) {
+    return 'عرض الكل ($count)';
+  }
+
+  @override
+  String get copyLog => 'نسخ السجل';
+
+  @override
+  String get logCopied => 'تم نسخ السجل';
+
+  @override
+  String get logEmpty => 'هذا السجل فارغ.';
+
+  @override
+  String get showMore => 'عرض المزيد';
+
+  @override
+  String get showLess => 'عرض أقل';
+
+  @override
+  String get onlyErrorsAndWarnings => 'الأخطاء والتحذيرات فقط';
+
+  @override
+  String get noLogIssues => 'لا توجد أخطاء أو تحذيرات في هذا السجل.';
+
+  @override
+  String get previousError => 'الخطأ السابق';
+
+  @override
+  String get nextError => 'الخطأ التالي';
+
+  @override
+  String errorPosition(int current, int total) {
+    return 'الخطأ $current من $total';
+  }
+
+  @override
+  String errorCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count أخطاء',
+      one: 'خطأ واحد',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get dashboard => 'نظرة عامة';
+
+  @override
+  String refreshFailed(String time) {
+    return 'تعذّر التحديث. البيانات من $time.';
+  }
+
+  @override
+  String get loadDashboardFailed => 'تعذّر تحميل النظرة العامة';
+
+  @override
+  String get myPullRequests => 'طلبات السحب الخاصة بي';
+
+  @override
+  String get myTickets => 'تذاكري المفتوحة';
+
+  @override
+  String get waitingForYourReview => 'بانتظار مراجعتك';
+
+  @override
+  String get waitingForYou => 'بانتظارك';
+
+  @override
+  String get nothingWaiting => 'لا شيء بانتظارك الآن.';
+
+  @override
+  String get readyToComplete => 'تمت الموافقة، جاهز للإكمال';
+
+  @override
+  String get yourApproval => 'بانتظار موافقتك';
+
+  @override
+  String get myRuns => 'عمليات التشغيل الخاصة بي';
+
+  @override
+  String get noRecentRuns => 'لم تبدأ أي عمليات تشغيل مؤخرًا.';
+
+  @override
+  String failingOnMain(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count مسارات تفشل على الفرع الرئيسي',
+      one: 'مسار واحد يفشل على الفرع الرئيسي',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String noChangesFor(int count) {
+    return 'بدون تغييرات منذ $count يوم';
+  }
 }

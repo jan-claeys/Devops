@@ -46,7 +46,25 @@ enum RunStatus {
 enum RunKind { build, release }
 
 /// A stage of a release with its status, as shown in the list of runs.
-typedef StageSummary = ({String name, RunStatus status});
+typedef StageSummary = ({
+  String name,
+  RunStatus status,
+  DateTime? startTime,
+  DateTime? finishTime,
+});
+
+/// An error or warning logged by a step of a run, or found while validating
+/// the pipeline before the run started.
+typedef RunIssue = ({bool isError, String message});
+
+List<RunIssue> _issues(Object? json, String typeKey) => [
+      for (final issue in ((json as List?) ?? const []).cast<Map<String, dynamic>>())
+        if (issue['message'] case final String message when message.trim().isNotEmpty)
+          (
+            isError: '${issue[typeKey]}'.toLowerCase() == 'error',
+            message: message.trim(),
+          ),
+    ];
 
 /// A run of a pipeline: a build, or a release of a classic release pipeline.
 class PipelineRun {
@@ -57,6 +75,7 @@ class PipelineRun {
     required this.pipelineName,
     required this.project,
     this.kind = RunKind.build,
+    this.definitionId,
     this.sourceBranch,
     this.requestedFor,
     this.queueTime,
@@ -65,6 +84,8 @@ class PipelineRun {
     this.artifactVersion,
     this.stages = const [],
     this.webUrl,
+    this.issues = const [],
+    this.pendingApproverIds = const {},
   });
 
   final int id;
@@ -75,6 +96,9 @@ class PipelineRun {
   final String pipelineName;
   final String project;
   final RunKind kind;
+
+  /// The pipeline the run belongs to, within its [project].
+  final int? definitionId;
   final String? sourceBranch;
   final Identity? requestedFor;
 
@@ -92,6 +116,13 @@ class PipelineRun {
   /// Link to the run in Azure DevOps, when the API returns one.
   final String? webUrl;
 
+  /// Problems with the pipeline itself, such as an invalid YAML file, that
+  /// keep a build from starting.
+  final List<RunIssue> issues;
+
+  /// Ids of the people and groups whose approval a release stage waits for.
+  final Set<String> pendingApproverIds;
+
   bool get isRelease => kind == RunKind.release;
 
   factory PipelineRun.fromJson(Map<String, dynamic> json) => PipelineRun(
@@ -105,11 +136,13 @@ class PipelineRun {
         },
         pipelineName: (json['definition'] as Map?)?['name'] as String? ?? '',
         project: (json['project'] as Map?)?['name'] as String? ?? '',
+        definitionId: (json['definition'] as Map?)?['id'] as int?,
         sourceBranch: json['sourceBranch'] as String?,
         requestedFor: Identity.fromJson(json['requestedFor']),
         queueTime: _date(json['queueTime']),
         startTime: _date(json['startTime']),
         finishTime: _date(json['finishTime']),
+        issues: _issues(json['validationResults'], 'result'),
       );
 
   /// A release, with its environments, artifacts and approvals expanded.
@@ -137,8 +170,13 @@ class PipelineRun {
       startTime: starts.firstOrNull,
       finishTime: status.isFinished ? finishes.lastOrNull : null,
       artifactVersion: (reference?['version'] as Map?)?['name'] as String?,
-      stages: [for (final e in environments) (name: e.name, status: e.status)],
+      definitionId: (json['releaseDefinition'] as Map?)?['id'] as int?,
+      stages: [
+        for (final e in environments)
+          (name: e.name, status: e.status, startTime: e.startTime, finishTime: e.finishTime),
+      ],
       webUrl: (((json['_links'] as Map?)?['web']) as Map?)?['href'] as String?,
+      pendingApproverIds: {for (final e in environments) ...e.approverIds},
     );
   }
 
@@ -185,6 +223,8 @@ class TimelineRecord {
     this.errorCount = 0,
     this.warningCount = 0,
     this.approvers = const [],
+    this.issues = const [],
+    this.logUrl,
   });
 
   final String id;
@@ -200,6 +240,13 @@ class TimelineRecord {
 
   /// Who still has to approve a release stage.
   final List<String> approvers;
+
+  /// The errors and warnings the step logged; Azure DevOps lists only the
+  /// first few, [errorCount] and [warningCount] count them all.
+  final List<RunIssue> issues;
+
+  /// Where the log of the step can be downloaded, once it has one.
+  final String? logUrl;
 
   bool get isTask => type == 'Task';
 
@@ -218,6 +265,8 @@ class TimelineRecord {
         finishTime: _date(json['finishTime']),
         errorCount: (json['errorCount'] as num?)?.toInt() ?? 0,
         warningCount: (json['warningCount'] as num?)?.toInt() ?? 0,
+        issues: _issues(json['issues'], 'type'),
+        logUrl: (json['log'] as Map?)?['url'] as String?,
       );
 }
 
@@ -228,6 +277,7 @@ class Timeline {
     for (final r in records) {
       final parent = ids.contains(r.parentId) ? r.parentId : null;
       (_children[parent] ??= []).add(r);
+      _records[r.id] = r;
     }
     for (final list in _children.values) {
       list.sort((a, b) => a.order.compareTo(b.order));
@@ -242,6 +292,7 @@ class Timeline {
       ]);
 
   final _children = <String?, List<TimelineRecord>>{};
+  final _records = <String, TimelineRecord>{};
   late final List<TimelineRecord> tasks;
 
   List<TimelineRecord> get roots => children(null);
@@ -256,10 +307,55 @@ class Timeline {
             r,
       ];
 
+  /// The errors of all steps in the order they ran, each with the step that
+  /// logged it. A message repeated by a parent is shown once, with the
+  /// innermost step.
+  List<(TimelineRecord, RunIssue)> get errors {
+    final seen = <String>{};
+    final errors = <(TimelineRecord, RunIssue)>[];
+    void visit(TimelineRecord record) {
+      for (final child in _children[record.id] ?? const <TimelineRecord>[]) {
+        visit(child);
+      }
+      for (final issue in record.issues) {
+        if (issue.isError && seen.add(issue.message)) errors.add((record, issue));
+      }
+    }
+
+    _children[null]?.forEach(visit);
+    return errors;
+  }
+
+  /// The names of the stage, job and task that lead to [record]; phases are
+  /// left out, as in [children].
+  List<String> path(TimelineRecord record) => [
+        for (TimelineRecord? r = record; r != null; r = _records[r.parentId])
+          if (r.type != 'Phase') r.name,
+      ].reversed.toList();
+
   int get finishedTasks => tasks.where((t) => t.status.isFinished).length;
 
   /// Share of the tasks that finished, or null before the tasks are known.
   double? get progress => tasks.isEmpty ? null : finishedTasks / tasks.length;
+
+  /// Share of the tasks of the running stages that finished, or null when no
+  /// stage with tasks is running.
+  double? get runningStagesProgress {
+    final stages = {
+      for (final r in roots)
+        if (r.status == RunStatus.running) r.id,
+    };
+    bool inRunningStage(TimelineRecord task) {
+      for (TimelineRecord? r = task; r != null; r = _records[r.parentId]) {
+        if (stages.contains(r.id)) return true;
+      }
+      return false;
+    }
+
+    final running = tasks.where(inRunningStage).toList();
+    if (running.isEmpty) return null;
+    return running.where((t) => t.status.isFinished).length / running.length;
+  }
 }
 
 /// An environment (stage) of a release.
@@ -272,12 +368,14 @@ class _ReleaseEnvironment {
       ..sort((a, b) => attempt(a).compareTo(attempt(b)));
     _phases = ((steps.lastOrNull?['releaseDeployPhases'] as List?) ?? const [])
         .cast<Map<String, dynamic>>();
-    approvers = [
+    final pending = [
       for (final key in ['preDeployApprovals', 'postDeployApprovals'])
         for (final a in ((json[key] as List?) ?? const []).cast<Map<String, dynamic>>())
           if (a['status'] == 'pending' && a['isAutomated'] != true)
-            ?Identity.fromJson(a['approver'])?.displayName,
+            ?Identity.fromJson(a['approver']),
     ];
+    approvers = [for (final a in pending) a.displayName];
+    approverIds = {for (final a in pending) ?a.id};
     final raw = json['status'] as String?;
     status = approvers.isNotEmpty
         ? RunStatus.waitingForApproval
@@ -295,7 +393,11 @@ class _ReleaseEnvironment {
     ]..sort();
     final finishes = [for (final job in jobs) ?_date(job['finishTime'])]..sort();
     startTime = starts.firstOrNull;
-    finishTime = status.isFinished ? finishes.lastOrNull : null;
+    // The list of releases leaves out the jobs; the last change to a finished
+    // deployment is when it finished.
+    finishTime = status.isFinished
+        ? finishes.lastOrNull ?? _date(steps.lastOrNull?['lastModifiedOn'])
+        : null;
   }
 
   static List<_ReleaseEnvironment> all(Map<String, dynamic> release) =>
@@ -307,6 +409,7 @@ class _ReleaseEnvironment {
   final Map<String, dynamic> json;
   late final List<Map<String, dynamic>> _phases;
   late final List<String> approvers;
+  late final Set<String> approverIds;
   late final RunStatus status;
   late final DateTime? startTime;
   late final DateTime? finishTime;
@@ -333,6 +436,10 @@ class _ReleaseEnvironment {
             name: phase['name'] as String? ?? '',
             status: RunStatus._fromRelease(phase['status'] as String?),
             order: (phase['rank'] as num?)?.toInt() ?? p,
+            issues: [
+              if (phase['errorLog'] case final String log when log.trim().isNotEmpty)
+                (isError: true, message: log.trim()),
+            ],
           ),
           for (final (j, deployment) in ((phase['deploymentJobs'] as List?) ?? const [])
               .cast<Map<String, dynamic>>()
@@ -355,7 +462,10 @@ class _ReleaseEnvironment {
     required String type,
     required int order,
   }) {
-    final issues = ((json['issues'] as List?) ?? const []).cast<Map<String, dynamic>>();
+    final types = [
+      for (final issue in ((json['issues'] as List?) ?? const []).cast<Map<String, dynamic>>())
+        issue['issueType'],
+    ];
     return TimelineRecord(
       id: id,
       parentId: parentId,
@@ -365,8 +475,10 @@ class _ReleaseEnvironment {
       order: order,
       startTime: _date(json['startTime']),
       finishTime: _date(json['finishTime']),
-      errorCount: issues.where((i) => i['issueType'] == 'Error').length,
-      warningCount: issues.where((i) => i['issueType'] == 'Warning').length,
+      errorCount: types.where((t) => t == 'Error').length,
+      warningCount: types.where((t) => t == 'Warning').length,
+      issues: _issues(json['issues'], 'issueType'),
+      logUrl: json['logUrl'] as String?,
     );
   }
 }

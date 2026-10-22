@@ -23,7 +23,8 @@ class DevOpsException implements Exception {
 
 enum WorkItemScope { assignedToMe, createdByMe, all }
 
-enum PullRequestScope { reviewing, createdByMe, all }
+/// [mine] are the pull requests the user created or reviews.
+enum PullRequestScope { mine, reviewing, createdByMe, all }
 
 /// Thin client for the Azure DevOps REST API (v7.1), authenticated with a PAT.
 class DevOpsApi {
@@ -197,15 +198,19 @@ class DevOpsApi {
         .toList();
   }
 
-  /// The latest runs of the pipelines in all [projects], newest first.
+  /// The latest runs of the pipelines in all [projects], newest first; only
+  /// those requested for the user with id [requestedFor], when given.
   Future<List<PipelineRun>> getPipelineRuns({
     required List<String> projects,
+    String? requestedFor,
     int top = 50,
   }) async {
+    final filter =
+        requestedFor == null ? '' : '&requestedFor=${Uri.encodeQueryComponent(requestedFor)}';
     final perProject = await Future.wait([
       for (final project in projects)
         _get('$baseUrl/${Uri.encodeComponent(project)}/_apis/build/builds'
-            '?\$top=$top&queryOrder=queueTimeDescending&api-version=$_apiVersion'),
+            '?\$top=$top&queryOrder=queueTimeDescending$filter&api-version=$_apiVersion'),
     ]);
     final runs = [
       for (final json in perProject)
@@ -257,6 +262,23 @@ class DevOpsApi {
     ]);
   }
 
+  /// The text of the log of a step, from [TimelineRecord.logUrl].
+  Future<String> getLog(String url) async {
+    final uri = Uri.parse(url);
+    // The URL comes from the API; still, the PAT only goes to the organization.
+    if (![baseUrl, releaseUrl].any((base) => Uri.parse(base).host == uri.host)) {
+      throw DevOpsException(DevOpsError.unexpectedResponse);
+    }
+    final response =
+        await _client.get(uri, headers: {..._headers, 'Accept': 'text/plain'});
+    _check(response);
+    // A sign-in page instead of the log when the PAT is invalid.
+    if (response.headers['content-type']?.contains('html') ?? false) {
+      throw DevOpsException(DevOpsError.unexpectedResponse, statusCode: response.statusCode);
+    }
+    return utf8.decode(response.bodyBytes, allowMalformed: true);
+  }
+
   /// Id of the user the token belongs to.
   Future<String> getCurrentUserId() async {
     if (_currentUserId case final id?) return id;
@@ -273,6 +295,19 @@ class DevOpsApi {
     bool openOnly = true,
     int top = 100,
   }) async {
+    if (scope == PullRequestScope.mine) {
+      final results = await Future.wait([
+        for (final s in [PullRequestScope.createdByMe, PullRequestScope.reviewing])
+          getPullRequests(projects: projects, scope: s, openOnly: openOnly, top: top),
+      ]);
+      // A pull request the user reviews may also be one they created.
+      final byId = {for (final pr in results.expand((prs) => prs)) pr.id: pr};
+      return (byId.values.toList()
+            ..sort((a, b) =>
+                (b.creationDate ?? DateTime(0)).compareTo(a.creationDate ?? DateTime(0))))
+          .take(top)
+          .toList();
+    }
     final me = scope == PullRequestScope.all ? null : await getCurrentUserId();
     final criteria = {
       'searchCriteria.status': openOnly ? 'active' : 'all',
@@ -340,6 +375,21 @@ class DevOpsApi {
       };
 
   Map<String, dynamic> _decode(http.Response response) {
+    _check(response);
+    final code = response.statusCode;
+    // The timeline of a run that hasn't started yet is empty or null.
+    if (code == 204 || response.bodyBytes.isEmpty) return const {};
+    try {
+      return (jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>?) ??
+          const {};
+    } on FormatException {
+      // Azure DevOps answers with an HTML sign-in page when the PAT is invalid.
+      throw DevOpsException(DevOpsError.unexpectedResponse, statusCode: code);
+    }
+  }
+
+  /// Throws when [response] is an error.
+  void _check(http.Response response) {
     final code = response.statusCode;
     if (code == 401 || code == 203 || code == 302) {
       throw DevOpsException(DevOpsError.unauthorized, statusCode: code);
@@ -354,15 +404,6 @@ class DevOpsApi {
         if (body['message'] is String) message = body['message'] as String;
       } catch (_) {}
       throw DevOpsException(DevOpsError.http, statusCode: code, serverMessage: message);
-    }
-    // The timeline of a run that hasn't started yet is empty or null.
-    if (code == 204 || response.bodyBytes.isEmpty) return const {};
-    try {
-      return (jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>?) ??
-          const {};
-    } on FormatException {
-      // Azure DevOps answers with an HTML sign-in page when the PAT is invalid.
-      throw DevOpsException(DevOpsError.unexpectedResponse, statusCode: code);
     }
   }
 }

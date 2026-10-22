@@ -1,4 +1,5 @@
 import 'package:devops/screens/home_screen.dart';
+import 'package:devops/screens/pipeline_log_screen.dart';
 import 'package:devops/screens/pipeline_run_screen.dart';
 import 'package:devops/screens/pipelines_screen.dart';
 import 'package:devops/widgets/pipeline_visuals.dart';
@@ -139,6 +140,70 @@ void main() {
     expect(buildRequests(), before);
   });
 
+  testWidgets('shows why a run failed, with the log of the failed step', (tester) async {
+    const log = 'https://dev.azure.com/contoso/1/_apis/build/builds/1/logs/7';
+    fake.timelines[1] = [
+      recordJson('s1', 'Stage', 'Build', result: 'failed'),
+      recordJson('j1', 'Job', 'Compile', parent: 's1', result: 'failed'),
+      recordJson('t1', 'Task', 'npm run build', parent: 'j1', result: 'failed',
+          errors: ['Bash exited with code 1', 'Retries failed\nat retry()\nat main()'],
+          log: log),
+    ];
+    fake.logs[Uri.parse(log).path] = '2026-10-19T10:00:01.0000000Z Installing\n'
+        '##[section]Starting: build\n'
+        'app.ts(3,1): missing semicolon\n'
+        '##[error]Exit code 1\n'
+        'Cleaning up\n'
+        '##[warning]Slow agent\n'
+        '##[error]Second error\n';
+    await pumpScreen(tester);
+    await tester.tap(find.text('Nightly'));
+    await tester.pumpAndSettle();
+
+    expect(find.text(en.runErrors), findsOneWidget);
+    // Both errors of the step are listed under its path.
+    expect(find.text('Build › Compile › npm run build'), findsOneWidget);
+    expect(find.text('Bash exited with code 1'), findsOneWidget);
+    expect(fake.requests.where((r) => r.url.path.endsWith('/logs/7')), hasLength(1));
+
+    // Long errors are collapsed to their first line until expanded.
+    expect(find.text('Retries failed'), findsOneWidget);
+    expect(find.text(en.viewLog), findsNothing);
+    await tester.tap(find.byTooltip(en.showMore).last);
+    await tester.pumpAndSettle();
+    expect(find.text('Retries failed\nat retry()\nat main()'), findsOneWidget);
+    expect(find.text(en.viewLog), findsOneWidget);
+    await tester.tap(find.byTooltip(en.showLess));
+    await tester.pumpAndSettle();
+    expect(find.text('Retries failed'), findsOneWidget);
+
+    // The cause from the log shows once the first error of the task is
+    // expanded.
+    expect(find.text('app.ts(3,1): missing semicolon'), findsNothing);
+    await tester.tap(find.byTooltip(en.showMore).first);
+    await tester.pumpAndSettle();
+    expect(find.text('app.ts(3,1): missing semicolon'), findsOneWidget);
+    expect(find.text('Exit code 1'), findsOneWidget);
+
+    // Tapping the excerpt opens the log at its first error, which steps
+    // through the others.
+    await tester.tap(find.text('app.ts(3,1): missing semicolon'));
+    await tester.pumpAndSettle();
+    expect(find.byType(PipelineLogScreen), findsOneWidget);
+    expect(find.text(en.errorPosition(1, 2)), findsOneWidget);
+    expect(find.text('Installing'), findsOneWidget);
+    await tester.tap(find.byTooltip(en.nextError));
+    await tester.pumpAndSettle();
+    expect(find.text(en.errorPosition(2, 2)), findsOneWidget);
+
+    await tester.tap(find.byTooltip(en.onlyErrorsAndWarnings));
+    await tester.pumpAndSettle();
+    expect(find.text('Installing'), findsNothing);
+    expect(find.text('Slow agent'), findsOneWidget);
+    expect(find.text('Exit code 1'), findsOneWidget);
+    expect(find.text(en.errorCount(2)), findsOneWidget);
+  });
+
   testWidgets('shows a run that hasn\'t started yet', (tester) async {
     fake.addRun(runJson(5, pipeline: 'Queued one', status: 'notStarted', result: null,
         startTime: null, finishTime: null, queueTime: '2026-10-21T10:00:00Z'));
@@ -167,23 +232,28 @@ void main() {
   testWidgets('switches between tickets and pipelines', (tester) async {
     await pumpApp(tester, const HomeScreen(), state: connectedState(fake));
     await tester.pumpAndSettle();
-    expect(find.text(en.noTicketsTitle), findsOneWidget);
     expect(find.byType(NavigationBar), findsOneWidget);
+    // The overview also has a section called Tickets.
+    Finder tab(String label) =>
+        find.descendant(of: find.byType(NavigationBar), matching: find.text(label));
+    await tester.tap(tab(en.tickets));
+    await tester.pumpAndSettle();
+    expect(find.text(en.noTicketsTitle), findsOneWidget);
 
-    await tester.tap(find.text(en.pipelines));
+    await tester.tap(tab(en.pipelines));
     await tester.pumpAndSettle();
     expect(find.text('CI'), findsOneWidget);
     expect(find.text(en.noTicketsTitle), findsNothing);
 
     // Hidden behind the tickets tab, the pipelines aren't refreshed.
-    await tester.tap(find.text(en.tickets));
+    await tester.tap(tab(en.tickets));
     await tester.pumpAndSettle();
     final before = buildRequests();
     await tester.pump(PipelinesScreen.refreshInterval * 2);
     expect(buildRequests(), before);
 
     // Shown again, they are.
-    await tester.tap(find.text(en.pipelines));
+    await tester.tap(tab(en.pipelines));
     await tester.pumpAndSettle();
     expect(buildRequests(), before + 1);
   });

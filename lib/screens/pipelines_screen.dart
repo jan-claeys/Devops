@@ -5,6 +5,7 @@ import 'package:logging/logging.dart';
 
 import '../l10n/l10n.dart';
 import '../models/pipeline_run.dart';
+import '../models/run_estimates.dart';
 import '../services/app_state.dart';
 import '../services/logging.dart';
 import '../widgets/empty_state.dart';
@@ -36,6 +37,14 @@ class _PipelinesScreenState extends State<PipelinesScreen> {
   RunKind? _kind;
 
   List<PipelineRun>? _runs;
+
+  /// How long running ones are expected to take, to estimate their progress.
+  RunEstimates _estimates = RunEstimates(const []);
+
+  /// Share of the tasks that finished, by kind, project and id, of the
+  /// running builds and releases that have no last duration to estimate
+  /// from. For a release, only its running stages count.
+  Map<(RunKind, String, int), double> _taskProgress = {};
   Object? _error;
 
   /// Releases that failed to load while the builds did, for example because
@@ -100,7 +109,9 @@ class _PipelinesScreenState extends State<PipelinesScreen> {
         _runs = runs;
         _error = null;
         _releaseError = releaseError;
+        _estimates = RunEstimates(runs);
       });
+      unawaited(_loadTaskProgress(runs));
     } catch (e, st) {
       logFailure(_log, 'Loading pipeline runs failed', e, st);
       // A failed background refresh keeps showing the runs it has.
@@ -114,6 +125,33 @@ class _PipelinesScreenState extends State<PipelinesScreen> {
         if (mounted && _visible) _load(silent: true);
       });
     }
+  }
+
+  /// Fetches the timelines of the running builds and releases that
+  /// [_estimates] can't estimate.
+  Future<void> _loadTaskProgress(List<PipelineRun> runs) async {
+    final api = AppScope.read(context).api;
+    if (api == null) return;
+    final running = [
+      for (final r in runs)
+        if (r.status == RunStatus.running && _estimates.of(r) == null) r,
+    ];
+    final progress = await Future.wait([
+      for (final r in running)
+        (r.isRelease
+                ? api.getRelease(r.project, r.id).then((p) => p.$2.runningStagesProgress)
+                : api.getTimeline(r.project, r.id).then((t) => t.progress))
+            .catchError((Object e, StackTrace st) {
+          logFailure(_log, 'Loading timeline of ${r.kind.name} ${r.id} failed', e, st);
+          // Keeps the last known progress, so the bar doesn't flicker.
+          return _taskProgress[(r.kind, r.project, r.id)];
+        }),
+    ]);
+    if (!mounted) return;
+    setState(() => _taskProgress = {
+          for (final (i, r) in running.indexed)
+            if (progress[i] case final double value) (r.kind, r.project, r.id): value,
+        });
   }
 
   List<PipelineRun> get _filtered {
@@ -338,6 +376,8 @@ class _PipelinesScreenState extends State<PipelinesScreen> {
                   itemBuilder: (context, i) => _RunCard(
                     run: runs[i],
                     showProject: state.projects.length > 1,
+                    estimate: _estimates.of(runs[i]),
+                    taskProgress: _taskProgress[(runs[i].kind, runs[i].project, runs[i].id)],
                     selected: wide &&
                         runs[i].id == _selected?.id &&
                         runs[i].kind == _selected?.kind &&
@@ -360,6 +400,8 @@ class _RunCard extends StatelessWidget {
     required this.onTap,
     this.selected = false,
     this.showProject = false,
+    this.estimate,
+    this.taskProgress,
   });
 
   final PipelineRun run;
@@ -368,6 +410,15 @@ class _RunCard extends StatelessWidget {
 
   /// Shows the project name, for when runs of several projects are listed.
   final bool showProject;
+
+  /// When a running build, or the running stages of a release, started and
+  /// how long they are expected to take, from the last successful run;
+  /// shown as a bar along the bottom of the card.
+  final List<RunEstimate>? estimate;
+
+  /// Share of the tasks that finished, for a running build or release
+  /// without [estimate].
+  final double? taskProgress;
 
   @override
   Widget build(BuildContext context) {
@@ -380,81 +431,95 @@ class _RunCard extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       child: InkWell(
         onTap: onTap,
-        child: Padding(
-          padding: const EdgeInsets.all(12),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(4),
-                child: RunStatusIcon(run.status, size: 32),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(12),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(4),
+                    child: RunStatusIcon(run.status, size: 32),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Flexible(
+                              child: Text(run.buildNumber,
+                                  maxLines: 1, overflow: TextOverflow.ellipsis, style: muted),
+                            ),
+                            if (showProject) ...[
+                              const SizedBox(width: 8),
+                              Flexible(
+                                child: Text(run.project,
+                                    maxLines: 1, overflow: TextOverflow.ellipsis, style: muted),
+                              ),
+                            ],
+                            const Spacer(),
+                            Text(formatRelative(l10n, run.queueTime), style: muted),
+                          ],
+                        ),
+                        const SizedBox(height: 2),
+                        Text(
+                          run.pipelineName,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: theme.textTheme.titleSmall,
+                        ),
+                        const SizedBox(height: 8),
+                        Row(
+                          children: [
+                            Flexible(flex: 2, child: RunStatusBadge(run.status)),
+                            const SizedBox(width: 8),
+                            if (run.branch != null) ...[
+                              Icon(Icons.call_split, size: 14, color: scheme.onSurfaceVariant),
+                              const SizedBox(width: 2),
+                            ],
+                            Expanded(
+                              flex: 3,
+                              child: Text(
+                                run.branch ?? '',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: muted,
+                              ),
+                            ),
+                            if (run.startTime != null) ...[
+                              Text(formatDuration(run.duration()), style: muted),
+                              const SizedBox(width: 8),
+                            ],
+                            Tooltip(
+                              message: run.requestedFor?.displayName ?? l10n.unknownPerson,
+                              child: PersonAvatar(run.requestedFor, radius: 12),
+                            ),
+                          ],
+                        ),
+                        if (run.stages.isNotEmpty) ...[
+                          const SizedBox(height: 8),
+                          StageChips(run.stages),
+                        ],
+                      ],
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Flexible(
-                          child: Text(run.buildNumber,
-                              maxLines: 1, overflow: TextOverflow.ellipsis, style: muted),
-                        ),
-                        if (showProject) ...[
-                          const SizedBox(width: 8),
-                          Flexible(
-                            child: Text(run.project,
-                                maxLines: 1, overflow: TextOverflow.ellipsis, style: muted),
-                          ),
-                        ],
-                        const Spacer(),
-                        Text(formatRelative(l10n, run.queueTime), style: muted),
-                      ],
-                    ),
-                    const SizedBox(height: 2),
-                    Text(
-                      run.pipelineName,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: theme.textTheme.titleSmall,
-                    ),
-                    const SizedBox(height: 8),
-                    Row(
-                      children: [
-                        Flexible(flex: 2, child: RunStatusBadge(run.status)),
-                        const SizedBox(width: 8),
-                        if (run.branch != null) ...[
-                          Icon(Icons.call_split, size: 14, color: scheme.onSurfaceVariant),
-                          const SizedBox(width: 2),
-                        ],
-                        Expanded(
-                          flex: 3,
-                          child: Text(
-                            run.branch ?? '',
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: muted,
-                          ),
-                        ),
-                        if (run.startTime != null) ...[
-                          Text(formatDuration(run.duration()), style: muted),
-                          const SizedBox(width: 8),
-                        ],
-                        Tooltip(
-                          message: run.requestedFor?.displayName ?? l10n.unknownPerson,
-                          child: PersonAvatar(run.requestedFor, radius: 12),
-                        ),
-                      ],
-                    ),
-                    if (run.stages.isNotEmpty) ...[
-                      const SizedBox(height: 8),
-                      StageChips(run.stages),
-                    ],
-                  ],
+            ),
+            if (run.status == RunStatus.running)
+              if (estimate case final estimate?)
+                EstimatedProgress(status: run.status, estimate: estimate)
+              else if (taskProgress case final progress?)
+                LinearProgressIndicator(
+                  value: progress,
+                  minHeight: 4,
+                  color: RunStatusStyle.of(run.status, scheme).color,
                 ),
-              ),
-            ],
-          ),
+          ],
         ),
       ),
     );

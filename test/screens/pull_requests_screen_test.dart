@@ -80,6 +80,23 @@ void main() {
     expect(fake.requests.where((r) => r.url.path.endsWith('/connectionData')), hasLength(1));
   });
 
+  testWidgets('shows the pull requests created by me or to review, once each', (tester) async {
+    fake.addPullRequest(pullRequestJson(15, title: 'Mine to review',
+        createdById: meId, reviewers: [('Me', 0)]));
+    await pumpScreen(tester);
+
+    await tester.tap(find.text(en.scopeMine));
+    await tester.pumpAndSettle();
+    expect(find.text('New dashboard'), findsOneWidget);
+    expect(find.text('Review this'), findsOneWidget);
+    expect(find.text('Mine to review'), findsOneWidget);
+    expect(find.text('Fix login'), findsNothing);
+    expect(find.text(en.pullRequestCount(3)), findsOneWidget);
+    final last = listRequests().toList().reversed.take(2).map((u) => u.queryParameters);
+    expect(last.map((q) => q['searchCriteria.creatorId']), contains(meId));
+    expect(last.map((q) => q['searchCriteria.reviewerId']), contains(meId));
+  });
+
   testWidgets('searches by title, branch and person', (tester) async {
     await pumpScreen(tester);
 

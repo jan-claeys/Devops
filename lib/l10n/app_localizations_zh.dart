@@ -458,6 +458,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get scopeReviewing => '待我审阅';
 
   @override
+  String get scopeMine => '我的';
+
+  @override
   String get loadPullRequestsFailed => '无法加载拉取请求';
 
   @override
@@ -532,4 +535,110 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get threadResolved => '已解决';
+
+  @override
+  String get runErrors => '错误';
+
+  @override
+  String get viewLog => '查看日志';
+
+  @override
+  String showAll(int count) {
+    return '全部显示 ($count)';
+  }
+
+  @override
+  String get copyLog => '复制日志';
+
+  @override
+  String get logCopied => '已复制日志';
+
+  @override
+  String get logEmpty => '此日志为空。';
+
+  @override
+  String get showMore => '显示更多';
+
+  @override
+  String get showLess => '收起';
+
+  @override
+  String get onlyErrorsAndWarnings => '仅错误和警告';
+
+  @override
+  String get noLogIssues => '此日志中没有错误或警告。';
+
+  @override
+  String get previousError => '上一个错误';
+
+  @override
+  String get nextError => '下一个错误';
+
+  @override
+  String errorPosition(int current, int total) {
+    return '第 $current 个错误，共 $total 个';
+  }
+
+  @override
+  String errorCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count 个错误',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get dashboard => '概览';
+
+  @override
+  String refreshFailed(String time) {
+    return '无法刷新。数据更新于$time。';
+  }
+
+  @override
+  String get loadDashboardFailed => '无法加载概览';
+
+  @override
+  String get myPullRequests => '我的拉取请求';
+
+  @override
+  String get myTickets => '我的未关闭工单';
+
+  @override
+  String get waitingForYourReview => '等待你审阅';
+
+  @override
+  String get waitingForYou => '等你处理';
+
+  @override
+  String get nothingWaiting => '目前没有等你处理的内容。';
+
+  @override
+  String get readyToComplete => '已批准，可以完成';
+
+  @override
+  String get yourApproval => '等待你的批准';
+
+  @override
+  String get myRuns => '我的运行';
+
+  @override
+  String get noRecentRuns => '你最近没有启动任何运行。';
+
+  @override
+  String failingOnMain(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count 个管道在主分支上失败',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String noChangesFor(int count) {
+    return '$count 天未更改';
+  }
 }
