@@ -324,7 +324,8 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get errorUnauthorized => 'غير مصرّح. تحقّق من Personal Access Token.';
+  String get errorUnauthorized =>
+      'Personal Access Token غير صالح أو منتهي الصلاحية. أنشئ رمزًا جديدًا في الإعدادات.';
 
   @override
   String get errorNotFound => 'غير موجود. تحقّق من المؤسسة أو المشروع.';

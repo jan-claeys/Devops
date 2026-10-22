@@ -320,6 +320,15 @@ void main() {
           throwsDevOps(DevOpsError.unexpectedResponse, code: 200));
     });
 
+    test('a sign-in page means unauthorized', () {
+      final signIn = http.Response('<html>Sign in</html>', 200,
+          headers: {'content-type': 'text/html; charset=utf-8'});
+      expect(apiAnswering(signIn).getProjects(),
+          throwsDevOps(DevOpsError.unauthorized, code: 200));
+      expect(apiAnswering(signIn).getLog('https://dev.azure.com/contoso/1/_apis/build/builds/4/logs/5'),
+          throwsDevOps(DevOpsError.unauthorized, code: 200));
+    });
+
     test('toString prefers the server message', () {
       expect(DevOpsException(DevOpsError.http, statusCode: 500, serverMessage: 'Boom')
           .toString(), 'Boom');

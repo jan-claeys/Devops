@@ -323,7 +323,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get errorUnauthorized =>
-      'Нет доступа. Проверьте Personal Access Token.';
+      'Personal Access Token недействителен или истёк. Создайте новый в настройках.';
 
   @override
   String get errorNotFound => 'Не найдено. Проверьте организацию или проект.';

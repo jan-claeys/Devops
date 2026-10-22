@@ -310,7 +310,8 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get errorUnauthorized => '未授权。请检查你的 Personal Access Token。';
+  String get errorUnauthorized =>
+      '你的 Personal Access Token 无效或已过期。请在设置中创建一个新的。';
 
   @override
   String get errorNotFound => '未找到。请检查组织或项目。';

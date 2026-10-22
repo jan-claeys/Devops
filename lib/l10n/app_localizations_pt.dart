@@ -320,7 +320,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get errorUnauthorized =>
-      'Não autorizado. Verifique seu Personal Access Token.';
+      'Seu Personal Access Token é inválido ou expirou. Crie um novo nas configurações.';
 
   @override
   String get errorNotFound =>

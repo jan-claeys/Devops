@@ -94,7 +94,7 @@
   "hoursAgo": "{count} 時間前",
   "daysAgo": "{count} 日前",
 
-  "errorUnauthorized": "認証されていません。Personal Access Token を確認してください。",
+  "errorUnauthorized": "Personal Access Token が無効か、有効期限が切れています。設定で新しいトークンを作成してください。",
   "errorNotFound": "見つかりません。組織またはプロジェクトを確認してください。",
   "errorHttp": "Azure DevOps からのエラー {code}",
   "errorUnexpectedResponse": "予期しない応答です。組織とトークンを確認してください。",

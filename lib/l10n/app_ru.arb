@@ -94,7 +94,7 @@
   "hoursAgo": "{count} ч назад",
   "daysAgo": "{count} дн. назад",
 
-  "errorUnauthorized": "Нет доступа. Проверьте Personal Access Token.",
+  "errorUnauthorized": "Personal Access Token недействителен или истёк. Создайте новый в настройках.",
   "errorNotFound": "Не найдено. Проверьте организацию или проект.",
   "errorHttp": "Ошибка {code} от Azure DevOps",
   "errorUnexpectedResponse": "Неожиданный ответ. Проверьте организацию и токен.",

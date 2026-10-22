@@ -274,7 +274,7 @@ class DevOpsApi {
     _check(response);
     // A sign-in page instead of the log when the PAT is invalid.
     if (response.headers['content-type']?.contains('html') ?? false) {
-      throw DevOpsException(DevOpsError.unexpectedResponse, statusCode: response.statusCode);
+      throw DevOpsException(DevOpsError.unauthorized, statusCode: response.statusCode);
     }
     return utf8.decode(response.bodyBytes, allowMalformed: true);
   }
@@ -384,7 +384,10 @@ class DevOpsApi {
           const {};
     } on FormatException {
       // Azure DevOps answers with an HTML sign-in page when the PAT is invalid.
-      throw DevOpsException(DevOpsError.unexpectedResponse, statusCode: code);
+      final signIn = response.headers['content-type']?.contains('html') ?? false;
+      throw DevOpsException(
+          signIn ? DevOpsError.unauthorized : DevOpsError.unexpectedResponse,
+          statusCode: code);
     }
   }
 

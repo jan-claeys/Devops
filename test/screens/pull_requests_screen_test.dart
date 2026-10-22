@@ -128,7 +128,9 @@ void main() {
     expect(find.textContaining(en.codeScopeHint), findsOneWidget);
 
     fake.failWith = null;
-    await tester.tap(find.text(en.retry));
+    await tester.tap(find.widgetWithText(FilledButton, en.settings));
+    await tester.pumpAndSettle();
+    await tester.pageBack();
     await tester.pumpAndSettle();
     expect(find.text('Fix login'), findsOneWidget);
   });

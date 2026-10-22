@@ -665,7 +665,7 @@ abstract class AppLocalizations {
   /// No description provided for @errorUnauthorized.
   ///
   /// In en, this message translates to:
-  /// **'Not authorized. Check your Personal Access Token.'**
+  /// **'Your Personal Access Token is invalid or has expired. Create a new one in the settings.'**
   String get errorUnauthorized;
 
   /// No description provided for @errorNotFound.

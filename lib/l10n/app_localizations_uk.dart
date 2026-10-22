@@ -323,7 +323,7 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get errorUnauthorized =>
-      'Немає доступу. Перевірте Personal Access Token.';
+      'Personal Access Token недійсний або його термін дії минув. Створіть новий у налаштуваннях.';
 
   @override
   String get errorNotFound => 'Не знайдено. Перевірте організацію або проєкт.';

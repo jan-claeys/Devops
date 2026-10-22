@@ -94,7 +94,7 @@
   "hoursAgo": "há {count} h",
   "daysAgo": "há {count} d",
 
-  "errorUnauthorized": "Não autorizado. Verifique seu Personal Access Token.",
+  "errorUnauthorized": "Seu Personal Access Token é inválido ou expirou. Crie um novo nas configurações.",
   "errorNotFound": "Não encontrado. Verifique a organização ou o projeto.",
   "errorHttp": "Erro {code} do Azure DevOps",
   "errorUnexpectedResponse": "Resposta inesperada. Verifique a organização e seu token.",

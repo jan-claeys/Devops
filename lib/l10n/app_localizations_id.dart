@@ -317,7 +317,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get errorUnauthorized =>
-      'Tidak diizinkan. Periksa Personal Access Token Anda.';
+      'Personal Access Token Anda tidak valid atau sudah kedaluwarsa. Buat yang baru di pengaturan.';
 
   @override
   String get errorNotFound =>

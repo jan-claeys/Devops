@@ -94,7 +94,7 @@
   "hoursAgo": "{count} u geleden",
   "daysAgo": "{count} d geleden",
 
-  "errorUnauthorized": "Niet geautoriseerd. Controleer je Personal Access Token.",
+  "errorUnauthorized": "Je Personal Access Token is ongeldig of verlopen. Maak een nieuwe aan in de instellingen.",
   "errorNotFound": "Niet gevonden. Controleer de organisatie of het project.",
   "errorHttp": "Fout {code} van Azure DevOps",
   "errorUnexpectedResponse": "Onverwacht antwoord. Controleer de organisatie en je token.",

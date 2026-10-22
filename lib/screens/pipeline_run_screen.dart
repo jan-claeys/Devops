@@ -9,6 +9,7 @@ import '../models/pipeline_log.dart';
 import '../models/pipeline_run.dart';
 import '../services/app_state.dart';
 import '../services/logging.dart';
+import '../widgets/error_action.dart';
 import '../widgets/pipeline_visuals.dart';
 import '../widgets/section_card.dart';
 import '../widgets/work_item_visuals.dart';
@@ -176,7 +177,7 @@ class _PipelineRunScreenState extends State<PipelineRunScreen> {
                         const SizedBox(height: 12),
                         Text(l10n.error(_error!), textAlign: TextAlign.center),
                         const SizedBox(height: 16),
-                        FilledButton.tonal(onPressed: _load, child: Text(l10n.retry)),
+                        ErrorAction(error: _error!, onRetry: _load),
                       ],
                     ),
                   ),

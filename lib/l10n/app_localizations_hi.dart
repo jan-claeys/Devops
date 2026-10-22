@@ -316,7 +316,7 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get errorUnauthorized =>
-      'अधिकृत नहीं। अपना Personal Access Token जाँचें।';
+      'आपका Personal Access Token अमान्य है या उसकी समय-सीमा समाप्त हो गई है। सेटिंग्स में नया बनाएँ।';
 
   @override
   String get errorNotFound => 'नहीं मिला। संगठन या प्रोजेक्ट जाँचें।';

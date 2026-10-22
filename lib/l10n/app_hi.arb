@@ -94,7 +94,7 @@
   "hoursAgo": "{count} घंटे पहले",
   "daysAgo": "{count} दिन पहले",
 
-  "errorUnauthorized": "अधिकृत नहीं। अपना Personal Access Token जाँचें।",
+  "errorUnauthorized": "आपका Personal Access Token अमान्य है या उसकी समय-सीमा समाप्त हो गई है। सेटिंग्स में नया बनाएँ।",
   "errorNotFound": "नहीं मिला। संगठन या प्रोजेक्ट जाँचें।",
   "errorHttp": "Azure DevOps से त्रुटि {code}",
   "errorUnexpectedResponse": "अप्रत्याशित प्रतिक्रिया। संगठन और अपना टोकन जाँचें।",

@@ -94,7 +94,7 @@
   "hoursAgo": "{count} sa önce",
   "daysAgo": "{count} g önce",
 
-  "errorUnauthorized": "Yetkisiz. Personal Access Token'ınızı kontrol edin.",
+  "errorUnauthorized": "Personal Access Token'ınız geçersiz veya süresi dolmuş. Ayarlarda yeni bir tane oluşturun.",
   "errorNotFound": "Bulunamadı. Kuruluşu veya projeyi kontrol edin.",
   "errorHttp": "Azure DevOps'tan {code} hatası",
   "errorUnexpectedResponse": "Beklenmeyen yanıt. Kuruluşu ve belirtecinizi kontrol edin.",

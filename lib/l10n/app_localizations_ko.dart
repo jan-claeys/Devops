@@ -313,7 +313,8 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get errorUnauthorized => '권한이 없습니다. Personal Access Token을 확인하세요.';
+  String get errorUnauthorized =>
+      'Personal Access Token이 유효하지 않거나 만료되었습니다. 설정에서 새 토큰을 만드세요.';
 
   @override
   String get errorNotFound => '찾을 수 없습니다. 조직 또는 프로젝트를 확인하세요.';

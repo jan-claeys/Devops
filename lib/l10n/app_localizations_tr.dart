@@ -317,7 +317,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get errorUnauthorized =>
-      'Yetkisiz. Personal Access Token\'ınızı kontrol edin.';
+      'Personal Access Token\'ınız geçersiz veya süresi dolmuş. Ayarlarda yeni bir tane oluşturun.';
 
   @override
   String get errorNotFound => 'Bulunamadı. Kuruluşu veya projeyi kontrol edin.';

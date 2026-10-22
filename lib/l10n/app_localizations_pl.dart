@@ -323,7 +323,7 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get errorUnauthorized =>
-      'Brak autoryzacji. Sprawdź swój Personal Access Token.';
+      'Twój Personal Access Token jest nieprawidłowy lub wygasł. Utwórz nowy w ustawieniach.';
 
   @override
   String get errorNotFound =>

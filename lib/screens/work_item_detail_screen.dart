@@ -7,6 +7,7 @@ import '../models/work_item.dart';
 import '../services/app_state.dart';
 import '../services/logging.dart';
 import '../widgets/devops_markdown.dart';
+import '../widgets/error_action.dart';
 import '../widgets/section_card.dart';
 import '../widgets/work_item_visuals.dart';
 
@@ -146,10 +147,7 @@ class _WorkItemDetailScreenState extends State<WorkItemDetailScreen> {
                             Text(context.l10n.error(snapshot.error!),
                                 textAlign: TextAlign.center),
                             const SizedBox(height: 16),
-                            FilledButton.tonal(
-                              onPressed: _reload,
-                              child: Text(context.l10n.retry),
-                            ),
+                            ErrorAction(error: snapshot.error!, onRetry: _reload),
                           ],
                         ),
                       ),

@@ -94,7 +94,7 @@
   "hoursAgo": "{count}시간 전",
   "daysAgo": "{count}일 전",
 
-  "errorUnauthorized": "권한이 없습니다. Personal Access Token을 확인하세요.",
+  "errorUnauthorized": "Personal Access Token이 유효하지 않거나 만료되었습니다. 설정에서 새 토큰을 만드세요.",
   "errorNotFound": "찾을 수 없습니다. 조직 또는 프로젝트를 확인하세요.",
   "errorHttp": "Azure DevOps 오류 {code}",
   "errorUnexpectedResponse": "예기치 않은 응답입니다. 조직과 토큰을 확인하세요.",

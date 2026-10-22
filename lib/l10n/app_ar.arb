@@ -94,7 +94,7 @@
   "hoursAgo": "منذ {count} س",
   "daysAgo": "منذ {count} ي",
 
-  "errorUnauthorized": "غير مصرّح. تحقّق من Personal Access Token.",
+  "errorUnauthorized": "Personal Access Token غير صالح أو منتهي الصلاحية. أنشئ رمزًا جديدًا في الإعدادات.",
   "errorNotFound": "غير موجود. تحقّق من المؤسسة أو المشروع.",
   "errorHttp": "خطأ {code} من Azure DevOps",
   "errorUnexpectedResponse": "استجابة غير متوقعة. تحقّق من المؤسسة والرمز.",

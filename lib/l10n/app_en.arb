@@ -124,7 +124,7 @@
     "placeholders": {"count": {"type": "int"}}
   },
 
-  "errorUnauthorized": "Not authorized. Check your Personal Access Token.",
+  "errorUnauthorized": "Your Personal Access Token is invalid or has expired. Create a new one in the settings.",
   "errorNotFound": "Not found. Check the organization or the project.",
   "errorHttp": "Error {code} from Azure DevOps",
   "@errorHttp": {

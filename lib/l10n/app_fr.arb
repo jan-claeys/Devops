@@ -94,7 +94,7 @@
   "hoursAgo": "il y a {count} h",
   "daysAgo": "il y a {count} j",
 
-  "errorUnauthorized": "Non autorisé. Vérifiez votre Personal Access Token.",
+  "errorUnauthorized": "Votre Personal Access Token est invalide ou a expiré. Créez-en un nouveau dans les paramètres.",
   "errorNotFound": "Introuvable. Vérifiez l'organisation ou le projet.",
   "errorHttp": "Erreur {code} d'Azure DevOps",
   "errorUnexpectedResponse": "Réponse inattendue. Vérifiez l'organisation et votre jeton.",

@@ -94,7 +94,7 @@
   "hoursAgo": "vor {count} Std.",
   "daysAgo": "vor {count} T.",
 
-  "errorUnauthorized": "Nicht autorisiert. Prüfe dein Personal Access Token.",
+  "errorUnauthorized": "Dein Personal Access Token ist ungültig oder abgelaufen. Erstelle ein neues in den Einstellungen.",
   "errorNotFound": "Nicht gefunden. Prüfe die Organisation oder das Projekt.",
   "errorHttp": "Fehler {code} von Azure DevOps",
   "errorUnexpectedResponse": "Unerwartete Antwort. Prüfe die Organisation und dein Token.",

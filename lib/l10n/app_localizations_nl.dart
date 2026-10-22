@@ -320,7 +320,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get errorUnauthorized =>
-      'Niet geautoriseerd. Controleer je Personal Access Token.';
+      'Je Personal Access Token is ongeldig of verlopen. Maak een nieuwe aan in de instellingen.';
 
   @override
   String get errorNotFound =>
