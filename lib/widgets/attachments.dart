@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 
@@ -126,10 +128,21 @@ class _Thumbnail extends StatelessWidget {
   }
 }
 
+/// The bytes of an image embedded in a `data:` URI, such as a screenshot
+/// pasted into a field; null for any other URI or one that can't be decoded.
+Uint8List? embeddedImage(Uri uri) {
+  if (!uri.isScheme('data')) return null;
+  try {
+    return uri.data?.contentAsBytes();
+  } on FormatException {
+    return null;
+  }
+}
+
 /// An image in a field or comment, opened full screen when tapped. Only
-/// images that [headers] returns headers for are loaded: any other image
-/// could tell its server who opened the item and when. Those show their alt
-/// text instead.
+/// embedded images and images that [headers] returns headers for are loaded:
+/// any other image could tell its server who opened the item and when. Those
+/// show their alt text instead.
 class InlineImage extends StatelessWidget {
   const InlineImage(this.uri, {super.key, this.alt, required this.headers});
 
@@ -143,15 +156,24 @@ class InlineImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final placeholder = Text(alt ?? uri.toString(),
+    final bytes = embeddedImage(uri);
+    final embedded = uri.isScheme('data');
+    // An embedded image's URI is its whole content: no text to show.
+    final placeholder = Text(alt ?? (embedded ? '' : uri.toString()),
         style: theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.onSurfaceVariant));
-    final imageHeaders = headers?.call(uri);
-    if (imageHeaders == null) return placeholder;
-    final name = uri.queryParameters['fileName'] ??
-        (alt?.trim().isNotEmpty ?? false ? alt! : uri.pathSegments.lastOrNull ?? '');
+    final imageHeaders = embedded ? null : headers?.call(uri);
+    if (bytes == null && imageHeaders == null) return placeholder;
+    final name = (embedded ? null : uri.queryParameters['fileName']) ??
+        (alt?.trim().isNotEmpty ?? false
+            ? alt!
+            : embedded
+                ? ''
+                : uri.pathSegments.lastOrNull ?? '');
     return LayoutBuilder(
       builder: (context, constraints) {
         final width = constraints.maxWidth.isFinite ? constraints.maxWidth : 600.0;
+        // Decoded no wider than shown; smaller images keep their size.
+        final cacheWidth = (width * MediaQuery.devicePixelRatioOf(context)).round();
         return Align(
           alignment: AlignmentDirectional.centerStart,
           child: MouseRegion(
@@ -163,15 +185,22 @@ class InlineImage extends StatelessWidget {
               )),
               child: ConstrainedBox(
                 constraints: const BoxConstraints(maxHeight: maxHeight),
-                child: Image.network(
-                  uri.toString(),
-                  headers: imageHeaders,
-                  semanticLabel: alt,
-                  fit: BoxFit.contain,
-                  // Decoded no wider than shown; smaller images keep their size.
-                  cacheWidth: (width * MediaQuery.devicePixelRatioOf(context)).round(),
-                  errorBuilder: (context, error, stackTrace) => placeholder,
-                ),
+                child: bytes != null
+                    ? Image.memory(
+                        bytes,
+                        semanticLabel: alt,
+                        fit: BoxFit.contain,
+                        cacheWidth: cacheWidth,
+                        errorBuilder: (context, error, stackTrace) => placeholder,
+                      )
+                    : Image.network(
+                        uri.toString(),
+                        headers: imageHeaders,
+                        semanticLabel: alt,
+                        fit: BoxFit.contain,
+                        cacheWidth: cacheWidth,
+                        errorBuilder: (context, error, stackTrace) => placeholder,
+                      ),
               ),
             ),
           ),
@@ -203,11 +232,36 @@ class _AttachmentImageScreenState extends State<AttachmentImageScreen> {
   @override
   Widget build(BuildContext context) {
     final attachment = widget.attachment;
-    final headers = AppScope.read(context).api?.headersFor(Uri.parse(attachment.url));
+    final uri = Uri.parse(attachment.url);
+    final bytes = embeddedImage(uri);
+    final headers = uri.isScheme('data') ? null : AppScope.read(context).api?.headersFor(uri);
     final failed = Center(
       child: Icon(Icons.broken_image_outlined,
           size: 48, color: Theme.of(context).colorScheme.onSurfaceVariant),
     );
+    final Widget? image = bytes != null
+        ? Image.memory(
+            bytes,
+            semanticLabel: attachment.name,
+            errorBuilder: (context, error, stackTrace) => failed,
+          )
+        : headers == null
+            ? null
+            : Image.network(
+                attachment.url,
+                headers: headers,
+                semanticLabel: attachment.name,
+                loadingBuilder: (context, child, progress) => progress == null
+                    ? child
+                    : Center(
+                        child: CircularProgressIndicator(
+                          value: progress.expectedTotalBytes == null
+                              ? null
+                              : progress.cumulativeBytesLoaded / progress.expectedTotalBytes!,
+                        ),
+                      ),
+                errorBuilder: (context, error, stackTrace) => failed,
+              );
     return Scaffold(
       appBar: AppBar(
         title: Text(attachment.name),
@@ -216,35 +270,18 @@ class _AttachmentImageScreenState extends State<AttachmentImageScreen> {
                 preferredSize: Size.fromHeight(4), child: LinearProgressIndicator())
             : null,
         actions: [
-          IconButton(
-            tooltip: context.l10n.openFile,
-            icon: const Icon(Icons.download_outlined),
-            onPressed: _downloading ? null : _download,
-          ),
+          // An embedded image is not stored as an attachment: nothing to download.
+          if (bytes == null)
+            IconButton(
+              tooltip: context.l10n.openFile,
+              icon: const Icon(Icons.download_outlined),
+              onPressed: _downloading ? null : _download,
+            ),
         ],
       ),
-      body: headers == null
+      body: image == null
           ? failed
-          : InteractiveViewer(
-              maxScale: 8,
-              child: Center(
-                child: Image.network(
-                  attachment.url,
-                  headers: headers,
-                  semanticLabel: attachment.name,
-                  loadingBuilder: (context, child, progress) => progress == null
-                      ? child
-                      : Center(
-                          child: CircularProgressIndicator(
-                            value: progress.expectedTotalBytes == null
-                                ? null
-                                : progress.cumulativeBytesLoaded / progress.expectedTotalBytes!,
-                          ),
-                        ),
-                  errorBuilder: (context, error, stackTrace) => failed,
-                ),
-              ),
-            ),
+          : InteractiveViewer(maxScale: 8, child: Center(child: image)),
     );
   }
 }
