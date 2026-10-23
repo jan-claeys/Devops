@@ -88,6 +88,12 @@
   "child": "Дочірній",
   "commentsCount": "Коментарі ({count})",
   "noComments": "Коментарів ще немає.",
+  "attachmentsCount": "Вкладення ({count})",
+  "openFile": "Відкрити файл",
+  "download": "Завантажити",
+  "downloadLargeTitle": "Завантажити великий файл?",
+  "downloadLargeBody": "{name} має розмір {size}. Завантаження може тривати довго й витрачати мобільний трафік.",
+  "noAppForFile": "На цьому пристрої немає застосунку, який може відкрити цей файл.",
   "unknownPerson": "Невідомо",
 
   "justNow": "щойно",
@@ -143,7 +149,6 @@
   "pullRequests": "Pull request’и",
   "searchPullRequestsHint": "Пошук за назвою, ID, гілкою або людиною",
   "scopeReviewing": "На перевірку",
-  "scopeMine": "Мої",
   "loadPullRequestsFailed": "Не вдалося завантажити pull request’и",
   "codeScopeHint": "Для pull request’ів токену потрібні права Code (Read).",
   "noPullRequestsTitle": "Немає pull request’ів",
@@ -196,5 +201,17 @@
   "myRuns": "Мої запуски",
   "noRecentRuns": "Ви давно не запускали конвеєри.",
   "failingOnMain": "{count, plural, one{{count} конвеєр падає на основній гілці} few{{count} конвеєри падають на основній гілці} many{{count} конвеєрів падають на основній гілці} other{{count} конвеєра падають на основній гілці}}",
-  "noChangesFor": "Без змін {count} дн."
+  "noChangesFor": "Без змін {count} дн.",
+
+  "linkNotSupported": "Це посилання не можна відкрити в застосунку.",
+  "linkOtherOrganization": "Це посилання належить іншій організації, а не тій, до якої ви підключені.",
+
+  "notifications": "Сповіщення",
+  "runNotificationsHint": "Показує хід виконання запущених конвеєрів, поки застосунок відкритий, і продовжує стежити за ними у фоні до завершення.",
+  "runNotificationsOff": "Вимк.",
+  "runNotificationsMine": "Мої запуски",
+  "runNotificationsAll": "Усі запуски",
+  "runNotificationChannel": "Хід виконання конвеєрів",
+  "notificationsDenied": "Сповіщення для цього застосунку вимкнено в налаштуваннях Android.",
+  "runNotificationsRunning": "{count, plural, one{{count} конвеєр виконується} few{{count} конвеєри виконуються} many{{count} конвеєрів виконуються} other{{count} конвеєра виконуються}}"
 }

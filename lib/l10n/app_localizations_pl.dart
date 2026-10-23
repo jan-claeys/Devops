@@ -305,6 +305,29 @@ class AppLocalizationsPl extends AppLocalizations {
   String get noComments => 'Brak komentarzy.';
 
   @override
+  String attachmentsCount(int count) {
+    return 'Załączniki ($count)';
+  }
+
+  @override
+  String get openFile => 'Otwórz plik';
+
+  @override
+  String get download => 'Pobierz';
+
+  @override
+  String get downloadLargeTitle => 'Pobrać duży plik?';
+
+  @override
+  String downloadLargeBody(String name, String size) {
+    return '$name ma $size. Pobieranie może chwilę potrwać i zużyć dane komórkowe.';
+  }
+
+  @override
+  String get noAppForFile =>
+      'Żadna aplikacja na tym urządzeniu nie może otworzyć tego pliku.';
+
+  @override
   String get unknownPerson => 'Nieznany';
 
   @override
@@ -481,9 +504,6 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get scopeReviewing => 'Do przeglądu';
-
-  @override
-  String get scopeMine => 'Moje';
 
   @override
   String get loadPullRequestsFailed => 'Nie udało się wczytać pull requestów';
@@ -677,5 +697,48 @@ class AppLocalizationsPl extends AppLocalizations {
   @override
   String noChangesFor(int count) {
     return 'Bez zmian od $count d';
+  }
+
+  @override
+  String get linkNotSupported => 'Tego linku nie można otworzyć w aplikacji.';
+
+  @override
+  String get linkOtherOrganization =>
+      'Ten link pochodzi z innej organizacji niż ta, z którą masz połączenie.';
+
+  @override
+  String get notifications => 'Powiadomienia';
+
+  @override
+  String get runNotificationsHint =>
+      'Pokazuje postęp uruchomionych potoków, gdy aplikacja jest otwarta, i śledzi je w tle aż do zakończenia.';
+
+  @override
+  String get runNotificationsOff => 'Wyłączone';
+
+  @override
+  String get runNotificationsMine => 'Moje uruchomienia';
+
+  @override
+  String get runNotificationsAll => 'Wszystkie uruchomienia';
+
+  @override
+  String get runNotificationChannel => 'Postęp potoków';
+
+  @override
+  String get notificationsDenied =>
+      'Powiadomienia dla tej aplikacji są wyłączone w ustawieniach Androida.';
+
+  @override
+  String runNotificationsRunning(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count potoku działa',
+      many: '$count potoków działa',
+      few: '$count potoki działają',
+      one: '1 potok działa',
+    );
+    return '$_temp0';
   }
 }

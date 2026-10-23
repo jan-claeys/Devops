@@ -299,6 +299,28 @@ class AppLocalizationsTr extends AppLocalizations {
   String get noComments => 'Henüz yorum yok.';
 
   @override
+  String attachmentsCount(int count) {
+    return 'Ekler ($count)';
+  }
+
+  @override
+  String get openFile => 'Dosyayı aç';
+
+  @override
+  String get download => 'İndir';
+
+  @override
+  String get downloadLargeTitle => 'Büyük dosya indirilsin mi?';
+
+  @override
+  String downloadLargeBody(String name, String size) {
+    return '$name $size boyutunda. İndirme biraz sürebilir ve mobil veri kullanabilir.';
+  }
+
+  @override
+  String get noAppForFile => 'Bu cihazda bu dosyayı açabilecek uygulama yok.';
+
+  @override
   String get unknownPerson => 'Bilinmiyor';
 
   @override
@@ -472,9 +494,6 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get scopeReviewing => 'İncelenecek';
-
-  @override
-  String get scopeMine => 'Benim';
 
   @override
   String get loadPullRequestsFailed => 'Çekme istekleri yüklenemedi';
@@ -658,5 +677,45 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String noChangesFor(int count) {
     return '$count gündür değişmedi';
+  }
+
+  @override
+  String get linkNotSupported => 'Bu bağlantı uygulamada açılamıyor.';
+
+  @override
+  String get linkOtherOrganization =>
+      'Bu bağlantı, bağlı olduğunuz kuruluştan farklı bir kuruluşa ait.';
+
+  @override
+  String get notifications => 'Bildirimler';
+
+  @override
+  String get runNotificationsHint =>
+      'Uygulama açıkken çalışan işlem hatlarının ilerlemesini gösterir ve bitene kadar arka planda takip etmeye devam eder.';
+
+  @override
+  String get runNotificationsOff => 'Kapalı';
+
+  @override
+  String get runNotificationsMine => 'Çalıştırmalarım';
+
+  @override
+  String get runNotificationsAll => 'Tüm çalıştırmalar';
+
+  @override
+  String get runNotificationChannel => 'İşlem hattı ilerlemesi';
+
+  @override
+  String get notificationsDenied =>
+      'Bu uygulamanın bildirimleri Android ayarlarında kapalı.';
+
+  @override
+  String runNotificationsRunning(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count işlem hattı çalışıyor',
+    );
+    return '$_temp0';
   }
 }

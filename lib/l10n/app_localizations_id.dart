@@ -299,6 +299,29 @@ class AppLocalizationsId extends AppLocalizations {
   String get noComments => 'Belum ada komentar.';
 
   @override
+  String attachmentsCount(int count) {
+    return 'Lampiran ($count)';
+  }
+
+  @override
+  String get openFile => 'Buka file';
+
+  @override
+  String get download => 'Unduh';
+
+  @override
+  String get downloadLargeTitle => 'Unduh file besar?';
+
+  @override
+  String downloadLargeBody(String name, String size) {
+    return '$name berukuran $size. Mengunduhnya bisa memakan waktu dan kuota data seluler.';
+  }
+
+  @override
+  String get noAppForFile =>
+      'Tidak ada aplikasi di perangkat ini yang dapat membuka file ini.';
+
+  @override
   String get unknownPerson => 'Tidak dikenal';
 
   @override
@@ -473,9 +496,6 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get scopeReviewing => 'Untuk ditinjau';
-
-  @override
-  String get scopeMine => 'Milik saya';
 
   @override
   String get loadPullRequestsFailed => 'Tidak dapat memuat pull request';
@@ -660,5 +680,45 @@ class AppLocalizationsId extends AppLocalizations {
   @override
   String noChangesFor(int count) {
     return 'Tidak berubah selama $count h';
+  }
+
+  @override
+  String get linkNotSupported => 'Tautan ini tidak dapat dibuka di aplikasi.';
+
+  @override
+  String get linkOtherOrganization =>
+      'Tautan ini berasal dari organisasi lain, bukan organisasi yang Anda hubungkan.';
+
+  @override
+  String get notifications => 'Notifikasi';
+
+  @override
+  String get runNotificationsHint =>
+      'Menampilkan progres pipeline yang sedang berjalan selama aplikasi terbuka, dan terus memantaunya di latar belakang hingga selesai.';
+
+  @override
+  String get runNotificationsOff => 'Nonaktif';
+
+  @override
+  String get runNotificationsMine => 'Run saya';
+
+  @override
+  String get runNotificationsAll => 'Semua run';
+
+  @override
+  String get runNotificationChannel => 'Progres pipeline';
+
+  @override
+  String get notificationsDenied =>
+      'Notifikasi untuk aplikasi ini dinonaktifkan di setelan Android.';
+
+  @override
+  String runNotificationsRunning(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count pipeline sedang berjalan',
+    );
+    return '$_temp0';
   }
 }

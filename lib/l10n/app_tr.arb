@@ -88,6 +88,12 @@
   "child": "Alt",
   "commentsCount": "Yorumlar ({count})",
   "noComments": "Henüz yorum yok.",
+  "attachmentsCount": "Ekler ({count})",
+  "openFile": "Dosyayı aç",
+  "download": "İndir",
+  "downloadLargeTitle": "Büyük dosya indirilsin mi?",
+  "downloadLargeBody": "{name} {size} boyutunda. İndirme biraz sürebilir ve mobil veri kullanabilir.",
+  "noAppForFile": "Bu cihazda bu dosyayı açabilecek uygulama yok.",
   "unknownPerson": "Bilinmiyor",
 
   "justNow": "az önce",
@@ -143,7 +149,6 @@
   "pullRequests": "Çekme istekleri",
   "searchPullRequestsHint": "Başlık, kimlik, dal veya kişiye göre ara",
   "scopeReviewing": "İncelenecek",
-  "scopeMine": "Benim",
   "loadPullRequestsFailed": "Çekme istekleri yüklenemedi",
   "codeScopeHint": "Çekme istekleri için belirtecinizde Code (Read) kapsamı gerekir.",
   "noPullRequestsTitle": "Çekme isteği yok",
@@ -196,5 +201,17 @@
   "myRuns": "Çalıştırmalarım",
   "noRecentRuns": "Son zamanlarda çalıştırma başlatmadınız.",
   "failingOnMain": "{count, plural, other{{count} işlem hattı ana dalda başarısız}}",
-  "noChangesFor": "{count} gündür değişmedi"
+  "noChangesFor": "{count} gündür değişmedi",
+
+  "linkNotSupported": "Bu bağlantı uygulamada açılamıyor.",
+  "linkOtherOrganization": "Bu bağlantı, bağlı olduğunuz kuruluştan farklı bir kuruluşa ait.",
+
+  "notifications": "Bildirimler",
+  "runNotificationsHint": "Uygulama açıkken çalışan işlem hatlarının ilerlemesini gösterir ve bitene kadar arka planda takip etmeye devam eder.",
+  "runNotificationsOff": "Kapalı",
+  "runNotificationsMine": "Çalıştırmalarım",
+  "runNotificationsAll": "Tüm çalıştırmalar",
+  "runNotificationChannel": "İşlem hattı ilerlemesi",
+  "notificationsDenied": "Bu uygulamanın bildirimleri Android ayarlarında kapalı.",
+  "runNotificationsRunning": "{count, plural, other{{count} işlem hattı çalışıyor}}"
 }

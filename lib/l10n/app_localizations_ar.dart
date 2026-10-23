@@ -307,6 +307,29 @@ class AppLocalizationsAr extends AppLocalizations {
   String get noComments => 'لا توجد تعليقات بعد.';
 
   @override
+  String attachmentsCount(int count) {
+    return 'المرفقات ($count)';
+  }
+
+  @override
+  String get openFile => 'فتح الملف';
+
+  @override
+  String get download => 'تنزيل';
+
+  @override
+  String get downloadLargeTitle => 'تنزيل ملف كبير؟';
+
+  @override
+  String downloadLargeBody(String name, String size) {
+    return 'حجم $name هو $size. قد يستغرق التنزيل وقتًا ويستهلك بيانات الجوال.';
+  }
+
+  @override
+  String get noAppForFile =>
+      'لا يوجد تطبيق على هذا الجهاز يمكنه فتح هذا الملف.';
+
+  @override
   String get unknownPerson => 'غير معروف';
 
   @override
@@ -483,9 +506,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get scopeReviewing => 'للمراجعة';
-
-  @override
-  String get scopeMine => 'الخاصة بي';
 
   @override
   String get loadPullRequestsFailed => 'تعذّر تحميل طلبات السحب';
@@ -676,5 +696,49 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String noChangesFor(int count) {
     return 'بدون تغييرات منذ $count يوم';
+  }
+
+  @override
+  String get linkNotSupported => 'لا يمكن فتح هذا الرابط في التطبيق.';
+
+  @override
+  String get linkOtherOrganization =>
+      'هذا الرابط من مؤسسة غير المؤسسة التي سجّلت الدخول إليها.';
+
+  @override
+  String get notifications => 'الإشعارات';
+
+  @override
+  String get runNotificationsHint =>
+      'يعرض تقدّم خطوط المعالجة قيد التشغيل أثناء فتح التطبيق، ويواصل متابعتها في الخلفية حتى تنتهي.';
+
+  @override
+  String get runNotificationsOff => 'إيقاف';
+
+  @override
+  String get runNotificationsMine => 'عمليات التشغيل الخاصة بي';
+
+  @override
+  String get runNotificationsAll => 'كل عمليات التشغيل';
+
+  @override
+  String get runNotificationChannel => 'تقدّم خطوط المعالجة';
+
+  @override
+  String get notificationsDenied =>
+      'الإشعارات متوقفة لهذا التطبيق في إعدادات Android.';
+
+  @override
+  String runNotificationsRunning(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count خط معالجة قيد التشغيل',
+      many: '$count خط معالجة قيد التشغيل',
+      few: '$count خطوط معالجة قيد التشغيل',
+      two: 'خطا معالجة قيد التشغيل',
+      one: 'خط معالجة واحد قيد التشغيل',
+    );
+    return '$_temp0';
   }
 }

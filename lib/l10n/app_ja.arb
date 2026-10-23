@@ -88,6 +88,12 @@
   "child": "子",
   "commentsCount": "コメント（{count}）",
   "noComments": "コメントはまだありません。",
+  "attachmentsCount": "添付ファイル ({count})",
+  "openFile": "ファイルを開く",
+  "download": "ダウンロード",
+  "downloadLargeTitle": "大きなファイルをダウンロードしますか？",
+  "downloadLargeBody": "{name} は {size} です。ダウンロードに時間がかかり、モバイルデータを使用する場合があります。",
+  "noAppForFile": "このファイルを開けるアプリがこのデバイスにありません。",
   "unknownPerson": "不明",
 
   "justNow": "たった今",
@@ -143,7 +149,6 @@
   "pullRequests": "プル リクエスト",
   "searchPullRequestsHint": "タイトル、ID、ブランチ、ユーザーで検索",
   "scopeReviewing": "レビュー担当",
-  "scopeMine": "自分",
   "loadPullRequestsFailed": "プル リクエストを読み込めませんでした",
   "codeScopeHint": "プル リクエストにはトークンの Code (Read) スコープが必要です。",
   "noPullRequestsTitle": "プル リクエストはありません",
@@ -196,5 +201,17 @@
   "myRuns": "自分の実行",
   "noRecentRuns": "最近開始した実行はありません。",
   "failingOnMain": "{count, plural, other{{count} 件のパイプラインがメイン ブランチで失敗しています}}",
-  "noChangesFor": "{count} 日間変更なし"
+  "noChangesFor": "{count} 日間変更なし",
+
+  "linkNotSupported": "このリンクはアプリで開けません。",
+  "linkOtherOrganization": "このリンクは、接続中のものとは別の組織のものです。",
+
+  "notifications": "通知",
+  "runNotificationsHint": "アプリを開いている間、実行中のパイプラインの進行状況を表示し、完了するまでバックグラウンドで追跡します。",
+  "runNotificationsOff": "オフ",
+  "runNotificationsMine": "自分の実行",
+  "runNotificationsAll": "すべての実行",
+  "runNotificationChannel": "パイプラインの進行状況",
+  "notificationsDenied": "Android の設定でこのアプリの通知がオフになっています。",
+  "runNotificationsRunning": "{count, plural, other{{count} 件のパイプラインを実行中}}"
 }

@@ -85,7 +85,8 @@ void main() {
         createdById: meId, reviewers: [('Me', 0)]));
     await pumpScreen(tester);
 
-    await tester.tap(find.text(en.scopeMine));
+    // Only reachable from the overview, which calls showMine().
+    tester.state<PullRequestsScreenState>(find.byType(PullRequestsScreen)).showMine();
     await tester.pumpAndSettle();
     expect(find.text('New dashboard'), findsOneWidget);
     expect(find.text('Review this'), findsOneWidget);

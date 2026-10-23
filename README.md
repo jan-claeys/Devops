@@ -4,21 +4,38 @@ A Flutter app for viewing your Azure DevOps work items (tickets) and pull reques
 
 ## Features
 
+- **Overview** of what waits for you, across all selected projects
+  - *Waiting for you*: pull requests waiting for your review (oldest first), your pull requests with merge conflicts or a reviewer asking for changes, your pull requests that are approved and ready to complete, your failed runs of the last 7 days that haven't been fixed since, and releases waiting for your approval
+  - Pipelines whose last run on the main branch failed
+  - *My runs* with an estimated progress bar, *My pull requests* and *My open tickets* (with a hint when a ticket hasn't changed for 14 days)
+  - Refreshes every 5 minutes, every minute while one of your runs is going, and when the app comes back to the foreground; a failed refresh keeps showing the last data
 - **Work item list** per project, sorted by last change
   - Scope: *Assigned to me*, *Created by me* or *All*
   - Filter on open items only and on work item type (Bug, Task, User Story, ...)
   - Search by title, ID, tag or assignee; pull to refresh
-- **Work item details**: description, state, assignee, priority, effort, original estimate / completed work, area and iteration path, tags, linked items and comments (including rendered @mentions), with a button to open the item in the browser
+- **Work item details**: description (or repro steps, acceptance criteria and the other fields of the work item type), state, assignee, priority, effort, original estimate / remaining / completed work, area and iteration path, tags, parent, child and other linked items, attachments and comments (including rendered @mentions and pasted images), with a button to open the item in the browser
+  - Images open full screen and can be zoomed; other attachments are downloaded and opened with an app on the device (on the web, downloaded by the browser), asking first for large files
 - **Pull requests** of the selected projects with status, branches, author and reviewer votes
   - Scope: *Reviewing*, *Created by me* or *All*; filter on open pull requests and search by title, ID, branch, repository or person
   - Details: description, source and target branch, merge conflicts, labels, reviewers with their vote, linked work items and the comment threads (with file and resolved status), with a button to open the pull request in the browser
 - **Pipelines**: the latest builds and releases of the selected projects with status, branch, duration and who started them
   - Show all runs, only builds or only releases; filter on active runs and search by pipeline, branch or person; refreshes automatically while a run is in progress or waiting for approval
+  - Running builds and release stages show an estimated progress bar, based on how long the last successful run took
   - Run details: progress bar, stages with their jobs and tasks (status, duration, errors and warnings), with a button to open the run in the browser
+  - Failed runs list their errors with the step that logged them and the log lines leading up to the first error
   - YAML pipelines (including deployment stages), classic build pipelines and classic release pipelines; releases show their stages, the artifact version and who still has to approve a stage
-- **Android home screen widget** showing your open work items; tapping a ticket opens it in the app
+- **Pipeline logs**: the log of each step, opened at its first error; show only errors and warnings, jump to the previous / next error and copy the log
+- **Wide screens** (tablet, desktop, web): a navigation rail instead of the bottom bar, and lists show the selected item side by side with its details
+- **Android home screen widgets**; tapping a row opens it in the app, the refresh button fetches new data, and they refresh every 30 minutes and whenever the app loads the same data
+  - *My tickets*: your open work items
+  - *PRs to review*: pull requests waiting for your vote, oldest first
+  - *Pipelines*: the latest run of each pipeline on each branch (builds and releases) with its status, and how many fail
+- **Open Azure DevOps links in the app** (Android): share a link to a work item, pull request, build or release to *DevOps* (for example from Teams or the browser), or let Android open those links with the app directly
+  - Works for `dev.azure.com/{organization}`, `{organization}.visualstudio.com` and, when shared, on-premises collection URLs; links of another organization show a message instead
+  - Opening links directly needs to be turned on once, since the app can't verify these domains: *Settings → Apps → DevOps → Open by default → Add link*, select `dev.azure.com` and `*.visualstudio.com`. *Open in DevOps* then still opens the browser
 - **Theming**: light/dark/system mode and optional dynamic colour (Material You)
-- **17 languages**: ar, de, en, es, fr, hi, id, it, ja, ko, nl, pl, pt, ru, tr, uk, zh (follows the system language by default, English as fallback)
+- **17 languages**: ar, de, en, es, fr, hi, id, it, ja, ko, nl, pl, pt, ru, tr, uk, zh (follows the system language by default, can be chosen in the settings, English as fallback)
+- **Error reporting**: crashes and errors are sent anonymously to Sentry (never the token); can be turned off under *Settings → Privacy*. Only builds made with `--dart-define=SENTRY_DSN=...` send anything
 
 ## Getting started
 
@@ -34,7 +51,7 @@ flutter pub get
 flutter run
 ```
 
-Supported platforms in this repo: Android, iOS, Windows and Web. The home screen widget is Android only.
+Supported platforms in this repo: Android, iOS, Windows and Web. The home screen widgets are Android only.
 
 ### Connect to Azure DevOps
 
@@ -89,26 +106,37 @@ If you cannot create a token, your organization's administrators may have restri
 lib/
 ├── main.dart                     App entry point, theming and localization setup
 ├── models/
-│   ├── work_item.dart            WorkItem, Project and comment models
+│   ├── work_item.dart            WorkItem, Project, attachment and comment models
 │   ├── pipeline_run.dart         Builds, releases and their timeline (stages, jobs, tasks)
-│   └── pull_request.dart         Pull requests, reviewers and comment threads
+│   ├── pipeline_log.dart         Log lines with their errors and warnings
+│   ├── run_estimates.dart        Expected duration of running builds and release stages
+│   ├── pull_request.dart         Pull requests, reviewers and comment threads
+│   ├── devops_link.dart          Reading Azure DevOps links of work items, pull requests and runs
+│   └── dashboard_summary.dart    What waits for the user, for the overview
 ├── services/
 │   ├── app_state.dart            Settings, connection and theme state
-│   ├── devops_api.dart           Azure DevOps REST API client (v7.1, WIQL, pull requests, builds, releases)
+│   ├── devops_api.dart           Azure DevOps REST API client (v7.1, WIQL, pull requests, builds, releases, logs, attachments)
+│   ├── attachment_opener*.dart   Downloading and opening attachments (device and web)
+│   ├── logging.dart              Logging and optional Sentry error reporting
+│   ├── links.dart                Links opened with or shared to the app, opening the browser (Android)
 │   └── home_widget_service.dart  Data feed for the Android home screen widget
 ├── screens/
-│   ├── home_screen.dart          Tabs for tickets, pull requests and pipelines
+│   ├── home_screen.dart          Tabs for the overview, tickets, pull requests and pipelines
+│   ├── dashboard_screen.dart     Overview of what waits for the user
 │   ├── work_items_screen.dart    List with scope, filters and search
 │   ├── work_item_detail_screen.dart
 │   ├── pull_requests_screen.dart List with scope, filter and search
 │   ├── pull_request_screen.dart  Reviewers, linked work items and comments of one pull request
 │   ├── pipelines_screen.dart     Latest runs, refreshed while runs are in progress
-│   ├── pipeline_run_screen.dart  Progress of one run
+│   ├── pipeline_run_screen.dart  Progress and errors of one run
+│   ├── pipeline_log_screen.dart  Log of one step, with error navigation
 │   └── settings_screen.dart      Onboarding and settings
 ├── widgets/
 │   ├── work_item_visuals.dart    Type/state icons and colours
 │   ├── pipeline_visuals.dart     Run status icons and colours
 │   ├── pull_request_visuals.dart Pull request status and vote icons
+│   ├── attachments.dart          Attachment list and inline / full screen images
+│   ├── devops_html.dart          HTML fields and comments, with their images
 │   └── ...                       Shared cards, empty states, Markdown, project picker
 └── l10n/                         ARB translation files and generated localizations
 ```
@@ -154,6 +182,7 @@ Add these repository secrets (*Settings → Secrets and variables → Actions*):
 | `ANDROID_KEYSTORE_PASSWORD` | keystore password |
 | `ANDROID_KEY_ALIAS` | `upload` |
 | `ANDROID_KEY_PASSWORD` | key password |
+| `SENTRY_DSN` | optional: DSN of the Sentry project for error reports; without it the release builds send nothing |
 
 For signed local release builds, put the keystore in `android/app/` and create `android/key.properties` (both are ignored by git):
 

@@ -302,6 +302,29 @@ class AppLocalizationsDe extends AppLocalizations {
   String get noComments => 'Noch keine Kommentare.';
 
   @override
+  String attachmentsCount(int count) {
+    return 'Anhänge ($count)';
+  }
+
+  @override
+  String get openFile => 'Datei öffnen';
+
+  @override
+  String get download => 'Herunterladen';
+
+  @override
+  String get downloadLargeTitle => 'Große Datei herunterladen?';
+
+  @override
+  String downloadLargeBody(String name, String size) {
+    return '$name ist $size groß. Das Herunterladen kann dauern und mobile Daten verbrauchen.';
+  }
+
+  @override
+  String get noAppForFile =>
+      'Keine App auf diesem Gerät kann diese Datei öffnen.';
+
+  @override
   String get unknownPerson => 'Unbekannt';
 
   @override
@@ -479,9 +502,6 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get scopeReviewing => 'Zu prüfen';
-
-  @override
-  String get scopeMine => 'Meine';
 
   @override
   String get loadPullRequestsFailed =>
@@ -671,5 +691,47 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String noChangesFor(int count) {
     return 'Seit $count T unverändert';
+  }
+
+  @override
+  String get linkNotSupported =>
+      'Dieser Link kann nicht in der App geöffnet werden.';
+
+  @override
+  String get linkOtherOrganization =>
+      'Dieser Link gehört zu einer anderen Organisation als der, mit der du verbunden bist.';
+
+  @override
+  String get notifications => 'Benachrichtigungen';
+
+  @override
+  String get runNotificationsHint =>
+      'Zeigt den Fortschritt laufender Pipelines, solange die App geöffnet ist, und verfolgt sie im Hintergrund weiter, bis sie fertig sind.';
+
+  @override
+  String get runNotificationsOff => 'Aus';
+
+  @override
+  String get runNotificationsMine => 'Meine Läufe';
+
+  @override
+  String get runNotificationsAll => 'Alle Läufe';
+
+  @override
+  String get runNotificationChannel => 'Pipeline-Fortschritt';
+
+  @override
+  String get notificationsDenied =>
+      'Benachrichtigungen sind für diese App in den Android-Einstellungen deaktiviert.';
+
+  @override
+  String runNotificationsRunning(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Pipelines laufen',
+      one: '1 Pipeline läuft',
+    );
+    return '$_temp0';
   }
 }

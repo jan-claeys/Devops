@@ -302,6 +302,29 @@ class AppLocalizationsPt extends AppLocalizations {
   String get noComments => 'Nenhum comentário ainda.';
 
   @override
+  String attachmentsCount(int count) {
+    return 'Anexos ($count)';
+  }
+
+  @override
+  String get openFile => 'Abrir arquivo';
+
+  @override
+  String get download => 'Baixar';
+
+  @override
+  String get downloadLargeTitle => 'Baixar arquivo grande?';
+
+  @override
+  String downloadLargeBody(String name, String size) {
+    return '$name tem $size. O download pode demorar e usar dados móveis.';
+  }
+
+  @override
+  String get noAppForFile =>
+      'Nenhum app neste dispositivo pode abrir este arquivo.';
+
+  @override
   String get unknownPerson => 'Desconhecido';
 
   @override
@@ -477,9 +500,6 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get scopeReviewing => 'Para revisar';
-
-  @override
-  String get scopeMine => 'Minhas';
 
   @override
   String get loadPullRequestsFailed =>
@@ -668,5 +688,46 @@ class AppLocalizationsPt extends AppLocalizations {
   @override
   String noChangesFor(int count) {
     return 'Sem alterações há $count d';
+  }
+
+  @override
+  String get linkNotSupported => 'Este link não pode ser aberto no aplicativo.';
+
+  @override
+  String get linkOtherOrganization =>
+      'Este link é de outra organização, não daquela em que você está conectado.';
+
+  @override
+  String get notifications => 'Notificações';
+
+  @override
+  String get runNotificationsHint =>
+      'Mostra o progresso dos pipelines em execução enquanto o app está aberto e continua a acompanhá-los em segundo plano até terminarem.';
+
+  @override
+  String get runNotificationsOff => 'Desativadas';
+
+  @override
+  String get runNotificationsMine => 'Minhas execuções';
+
+  @override
+  String get runNotificationsAll => 'Todas as execuções';
+
+  @override
+  String get runNotificationChannel => 'Progresso dos pipelines';
+
+  @override
+  String get notificationsDenied =>
+      'As notificações estão desativadas para este app nas configurações do Android.';
+
+  @override
+  String runNotificationsRunning(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count pipelines em execução',
+      one: '1 pipeline em execução',
+    );
+    return '$_temp0';
   }
 }

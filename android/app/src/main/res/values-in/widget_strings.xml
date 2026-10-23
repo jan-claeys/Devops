@@ -2,9 +2,17 @@
 <resources>
     <string name="tickets_widget_label">Tiket saya</string>
     <string name="tickets_widget_description">Tiket Azure DevOps terbuka Anda sekilas</string>
-    <string name="tickets_widget_refresh">Muat ulang</string>
-    <string name="tickets_widget_refreshing">Memuat ulang…</string>
-    <string name="tickets_widget_not_loaded">Buka aplikasi untuk memuat</string>
+    <string name="widget_refresh">Muat ulang</string>
+    <string name="widget_refreshing">Memuat ulang…</string>
+    <string name="widget_not_loaded">Buka aplikasi untuk memuat</string>
     <string name="tickets_widget_empty">Tidak ada tiket terbuka</string>
     <string name="tickets_widget_open_count">%1$d terbuka</string>
+    <string name="pull_requests_widget_label">PR untuk ditinjau</string>
+    <string name="pull_requests_widget_description">Pull request yang menunggu tinjauan Anda</string>
+    <string name="pull_requests_widget_empty">Tidak ada yang perlu ditinjau</string>
+    <string name="pull_requests_widget_count">%1$d untuk ditinjau</string>
+    <string name="pipelines_widget_label">Pipeline</string>
+    <string name="pipelines_widget_description">Run terbaru setiap pipeline di setiap branch</string>
+    <string name="pipelines_widget_empty">Tidak ada run terbaru</string>
+    <string name="pipelines_widget_count">%1$d gagal</string>
 </resources>

@@ -38,6 +38,24 @@ Map<String, dynamic> workItemJson(
 Map<String, dynamic> relation(String rel, int id) =>
     {'rel': rel, 'url': 'https://dev.azure.com/contoso/_apis/wit/workItems/$id'};
 
+/// A file on the Attachments tab of a work item.
+Map<String, dynamic> attachmentRelation(
+  String name, {
+  String id = 'a1b2c3d4-0000-0000-0000-000000000001',
+  int? size,
+  String? comment,
+}) =>
+    {
+      'rel': 'AttachedFile',
+      'url': 'https://dev.azure.com/contoso/1/_apis/wit/attachments/$id',
+      'attributes': {
+        'name': name,
+        'resourceSize': ?size,
+        'comment': ?comment,
+        'authorizedDate': '2026-10-20T10:00:00Z',
+      },
+    };
+
 /// Raw build JSON as returned by Azure DevOps.
 Map<String, dynamic> runJson(
   int id, {
@@ -240,6 +258,9 @@ class FakeDevOps {
   /// The text of logs, by the path of their URL.
   final logs = <String, String>{};
 
+  /// The content of attachments, by their guid.
+  final attachments = <String, List<int>>{};
+
   /// Releases of classic release pipelines, by id, all in Contoso.
   final releases = <int, Map<String, dynamic>>{};
 
@@ -271,6 +292,13 @@ class FakeDevOps {
     }
     if (logs[path] case final log?) {
       return http.Response.bytes(utf8.encode(log), 200, headers: {'content-type': 'text/plain'});
+    }
+    final attachment = RegExp(r'/_apis/wit/attachments/([^/]+)$').firstMatch(path);
+    if (attachment != null) {
+      final bytes = attachments[attachment[1]!];
+      return bytes == null
+          ? http.Response('', 404)
+          : http.Response.bytes(bytes, 200, headers: {'content-type': 'application/octet-stream'});
     }
     if (path.endsWith('/_apis/projects')) {
       return _json({'value': projects});

@@ -120,10 +120,65 @@ class WorkItem {
             ?int.tryParse((r['url'] as String).split('/').last),
       ];
 
+  /// Files on the Attachments tab, in the order they were added.
+  List<WorkItemAttachment> get attachments => [
+        for (final r in relations)
+          if (r['rel'] == 'AttachedFile') ?WorkItemAttachment.fromRelation(r),
+      ];
+
   DateTime? _date(String field) {
     final v = fields[field];
     return v is String ? DateTime.tryParse(v)?.toLocal() : null;
   }
+}
+
+enum AttachmentKind { image, video, file }
+
+/// A file on the Attachments tab of a work item.
+class WorkItemAttachment {
+  const WorkItemAttachment({
+    required this.url,
+    required this.name,
+    this.size,
+    this.comment,
+    this.date,
+  });
+
+  final String url;
+  final String name;
+
+  /// Size in bytes, if known.
+  final int? size;
+  final String? comment;
+  final DateTime? date;
+
+  static WorkItemAttachment? fromRelation(Map<String, dynamic> json) {
+    final url = json['url'];
+    if (url is! String) return null;
+    final attributes = (json['attributes'] as Map?) ?? const {};
+    final comment = attributes['comment'];
+    return WorkItemAttachment(
+      url: url,
+      name: attributes['name'] as String? ?? Uri.parse(url).pathSegments.last,
+      size: (attributes['resourceSize'] as num?)?.toInt(),
+      comment: comment is String && comment.trim().isNotEmpty ? comment.trim() : null,
+      date: DateTime.tryParse(attributes['authorizedDate'] as String? ?? '')?.toLocal(),
+    );
+  }
+
+  /// The guid of the file; its content never changes.
+  String get id => Uri.parse(url).pathSegments.last;
+
+  String get extension {
+    final dot = name.lastIndexOf('.');
+    return dot < 0 ? '' : name.substring(dot + 1).toLowerCase();
+  }
+
+  AttachmentKind get kind => switch (extension) {
+        'png' || 'jpg' || 'jpeg' || 'gif' || 'webp' || 'bmp' => AttachmentKind.image,
+        'mp4' || 'mov' || 'm4v' || 'webm' || 'avi' || 'mkv' || 'wmv' => AttachmentKind.video,
+        _ => AttachmentKind.file,
+      };
 }
 
 class WorkItemComment {

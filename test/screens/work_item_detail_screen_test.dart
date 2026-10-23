@@ -214,4 +214,94 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Found it'), findsOneWidget);
   });
+
+  group('images in HTML', () {
+    const pasted = 'https://dev.azure.com/contoso/1/_apis/wit/attachments/g1?fileName=shot.png';
+
+    setUp(() {
+      fake.add(workItemJson(13, type: 'Task', fields: {
+        'System.Description': '<div>Look here:</div><div><img src="$pasted" alt=Image></div>'
+            '<div>and <img src="https://tracker.test/pixel.gif" alt="tracker"></div>',
+      }));
+      fake.comments[13] = [
+        {
+          'text': '<p>Again: <img src="$pasted"></p>',
+          'createdBy': {'displayName': 'Piet Peeters'},
+          'createdDate': DateTime.now().toUtc().toIso8601String(),
+        },
+      ];
+    });
+
+    NetworkImage network(Image image) => (image.image as ResizeImage).imageProvider as NetworkImage;
+
+    testWidgets('loads images of the organization with the token', (tester) async {
+      await pumpDetail(tester, id: 13);
+      expect(find.text('Look here:'), findsOneWidget);
+      final images = tester.widgetList<Image>(find.byType(Image)).map(network).toList();
+      expect(images.map((i) => i.url), [pasted, pasted]);
+      expect(images.first.headers?['Authorization'], startsWith('Basic '));
+      // Any other image could tell its server who opened the item.
+      expect(find.text('tracker'), findsOneWidget);
+    });
+
+    testWidgets('shows a field with only an image', (tester) async {
+      fake.items[13]!['fields']['System.Description'] = '<div><img src="$pasted"></div>';
+      await pumpDetail(tester, id: 13);
+      expect(find.text(en.description), findsOneWidget);
+      expect(find.byType(Image), findsNWidgets(2));
+    });
+
+    testWidgets('opens an image full screen', (tester) async {
+      await pumpDetail(tester, id: 13);
+      await tester.tap(find.byType(Image).first);
+      await tester.pumpAndSettle();
+      expect(find.byType(InteractiveViewer), findsOneWidget);
+      expect(find.text('shot.png'), findsOneWidget);
+    });
+  });
+
+  group('attachments', () {
+    setUp(() {
+      (fake.items[10]!['relations'] as List).addAll(<Map<String, dynamic>>[
+        attachmentRelation('screenshot.png', id: 'img', size: 2048, comment: 'Login screen'),
+        attachmentRelation('crash.mp4', id: 'vid', size: 300 * 1024 * 1024),
+      ]);
+    });
+
+    testWidgets('lists the attached files', (tester) async {
+      await pumpDetail(tester);
+      expect(find.text(en.attachmentsCount(2)), findsOneWidget);
+      expect(find.text('screenshot.png'), findsOneWidget);
+      expect(find.textContaining('2 KB'), findsOneWidget);
+      expect(find.text('Login screen'), findsOneWidget);
+      expect(find.text('crash.mp4'), findsOneWidget);
+      expect(find.textContaining('300 MB'), findsOneWidget);
+    });
+
+    testWidgets('opens images in the app', (tester) async {
+      await pumpDetail(tester);
+      await tester.tap(find.text('screenshot.png'));
+      await tester.pumpAndSettle();
+      expect(find.byType(InteractiveViewer), findsOneWidget);
+      expect(find.byTooltip(en.openFile), findsOneWidget);
+    });
+
+    testWidgets('asks before downloading a large file', (tester) async {
+      await pumpDetail(tester);
+      fake.requests.clear();
+      await tester.tap(find.text('crash.mp4'));
+      await tester.pumpAndSettle();
+      expect(find.text(en.downloadLargeTitle), findsOneWidget);
+      await tester.tap(find.text('Cancel'));
+      await tester.pumpAndSettle();
+      expect(find.text(en.downloadLargeTitle), findsNothing);
+      expect(fake.requests, isEmpty);
+    });
+
+    testWidgets('has no section without attachments', (tester) async {
+      fake.add(workItemJson(12));
+      await pumpDetail(tester, id: 12);
+      expect(find.textContaining('Attachments'), findsNothing);
+    });
+  });
 }

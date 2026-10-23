@@ -88,6 +88,12 @@
   "child": "子项",
   "commentsCount": "评论（{count}）",
   "noComments": "暂无评论。",
+  "attachmentsCount": "附件 ({count})",
+  "openFile": "打开文件",
+  "download": "下载",
+  "downloadLargeTitle": "下载大文件？",
+  "downloadLargeBody": "{name} 大小为 {size}。下载可能需要一些时间并消耗移动数据。",
+  "noAppForFile": "此设备上没有可以打开此文件的应用。",
   "unknownPerson": "未知",
 
   "justNow": "刚刚",
@@ -143,7 +149,6 @@
   "pullRequests": "拉取请求",
   "searchPullRequestsHint": "按标题、ID、分支或人员搜索",
   "scopeReviewing": "待我审阅",
-  "scopeMine": "我的",
   "loadPullRequestsFailed": "无法加载拉取请求",
   "codeScopeHint": "拉取请求需要令牌具有 Code (Read) 范围。",
   "noPullRequestsTitle": "没有拉取请求",
@@ -196,5 +201,17 @@
   "myRuns": "我的运行",
   "noRecentRuns": "你最近没有启动任何运行。",
   "failingOnMain": "{count, plural, other{{count} 个管道在主分支上失败}}",
-  "noChangesFor": "{count} 天未更改"
+  "noChangesFor": "{count} 天未更改",
+
+  "linkNotSupported": "无法在应用中打开此链接。",
+  "linkOtherOrganization": "此链接属于其他组织，而不是你当前连接的组织。",
+
+  "notifications": "通知",
+  "runNotificationsHint": "在应用打开时显示正在运行的管道进度，并在后台持续跟踪直到完成。",
+  "runNotificationsOff": "关闭",
+  "runNotificationsMine": "我的运行",
+  "runNotificationsAll": "所有运行",
+  "runNotificationChannel": "管道进度",
+  "notificationsDenied": "已在 Android 设置中关闭此应用的通知。",
+  "runNotificationsRunning": "{count, plural, other{{count} 个管道正在运行}}"
 }

@@ -296,6 +296,28 @@ class AppLocalizationsJa extends AppLocalizations {
   String get noComments => 'コメントはまだありません。';
 
   @override
+  String attachmentsCount(int count) {
+    return '添付ファイル ($count)';
+  }
+
+  @override
+  String get openFile => 'ファイルを開く';
+
+  @override
+  String get download => 'ダウンロード';
+
+  @override
+  String get downloadLargeTitle => '大きなファイルをダウンロードしますか？';
+
+  @override
+  String downloadLargeBody(String name, String size) {
+    return '$name は $size です。ダウンロードに時間がかかり、モバイルデータを使用する場合があります。';
+  }
+
+  @override
+  String get noAppForFile => 'このファイルを開けるアプリがこのデバイスにありません。';
+
+  @override
   String get unknownPerson => '不明';
 
   @override
@@ -464,9 +486,6 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get scopeReviewing => 'レビュー担当';
-
-  @override
-  String get scopeMine => '自分';
 
   @override
   String get loadPullRequestsFailed => 'プル リクエストを読み込めませんでした';
@@ -648,5 +667,43 @@ class AppLocalizationsJa extends AppLocalizations {
   @override
   String noChangesFor(int count) {
     return '$count 日間変更なし';
+  }
+
+  @override
+  String get linkNotSupported => 'このリンクはアプリで開けません。';
+
+  @override
+  String get linkOtherOrganization => 'このリンクは、接続中のものとは別の組織のものです。';
+
+  @override
+  String get notifications => '通知';
+
+  @override
+  String get runNotificationsHint =>
+      'アプリを開いている間、実行中のパイプラインの進行状況を表示し、完了するまでバックグラウンドで追跡します。';
+
+  @override
+  String get runNotificationsOff => 'オフ';
+
+  @override
+  String get runNotificationsMine => '自分の実行';
+
+  @override
+  String get runNotificationsAll => 'すべての実行';
+
+  @override
+  String get runNotificationChannel => 'パイプラインの進行状況';
+
+  @override
+  String get notificationsDenied => 'Android の設定でこのアプリの通知がオフになっています。';
+
+  @override
+  String runNotificationsRunning(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count 件のパイプラインを実行中',
+    );
+    return '$_temp0';
   }
 }

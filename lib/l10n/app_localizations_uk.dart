@@ -305,6 +305,29 @@ class AppLocalizationsUk extends AppLocalizations {
   String get noComments => 'Коментарів ще немає.';
 
   @override
+  String attachmentsCount(int count) {
+    return 'Вкладення ($count)';
+  }
+
+  @override
+  String get openFile => 'Відкрити файл';
+
+  @override
+  String get download => 'Завантажити';
+
+  @override
+  String get downloadLargeTitle => 'Завантажити великий файл?';
+
+  @override
+  String downloadLargeBody(String name, String size) {
+    return '$name має розмір $size. Завантаження може тривати довго й витрачати мобільний трафік.';
+  }
+
+  @override
+  String get noAppForFile =>
+      'На цьому пристрої немає застосунку, який може відкрити цей файл.';
+
+  @override
   String get unknownPerson => 'Невідомо';
 
   @override
@@ -480,9 +503,6 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get scopeReviewing => 'На перевірку';
-
-  @override
-  String get scopeMine => 'Мої';
 
   @override
   String get loadPullRequestsFailed => 'Не вдалося завантажити pull request’и';
@@ -676,5 +696,48 @@ class AppLocalizationsUk extends AppLocalizations {
   @override
   String noChangesFor(int count) {
     return 'Без змін $count дн.';
+  }
+
+  @override
+  String get linkNotSupported => 'Це посилання не можна відкрити в застосунку.';
+
+  @override
+  String get linkOtherOrganization =>
+      'Це посилання належить іншій організації, а не тій, до якої ви підключені.';
+
+  @override
+  String get notifications => 'Сповіщення';
+
+  @override
+  String get runNotificationsHint =>
+      'Показує хід виконання запущених конвеєрів, поки застосунок відкритий, і продовжує стежити за ними у фоні до завершення.';
+
+  @override
+  String get runNotificationsOff => 'Вимк.';
+
+  @override
+  String get runNotificationsMine => 'Мої запуски';
+
+  @override
+  String get runNotificationsAll => 'Усі запуски';
+
+  @override
+  String get runNotificationChannel => 'Хід виконання конвеєрів';
+
+  @override
+  String get notificationsDenied =>
+      'Сповіщення для цього застосунку вимкнено в налаштуваннях Android.';
+
+  @override
+  String runNotificationsRunning(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count конвеєра виконуються',
+      many: '$count конвеєрів виконуються',
+      few: '$count конвеєри виконуються',
+      one: '$count конвеєр виконується',
+    );
+    return '$_temp0';
   }
 }

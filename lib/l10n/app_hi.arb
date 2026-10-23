@@ -88,6 +88,12 @@
   "child": "चाइल्ड",
   "commentsCount": "टिप्पणियाँ ({count})",
   "noComments": "अभी कोई टिप्पणी नहीं।",
+  "attachmentsCount": "अटैचमेंट ({count})",
+  "openFile": "फ़ाइल खोलें",
+  "download": "डाउनलोड करें",
+  "downloadLargeTitle": "बड़ी फ़ाइल डाउनलोड करें?",
+  "downloadLargeBody": "{name} का आकार {size} है। डाउनलोड में समय लग सकता है और मोबाइल डेटा खर्च हो सकता है।",
+  "noAppForFile": "इस डिवाइस पर कोई ऐप यह फ़ाइल नहीं खोल सकता।",
   "unknownPerson": "अज्ञात",
 
   "justNow": "अभी",
@@ -143,7 +149,6 @@
   "pullRequests": "पुल रिक्वेस्ट",
   "searchPullRequestsHint": "शीर्षक, ID, ब्रांच या व्यक्ति से खोजें",
   "scopeReviewing": "समीक्षा के लिए",
-  "scopeMine": "मेरे",
   "loadPullRequestsFailed": "पुल रिक्वेस्ट लोड नहीं हो सके",
   "codeScopeHint": "पुल रिक्वेस्ट के लिए आपके टोकन में Code (Read) स्कोप चाहिए।",
   "noPullRequestsTitle": "कोई पुल रिक्वेस्ट नहीं",
@@ -196,5 +201,17 @@
   "myRuns": "मेरे रन",
   "noRecentRuns": "आपने हाल में कोई रन शुरू नहीं किया।",
   "failingOnMain": "{count, plural, =1{1 पाइपलाइन मुख्य ब्रांच पर विफल है} other{{count} पाइपलाइन मुख्य ब्रांच पर विफल हैं}}",
-  "noChangesFor": "{count} दिन से कोई बदलाव नहीं"
+  "noChangesFor": "{count} दिन से कोई बदलाव नहीं",
+
+  "linkNotSupported": "यह लिंक ऐप में नहीं खोला जा सकता।",
+  "linkOtherOrganization": "यह लिंक उस संगठन का नहीं है जिससे आप जुड़े हैं।",
+
+  "notifications": "सूचनाएँ",
+  "runNotificationsHint": "ऐप खुला रहने पर चल रही पाइपलाइनों की प्रगति दिखाता है, और उनके पूरा होने तक बैकग्राउंड में उन्हें फ़ॉलो करता रहता है।",
+  "runNotificationsOff": "बंद",
+  "runNotificationsMine": "मेरे रन",
+  "runNotificationsAll": "सभी रन",
+  "runNotificationChannel": "पाइपलाइन की प्रगति",
+  "notificationsDenied": "Android सेटिंग में इस ऐप के लिए सूचनाएँ बंद हैं।",
+  "runNotificationsRunning": "{count, plural, =1{1 पाइपलाइन चल रही है} other{{count} पाइपलाइन चल रही हैं}}"
 }

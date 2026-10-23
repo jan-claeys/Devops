@@ -88,6 +88,12 @@
   "child": "Podrzędny",
   "commentsCount": "Komentarze ({count})",
   "noComments": "Brak komentarzy.",
+  "attachmentsCount": "Załączniki ({count})",
+  "openFile": "Otwórz plik",
+  "download": "Pobierz",
+  "downloadLargeTitle": "Pobrać duży plik?",
+  "downloadLargeBody": "{name} ma {size}. Pobieranie może chwilę potrwać i zużyć dane komórkowe.",
+  "noAppForFile": "Żadna aplikacja na tym urządzeniu nie może otworzyć tego pliku.",
   "unknownPerson": "Nieznany",
 
   "justNow": "przed chwilą",
@@ -143,7 +149,6 @@
   "pullRequests": "Pull requesty",
   "searchPullRequestsHint": "Szukaj według tytułu, ID, gałęzi lub osoby",
   "scopeReviewing": "Do przeglądu",
-  "scopeMine": "Moje",
   "loadPullRequestsFailed": "Nie udało się wczytać pull requestów",
   "codeScopeHint": "Pull requesty wymagają zakresu Code (Read) w tokenie.",
   "noPullRequestsTitle": "Brak pull requestów",
@@ -196,5 +201,17 @@
   "myRuns": "Moje uruchomienia",
   "noRecentRuns": "Brak twoich ostatnich uruchomień.",
   "failingOnMain": "{count, plural, =1{1 potok kończy się niepowodzeniem na gałęzi main} few{{count} potoki kończą się niepowodzeniem na gałęzi main} many{{count} potoków kończy się niepowodzeniem na gałęzi main} other{{count} potoku kończy się niepowodzeniem na gałęzi main}}",
-  "noChangesFor": "Bez zmian od {count} d"
+  "noChangesFor": "Bez zmian od {count} d",
+
+  "linkNotSupported": "Tego linku nie można otworzyć w aplikacji.",
+  "linkOtherOrganization": "Ten link pochodzi z innej organizacji niż ta, z którą masz połączenie.",
+
+  "notifications": "Powiadomienia",
+  "runNotificationsHint": "Pokazuje postęp uruchomionych potoków, gdy aplikacja jest otwarta, i śledzi je w tle aż do zakończenia.",
+  "runNotificationsOff": "Wyłączone",
+  "runNotificationsMine": "Moje uruchomienia",
+  "runNotificationsAll": "Wszystkie uruchomienia",
+  "runNotificationChannel": "Postęp potoków",
+  "notificationsDenied": "Powiadomienia dla tej aplikacji są wyłączone w ustawieniach Androida.",
+  "runNotificationsRunning": "{count, plural, =1{1 potok działa} few{{count} potoki działają} many{{count} potoków działa} other{{count} potoku działa}}"
 }

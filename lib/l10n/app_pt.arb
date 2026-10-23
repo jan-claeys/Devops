@@ -88,6 +88,12 @@
   "child": "Filho",
   "commentsCount": "Comentários ({count})",
   "noComments": "Nenhum comentário ainda.",
+  "attachmentsCount": "Anexos ({count})",
+  "openFile": "Abrir arquivo",
+  "download": "Baixar",
+  "downloadLargeTitle": "Baixar arquivo grande?",
+  "downloadLargeBody": "{name} tem {size}. O download pode demorar e usar dados móveis.",
+  "noAppForFile": "Nenhum app neste dispositivo pode abrir este arquivo.",
   "unknownPerson": "Desconhecido",
 
   "justNow": "agora mesmo",
@@ -143,7 +149,6 @@
   "pullRequests": "Pull requests",
   "searchPullRequestsHint": "Pesquisar por título, ID, branch ou pessoa",
   "scopeReviewing": "Para revisar",
-  "scopeMine": "Minhas",
   "loadPullRequestsFailed": "Não foi possível carregar os pull requests",
   "codeScopeHint": "Os pull requests precisam do escopo Code (Read) no seu token.",
   "noPullRequestsTitle": "Nenhum pull request",
@@ -196,5 +201,17 @@
   "myRuns": "Minhas execuções",
   "noRecentRuns": "Você não iniciou execuções recentemente.",
   "failingOnMain": "{count, plural, =1{1 pipeline falha na branch principal} other{{count} pipelines falham na branch principal}}",
-  "noChangesFor": "Sem alterações há {count} d"
+  "noChangesFor": "Sem alterações há {count} d",
+
+  "linkNotSupported": "Este link não pode ser aberto no aplicativo.",
+  "linkOtherOrganization": "Este link é de outra organização, não daquela em que você está conectado.",
+
+  "notifications": "Notificações",
+  "runNotificationsHint": "Mostra o progresso dos pipelines em execução enquanto o app está aberto e continua a acompanhá-los em segundo plano até terminarem.",
+  "runNotificationsOff": "Desativadas",
+  "runNotificationsMine": "Minhas execuções",
+  "runNotificationsAll": "Todas as execuções",
+  "runNotificationChannel": "Progresso dos pipelines",
+  "notificationsDenied": "As notificações estão desativadas para este app nas configurações do Android.",
+  "runNotificationsRunning": "{count, plural, =1{1 pipeline em execução} other{{count} pipelines em execução}}"
 }

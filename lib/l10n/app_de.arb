@@ -88,6 +88,12 @@
   "child": "Untergeordnet",
   "commentsCount": "Kommentare ({count})",
   "noComments": "Noch keine Kommentare.",
+  "attachmentsCount": "Anhänge ({count})",
+  "openFile": "Datei öffnen",
+  "download": "Herunterladen",
+  "downloadLargeTitle": "Große Datei herunterladen?",
+  "downloadLargeBody": "{name} ist {size} groß. Das Herunterladen kann dauern und mobile Daten verbrauchen.",
+  "noAppForFile": "Keine App auf diesem Gerät kann diese Datei öffnen.",
   "unknownPerson": "Unbekannt",
 
   "justNow": "gerade eben",
@@ -143,7 +149,6 @@
   "pullRequests": "Pull Requests",
   "searchPullRequestsHint": "Nach Titel, ID, Branch oder Person suchen",
   "scopeReviewing": "Zu prüfen",
-  "scopeMine": "Meine",
   "loadPullRequestsFailed": "Pull Requests konnten nicht geladen werden",
   "codeScopeHint": "Für Pull Requests braucht dein Token den Bereich Code (Read).",
   "noPullRequestsTitle": "Keine Pull Requests",
@@ -196,5 +201,17 @@
   "myRuns": "Meine Ausführungen",
   "noRecentRuns": "Du hast in letzter Zeit keine Ausführungen gestartet.",
   "failingOnMain": "{count, plural, =1{1 Pipeline schlägt auf dem Main-Branch fehl} other{{count} Pipelines schlagen auf dem Main-Branch fehl}}",
-  "noChangesFor": "Seit {count} T unverändert"
+  "noChangesFor": "Seit {count} T unverändert",
+
+  "linkNotSupported": "Dieser Link kann nicht in der App geöffnet werden.",
+  "linkOtherOrganization": "Dieser Link gehört zu einer anderen Organisation als der, mit der du verbunden bist.",
+
+  "notifications": "Benachrichtigungen",
+  "runNotificationsHint": "Zeigt den Fortschritt laufender Pipelines, solange die App geöffnet ist, und verfolgt sie im Hintergrund weiter, bis sie fertig sind.",
+  "runNotificationsOff": "Aus",
+  "runNotificationsMine": "Meine Läufe",
+  "runNotificationsAll": "Alle Läufe",
+  "runNotificationChannel": "Pipeline-Fortschritt",
+  "notificationsDenied": "Benachrichtigungen sind für diese App in den Android-Einstellungen deaktiviert.",
+  "runNotificationsRunning": "{count, plural, =1{1 Pipeline läuft} other{{count} Pipelines laufen}}"
 }

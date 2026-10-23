@@ -2,9 +2,17 @@
 <resources>
     <string name="tickets_widget_label">我的工单</string>
     <string name="tickets_widget_description">一目了然地查看你未关闭的 Azure DevOps 工单</string>
-    <string name="tickets_widget_refresh">刷新</string>
-    <string name="tickets_widget_refreshing">正在刷新…</string>
-    <string name="tickets_widget_not_loaded">打开应用以加载</string>
+    <string name="widget_refresh">刷新</string>
+    <string name="widget_refreshing">正在刷新…</string>
+    <string name="widget_not_loaded">打开应用以加载</string>
     <string name="tickets_widget_empty">没有未关闭的工单</string>
     <string name="tickets_widget_open_count">%1$d 个未关闭</string>
+    <string name="pull_requests_widget_label">待审阅的 PR</string>
+    <string name="pull_requests_widget_description">等待你审阅的拉取请求</string>
+    <string name="pull_requests_widget_empty">没有待审阅的内容</string>
+    <string name="pull_requests_widget_count">%1$d 个待审阅</string>
+    <string name="pipelines_widget_label">管道</string>
+    <string name="pipelines_widget_description">每个分支上每个管道的最新运行</string>
+    <string name="pipelines_widget_empty">没有最近的运行</string>
+    <string name="pipelines_widget_count">%1$d 个失败</string>
 </resources>

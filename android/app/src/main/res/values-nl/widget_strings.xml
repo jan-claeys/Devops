@@ -2,9 +2,17 @@
 <resources>
     <string name="tickets_widget_label">Mijn tickets</string>
     <string name="tickets_widget_description">Je open Azure DevOps-tickets in één oogopslag</string>
-    <string name="tickets_widget_refresh">Vernieuwen</string>
-    <string name="tickets_widget_refreshing">Vernieuwen…</string>
-    <string name="tickets_widget_not_loaded">Open de app om te laden</string>
+    <string name="widget_refresh">Vernieuwen</string>
+    <string name="widget_refreshing">Vernieuwen…</string>
+    <string name="widget_not_loaded">Open de app om te laden</string>
     <string name="tickets_widget_empty">Geen open tickets</string>
     <string name="tickets_widget_open_count">%1$d open</string>
+    <string name="pull_requests_widget_label">Te reviewen PR\'s</string>
+    <string name="pull_requests_widget_description">Pull requests die op jouw review wachten</string>
+    <string name="pull_requests_widget_empty">Niets te reviewen</string>
+    <string name="pull_requests_widget_count">%1$d te reviewen</string>
+    <string name="pipelines_widget_label">Pipelines</string>
+    <string name="pipelines_widget_description">De laatste run van elke pipeline op elke branch</string>
+    <string name="pipelines_widget_empty">Geen recente runs</string>
+    <string name="pipelines_widget_count">%1$d mislukt</string>
 </resources>

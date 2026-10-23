@@ -88,6 +88,12 @@
   "child": "Anak",
   "commentsCount": "Komentar ({count})",
   "noComments": "Belum ada komentar.",
+  "attachmentsCount": "Lampiran ({count})",
+  "openFile": "Buka file",
+  "download": "Unduh",
+  "downloadLargeTitle": "Unduh file besar?",
+  "downloadLargeBody": "{name} berukuran {size}. Mengunduhnya bisa memakan waktu dan kuota data seluler.",
+  "noAppForFile": "Tidak ada aplikasi di perangkat ini yang dapat membuka file ini.",
   "unknownPerson": "Tidak dikenal",
 
   "justNow": "baru saja",
@@ -143,7 +149,6 @@
   "pullRequests": "Pull request",
   "searchPullRequestsHint": "Cari menurut judul, ID, branch, atau orang",
   "scopeReviewing": "Untuk ditinjau",
-  "scopeMine": "Milik saya",
   "loadPullRequestsFailed": "Tidak dapat memuat pull request",
   "codeScopeHint": "Pull request memerlukan cakupan Code (Read) pada token Anda.",
   "noPullRequestsTitle": "Tidak ada pull request",
@@ -196,5 +201,17 @@
   "myRuns": "Run saya",
   "noRecentRuns": "Anda belum memulai run akhir-akhir ini.",
   "failingOnMain": "{count, plural, other{{count} pipeline gagal di branch utama}}",
-  "noChangesFor": "Tidak berubah selama {count} h"
+  "noChangesFor": "Tidak berubah selama {count} h",
+
+  "linkNotSupported": "Tautan ini tidak dapat dibuka di aplikasi.",
+  "linkOtherOrganization": "Tautan ini berasal dari organisasi lain, bukan organisasi yang Anda hubungkan.",
+
+  "notifications": "Notifikasi",
+  "runNotificationsHint": "Menampilkan progres pipeline yang sedang berjalan selama aplikasi terbuka, dan terus memantaunya di latar belakang hingga selesai.",
+  "runNotificationsOff": "Nonaktif",
+  "runNotificationsMine": "Run saya",
+  "runNotificationsAll": "Semua run",
+  "runNotificationChannel": "Progres pipeline",
+  "notificationsDenied": "Notifikasi untuk aplikasi ini dinonaktifkan di setelan Android.",
+  "runNotificationsRunning": "{count, plural, other{{count} pipeline sedang berjalan}}"
 }

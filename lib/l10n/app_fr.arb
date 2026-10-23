@@ -88,6 +88,12 @@
   "child": "Enfant",
   "commentsCount": "Commentaires ({count})",
   "noComments": "Aucun commentaire pour l'instant.",
+  "attachmentsCount": "Pièces jointes ({count})",
+  "openFile": "Ouvrir le fichier",
+  "download": "Télécharger",
+  "downloadLargeTitle": "Télécharger un fichier volumineux ?",
+  "downloadLargeBody": "{name} fait {size}. Le téléchargement peut prendre du temps et consommer des données mobiles.",
+  "noAppForFile": "Aucune application de cet appareil ne peut ouvrir ce fichier.",
   "unknownPerson": "Inconnu",
 
   "justNow": "à l'instant",
@@ -143,7 +149,6 @@
   "pullRequests": "Pull requests",
   "searchPullRequestsHint": "Rechercher par titre, ID, branche ou personne",
   "scopeReviewing": "À relire",
-  "scopeMine": "Les miennes",
   "loadPullRequestsFailed": "Impossible de charger les pull requests",
   "codeScopeHint": "Les pull requests nécessitent la portée Code (Read) sur votre jeton.",
   "noPullRequestsTitle": "Aucune pull request",
@@ -196,5 +201,17 @@
   "myRuns": "Mes exécutions",
   "noRecentRuns": "Vous n’avez lancé aucune exécution récemment.",
   "failingOnMain": "{count, plural, =1{1 pipeline échoue sur la branche principale} other{{count} pipelines échouent sur la branche principale}}",
-  "noChangesFor": "Inchangé depuis {count} j"
+  "noChangesFor": "Inchangé depuis {count} j",
+
+  "linkNotSupported": "Ce lien ne peut pas être ouvert dans l'application.",
+  "linkOtherOrganization": "Ce lien appartient à une autre organisation que celle à laquelle vous êtes connecté.",
+
+  "notifications": "Notifications",
+  "runNotificationsHint": "Affiche la progression des pipelines en cours tant que l'app est ouverte, et continue de les suivre en arrière-plan jusqu'à leur fin.",
+  "runNotificationsOff": "Désactivées",
+  "runNotificationsMine": "Mes exécutions",
+  "runNotificationsAll": "Toutes les exécutions",
+  "runNotificationChannel": "Progression des pipelines",
+  "notificationsDenied": "Les notifications sont désactivées pour cette app dans les paramètres Android.",
+  "runNotificationsRunning": "{count, plural, =1{1 pipeline en cours} other{{count} pipelines en cours}}"
 }

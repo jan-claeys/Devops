@@ -2,9 +2,17 @@
 <resources>
     <string name="tickets_widget_label">Мои тикеты</string>
     <string name="tickets_widget_description">Ваши открытые тикеты Azure DevOps с первого взгляда</string>
-    <string name="tickets_widget_refresh">Обновить</string>
-    <string name="tickets_widget_refreshing">Обновление…</string>
-    <string name="tickets_widget_not_loaded">Откройте приложение для загрузки</string>
+    <string name="widget_refresh">Обновить</string>
+    <string name="widget_refreshing">Обновление…</string>
+    <string name="widget_not_loaded">Откройте приложение для загрузки</string>
     <string name="tickets_widget_empty">Нет открытых тикетов</string>
     <string name="tickets_widget_open_count">Открыто: %1$d</string>
+    <string name="pull_requests_widget_label">PR на проверку</string>
+    <string name="pull_requests_widget_description">Запросы на вытягивание, ожидающие вашей проверки</string>
+    <string name="pull_requests_widget_empty">Нечего проверять</string>
+    <string name="pull_requests_widget_count">На проверку: %1$d</string>
+    <string name="pipelines_widget_label">Конвейеры</string>
+    <string name="pipelines_widget_description">Последний запуск каждого конвейера в каждой ветке</string>
+    <string name="pipelines_widget_empty">Нет недавних запусков</string>
+    <string name="pipelines_widget_count">С ошибкой: %1$d</string>
 </resources>

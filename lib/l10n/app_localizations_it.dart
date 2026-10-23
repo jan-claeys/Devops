@@ -302,6 +302,29 @@ class AppLocalizationsIt extends AppLocalizations {
   String get noComments => 'Ancora nessun commento.';
 
   @override
+  String attachmentsCount(int count) {
+    return 'Allegati ($count)';
+  }
+
+  @override
+  String get openFile => 'Apri file';
+
+  @override
+  String get download => 'Scarica';
+
+  @override
+  String get downloadLargeTitle => 'Scaricare un file grande?';
+
+  @override
+  String downloadLargeBody(String name, String size) {
+    return '$name è di $size. Il download può richiedere tempo e consumare dati mobili.';
+  }
+
+  @override
+  String get noAppForFile =>
+      'Nessuna app su questo dispositivo può aprire questo file.';
+
+  @override
   String get unknownPerson => 'Sconosciuto';
 
   @override
@@ -476,9 +499,6 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get scopeReviewing => 'Da revisionare';
-
-  @override
-  String get scopeMine => 'Mie';
 
   @override
   String get loadPullRequestsFailed => 'Impossibile caricare le pull request';
@@ -666,5 +686,46 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String noChangesFor(int count) {
     return 'Nessuna modifica da $count g';
+  }
+
+  @override
+  String get linkNotSupported => 'Questo link non può essere aperto nell\'app.';
+
+  @override
+  String get linkOtherOrganization =>
+      'Questo link appartiene a un\'organizzazione diversa da quella a cui sei connesso.';
+
+  @override
+  String get notifications => 'Notifiche';
+
+  @override
+  String get runNotificationsHint =>
+      'Mostra l\'avanzamento delle pipeline in esecuzione mentre l\'app è aperta e continua a seguirle in background finché non terminano.';
+
+  @override
+  String get runNotificationsOff => 'Disattivate';
+
+  @override
+  String get runNotificationsMine => 'Le mie esecuzioni';
+
+  @override
+  String get runNotificationsAll => 'Tutte le esecuzioni';
+
+  @override
+  String get runNotificationChannel => 'Avanzamento pipeline';
+
+  @override
+  String get notificationsDenied =>
+      'Le notifiche sono disattivate per questa app nelle impostazioni di Android.';
+
+  @override
+  String runNotificationsRunning(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count pipeline in esecuzione',
+      one: '1 pipeline in esecuzione',
+    );
+    return '$_temp0';
   }
 }

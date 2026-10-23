@@ -292,6 +292,28 @@ class AppLocalizationsZh extends AppLocalizations {
   String get noComments => '暂无评论。';
 
   @override
+  String attachmentsCount(int count) {
+    return '附件 ($count)';
+  }
+
+  @override
+  String get openFile => '打开文件';
+
+  @override
+  String get download => '下载';
+
+  @override
+  String get downloadLargeTitle => '下载大文件？';
+
+  @override
+  String downloadLargeBody(String name, String size) {
+    return '$name 大小为 $size。下载可能需要一些时间并消耗移动数据。';
+  }
+
+  @override
+  String get noAppForFile => '此设备上没有可以打开此文件的应用。';
+
+  @override
   String get unknownPerson => '未知';
 
   @override
@@ -460,9 +482,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get scopeReviewing => '待我审阅';
-
-  @override
-  String get scopeMine => '我的';
 
   @override
   String get loadPullRequestsFailed => '无法加载拉取请求';
@@ -644,5 +663,42 @@ class AppLocalizationsZh extends AppLocalizations {
   @override
   String noChangesFor(int count) {
     return '$count 天未更改';
+  }
+
+  @override
+  String get linkNotSupported => '无法在应用中打开此链接。';
+
+  @override
+  String get linkOtherOrganization => '此链接属于其他组织，而不是你当前连接的组织。';
+
+  @override
+  String get notifications => '通知';
+
+  @override
+  String get runNotificationsHint => '在应用打开时显示正在运行的管道进度，并在后台持续跟踪直到完成。';
+
+  @override
+  String get runNotificationsOff => '关闭';
+
+  @override
+  String get runNotificationsMine => '我的运行';
+
+  @override
+  String get runNotificationsAll => '所有运行';
+
+  @override
+  String get runNotificationChannel => '管道进度';
+
+  @override
+  String get notificationsDenied => '已在 Android 设置中关闭此应用的通知。';
+
+  @override
+  String runNotificationsRunning(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count 个管道正在运行',
+    );
+    return '$_temp0';
   }
 }

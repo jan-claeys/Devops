@@ -298,6 +298,28 @@ class AppLocalizationsHi extends AppLocalizations {
   String get noComments => 'अभी कोई टिप्पणी नहीं।';
 
   @override
+  String attachmentsCount(int count) {
+    return 'अटैचमेंट ($count)';
+  }
+
+  @override
+  String get openFile => 'फ़ाइल खोलें';
+
+  @override
+  String get download => 'डाउनलोड करें';
+
+  @override
+  String get downloadLargeTitle => 'बड़ी फ़ाइल डाउनलोड करें?';
+
+  @override
+  String downloadLargeBody(String name, String size) {
+    return '$name का आकार $size है। डाउनलोड में समय लग सकता है और मोबाइल डेटा खर्च हो सकता है।';
+  }
+
+  @override
+  String get noAppForFile => 'इस डिवाइस पर कोई ऐप यह फ़ाइल नहीं खोल सकता।';
+
+  @override
   String get unknownPerson => 'अज्ञात';
 
   @override
@@ -470,9 +492,6 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get scopeReviewing => 'समीक्षा के लिए';
-
-  @override
-  String get scopeMine => 'मेरे';
 
   @override
   String get loadPullRequestsFailed => 'पुल रिक्वेस्ट लोड नहीं हो सके';
@@ -660,5 +679,46 @@ class AppLocalizationsHi extends AppLocalizations {
   @override
   String noChangesFor(int count) {
     return '$count दिन से कोई बदलाव नहीं';
+  }
+
+  @override
+  String get linkNotSupported => 'यह लिंक ऐप में नहीं खोला जा सकता।';
+
+  @override
+  String get linkOtherOrganization =>
+      'यह लिंक उस संगठन का नहीं है जिससे आप जुड़े हैं।';
+
+  @override
+  String get notifications => 'सूचनाएँ';
+
+  @override
+  String get runNotificationsHint =>
+      'ऐप खुला रहने पर चल रही पाइपलाइनों की प्रगति दिखाता है, और उनके पूरा होने तक बैकग्राउंड में उन्हें फ़ॉलो करता रहता है।';
+
+  @override
+  String get runNotificationsOff => 'बंद';
+
+  @override
+  String get runNotificationsMine => 'मेरे रन';
+
+  @override
+  String get runNotificationsAll => 'सभी रन';
+
+  @override
+  String get runNotificationChannel => 'पाइपलाइन की प्रगति';
+
+  @override
+  String get notificationsDenied =>
+      'Android सेटिंग में इस ऐप के लिए सूचनाएँ बंद हैं।';
+
+  @override
+  String runNotificationsRunning(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count पाइपलाइन चल रही हैं',
+      one: '1 पाइपलाइन चल रही है',
+    );
+    return '$_temp0';
   }
 }

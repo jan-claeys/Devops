@@ -305,6 +305,29 @@ class AppLocalizationsRu extends AppLocalizations {
   String get noComments => 'Комментариев пока нет.';
 
   @override
+  String attachmentsCount(int count) {
+    return 'Вложения ($count)';
+  }
+
+  @override
+  String get openFile => 'Открыть файл';
+
+  @override
+  String get download => 'Скачать';
+
+  @override
+  String get downloadLargeTitle => 'Скачать большой файл?';
+
+  @override
+  String downloadLargeBody(String name, String size) {
+    return '$name занимает $size. Загрузка может занять время и расходовать мобильный трафик.';
+  }
+
+  @override
+  String get noAppForFile =>
+      'На этом устройстве нет приложения, которое может открыть этот файл.';
+
+  @override
   String get unknownPerson => 'Неизвестно';
 
   @override
@@ -480,9 +503,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get scopeReviewing => 'На проверку';
-
-  @override
-  String get scopeMine => 'Мои';
 
   @override
   String get loadPullRequestsFailed => 'Не удалось загрузить pull request’ы';
@@ -676,5 +696,48 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String noChangesFor(int count) {
     return 'Без изменений $count дн.';
+  }
+
+  @override
+  String get linkNotSupported => 'Эту ссылку нельзя открыть в приложении.';
+
+  @override
+  String get linkOtherOrganization =>
+      'Эта ссылка относится к другой организации, а не к той, к которой вы подключены.';
+
+  @override
+  String get notifications => 'Уведомления';
+
+  @override
+  String get runNotificationsHint =>
+      'Показывает ход выполнения запущенных конвейеров, пока приложение открыто, и продолжает следить за ними в фоне до их завершения.';
+
+  @override
+  String get runNotificationsOff => 'Выкл.';
+
+  @override
+  String get runNotificationsMine => 'Мои запуски';
+
+  @override
+  String get runNotificationsAll => 'Все запуски';
+
+  @override
+  String get runNotificationChannel => 'Ход выполнения конвейеров';
+
+  @override
+  String get notificationsDenied =>
+      'Уведомления для этого приложения отключены в настройках Android.';
+
+  @override
+  String runNotificationsRunning(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count конвейера выполняются',
+      many: '$count конвейеров выполняются',
+      few: '$count конвейера выполняются',
+      one: '$count конвейер выполняется',
+    );
+    return '$_temp0';
   }
 }

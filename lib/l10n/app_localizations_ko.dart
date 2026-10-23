@@ -296,6 +296,28 @@ class AppLocalizationsKo extends AppLocalizations {
   String get noComments => '아직 댓글이 없습니다.';
 
   @override
+  String attachmentsCount(int count) {
+    return '첨부 파일 ($count)';
+  }
+
+  @override
+  String get openFile => '파일 열기';
+
+  @override
+  String get download => '다운로드';
+
+  @override
+  String get downloadLargeTitle => '큰 파일을 다운로드할까요?';
+
+  @override
+  String downloadLargeBody(String name, String size) {
+    return '$name의 크기는 $size입니다. 다운로드에 시간이 걸리고 모바일 데이터가 사용될 수 있습니다.';
+  }
+
+  @override
+  String get noAppForFile => '이 기기에 이 파일을 열 수 있는 앱이 없습니다.';
+
+  @override
   String get unknownPerson => '알 수 없음';
 
   @override
@@ -464,9 +486,6 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get scopeReviewing => '검토 대상';
-
-  @override
-  String get scopeMine => '내 항목';
 
   @override
   String get loadPullRequestsFailed => '끌어오기 요청을 불러오지 못했습니다';
@@ -648,5 +667,43 @@ class AppLocalizationsKo extends AppLocalizations {
   @override
   String noChangesFor(int count) {
     return '$count일 동안 변경 없음';
+  }
+
+  @override
+  String get linkNotSupported => '이 링크는 앱에서 열 수 없습니다.';
+
+  @override
+  String get linkOtherOrganization => '이 링크는 연결된 조직이 아닌 다른 조직의 링크입니다.';
+
+  @override
+  String get notifications => '알림';
+
+  @override
+  String get runNotificationsHint =>
+      '앱이 열려 있는 동안 실행 중인 파이프라인의 진행 상황을 표시하고, 완료될 때까지 백그라운드에서 계속 추적합니다.';
+
+  @override
+  String get runNotificationsOff => '끄기';
+
+  @override
+  String get runNotificationsMine => '내 실행';
+
+  @override
+  String get runNotificationsAll => '모든 실행';
+
+  @override
+  String get runNotificationChannel => '파이프라인 진행 상황';
+
+  @override
+  String get notificationsDenied => 'Android 설정에서 이 앱의 알림이 꺼져 있습니다.';
+
+  @override
+  String runNotificationsRunning(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '파이프라인 $count개 실행 중',
+    );
+    return '$_temp0';
   }
 }

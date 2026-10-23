@@ -301,6 +301,28 @@ class AppLocalizationsEn extends AppLocalizations {
   String get noComments => 'No comments yet.';
 
   @override
+  String attachmentsCount(int count) {
+    return 'Attachments ($count)';
+  }
+
+  @override
+  String get openFile => 'Open file';
+
+  @override
+  String get download => 'Download';
+
+  @override
+  String get downloadLargeTitle => 'Download large file?';
+
+  @override
+  String downloadLargeBody(String name, String size) {
+    return '$name is $size. Downloading it can take a while and use mobile data.';
+  }
+
+  @override
+  String get noAppForFile => 'No app on this device can open this file.';
+
+  @override
   String get unknownPerson => 'Unknown';
 
   @override
@@ -475,9 +497,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get scopeReviewing => 'Reviewing';
-
-  @override
-  String get scopeMine => 'Mine';
 
   @override
   String get loadPullRequestsFailed => 'Couldn\'t load pull requests';
@@ -665,5 +684,46 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String noChangesFor(int count) {
     return 'No changes for $count d';
+  }
+
+  @override
+  String get linkNotSupported => 'This link can\'t be opened in the app.';
+
+  @override
+  String get linkOtherOrganization =>
+      'This link is from another organization than the one you\'re signed in to.';
+
+  @override
+  String get notifications => 'Notifications';
+
+  @override
+  String get runNotificationsHint =>
+      'Shows the progress of running pipelines while the app is open, and keeps following them in the background until they finish.';
+
+  @override
+  String get runNotificationsOff => 'Off';
+
+  @override
+  String get runNotificationsMine => 'My runs';
+
+  @override
+  String get runNotificationsAll => 'All runs';
+
+  @override
+  String get runNotificationChannel => 'Pipeline progress';
+
+  @override
+  String get notificationsDenied =>
+      'Notifications are turned off for this app in the Android settings.';
+
+  @override
+  String runNotificationsRunning(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count pipelines running',
+      one: '1 pipeline running',
+    );
+    return '$_temp0';
   }
 }

@@ -88,6 +88,12 @@
   "child": "فرعي",
   "commentsCount": "التعليقات ({count})",
   "noComments": "لا توجد تعليقات بعد.",
+  "attachmentsCount": "المرفقات ({count})",
+  "openFile": "فتح الملف",
+  "download": "تنزيل",
+  "downloadLargeTitle": "تنزيل ملف كبير؟",
+  "downloadLargeBody": "حجم {name} هو {size}. قد يستغرق التنزيل وقتًا ويستهلك بيانات الجوال.",
+  "noAppForFile": "لا يوجد تطبيق على هذا الجهاز يمكنه فتح هذا الملف.",
   "unknownPerson": "غير معروف",
 
   "justNow": "الآن",
@@ -143,7 +149,6 @@
   "pullRequests": "طلبات السحب",
   "searchPullRequestsHint": "ابحث حسب العنوان أو المعرّف أو الفرع أو الشخص",
   "scopeReviewing": "للمراجعة",
-  "scopeMine": "الخاصة بي",
   "loadPullRequestsFailed": "تعذّر تحميل طلبات السحب",
   "codeScopeHint": "تحتاج طلبات السحب إلى النطاق Code (Read) في الرمز المميز.",
   "noPullRequestsTitle": "لا توجد طلبات سحب",
@@ -196,5 +201,17 @@
   "myRuns": "عمليات التشغيل الخاصة بي",
   "noRecentRuns": "لم تبدأ أي عمليات تشغيل مؤخرًا.",
   "failingOnMain": "{count, plural, =1{مسار واحد يفشل على الفرع الرئيسي} other{{count} مسارات تفشل على الفرع الرئيسي}}",
-  "noChangesFor": "بدون تغييرات منذ {count} يوم"
+  "noChangesFor": "بدون تغييرات منذ {count} يوم",
+
+  "linkNotSupported": "لا يمكن فتح هذا الرابط في التطبيق.",
+  "linkOtherOrganization": "هذا الرابط من مؤسسة غير المؤسسة التي سجّلت الدخول إليها.",
+
+  "notifications": "الإشعارات",
+  "runNotificationsHint": "يعرض تقدّم خطوط المعالجة قيد التشغيل أثناء فتح التطبيق، ويواصل متابعتها في الخلفية حتى تنتهي.",
+  "runNotificationsOff": "إيقاف",
+  "runNotificationsMine": "عمليات التشغيل الخاصة بي",
+  "runNotificationsAll": "كل عمليات التشغيل",
+  "runNotificationChannel": "تقدّم خطوط المعالجة",
+  "notificationsDenied": "الإشعارات متوقفة لهذا التطبيق في إعدادات Android.",
+  "runNotificationsRunning": "{count, plural, =1{خط معالجة واحد قيد التشغيل} =2{خطا معالجة قيد التشغيل} few{{count} خطوط معالجة قيد التشغيل} many{{count} خط معالجة قيد التشغيل} other{{count} خط معالجة قيد التشغيل}}"
 }

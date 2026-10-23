@@ -227,10 +227,6 @@ class PullRequestsScreenState extends State<PullRequestsScreen> {
                   showSelectedIcon: false,
                   segments: [
                     ButtonSegment(
-                        value: PullRequestScope.mine,
-                        icon: const Icon(Icons.person_outline),
-                        label: Text(l10n.scopeMine)),
-                    ButtonSegment(
                         value: PullRequestScope.reviewing,
                         icon: const Icon(Icons.rate_review_outlined),
                         label: Text(l10n.scopeReviewing)),

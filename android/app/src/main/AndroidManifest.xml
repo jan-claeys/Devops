@@ -1,5 +1,10 @@
 ﻿<manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- Progress of pipeline runs, see RunNotifications.kt. -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <uses-permission android:name="android.permission.POST_PROMOTED_NOTIFICATIONS"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC"/>
     <application
         android:label="DevOps"
         android:name="${applicationName}"
@@ -21,7 +26,8 @@
               android:name="io.flutter.embedding.android.NormalTheme"
               android:resource="@style/NormalTheme"
               />
-            <!-- Widget taps carry devops://workitem/<id>; home_widget hands those
+            <!-- Widget taps carry devops://workitem/<id>, devops://pullrequest/<project>/<id>
+                 and the like; home_widget hands those
                  to Dart. Flutter's own deep linking would push them as named
                  routes, which MaterialApp doesn't define, and crash. -->
             <meta-data
@@ -36,8 +42,41 @@
             <intent-filter>
                 <action android:name="es.antonborri.home_widget.action.LAUNCH"/>
             </intent-filter>
+            <!-- Azure DevOps links of work items, pull requests, builds and
+                 releases. The domains can't be verified for this app, so
+                 Android 12+ only opens them here once the user adds them under
+                 Open by default. The pattern matcher doesn't backtrack: each
+                 ".*" runs to the next "/", so every segment is spelled out,
+                 with and without the organization in the path. -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="https"/>
+                <data android:host="dev.azure.com"/>
+                <data android:host="*.visualstudio.com"/>
+                <data android:pathPattern="/..*/_workitems/edit/..*"/>
+                <data android:pathPattern="/..*/..*/_workitems/edit/..*"/>
+                <data android:pathPattern="/..*/..*/..*/_workitems/edit/..*"/>
+                <data android:pathPattern="/..*/_git/..*/pullrequest/..*"/>
+                <data android:pathPattern="/..*/..*/_git/..*/pullrequest/..*"/>
+                <data android:pathPattern="/..*/..*/..*/_git/..*/pullrequest/..*"/>
+                <data android:pathPattern="/..*/..*/_build/results"/>
+                <data android:pathPattern="/..*/..*/..*/_build/results"/>
+                <data android:pathPattern="/..*/..*/_release"/>
+                <data android:pathPattern="/..*/..*/..*/_release"/>
+                <data android:pathPattern="/..*/..*/_releaseProgress"/>
+                <data android:pathPattern="/..*/..*/..*/_releaseProgress"/>
+            </intent-filter>
+            <!-- Text shared to the app, such as a link from Teams. -->
+            <intent-filter>
+                <action android:name="android.intent.action.SEND"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:mimeType="text/plain"/>
+            </intent-filter>
         </activity>
-        <!-- Home screen widget with my open tickets. -->
+        <!-- Home screen widgets, see ListWidgetProvider.kt: my open tickets,
+             pull requests waiting for my review and the latest pipeline runs. -->
         <receiver
             android:name=".TicketsWidgetProvider"
             android:label="@string/tickets_widget_label"
@@ -49,10 +88,37 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/tickets_widget_info"/>
         </receiver>
+        <receiver
+            android:name=".PullRequestsWidgetProvider"
+            android:label="@string/pull_requests_widget_label"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/pull_requests_widget_info"/>
+        </receiver>
+        <receiver
+            android:name=".PipelinesWidgetProvider"
+            android:label="@string/pipelines_widget_label"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/pipelines_widget_info"/>
+        </receiver>
         <service
-            android:name=".TicketsWidgetService"
+            android:name=".ListWidgetService"
             android:exported="false"
             android:permission="android.permission.BIND_REMOTEVIEWS"/>
+        <!-- Keeps following pipeline runs with the app in the background. -->
+        <service
+            android:name=".RunProgressService"
+            android:exported="false"
+            android:foregroundServiceType="dataSync"/>
         <!-- Runs the Dart refresh callback for the widget in the background. -->
         <receiver
             android:name="es.antonborri.home_widget.HomeWidgetBackgroundReceiver"
@@ -73,6 +139,12 @@
 
          In particular, this is used by the Flutter engine in io.flutter.plugin.text.ProcessTextPlugin. -->
     <queries>
+        <!-- Finding the default browser, see MainActivity.openInBrowser. -->
+        <intent>
+            <action android:name="android.intent.action.VIEW"/>
+            <category android:name="android.intent.category.BROWSABLE"/>
+            <data android:scheme="https"/>
+        </intent>
         <intent>
             <action android:name="android.intent.action.PROCESS_TEXT"/>
             <data android:mimeType="text/plain"/>

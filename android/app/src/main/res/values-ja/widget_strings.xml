@@ -2,9 +2,17 @@
 <resources>
     <string name="tickets_widget_label">マイチケット</string>
     <string name="tickets_widget_description">未完了の Azure DevOps チケットをひと目で確認</string>
-    <string name="tickets_widget_refresh">更新</string>
-    <string name="tickets_widget_refreshing">更新中…</string>
-    <string name="tickets_widget_not_loaded">アプリを開いて読み込みます</string>
+    <string name="widget_refresh">更新</string>
+    <string name="widget_refreshing">更新中…</string>
+    <string name="widget_not_loaded">アプリを開いて読み込みます</string>
     <string name="tickets_widget_empty">未完了のチケットはありません</string>
     <string name="tickets_widget_open_count">未完了 %1$d 件</string>
+    <string name="pull_requests_widget_label">レビュー待ちの PR</string>
+    <string name="pull_requests_widget_description">あなたのレビューを待っているプル リクエスト</string>
+    <string name="pull_requests_widget_empty">レビュー待ちはありません</string>
+    <string name="pull_requests_widget_count">レビュー待ち %1$d 件</string>
+    <string name="pipelines_widget_label">パイプライン</string>
+    <string name="pipelines_widget_description">各ブランチの各パイプラインの最新の実行</string>
+    <string name="pipelines_widget_empty">最近の実行はありません</string>
+    <string name="pipelines_widget_count">失敗 %1$d 件</string>
 </resources>

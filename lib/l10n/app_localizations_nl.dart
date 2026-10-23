@@ -302,6 +302,28 @@ class AppLocalizationsNl extends AppLocalizations {
   String get noComments => 'Nog geen opmerkingen.';
 
   @override
+  String attachmentsCount(int count) {
+    return 'Bijlagen ($count)';
+  }
+
+  @override
+  String get openFile => 'Bestand openen';
+
+  @override
+  String get download => 'Downloaden';
+
+  @override
+  String get downloadLargeTitle => 'Groot bestand downloaden?';
+
+  @override
+  String downloadLargeBody(String name, String size) {
+    return '$name is $size. Downloaden kan even duren en mobiele data verbruiken.';
+  }
+
+  @override
+  String get noAppForFile => 'Geen app op dit toestel kan dit bestand openen.';
+
+  @override
   String get unknownPerson => 'Onbekend';
 
   @override
@@ -476,9 +498,6 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get scopeReviewing => 'Te reviewen';
-
-  @override
-  String get scopeMine => 'Van mij';
 
   @override
   String get loadPullRequestsFailed => 'Kon de pull requests niet laden';
@@ -666,5 +685,46 @@ class AppLocalizationsNl extends AppLocalizations {
   @override
   String noChangesFor(int count) {
     return '$count d niet gewijzigd';
+  }
+
+  @override
+  String get linkNotSupported => 'Deze link kan niet in de app geopend worden.';
+
+  @override
+  String get linkOtherOrganization =>
+      'Deze link hoort bij een andere organisatie dan die waarmee je verbonden bent.';
+
+  @override
+  String get notifications => 'Meldingen';
+
+  @override
+  String get runNotificationsHint =>
+      'Toont de voortgang van lopende pipelines zolang de app open is, en volgt ze op de achtergrond verder tot ze klaar zijn.';
+
+  @override
+  String get runNotificationsOff => 'Uit';
+
+  @override
+  String get runNotificationsMine => 'Mijn runs';
+
+  @override
+  String get runNotificationsAll => 'Alle runs';
+
+  @override
+  String get runNotificationChannel => 'Voortgang van pipelines';
+
+  @override
+  String get notificationsDenied =>
+      'Meldingen staan uit voor deze app in de Android-instellingen.';
+
+  @override
+  String runNotificationsRunning(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count pipelines bezig',
+      one: '1 pipeline bezig',
+    );
+    return '$_temp0';
   }
 }

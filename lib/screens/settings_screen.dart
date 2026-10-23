@@ -7,6 +7,7 @@ import '../l10n/l10n.dart';
 import '../services/app_state.dart';
 import '../services/devops_api.dart';
 import '../services/home_widget_service.dart';
+import '../services/run_notifications.dart';
 import '../services/logging.dart';
 import '../widgets/project_picker.dart';
 
@@ -83,6 +84,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final state = AppScope.read(context);
     final picked = await showProjectPicker(context, api: state.api!, current: state.projects);
     if (picked != null) await state.setProjects(picked);
+  }
+
+  /// Turning the run notifications on asks for permission to show them.
+  Future<void> _setRunNotifications(RunNotificationScope scope) async {
+    final state = AppScope.read(context);
+    final messenger = ScaffoldMessenger.of(context);
+    final l10n = context.l10n;
+    await state.setRunNotifications(scope);
+    if (scope == RunNotificationScope.off || await RunNotifications.requestPermission()) return;
+    messenger.showSnackBar(SnackBar(content: Text(l10n.notificationsDenied)));
   }
 
   @override
@@ -228,7 +239,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     ];
   }
 
-  /// Appearance, language, privacy, sign out and about.
+  /// Appearance, language, notifications, privacy, sign out and about.
   List<Widget> _buildPreferences(BuildContext context) {
     final state = AppScope.of(context);
     final l10n = context.l10n;
@@ -278,6 +289,34 @@ class _SettingsScreenState extends State<SettingsScreen> {
       Text(l10n.language, style: theme.textTheme.titleMedium),
       const SizedBox(height: 12),
       const _LanguagePicker(),
+      if (RunNotifications.isSupported) ...[
+        const SizedBox(height: 32),
+        Text(l10n.notifications, style: theme.textTheme.titleMedium),
+        const SizedBox(height: 4),
+        Text(l10n.runNotificationsHint, style: theme.textTheme.bodySmall),
+        const SizedBox(height: 12),
+        SegmentedButton<RunNotificationScope>(
+          segments: [
+            ButtonSegment(
+              value: RunNotificationScope.off,
+              icon: const Icon(Icons.notifications_off_outlined),
+              label: Text(l10n.runNotificationsOff),
+            ),
+            ButtonSegment(
+              value: RunNotificationScope.mine,
+              icon: const Icon(Icons.person_outline),
+              label: Text(l10n.runNotificationsMine),
+            ),
+            ButtonSegment(
+              value: RunNotificationScope.all,
+              icon: const Icon(Icons.groups_outlined),
+              label: Text(l10n.runNotificationsAll),
+            ),
+          ],
+          selected: {state.runNotifications},
+          onSelectionChanged: (s) => _setRunNotifications(s.first),
+        ),
+      ],
       if (errorReportingAvailable) ...[
         const SizedBox(height: 32),
         Text(l10n.privacy, style: theme.textTheme.titleMedium),
@@ -297,7 +336,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         onPressed: () async {
           final nav = Navigator.of(context);
           await state.signOut();
-          TicketsHomeWidget.refresh(state);
+          HomeWidgets.refresh(state: state);
           nav.popUntil((r) => r.isFirst);
         },
         icon: const Icon(Icons.logout),

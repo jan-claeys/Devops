@@ -22,10 +22,14 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
+            <!-- Title and empty text are set by ListWidgetProvider. -->
             <TextView
+                android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/tickets_widget_label"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@string/widget_app_name"
                 android:textColor="@color/widget_on_surface"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -36,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="@string/tickets_widget_not_loaded"
+                android:text="@string/widget_not_loaded"
                 android:textColor="@color/widget_on_surface_variant"
                 android:textSize="12sp" />
         </LinearLayout>
@@ -45,7 +49,7 @@
             android:id="@+id/refresh"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:contentDescription="@string/tickets_widget_refresh"
+            android:contentDescription="@string/widget_refresh"
             android:padding="8dp"
             android:src="@drawable/ic_widget_refresh" />
     </LinearLayout>
@@ -80,7 +84,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="@string/tickets_widget_empty"
             android:textColor="@color/widget_on_surface_variant"
             android:textSize="14sp" />
     </FrameLayout>
