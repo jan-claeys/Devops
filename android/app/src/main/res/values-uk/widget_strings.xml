@@ -2,9 +2,17 @@
 <resources>
     <string name="tickets_widget_label">Мої тікети</string>
     <string name="tickets_widget_description">Ваші відкриті тікети Azure DevOps з першого погляду</string>
-    <string name="tickets_widget_refresh">Оновити</string>
-    <string name="tickets_widget_refreshing">Оновлення…</string>
-    <string name="tickets_widget_not_loaded">Відкрийте застосунок для завантаження</string>
+    <string name="widget_refresh">Оновити</string>
+    <string name="widget_refreshing">Оновлення…</string>
+    <string name="widget_not_loaded">Відкрийте застосунок для завантаження</string>
     <string name="tickets_widget_empty">Немає відкритих тікетів</string>
     <string name="tickets_widget_open_count">Відкрито: %1$d</string>
+    <string name="pull_requests_widget_label">PR на перевірку</string>
+    <string name="pull_requests_widget_description">Запити на злиття, що чекають на вашу перевірку</string>
+    <string name="pull_requests_widget_empty">Нічого перевіряти</string>
+    <string name="pull_requests_widget_count">На перевірку: %1$d</string>
+    <string name="pipelines_widget_label">Конвеєри</string>
+    <string name="pipelines_widget_description">Останній запуск кожного конвеєра в кожній гілці</string>
+    <string name="pipelines_widget_empty">Немає нещодавніх запусків</string>
+    <string name="pipelines_widget_count">З помилкою: %1$d</string>
 </resources>

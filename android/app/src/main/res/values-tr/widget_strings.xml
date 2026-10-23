@@ -2,9 +2,17 @@
 <resources>
     <string name="tickets_widget_label">Biletlerim</string>
     <string name="tickets_widget_description">Açık Azure DevOps biletleriniz bir bakışta</string>
-    <string name="tickets_widget_refresh">Yenile</string>
-    <string name="tickets_widget_refreshing">Yenileniyor…</string>
-    <string name="tickets_widget_not_loaded">Yüklemek için uygulamayı açın</string>
+    <string name="widget_refresh">Yenile</string>
+    <string name="widget_refreshing">Yenileniyor…</string>
+    <string name="widget_not_loaded">Yüklemek için uygulamayı açın</string>
     <string name="tickets_widget_empty">Açık bilet yok</string>
     <string name="tickets_widget_open_count">%1$d açık</string>
+    <string name="pull_requests_widget_label">İncelenecek PR\'ler</string>
+    <string name="pull_requests_widget_description">İncelemenizi bekleyen çekme istekleri</string>
+    <string name="pull_requests_widget_empty">İncelenecek bir şey yok</string>
+    <string name="pull_requests_widget_count">%1$d incelenecek</string>
+    <string name="pipelines_widget_label">İşlem hatları</string>
+    <string name="pipelines_widget_description">Her daldaki her işlem hattının son çalıştırması</string>
+    <string name="pipelines_widget_empty">Yakın zamanda çalıştırma yok</string>
+    <string name="pipelines_widget_count">%1$d başarısız</string>
 </resources>

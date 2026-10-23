@@ -21,7 +21,8 @@
               android:name="io.flutter.embedding.android.NormalTheme"
               android:resource="@style/NormalTheme"
               />
-            <!-- Widget taps carry devops://workitem/<id>; home_widget hands those
+            <!-- Widget taps carry devops://workitem/<id>, devops://pullrequest/<project>/<id>
+                 and the like; home_widget hands those
                  to Dart. Flutter's own deep linking would push them as named
                  routes, which MaterialApp doesn't define, and crash. -->
             <meta-data
@@ -69,7 +70,8 @@
                 <data android:mimeType="text/plain"/>
             </intent-filter>
         </activity>
-        <!-- Home screen widget with my open tickets. -->
+        <!-- Home screen widgets, see ListWidgetProvider.kt: my open tickets,
+             pull requests waiting for my review and the latest pipeline runs. -->
         <receiver
             android:name=".TicketsWidgetProvider"
             android:label="@string/tickets_widget_label"
@@ -81,8 +83,30 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/tickets_widget_info"/>
         </receiver>
+        <receiver
+            android:name=".PullRequestsWidgetProvider"
+            android:label="@string/pull_requests_widget_label"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/pull_requests_widget_info"/>
+        </receiver>
+        <receiver
+            android:name=".PipelinesWidgetProvider"
+            android:label="@string/pipelines_widget_label"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/pipelines_widget_info"/>
+        </receiver>
         <service
-            android:name=".TicketsWidgetService"
+            android:name=".ListWidgetService"
             android:exported="false"
             android:permission="android.permission.BIND_REMOTEVIEWS"/>
         <!-- Runs the Dart refresh callback for the widget in the background. -->

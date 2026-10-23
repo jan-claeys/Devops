@@ -70,7 +70,7 @@ class _WorkItemsScreenState extends State<WorkItemsScreen> {
           await api.queryWorkItems(projects: projects, scope: _scope, openOnly: _openOnly);
       // The home screen widget shows exactly this view, so reuse the result.
       if (_scope == WorkItemScope.assignedToMe && _openOnly) {
-        TicketsHomeWidget.update(projects: projects, items: items);
+        HomeWidgets.updateTickets(projects: projects, items: items);
       }
       if (!mounted) return;
       setState(() => _items = items);

@@ -11,6 +11,7 @@ import '../models/run_estimates.dart';
 import '../models/work_item.dart';
 import '../services/app_state.dart';
 import '../services/devops_api.dart';
+import '../services/home_widget_service.dart';
 import '../services/logging.dart';
 import '../widgets/empty_state.dart';
 import '../widgets/error_action.dart';
@@ -152,6 +153,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
           api.queryWorkItems(projects: projects, top: DashboardScreen.ticketLimit)),
     ).wait;
     if (!mounted) return;
+
+    // The home screen widgets show the same, so reuse the results.
+    if (me != null && !errors.containsKey(_Source.pullRequests)) {
+      HomeWidgets.updatePullRequests(
+          projects: projects,
+          toReview: DashboardSummary(pullRequests: pullRequests, me: me).toReview);
+    }
+    if (!errors.containsKey(_Source.builds)) {
+      HomeWidgets.updatePipelines(
+          projects: projects, runs: [...builds, ...releases], l10n: context.l10n);
+    }
 
     final runs = {
       for (final r in [...builds, ...myBuilds, ...releases]) (r.kind, r.project, r.id): r,

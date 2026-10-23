@@ -26,7 +26,10 @@ A Flutter app for viewing your Azure DevOps work items (tickets) and pull reques
   - YAML pipelines (including deployment stages), classic build pipelines and classic release pipelines; releases show their stages, the artifact version and who still has to approve a stage
 - **Pipeline logs**: the log of each step, opened at its first error; show only errors and warnings, jump to the previous / next error and copy the log
 - **Wide screens** (tablet, desktop, web): a navigation rail instead of the bottom bar, and lists show the selected item side by side with its details
-- **Android home screen widget** showing your open work items; tapping a ticket opens it in the app
+- **Android home screen widgets**; tapping a row opens it in the app, the refresh button fetches new data, and they refresh every 30 minutes and whenever the app loads the same data
+  - *My tickets*: your open work items
+  - *PRs to review*: pull requests waiting for your vote, oldest first
+  - *Pipelines*: the latest run of each pipeline on each branch (builds and releases) with its status, and how many fail
 - **Open Azure DevOps links in the app** (Android): share a link to a work item, pull request, build or release to *DevOps* (for example from Teams or the browser), or let Android open those links with the app directly
   - Works for `dev.azure.com/{organization}`, `{organization}.visualstudio.com` and, when shared, on-premises collection URLs; links of another organization show a message instead
   - Opening links directly needs to be turned on once, since the app can't verify these domains: *Settings → Apps → DevOps → Open by default → Add link*, select `dev.azure.com` and `*.visualstudio.com`. *Open in DevOps* then still opens the browser
@@ -48,7 +51,7 @@ flutter pub get
 flutter run
 ```
 
-Supported platforms in this repo: Android, iOS, Windows and Web. The home screen widget is Android only.
+Supported platforms in this repo: Android, iOS, Windows and Web. The home screen widgets are Android only.
 
 ### Connect to Azure DevOps
 

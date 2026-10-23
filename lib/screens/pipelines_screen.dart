@@ -7,6 +7,7 @@ import '../l10n/l10n.dart';
 import '../models/pipeline_run.dart';
 import '../models/run_estimates.dart';
 import '../services/app_state.dart';
+import '../services/home_widget_service.dart';
 import '../services/logging.dart';
 import '../widgets/empty_state.dart';
 import '../widgets/error_action.dart';
@@ -117,6 +118,8 @@ class _PipelinesScreenState extends State<PipelinesScreen> {
       final runs = [...builds, ...await releases]
         ..sort((a, b) => (b.queueTime ?? DateTime(0)).compareTo(a.queueTime ?? DateTime(0)));
       if (!mounted) return;
+      // The home screen widget shows the latest of these runs.
+      HomeWidgets.updatePipelines(projects: projects, runs: runs, l10n: context.l10n);
       setState(() {
         _runs = runs;
         _error = null;

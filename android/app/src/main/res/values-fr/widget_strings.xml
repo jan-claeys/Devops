@@ -2,9 +2,17 @@
 <resources>
     <string name="tickets_widget_label">Mes tickets</string>
     <string name="tickets_widget_description">Vos tickets Azure DevOps ouverts en un coup d\'œil</string>
-    <string name="tickets_widget_refresh">Actualiser</string>
-    <string name="tickets_widget_refreshing">Actualisation…</string>
-    <string name="tickets_widget_not_loaded">Ouvrez l\'application pour charger</string>
+    <string name="widget_refresh">Actualiser</string>
+    <string name="widget_refreshing">Actualisation…</string>
+    <string name="widget_not_loaded">Ouvrez l\'application pour charger</string>
     <string name="tickets_widget_empty">Aucun ticket ouvert</string>
     <string name="tickets_widget_open_count">%1$d ouverts</string>
+    <string name="pull_requests_widget_label">PR à relire</string>
+    <string name="pull_requests_widget_description">Pull requests en attente de ta relecture</string>
+    <string name="pull_requests_widget_empty">Rien à relire</string>
+    <string name="pull_requests_widget_count">%1$d à relire</string>
+    <string name="pipelines_widget_label">Pipelines</string>
+    <string name="pipelines_widget_description">La dernière exécution de chaque pipeline sur chaque branche</string>
+    <string name="pipelines_widget_empty">Aucune exécution récente</string>
+    <string name="pipelines_widget_count">%1$d en échec</string>
 </resources>

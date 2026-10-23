@@ -2,9 +2,17 @@
 <resources>
     <string name="tickets_widget_label">मेरे टिकट</string>
     <string name="tickets_widget_description">आपके खुले Azure DevOps टिकट एक नज़र में</string>
-    <string name="tickets_widget_refresh">रीफ़्रेश करें</string>
-    <string name="tickets_widget_refreshing">रीफ़्रेश हो रहा है…</string>
-    <string name="tickets_widget_not_loaded">लोड करने के लिए ऐप खोलें</string>
+    <string name="widget_refresh">रीफ़्रेश करें</string>
+    <string name="widget_refreshing">रीफ़्रेश हो रहा है…</string>
+    <string name="widget_not_loaded">लोड करने के लिए ऐप खोलें</string>
     <string name="tickets_widget_empty">कोई खुला टिकट नहीं</string>
     <string name="tickets_widget_open_count">%1$d खुले</string>
+    <string name="pull_requests_widget_label">समीक्षा के लिए PR</string>
+    <string name="pull_requests_widget_description">आपकी समीक्षा की प्रतीक्षा कर रहे पुल रिक्वेस्ट</string>
+    <string name="pull_requests_widget_empty">समीक्षा के लिए कुछ नहीं</string>
+    <string name="pull_requests_widget_count">%1$d समीक्षा के लिए</string>
+    <string name="pipelines_widget_label">पाइपलाइन</string>
+    <string name="pipelines_widget_description">हर ब्रांच पर हर पाइपलाइन का नवीनतम रन</string>
+    <string name="pipelines_widget_empty">कोई हाल का रन नहीं</string>
+    <string name="pipelines_widget_count">%1$d विफल</string>
 </resources>

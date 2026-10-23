@@ -9,13 +9,13 @@
     android:padding="10dp">
 
     <ImageView
-        android:id="@+id/type_bar"
+        android:id="@+id/bar"
         android:layout_width="4dp"
         android:layout_height="36dp"
         android:layout_marginEnd="10dp"
         android:importantForAccessibility="no"
         android:scaleType="fitXY"
-        android:src="@drawable/widget_type_bar" />
+        android:src="@drawable/widget_bar" />
 
     <LinearLayout
         android:layout_width="0dp"

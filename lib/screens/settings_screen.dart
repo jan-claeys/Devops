@@ -297,7 +297,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         onPressed: () async {
           final nav = Navigator.of(context);
           await state.signOut();
-          TicketsHomeWidget.refresh(state);
+          HomeWidgets.refresh(state: state);
           nav.popUntil((r) => r.isFirst);
         },
         icon: const Icon(Icons.logout),

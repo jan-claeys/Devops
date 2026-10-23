@@ -2,9 +2,17 @@
 <resources>
     <string name="tickets_widget_label">تذاكري</string>
     <string name="tickets_widget_description">تذاكر Azure DevOps المفتوحة في لمحة</string>
-    <string name="tickets_widget_refresh">تحديث</string>
-    <string name="tickets_widget_refreshing">جارٍ التحديث…</string>
-    <string name="tickets_widget_not_loaded">افتح التطبيق للتحميل</string>
+    <string name="widget_refresh">تحديث</string>
+    <string name="widget_refreshing">جارٍ التحديث…</string>
+    <string name="widget_not_loaded">افتح التطبيق للتحميل</string>
     <string name="tickets_widget_empty">لا توجد تذاكر مفتوحة</string>
     <string name="tickets_widget_open_count">مفتوحة: %1$d</string>
+    <string name="pull_requests_widget_label">طلبات سحب للمراجعة</string>
+    <string name="pull_requests_widget_description">طلبات السحب التي تنتظر مراجعتك</string>
+    <string name="pull_requests_widget_empty">لا شيء للمراجعة</string>
+    <string name="pull_requests_widget_count">%1$d للمراجعة</string>
+    <string name="pipelines_widget_label">خطوط التنفيذ</string>
+    <string name="pipelines_widget_description">آخر تشغيل لكل خط تنفيذ على كل فرع</string>
+    <string name="pipelines_widget_empty">لا توجد عمليات تشغيل حديثة</string>
+    <string name="pipelines_widget_count">%1$d فاشل</string>
 </resources>

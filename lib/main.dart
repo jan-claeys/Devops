@@ -26,7 +26,7 @@ Future<void> main() async {
     await initializeDateFormatting();
     final state = AppState();
     await state.load();
-    unawaited(TicketsHomeWidget.registerBackgroundRefresh());
+    unawaited(HomeWidgets.registerBackgroundRefresh());
     runApp(AppScope(state: state, child: const DevOpsApp()));
   });
 }
@@ -50,10 +50,10 @@ class _DevOpsAppState extends State<DevOpsApp> {
   void initState() {
     super.initState();
     if (Links.isSupported) _links = Links.incoming().listen(_openLink);
-    // Tapping a ticket in the home screen widget opens its details. Elsewhere
+    // Tapping a row in a home screen widget opens its details. Elsewhere
     // the event channel has no implementation and listening reports a
     // MissingPluginException straight to FlutterError, bypassing onError.
-    if (!TicketsHomeWidget.isSupported) return;
+    if (!HomeWidgets.isSupported) return;
     HomeWidget.initiallyLaunchedFromHomeWidget().then(_openFromWidget, onError: (_) {});
     _widgetClicks = HomeWidget.widgetClicked.listen(_openFromWidget, onError: (_) {});
   }
@@ -66,9 +66,7 @@ class _DevOpsAppState extends State<DevOpsApp> {
   }
 
   void _openFromWidget(Uri? uri) {
-    final id = TicketsHomeWidget.workItemIdFromUri(uri);
-    if (id == null) return;
-    _open(DevOpsLink(DevOpsLinkKind.workItem, id));
+    if (HomeWidgets.linkFromUri(uri) case final link?) _open(link);
   }
 
   /// Opens the work item, pull request or run a link opened with the app, or

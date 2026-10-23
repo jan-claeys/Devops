@@ -2,9 +2,17 @@
 <resources>
     <string name="tickets_widget_label">Moje zgłoszenia</string>
     <string name="tickets_widget_description">Twoje otwarte zgłoszenia Azure DevOps w skrócie</string>
-    <string name="tickets_widget_refresh">Odśwież</string>
-    <string name="tickets_widget_refreshing">Odświeżanie…</string>
-    <string name="tickets_widget_not_loaded">Otwórz aplikację, aby wczytać</string>
+    <string name="widget_refresh">Odśwież</string>
+    <string name="widget_refreshing">Odświeżanie…</string>
+    <string name="widget_not_loaded">Otwórz aplikację, aby wczytać</string>
     <string name="tickets_widget_empty">Brak otwartych zgłoszeń</string>
     <string name="tickets_widget_open_count">Otwarte: %1$d</string>
+    <string name="pull_requests_widget_label">PR do przejrzenia</string>
+    <string name="pull_requests_widget_description">Pull requesty czekające na Twoją recenzję</string>
+    <string name="pull_requests_widget_empty">Nic do przejrzenia</string>
+    <string name="pull_requests_widget_count">Do przejrzenia: %1$d</string>
+    <string name="pipelines_widget_label">Potoki</string>
+    <string name="pipelines_widget_description">Ostatnie uruchomienie każdego potoku w każdej gałęzi</string>
+    <string name="pipelines_widget_empty">Brak ostatnich uruchomień</string>
+    <string name="pipelines_widget_count">Nieudane: %1$d</string>
 </resources>
