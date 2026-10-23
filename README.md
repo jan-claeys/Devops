@@ -13,7 +13,7 @@ A Flutter app for viewing your Azure DevOps work items (tickets) and pull reques
   - Scope: *Assigned to me*, *Created by me* or *All*
   - Filter on open items only and on work item type (Bug, Task, User Story, ...)
   - Search by title, ID, tag or assignee; pull to refresh
-- **Work item details**: description (or repro steps, acceptance criteria and the other fields of the work item type), state, assignee, priority, effort, original estimate / remaining / completed work, area and iteration path, tags, parent, child and other linked items, attachments and comments (including rendered @mentions and pasted images), with a button to open the item in the browser
+- **Work item details**: description (or repro steps, acceptance criteria and the other fields of the work item type), state, assignee, priority, effort, original estimate / remaining / completed work, area and iteration path, tags, parent, child and other linked items, attachments and comments (including rendered @mentions and pasted or embedded images), with a button to open the item in the browser
   - Images open full screen and can be zoomed; other attachments are downloaded and opened with an app on the device (on the web, downloaded by the browser), asking first for large files
 - **Pull requests** of the selected projects with status, branches, author and reviewer votes
   - Scope: *Reviewing*, *Created by me* or *All*; filter on open pull requests and search by title, ID, branch, repository or person
@@ -30,6 +30,9 @@ A Flutter app for viewing your Azure DevOps work items (tickets) and pull reques
   - *My tickets*: your open work items
   - *PRs to review*: pull requests waiting for your vote, oldest first
   - *Pipelines*: the latest run of each pipeline on each branch (builds and releases) with its status, and how many fail
+- **Run notifications** (Android): the progress of running builds and releases in a notification, on Android 16 as a Live Update with a chip in the status bar; several runs share one notification and each shows its result when it finishes
+  - Follows *My runs* (default), *All runs* or nothing, under *Settings → Notifications*; turning them on asks for permission to post notifications
+  - Runs are refreshed every 15 seconds while the app is open and, as long as a run is going, in the background through a foreground service; runs that start while the app is closed are picked up the next time it is opened
 - **Open Azure DevOps links in the app** (Android): share a link to a work item, pull request, build or release to *DevOps* (for example from Teams or the browser), or let Android open those links with the app directly
   - Works for `dev.azure.com/{organization}`, `{organization}.visualstudio.com` and, when shared, on-premises collection URLs; links of another organization show a message instead
   - Opening links directly needs to be turned on once, since the app can't verify these domains: *Settings → Apps → DevOps → Open by default → Add link*, select `dev.azure.com` and `*.visualstudio.com`. *Open in DevOps* then still opens the browser
@@ -51,7 +54,7 @@ flutter pub get
 flutter run
 ```
 
-Supported platforms in this repo: Android, iOS, Windows and Web. The home screen widgets are Android only.
+Supported platforms in this repo: Android, iOS, Windows and Web. The home screen widgets and run notifications are Android only.
 
 ### Connect to Azure DevOps
 
@@ -114,12 +117,13 @@ lib/
 │   ├── devops_link.dart          Reading Azure DevOps links of work items, pull requests and runs
 │   └── dashboard_summary.dart    What waits for the user, for the overview
 ├── services/
-│   ├── app_state.dart            Settings, connection and theme state
+│   ├── app_state.dart            Settings, connection, theme and notification state
 │   ├── devops_api.dart           Azure DevOps REST API client (v7.1, WIQL, pull requests, builds, releases, logs, attachments)
 │   ├── attachment_opener*.dart   Downloading and opening attachments (device and web)
 │   ├── logging.dart              Logging and optional Sentry error reporting
 │   ├── links.dart                Links opened with or shared to the app, opening the browser (Android)
-│   └── home_widget_service.dart  Data feed for the Android home screen widget
+│   ├── run_notifications.dart    Progress notifications of running pipeline runs (Android)
+│   └── home_widget_service.dart  Data feed for the Android home screen widgets
 ├── screens/
 │   ├── home_screen.dart          Tabs for the overview, tickets, pull requests and pipelines
 │   ├── dashboard_screen.dart     Overview of what waits for the user
