@@ -704,4 +704,40 @@ class AppLocalizationsUk extends AppLocalizations {
   @override
   String get linkOtherOrganization =>
       'Це посилання належить іншій організації, а не тій, до якої ви підключені.';
+
+  @override
+  String get notifications => 'Сповіщення';
+
+  @override
+  String get runNotificationsHint =>
+      'Показує хід виконання запущених конвеєрів, поки застосунок відкритий, і продовжує стежити за ними у фоні до завершення.';
+
+  @override
+  String get runNotificationsOff => 'Вимк.';
+
+  @override
+  String get runNotificationsMine => 'Мої запуски';
+
+  @override
+  String get runNotificationsAll => 'Усі запуски';
+
+  @override
+  String get runNotificationChannel => 'Хід виконання конвеєрів';
+
+  @override
+  String get notificationsDenied =>
+      'Сповіщення для цього застосунку вимкнено в налаштуваннях Android.';
+
+  @override
+  String runNotificationsRunning(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count конвеєра виконуються',
+      many: '$count конвеєрів виконуються',
+      few: '$count конвеєри виконуються',
+      one: '$count конвеєр виконується',
+    );
+    return '$_temp0';
+  }
 }

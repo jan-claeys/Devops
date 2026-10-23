@@ -204,5 +204,14 @@
   "noChangesFor": "Tidak berubah selama {count} h",
 
   "linkNotSupported": "Tautan ini tidak dapat dibuka di aplikasi.",
-  "linkOtherOrganization": "Tautan ini berasal dari organisasi lain, bukan organisasi yang Anda hubungkan."
+  "linkOtherOrganization": "Tautan ini berasal dari organisasi lain, bukan organisasi yang Anda hubungkan.",
+
+  "notifications": "Notifikasi",
+  "runNotificationsHint": "Menampilkan progres pipeline yang sedang berjalan selama aplikasi terbuka, dan terus memantaunya di latar belakang hingga selesai.",
+  "runNotificationsOff": "Nonaktif",
+  "runNotificationsMine": "Run saya",
+  "runNotificationsAll": "Semua run",
+  "runNotificationChannel": "Progres pipeline",
+  "notificationsDenied": "Notifikasi untuk aplikasi ini dinonaktifkan di setelan Android.",
+  "runNotificationsRunning": "{count, plural, other{{count} pipeline sedang berjalan}}"
 }

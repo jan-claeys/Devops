@@ -273,5 +273,21 @@
   },
 
   "linkNotSupported": "This link can't be opened in the app.",
-  "linkOtherOrganization": "This link is from another organization than the one you're signed in to."
+  "linkOtherOrganization": "This link is from another organization than the one you're signed in to.",
+
+  "notifications": "Notifications",
+  "runNotificationsHint": "Shows the progress of running pipelines while the app is open, and keeps following them in the background until they finish.",
+  "runNotificationsOff": "Off",
+  "runNotificationsMine": "My runs",
+  "runNotificationsAll": "All runs",
+  "runNotificationChannel": "Pipeline progress",
+  "notificationsDenied": "Notifications are turned off for this app in the Android settings.",
+  "@runNotificationChannel": {
+    "description": "Name of the Android notification channel, shown in the system settings."
+  },
+  "runNotificationsRunning": "{count, plural, =1{1 pipeline running} other{{count} pipelines running}}",
+  "@runNotificationsRunning": {
+    "description": "Title of the notification shown while several pipeline runs are running at once.",
+    "placeholders": {"count": {"type": "int"}}
+  }
 }

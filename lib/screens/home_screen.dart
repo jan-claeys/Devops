@@ -13,14 +13,18 @@ class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<HomeScreen> createState() => HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class HomeScreenState extends State<HomeScreen> {
   static const _railBreakpoint = 600.0;
 
   int _index = 0;
   final _pullRequests = GlobalKey<PullRequestsScreenState>();
+
+  /// Switches to the pipelines, as a tap on the notification of several
+  /// running runs does.
+  void showPipelines() => setState(() => _index = 3);
 
   @override
   Widget build(BuildContext context) {

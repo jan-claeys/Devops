@@ -694,4 +694,38 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get linkOtherOrganization =>
       'Questo link appartiene a un\'organizzazione diversa da quella a cui sei connesso.';
+
+  @override
+  String get notifications => 'Notifiche';
+
+  @override
+  String get runNotificationsHint =>
+      'Mostra l\'avanzamento delle pipeline in esecuzione mentre l\'app è aperta e continua a seguirle in background finché non terminano.';
+
+  @override
+  String get runNotificationsOff => 'Disattivate';
+
+  @override
+  String get runNotificationsMine => 'Le mie esecuzioni';
+
+  @override
+  String get runNotificationsAll => 'Tutte le esecuzioni';
+
+  @override
+  String get runNotificationChannel => 'Avanzamento pipeline';
+
+  @override
+  String get notificationsDenied =>
+      'Le notifiche sono disattivate per questa app nelle impostazioni di Android.';
+
+  @override
+  String runNotificationsRunning(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count pipeline in esecuzione',
+      one: '1 pipeline in esecuzione',
+    );
+    return '$_temp0';
+  }
 }

@@ -1291,6 +1291,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This link is from another organization than the one you\'re signed in to.'**
   String get linkOtherOrganization;
+
+  /// No description provided for @notifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get notifications;
+
+  /// No description provided for @runNotificationsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Shows the progress of running pipelines while the app is open, and keeps following them in the background until they finish.'**
+  String get runNotificationsHint;
+
+  /// No description provided for @runNotificationsOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get runNotificationsOff;
+
+  /// No description provided for @runNotificationsMine.
+  ///
+  /// In en, this message translates to:
+  /// **'My runs'**
+  String get runNotificationsMine;
+
+  /// No description provided for @runNotificationsAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All runs'**
+  String get runNotificationsAll;
+
+  /// Name of the Android notification channel, shown in the system settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Pipeline progress'**
+  String get runNotificationChannel;
+
+  /// No description provided for @notificationsDenied.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications are turned off for this app in the Android settings.'**
+  String get notificationsDenied;
+
+  /// Title of the notification shown while several pipeline runs are running at once.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 pipeline running} other{{count} pipelines running}}'**
+  String runNotificationsRunning(int count);
 }
 
 class _AppLocalizationsDelegate

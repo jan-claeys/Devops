@@ -1,5 +1,10 @@
 ﻿<manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- Progress of pipeline runs, see RunNotifications.kt. -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <uses-permission android:name="android.permission.POST_PROMOTED_NOTIFICATIONS"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC"/>
     <application
         android:label="DevOps"
         android:name="${applicationName}"
@@ -109,6 +114,11 @@
             android:name=".ListWidgetService"
             android:exported="false"
             android:permission="android.permission.BIND_REMOTEVIEWS"/>
+        <!-- Keeps following pipeline runs with the app in the background. -->
+        <service
+            android:name=".RunProgressService"
+            android:exported="false"
+            android:foregroundServiceType="dataSync"/>
         <!-- Runs the Dart refresh callback for the widget in the background. -->
         <receiver
             android:name="es.antonborri.home_widget.HomeWidgetBackgroundReceiver"

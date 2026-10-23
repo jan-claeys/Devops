@@ -204,5 +204,14 @@
   "noChangesFor": "{count} gündür değişmedi",
 
   "linkNotSupported": "Bu bağlantı uygulamada açılamıyor.",
-  "linkOtherOrganization": "Bu bağlantı, bağlı olduğunuz kuruluştan farklı bir kuruluşa ait."
+  "linkOtherOrganization": "Bu bağlantı, bağlı olduğunuz kuruluştan farklı bir kuruluşa ait.",
+
+  "notifications": "Bildirimler",
+  "runNotificationsHint": "Uygulama açıkken çalışan işlem hatlarının ilerlemesini gösterir ve bitene kadar arka planda takip etmeye devam eder.",
+  "runNotificationsOff": "Kapalı",
+  "runNotificationsMine": "Çalıştırmalarım",
+  "runNotificationsAll": "Tüm çalıştırmalar",
+  "runNotificationChannel": "İşlem hattı ilerlemesi",
+  "notificationsDenied": "Bu uygulamanın bildirimleri Android ayarlarında kapalı.",
+  "runNotificationsRunning": "{count, plural, other{{count} işlem hattı çalışıyor}}"
 }

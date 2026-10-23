@@ -229,6 +229,17 @@ void main() {
     expect(find.text(en.noStagesYet), findsOneWidget);
   });
 
+  testWidgets('switches to the pipelines from the notification of several runs', (tester) async {
+    final home = GlobalKey<HomeScreenState>();
+    await pumpApp(tester, HomeScreen(key: home), state: connectedState(fake));
+    await tester.pumpAndSettle();
+    expect(find.text('CI'), findsNothing);
+
+    home.currentState!.showPipelines();
+    await tester.pumpAndSettle();
+    expect(find.text('CI'), findsOneWidget);
+  });
+
   testWidgets('switches between tickets and pipelines', (tester) async {
     await pumpApp(tester, const HomeScreen(), state: connectedState(fake));
     await tester.pumpAndSettle();

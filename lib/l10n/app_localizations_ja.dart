@@ -674,4 +674,36 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get linkOtherOrganization => 'このリンクは、接続中のものとは別の組織のものです。';
+
+  @override
+  String get notifications => '通知';
+
+  @override
+  String get runNotificationsHint =>
+      'アプリを開いている間、実行中のパイプラインの進行状況を表示し、完了するまでバックグラウンドで追跡します。';
+
+  @override
+  String get runNotificationsOff => 'オフ';
+
+  @override
+  String get runNotificationsMine => '自分の実行';
+
+  @override
+  String get runNotificationsAll => 'すべての実行';
+
+  @override
+  String get runNotificationChannel => 'パイプラインの進行状況';
+
+  @override
+  String get notificationsDenied => 'Android の設定でこのアプリの通知がオフになっています。';
+
+  @override
+  String runNotificationsRunning(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count 件のパイプラインを実行中',
+    );
+    return '$_temp0';
+  }
 }

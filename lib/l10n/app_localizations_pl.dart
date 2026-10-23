@@ -705,4 +705,40 @@ class AppLocalizationsPl extends AppLocalizations {
   @override
   String get linkOtherOrganization =>
       'Ten link pochodzi z innej organizacji niż ta, z którą masz połączenie.';
+
+  @override
+  String get notifications => 'Powiadomienia';
+
+  @override
+  String get runNotificationsHint =>
+      'Pokazuje postęp uruchomionych potoków, gdy aplikacja jest otwarta, i śledzi je w tle aż do zakończenia.';
+
+  @override
+  String get runNotificationsOff => 'Wyłączone';
+
+  @override
+  String get runNotificationsMine => 'Moje uruchomienia';
+
+  @override
+  String get runNotificationsAll => 'Wszystkie uruchomienia';
+
+  @override
+  String get runNotificationChannel => 'Postęp potoków';
+
+  @override
+  String get notificationsDenied =>
+      'Powiadomienia dla tej aplikacji są wyłączone w ustawieniach Androida.';
+
+  @override
+  String runNotificationsRunning(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count potoku działa',
+      many: '$count potoków działa',
+      few: '$count potoki działają',
+      one: '1 potok działa',
+    );
+    return '$_temp0';
+  }
 }

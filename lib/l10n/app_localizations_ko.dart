@@ -674,4 +674,36 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get linkOtherOrganization => '이 링크는 연결된 조직이 아닌 다른 조직의 링크입니다.';
+
+  @override
+  String get notifications => '알림';
+
+  @override
+  String get runNotificationsHint =>
+      '앱이 열려 있는 동안 실행 중인 파이프라인의 진행 상황을 표시하고, 완료될 때까지 백그라운드에서 계속 추적합니다.';
+
+  @override
+  String get runNotificationsOff => '끄기';
+
+  @override
+  String get runNotificationsMine => '내 실행';
+
+  @override
+  String get runNotificationsAll => '모든 실행';
+
+  @override
+  String get runNotificationChannel => '파이프라인 진행 상황';
+
+  @override
+  String get notificationsDenied => 'Android 설정에서 이 앱의 알림이 꺼져 있습니다.';
+
+  @override
+  String runNotificationsRunning(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '파이프라인 $count개 실행 중',
+    );
+    return '$_temp0';
+  }
 }

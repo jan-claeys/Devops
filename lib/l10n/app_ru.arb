@@ -204,5 +204,14 @@
   "noChangesFor": "Без изменений {count} дн.",
 
   "linkNotSupported": "Эту ссылку нельзя открыть в приложении.",
-  "linkOtherOrganization": "Эта ссылка относится к другой организации, а не к той, к которой вы подключены."
+  "linkOtherOrganization": "Эта ссылка относится к другой организации, а не к той, к которой вы подключены.",
+
+  "notifications": "Уведомления",
+  "runNotificationsHint": "Показывает ход выполнения запущенных конвейеров, пока приложение открыто, и продолжает следить за ними в фоне до их завершения.",
+  "runNotificationsOff": "Выкл.",
+  "runNotificationsMine": "Мои запуски",
+  "runNotificationsAll": "Все запуски",
+  "runNotificationChannel": "Ход выполнения конвейеров",
+  "notificationsDenied": "Уведомления для этого приложения отключены в настройках Android.",
+  "runNotificationsRunning": "{count, plural, one{{count} конвейер выполняется} few{{count} конвейера выполняются} many{{count} конвейеров выполняются} other{{count} конвейера выполняются}}"
 }

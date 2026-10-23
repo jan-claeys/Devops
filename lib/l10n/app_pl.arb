@@ -204,5 +204,14 @@
   "noChangesFor": "Bez zmian od {count} d",
 
   "linkNotSupported": "Tego linku nie można otworzyć w aplikacji.",
-  "linkOtherOrganization": "Ten link pochodzi z innej organizacji niż ta, z którą masz połączenie."
+  "linkOtherOrganization": "Ten link pochodzi z innej organizacji niż ta, z którą masz połączenie.",
+
+  "notifications": "Powiadomienia",
+  "runNotificationsHint": "Pokazuje postęp uruchomionych potoków, gdy aplikacja jest otwarta, i śledzi je w tle aż do zakończenia.",
+  "runNotificationsOff": "Wyłączone",
+  "runNotificationsMine": "Moje uruchomienia",
+  "runNotificationsAll": "Wszystkie uruchomienia",
+  "runNotificationChannel": "Postęp potoków",
+  "notificationsDenied": "Powiadomienia dla tej aplikacji są wyłączone w ustawieniach Androida.",
+  "runNotificationsRunning": "{count, plural, =1{1 potok działa} few{{count} potoki działają} many{{count} potoków działa} other{{count} potoku działa}}"
 }

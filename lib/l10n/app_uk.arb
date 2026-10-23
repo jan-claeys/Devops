@@ -204,5 +204,14 @@
   "noChangesFor": "Без змін {count} дн.",
 
   "linkNotSupported": "Це посилання не можна відкрити в застосунку.",
-  "linkOtherOrganization": "Це посилання належить іншій організації, а не тій, до якої ви підключені."
+  "linkOtherOrganization": "Це посилання належить іншій організації, а не тій, до якої ви підключені.",
+
+  "notifications": "Сповіщення",
+  "runNotificationsHint": "Показує хід виконання запущених конвеєрів, поки застосунок відкритий, і продовжує стежити за ними у фоні до завершення.",
+  "runNotificationsOff": "Вимк.",
+  "runNotificationsMine": "Мої запуски",
+  "runNotificationsAll": "Усі запуски",
+  "runNotificationChannel": "Хід виконання конвеєрів",
+  "notificationsDenied": "Сповіщення для цього застосунку вимкнено в налаштуваннях Android.",
+  "runNotificationsRunning": "{count, plural, one{{count} конвеєр виконується} few{{count} конвеєри виконуються} many{{count} конвеєрів виконуються} other{{count} конвеєра виконуються}}"
 }

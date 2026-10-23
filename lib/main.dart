@@ -18,6 +18,7 @@ import 'services/app_state.dart';
 import 'services/home_widget_service.dart';
 import 'services/links.dart';
 import 'services/logging.dart';
+import 'services/run_notifications.dart';
 
 Future<void> main() async {
   await runWithErrorReporting(() async {
@@ -43,14 +44,18 @@ class _DevOpsAppState extends State<DevOpsApp> {
 
   final _navigator = GlobalKey<NavigatorState>();
   final _messenger = GlobalKey<ScaffoldMessengerState>();
+  final _home = GlobalKey<HomeScreenState>();
   StreamSubscription<Uri?>? _widgetClicks;
   StreamSubscription<String>? _links;
+  late final RunNotifications _runNotifications;
 
   @override
   void initState() {
     super.initState();
+    _runNotifications = RunNotifications(AppScope.read(context))..start();
     if (Links.isSupported) _links = Links.incoming().listen(_openLink);
-    // Tapping a row in a home screen widget opens its details. Elsewhere
+    // Tapping a row in a home screen widget, or a run notification, opens
+    // its details; the notification of several runs the pipelines. Elsewhere
     // the event channel has no implementation and listening reports a
     // MissingPluginException straight to FlutterError, bypassing onError.
     if (!HomeWidgets.isSupported) return;
@@ -62,11 +67,22 @@ class _DevOpsAppState extends State<DevOpsApp> {
   void dispose() {
     _widgetClicks?.cancel();
     _links?.cancel();
+    _runNotifications.dispose();
     super.dispose();
   }
 
   void _openFromWidget(Uri? uri) {
+    if (uri?.toString() == RunNotifications.pipelinesUri) return _showPipelines();
     if (HomeWidgets.linkFromUri(uri) case final link?) _open(link);
+  }
+
+  /// Shows the pipelines tab, closing whatever is opened on top of it.
+  void _showPipelines() {
+    if (!AppScope.read(context).isConfigured) return;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _navigator.currentState?.popUntil((r) => r.isFirst);
+      _home.currentState?.showPipelines();
+    });
   }
 
   /// Opens the work item, pull request or run a link opened with the app, or
@@ -148,7 +164,7 @@ class _DevOpsAppState extends State<DevOpsApp> {
           themeMode: state.themeMode,
           // Onboarding also asks for the projects before showing tickets.
           home: state.isConfigured && state.projects.isNotEmpty
-              ? const HomeScreen()
+              ? HomeScreen(key: _home)
               : const SettingsScreen(isOnboarding: true),
         );
       },

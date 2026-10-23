@@ -1,10 +1,13 @@
 package io.github.jan_claeys.devops
 
+import android.Manifest
+import android.app.NotificationManager
 import android.content.ActivityNotFoundException
 import android.content.ComponentName
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
@@ -12,11 +15,12 @@ import io.flutter.plugin.common.MethodChannel
 /**
  * Hands Azure DevOps links to Dart (lib/services/links.dart): links opened
  * with the app and text shared to it. Widget taps go through home_widget
- * instead.
+ * instead. Also shows the progress of pipeline runs, see RunNotifications.
  */
 class MainActivity : FlutterActivity() {
   private var channel: MethodChannel? = null
   private var initialLink: String? = null
+  private var permissionResult: MethodChannel.Result? = null
 
   override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
     super.configureFlutterEngine(flutterEngine)
@@ -33,6 +37,48 @@ class MainActivity : FlutterActivity() {
         }
       }
     }
+    MethodChannel(flutterEngine.dartExecutor.binaryMessenger, RUNS_CHANNEL).setMethodCallHandler { call, result ->
+      when (call.method) {
+        "update" -> {
+          RunNotifications.update(
+              this,
+              call.argument<List<Map<String, Any?>>>("running")!!,
+              call.argument<List<Map<String, Any?>>>("finished")!!,
+              call.argument<String>("channelName")!!)
+          result.success(null)
+        }
+        "requestPermission" -> requestNotificationPermission(result)
+        else -> result.notImplemented()
+      }
+    }
+  }
+
+  /** Asks to post notifications, needed from Android 13; tells whether they show. */
+  private fun requestNotificationPermission(result: MethodChannel.Result) {
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU ||
+        checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+      result.success(getSystemService(NotificationManager::class.java).areNotificationsEnabled())
+      return
+    }
+    permissionResult?.success(false)
+    permissionResult = result
+    requestPermissions(arrayOf(Manifest.permission.POST_NOTIFICATIONS), NOTIFICATION_PERMISSION_REQUEST)
+  }
+
+  override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    if (requestCode != NOTIFICATION_PERMISSION_REQUEST) return
+    permissionResult?.success(grantResults.firstOrNull() == PackageManager.PERMISSION_GRANTED)
+    permissionResult = null
+  }
+
+  override fun onDestroy() {
+    // The Dart side that updates the notifications goes with the activity.
+    if (isFinishing) {
+      RunProgressService.stop(this)
+      RunNotifications.cancelRunning(this)
+    }
+    super.onDestroy()
   }
 
   override fun onNewIntent(intent: Intent) {
@@ -79,5 +125,7 @@ class MainActivity : FlutterActivity() {
 
   private companion object {
     const val CHANNEL = "devops/links"
+    const val RUNS_CHANNEL = "devops/run_notifications"
+    const val NOTIFICATION_PERMISSION_REQUEST = 1
   }
 }

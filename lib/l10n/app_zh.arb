@@ -204,5 +204,14 @@
   "noChangesFor": "{count} 天未更改",
 
   "linkNotSupported": "无法在应用中打开此链接。",
-  "linkOtherOrganization": "此链接属于其他组织，而不是你当前连接的组织。"
+  "linkOtherOrganization": "此链接属于其他组织，而不是你当前连接的组织。",
+
+  "notifications": "通知",
+  "runNotificationsHint": "在应用打开时显示正在运行的管道进度，并在后台持续跟踪直到完成。",
+  "runNotificationsOff": "关闭",
+  "runNotificationsMine": "我的运行",
+  "runNotificationsAll": "所有运行",
+  "runNotificationChannel": "管道进度",
+  "notificationsDenied": "已在 Android 设置中关闭此应用的通知。",
+  "runNotificationsRunning": "{count, plural, other{{count} 个管道正在运行}}"
 }

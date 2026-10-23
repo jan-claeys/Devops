@@ -688,4 +688,37 @@ class AppLocalizationsId extends AppLocalizations {
   @override
   String get linkOtherOrganization =>
       'Tautan ini berasal dari organisasi lain, bukan organisasi yang Anda hubungkan.';
+
+  @override
+  String get notifications => 'Notifikasi';
+
+  @override
+  String get runNotificationsHint =>
+      'Menampilkan progres pipeline yang sedang berjalan selama aplikasi terbuka, dan terus memantaunya di latar belakang hingga selesai.';
+
+  @override
+  String get runNotificationsOff => 'Nonaktif';
+
+  @override
+  String get runNotificationsMine => 'Run saya';
+
+  @override
+  String get runNotificationsAll => 'Semua run';
+
+  @override
+  String get runNotificationChannel => 'Progres pipeline';
+
+  @override
+  String get notificationsDenied =>
+      'Notifikasi untuk aplikasi ini dinonaktifkan di setelan Android.';
+
+  @override
+  String runNotificationsRunning(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count pipeline sedang berjalan',
+    );
+    return '$_temp0';
+  }
 }

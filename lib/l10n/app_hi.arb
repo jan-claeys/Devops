@@ -204,5 +204,14 @@
   "noChangesFor": "{count} दिन से कोई बदलाव नहीं",
 
   "linkNotSupported": "यह लिंक ऐप में नहीं खोला जा सकता।",
-  "linkOtherOrganization": "यह लिंक उस संगठन का नहीं है जिससे आप जुड़े हैं।"
+  "linkOtherOrganization": "यह लिंक उस संगठन का नहीं है जिससे आप जुड़े हैं।",
+
+  "notifications": "सूचनाएँ",
+  "runNotificationsHint": "ऐप खुला रहने पर चल रही पाइपलाइनों की प्रगति दिखाता है, और उनके पूरा होने तक बैकग्राउंड में उन्हें फ़ॉलो करता रहता है।",
+  "runNotificationsOff": "बंद",
+  "runNotificationsMine": "मेरे रन",
+  "runNotificationsAll": "सभी रन",
+  "runNotificationChannel": "पाइपलाइन की प्रगति",
+  "notificationsDenied": "Android सेटिंग में इस ऐप के लिए सूचनाएँ बंद हैं।",
+  "runNotificationsRunning": "{count, plural, =1{1 पाइपलाइन चल रही है} other{{count} पाइपलाइन चल रही हैं}}"
 }

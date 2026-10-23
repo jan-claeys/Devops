@@ -204,5 +204,14 @@
   "noChangesFor": "{count} d niet gewijzigd",
 
   "linkNotSupported": "Deze link kan niet in de app geopend worden.",
-  "linkOtherOrganization": "Deze link hoort bij een andere organisatie dan die waarmee je verbonden bent."
+  "linkOtherOrganization": "Deze link hoort bij een andere organisatie dan die waarmee je verbonden bent.",
+
+  "notifications": "Meldingen",
+  "runNotificationsHint": "Toont de voortgang van lopende pipelines zolang de app open is, en volgt ze op de achtergrond verder tot ze klaar zijn.",
+  "runNotificationsOff": "Uit",
+  "runNotificationsMine": "Mijn runs",
+  "runNotificationsAll": "Alle runs",
+  "runNotificationChannel": "Voortgang van pipelines",
+  "notificationsDenied": "Meldingen staan uit voor deze app in de Android-instellingen.",
+  "runNotificationsRunning": "{count, plural, =1{1 pipeline bezig} other{{count} pipelines bezig}}"
 }

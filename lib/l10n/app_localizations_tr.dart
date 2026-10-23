@@ -685,4 +685,37 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get linkOtherOrganization =>
       'Bu bağlantı, bağlı olduğunuz kuruluştan farklı bir kuruluşa ait.';
+
+  @override
+  String get notifications => 'Bildirimler';
+
+  @override
+  String get runNotificationsHint =>
+      'Uygulama açıkken çalışan işlem hatlarının ilerlemesini gösterir ve bitene kadar arka planda takip etmeye devam eder.';
+
+  @override
+  String get runNotificationsOff => 'Kapalı';
+
+  @override
+  String get runNotificationsMine => 'Çalıştırmalarım';
+
+  @override
+  String get runNotificationsAll => 'Tüm çalıştırmalar';
+
+  @override
+  String get runNotificationChannel => 'İşlem hattı ilerlemesi';
+
+  @override
+  String get notificationsDenied =>
+      'Bu uygulamanın bildirimleri Android ayarlarında kapalı.';
+
+  @override
+  String runNotificationsRunning(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count işlem hattı çalışıyor',
+    );
+    return '$_temp0';
+  }
 }

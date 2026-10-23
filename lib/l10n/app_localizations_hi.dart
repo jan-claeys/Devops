@@ -687,4 +687,38 @@ class AppLocalizationsHi extends AppLocalizations {
   @override
   String get linkOtherOrganization =>
       'यह लिंक उस संगठन का नहीं है जिससे आप जुड़े हैं।';
+
+  @override
+  String get notifications => 'सूचनाएँ';
+
+  @override
+  String get runNotificationsHint =>
+      'ऐप खुला रहने पर चल रही पाइपलाइनों की प्रगति दिखाता है, और उनके पूरा होने तक बैकग्राउंड में उन्हें फ़ॉलो करता रहता है।';
+
+  @override
+  String get runNotificationsOff => 'बंद';
+
+  @override
+  String get runNotificationsMine => 'मेरे रन';
+
+  @override
+  String get runNotificationsAll => 'सभी रन';
+
+  @override
+  String get runNotificationChannel => 'पाइपलाइन की प्रगति';
+
+  @override
+  String get notificationsDenied =>
+      'Android सेटिंग में इस ऐप के लिए सूचनाएँ बंद हैं।';
+
+  @override
+  String runNotificationsRunning(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count पाइपलाइन चल रही हैं',
+      one: '1 पाइपलाइन चल रही है',
+    );
+    return '$_temp0';
+  }
 }

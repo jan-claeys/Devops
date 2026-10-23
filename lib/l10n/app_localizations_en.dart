@@ -692,4 +692,38 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get linkOtherOrganization =>
       'This link is from another organization than the one you\'re signed in to.';
+
+  @override
+  String get notifications => 'Notifications';
+
+  @override
+  String get runNotificationsHint =>
+      'Shows the progress of running pipelines while the app is open, and keeps following them in the background until they finish.';
+
+  @override
+  String get runNotificationsOff => 'Off';
+
+  @override
+  String get runNotificationsMine => 'My runs';
+
+  @override
+  String get runNotificationsAll => 'All runs';
+
+  @override
+  String get runNotificationChannel => 'Pipeline progress';
+
+  @override
+  String get notificationsDenied =>
+      'Notifications are turned off for this app in the Android settings.';
+
+  @override
+  String runNotificationsRunning(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count pipelines running',
+      one: '1 pipeline running',
+    );
+    return '$_temp0';
+  }
 }

@@ -204,5 +204,14 @@
   "noChangesFor": "بدون تغييرات منذ {count} يوم",
 
   "linkNotSupported": "لا يمكن فتح هذا الرابط في التطبيق.",
-  "linkOtherOrganization": "هذا الرابط من مؤسسة غير المؤسسة التي سجّلت الدخول إليها."
+  "linkOtherOrganization": "هذا الرابط من مؤسسة غير المؤسسة التي سجّلت الدخول إليها.",
+
+  "notifications": "الإشعارات",
+  "runNotificationsHint": "يعرض تقدّم خطوط المعالجة قيد التشغيل أثناء فتح التطبيق، ويواصل متابعتها في الخلفية حتى تنتهي.",
+  "runNotificationsOff": "إيقاف",
+  "runNotificationsMine": "عمليات التشغيل الخاصة بي",
+  "runNotificationsAll": "كل عمليات التشغيل",
+  "runNotificationChannel": "تقدّم خطوط المعالجة",
+  "notificationsDenied": "الإشعارات متوقفة لهذا التطبيق في إعدادات Android.",
+  "runNotificationsRunning": "{count, plural, =1{خط معالجة واحد قيد التشغيل} =2{خطا معالجة قيد التشغيل} few{{count} خطوط معالجة قيد التشغيل} many{{count} خط معالجة قيد التشغيل} other{{count} خط معالجة قيد التشغيل}}"
 }

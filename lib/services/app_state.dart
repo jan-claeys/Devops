@@ -9,6 +9,9 @@ import 'logging.dart' as reporting;
 
 final _log = Logger('AppState');
 
+/// Which pipeline runs show their progress in a notification.
+enum RunNotificationScope { off, mine, all }
+
 /// Holds the connection settings and exposes a configured [DevOpsApi].
 class AppState extends ChangeNotifier {
   AppState({this.httpClient});
@@ -25,6 +28,7 @@ class AppState extends ChangeNotifier {
   static const _dynamicColorKey = 'useDynamicColor';
   static const _languageKey = 'language';
   static const _errorReportsKey = 'sendErrorReports';
+  static const _runNotificationsKey = 'runNotifications';
   static const _patKey = 'pat';
 
   final _secure = const FlutterSecureStorage();
@@ -44,6 +48,9 @@ class AppState extends ChangeNotifier {
 
   /// Send crash and error reports to Sentry; on unless the user opts out.
   bool sendErrorReports = true;
+
+  /// Follow the runs the user started, unless the user changes that.
+  RunNotificationScope runNotifications = RunNotificationScope.mine;
   DevOpsApi? api;
 
   bool get isConfigured => api != null;
@@ -60,6 +67,10 @@ class AppState extends ChangeNotifier {
     locale = language == null ? null : Locale(language);
     sendErrorReports = prefs.getBool(_errorReportsKey) ?? true;
     reporting.sendErrorReports = sendErrorReports;
+    runNotifications = RunNotificationScope.values
+            .where((s) => s.name == prefs.getString(_runNotificationsKey))
+            .firstOrNull ??
+        RunNotificationScope.mine;
     try {
       _pat = await _secure.read(key: _patKey);
     } catch (e, st) {
@@ -126,6 +137,13 @@ class AppState extends ChangeNotifier {
     reporting.sendErrorReports = value;
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool(_errorReportsKey, value);
+    notifyListeners();
+  }
+
+  Future<void> setRunNotifications(RunNotificationScope value) async {
+    runNotifications = value;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_runNotificationsKey, value.name);
     notifyListeners();
   }
 

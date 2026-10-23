@@ -204,5 +204,14 @@
   "noChangesFor": "Seit {count} T unverändert",
 
   "linkNotSupported": "Dieser Link kann nicht in der App geöffnet werden.",
-  "linkOtherOrganization": "Dieser Link gehört zu einer anderen Organisation als der, mit der du verbunden bist."
+  "linkOtherOrganization": "Dieser Link gehört zu einer anderen Organisation als der, mit der du verbunden bist.",
+
+  "notifications": "Benachrichtigungen",
+  "runNotificationsHint": "Zeigt den Fortschritt laufender Pipelines, solange die App geöffnet ist, und verfolgt sie im Hintergrund weiter, bis sie fertig sind.",
+  "runNotificationsOff": "Aus",
+  "runNotificationsMine": "Meine Läufe",
+  "runNotificationsAll": "Alle Läufe",
+  "runNotificationChannel": "Pipeline-Fortschritt",
+  "notificationsDenied": "Benachrichtigungen sind für diese App in den Android-Einstellungen deaktiviert.",
+  "runNotificationsRunning": "{count, plural, =1{1 Pipeline läuft} other{{count} Pipelines laufen}}"
 }

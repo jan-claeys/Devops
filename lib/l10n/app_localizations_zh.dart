@@ -670,4 +670,35 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get linkOtherOrganization => '此链接属于其他组织，而不是你当前连接的组织。';
+
+  @override
+  String get notifications => '通知';
+
+  @override
+  String get runNotificationsHint => '在应用打开时显示正在运行的管道进度，并在后台持续跟踪直到完成。';
+
+  @override
+  String get runNotificationsOff => '关闭';
+
+  @override
+  String get runNotificationsMine => '我的运行';
+
+  @override
+  String get runNotificationsAll => '所有运行';
+
+  @override
+  String get runNotificationChannel => '管道进度';
+
+  @override
+  String get notificationsDenied => '已在 Android 设置中关闭此应用的通知。';
+
+  @override
+  String runNotificationsRunning(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count 个管道正在运行',
+    );
+    return '$_temp0';
+  }
 }
