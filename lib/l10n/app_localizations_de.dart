@@ -520,6 +520,31 @@ class AppLocalizationsDe extends AppLocalizations {
       'Für Aktionen an Pipeline-Ausführungen braucht dein Token den Bereich Build (Read & execute).';
 
   @override
+  String get cancelRun => 'Ausführung abbrechen';
+
+  @override
+  String get cancelRunTitle => 'Diese Ausführung abbrechen?';
+
+  @override
+  String get cancelRunBody =>
+      'Laufende Jobs werden gestoppt, noch nicht gestartete übersprungen.';
+
+  @override
+  String get keepRunning => 'Weiterlaufen lassen';
+
+  @override
+  String get runAgain => 'Erneut ausführen';
+
+  @override
+  String get rerunFailedJobs => 'Fehlgeschlagene Jobs erneut ausführen';
+
+  @override
+  String get runStarted => 'Ausführung gestartet';
+
+  @override
+  String get open => 'Öffnen';
+
+  @override
   String get pullRequests => 'Pull Requests';
 
   @override

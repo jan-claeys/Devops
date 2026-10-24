@@ -517,6 +517,31 @@ class AppLocalizationsNl extends AppLocalizations {
       'Om pipeline-runs te beheren heeft je token de scope Build (Read & execute) nodig.';
 
   @override
+  String get cancelRun => 'Run annuleren';
+
+  @override
+  String get cancelRunTitle => 'Deze run annuleren?';
+
+  @override
+  String get cancelRunBody =>
+      'Lopende jobs worden gestopt en jobs die nog niet gestart zijn worden overgeslagen.';
+
+  @override
+  String get keepRunning => 'Laten lopen';
+
+  @override
+  String get runAgain => 'Opnieuw uitvoeren';
+
+  @override
+  String get rerunFailedJobs => 'Mislukte jobs opnieuw uitvoeren';
+
+  @override
+  String get runStarted => 'Run gestart';
+
+  @override
+  String get open => 'Openen';
+
+  @override
   String get pullRequests => 'Pull requests';
 
   @override

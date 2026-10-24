@@ -524,6 +524,31 @@ class AppLocalizationsAr extends AppLocalizations {
       'يتطلب التعامل مع تشغيلات المسارات النطاق Build (Read & execute) في الرمز المميز.';
 
   @override
+  String get cancelRun => 'إلغاء التشغيل';
+
+  @override
+  String get cancelRunTitle => 'هل تريد إلغاء هذا التشغيل؟';
+
+  @override
+  String get cancelRunBody =>
+      'ستتوقف المهام قيد التشغيل وسيتم تخطي المهام التي لم تبدأ بعد.';
+
+  @override
+  String get keepRunning => 'متابعة التشغيل';
+
+  @override
+  String get runAgain => 'تشغيل مرة أخرى';
+
+  @override
+  String get rerunFailedJobs => 'إعادة تشغيل المهام الفاشلة';
+
+  @override
+  String get runStarted => 'بدأ التشغيل';
+
+  @override
+  String get open => 'فتح';
+
+  @override
   String get pullRequests => 'طلبات السحب';
 
   @override

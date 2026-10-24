@@ -514,6 +514,31 @@ class AppLocalizationsId extends AppLocalizations {
       'Bertindak pada eksekusi pipeline memerlukan cakupan Build (Read & execute) pada token Anda.';
 
   @override
+  String get cancelRun => 'Batalkan eksekusi';
+
+  @override
+  String get cancelRunTitle => 'Batalkan eksekusi ini?';
+
+  @override
+  String get cancelRunBody =>
+      'Job yang sedang berjalan dihentikan dan yang belum dimulai dilewati.';
+
+  @override
+  String get keepRunning => 'Tetap jalankan';
+
+  @override
+  String get runAgain => 'Jalankan lagi';
+
+  @override
+  String get rerunFailedJobs => 'Jalankan ulang job yang gagal';
+
+  @override
+  String get runStarted => 'Eksekusi dimulai';
+
+  @override
+  String get open => 'Buka';
+
+  @override
   String get pullRequests => 'Pull request';
 
   @override

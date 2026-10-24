@@ -522,6 +522,31 @@ class AppLocalizationsPl extends AppLocalizations {
       'Działania na uruchomieniach potoków wymagają zakresu Build (Read & execute) w tokenie.';
 
   @override
+  String get cancelRun => 'Anuluj uruchomienie';
+
+  @override
+  String get cancelRunTitle => 'Anulować to uruchomienie?';
+
+  @override
+  String get cancelRunBody =>
+      'Uruchomione zadania zostaną zatrzymane, a te, które się nie rozpoczęły, pominięte.';
+
+  @override
+  String get keepRunning => 'Kontynuuj';
+
+  @override
+  String get runAgain => 'Uruchom ponownie';
+
+  @override
+  String get rerunFailedJobs => 'Uruchom ponownie nieudane zadania';
+
+  @override
+  String get runStarted => 'Uruchomiono';
+
+  @override
+  String get open => 'Otwórz';
+
+  @override
   String get pullRequests => 'Pull requesty';
 
   @override

@@ -516,6 +516,31 @@ class AppLocalizationsEn extends AppLocalizations {
       'Acting on pipeline runs needs the Build (Read & execute) scope on your token.';
 
   @override
+  String get cancelRun => 'Cancel run';
+
+  @override
+  String get cancelRunTitle => 'Cancel this run?';
+
+  @override
+  String get cancelRunBody =>
+      'Jobs that are running are stopped and the ones that haven\'t started are skipped.';
+
+  @override
+  String get keepRunning => 'Keep running';
+
+  @override
+  String get runAgain => 'Run again';
+
+  @override
+  String get rerunFailedJobs => 'Rerun failed jobs';
+
+  @override
+  String get runStarted => 'Run started';
+
+  @override
+  String get open => 'Open';
+
+  @override
   String get pullRequests => 'Pull requests';
 
   @override

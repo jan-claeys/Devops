@@ -502,6 +502,30 @@ class AppLocalizationsZh extends AppLocalizations {
   String get buildScopeHint => '操作管道运行需要令牌具有 Build (Read & execute) 范围。';
 
   @override
+  String get cancelRun => '取消运行';
+
+  @override
+  String get cancelRunTitle => '取消此运行？';
+
+  @override
+  String get cancelRunBody => '正在运行的作业将停止，尚未开始的作业将被跳过。';
+
+  @override
+  String get keepRunning => '继续运行';
+
+  @override
+  String get runAgain => '再次运行';
+
+  @override
+  String get rerunFailedJobs => '重新运行失败的作业';
+
+  @override
+  String get runStarted => '运行已开始';
+
+  @override
+  String get open => '打开';
+
+  @override
   String get pullRequests => '拉取请求';
 
   @override

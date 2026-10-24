@@ -998,6 +998,54 @@ abstract class AppLocalizations {
   /// **'Acting on pipeline runs needs the Build (Read & execute) scope on your token.'**
   String get buildScopeHint;
 
+  /// No description provided for @cancelRun.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel run'**
+  String get cancelRun;
+
+  /// No description provided for @cancelRunTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel this run?'**
+  String get cancelRunTitle;
+
+  /// No description provided for @cancelRunBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Jobs that are running are stopped and the ones that haven\'t started are skipped.'**
+  String get cancelRunBody;
+
+  /// No description provided for @keepRunning.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep running'**
+  String get keepRunning;
+
+  /// No description provided for @runAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Run again'**
+  String get runAgain;
+
+  /// No description provided for @rerunFailedJobs.
+  ///
+  /// In en, this message translates to:
+  /// **'Rerun failed jobs'**
+  String get rerunFailedJobs;
+
+  /// No description provided for @runStarted.
+  ///
+  /// In en, this message translates to:
+  /// **'Run started'**
+  String get runStarted;
+
+  /// No description provided for @open.
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get open;
+
   /// No description provided for @pullRequests.
   ///
   /// In en, this message translates to:

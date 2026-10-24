@@ -519,6 +519,31 @@ class AppLocalizationsFr extends AppLocalizations {
       'Agir sur les exécutions de pipeline nécessite la portée Build (Read & execute) sur votre jeton.';
 
   @override
+  String get cancelRun => 'Annuler l’exécution';
+
+  @override
+  String get cancelRunTitle => 'Annuler cette exécution ?';
+
+  @override
+  String get cancelRunBody =>
+      'Les jobs en cours sont arrêtés et ceux qui n’ont pas commencé sont ignorés.';
+
+  @override
+  String get keepRunning => 'Continuer';
+
+  @override
+  String get runAgain => 'Relancer';
+
+  @override
+  String get rerunFailedJobs => 'Relancer les jobs en échec';
+
+  @override
+  String get runStarted => 'Exécution lancée';
+
+  @override
+  String get open => 'Ouvrir';
+
+  @override
   String get pullRequests => 'Pull requests';
 
   @override

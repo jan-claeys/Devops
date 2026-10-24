@@ -518,6 +518,31 @@ class AppLocalizationsIt extends AppLocalizations {
       'Per agire sulle esecuzioni delle pipeline il token richiede l’ambito Build (Read & execute).';
 
   @override
+  String get cancelRun => 'Annulla esecuzione';
+
+  @override
+  String get cancelRunTitle => 'Annullare questa esecuzione?';
+
+  @override
+  String get cancelRunBody =>
+      'I job in esecuzione vengono fermati e quelli non ancora avviati vengono saltati.';
+
+  @override
+  String get keepRunning => 'Continua';
+
+  @override
+  String get runAgain => 'Esegui di nuovo';
+
+  @override
+  String get rerunFailedJobs => 'Riesegui i job non riusciti';
+
+  @override
+  String get runStarted => 'Esecuzione avviata';
+
+  @override
+  String get open => 'Apri';
+
+  @override
   String get pullRequests => 'Pull request';
 
   @override

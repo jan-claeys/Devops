@@ -372,6 +372,46 @@ void main() {
       expect(fake.requests.single.url.path, '/contoso/Contoso/_apis/release/releases/3');
     });
 
+    group('run actions', () {
+      final run = PipelineRun.fromJson({
+        ...runJson(5, project: 'My Project'),
+        'sourceVersion': 'abc123',
+        'templateParameters': {'environment': 'test'},
+      });
+
+      test('cancelRun stops the build', () async {
+        await api.cancelRun(run);
+        final request = fake.requests.single;
+        expect(request.method, 'PATCH');
+        expect(request.url.toString(),
+            'https://dev.azure.com/contoso/My%20Project/_apis/build/builds/5?api-version=7.1');
+        expect(jsonDecode(request.body), {'status': 'cancelling'});
+      });
+
+      test('runAgain queues the same branch, commit and parameters', () async {
+        final started = await api.runAgain(run);
+        final request = fake.requests.single;
+        expect(request.method, 'POST');
+        expect(request.url.toString(),
+            'https://dev.azure.com/contoso/My%20Project/_apis/build/builds?api-version=7.1');
+        expect(jsonDecode(request.body), {
+          'definition': {'id': 1},
+          'sourceBranch': 'refs/heads/main',
+          'sourceVersion': 'abc123',
+          'templateParameters': {'environment': 'test'},
+        });
+        expect(started.id, 1000);
+      });
+
+      test('rerunFailedJobs retries the build', () async {
+        await api.rerunFailedJobs(run);
+        final request = fake.requests.single;
+        expect(request.method, 'PATCH');
+        expect(request.url.queryParameters['retry'], 'true');
+        expect(request.url.path, '/contoso/My%20Project/_apis/build/builds/5');
+      });
+    });
+
     group('approvals', () {
       test('getApprovals reads the pending approvals with their steps', () async {
         fake.approvals.addAll([

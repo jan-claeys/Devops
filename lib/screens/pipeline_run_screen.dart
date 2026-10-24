@@ -49,6 +49,9 @@ class _PipelineRunScreenState extends State<PipelineRunScreen> {
 
   /// The approval that is being approved or rejected.
   String? _responding;
+
+  /// True while the run is being canceled or started again.
+  bool _acting = false;
   Object? _error;
   Timer? _refresh;
   bool _visible = true;
@@ -164,6 +167,59 @@ class _PipelineRunScreenState extends State<PipelineRunScreen> {
     if (mounted) setState(() => _responding = null);
   }
 
+  /// Runs [action] on the run and reloads it; when it fails, tells why.
+  Future<void> _runAction(Future<void> Function(DevOpsApi api) action, String failure) async {
+    setState(() => _acting = true);
+    try {
+      await action(AppScope.read(context).api!);
+      if (mounted) await _load();
+    } catch (e, st) {
+      logFailure(_log, failure, e, st);
+      if (mounted) showActionError(context, e, scopeHint: context.l10n.buildScopeHint);
+    }
+    if (mounted) setState(() => _acting = false);
+  }
+
+  Future<void> _cancel(PipelineRun run) async {
+    final l10n = context.l10n;
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(l10n.cancelRunTitle),
+        content: Text(l10n.cancelRunBody),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: Text(l10n.keepRunning),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: Text(l10n.cancelRun),
+          ),
+        ],
+      ),
+    );
+    if (confirmed != true || !mounted) return;
+    await _runAction((api) => api.cancelRun(run), 'Canceling run ${run.id} failed');
+  }
+
+  Future<void> _runAgain(PipelineRun run) {
+    final l10n = context.l10n;
+    final messenger = ScaffoldMessenger.of(context);
+    final navigator = Navigator.of(context);
+    return _runAction((api) async {
+      final started = await api.runAgain(run);
+      messenger.showSnackBar(SnackBar(
+        content: Text(l10n.runStarted),
+        action: SnackBarAction(
+          label: l10n.open,
+          onPressed: () => navigator.push(MaterialPageRoute(
+              builder: (_) => PipelineRunScreen(project: run.project, id: started.id))),
+        ),
+      ));
+    }, 'Starting run ${run.id} again failed');
+  }
+
   /// The log of a task is complete once it finished, so it is fetched once.
   Future<void> _loadExcerpts(Timeline timeline) async {
     final api = AppScope.read(context).api!;
@@ -274,6 +330,18 @@ class _PipelineRunScreenState extends State<PipelineRunScreen> {
       ),
       const SizedBox(height: 16),
       Row(children: [RunStatusBadge(run.status)]),
+      // Classic releases are deployed stage by stage, in the browser.
+      if (!run.isRelease) ...[
+        const SizedBox(height: 16),
+        _RunActions(
+          run: run,
+          busy: _acting,
+          onCancel: () => _cancel(run),
+          onRunAgain: () => _runAgain(run),
+          onRerunFailedJobs: () => _runAction(
+              (api) => api.rerunFailedJobs(run), 'Rerunning the failed jobs of run ${run.id} failed'),
+        ),
+      ],
       if (_approvals.isNotEmpty) ...[
         const SizedBox(height: 16),
         _ApprovalsCard(approvals: _approvals, responding: _responding, onRespond: _respond),
@@ -374,6 +442,54 @@ class _PipelineRunScreenState extends State<PipelineRunScreen> {
               ),
       ),
     ];
+  }
+}
+
+/// Cancels a build that is going, or starts a finished one again.
+class _RunActions extends StatelessWidget {
+  const _RunActions({
+    required this.run,
+    required this.busy,
+    required this.onCancel,
+    required this.onRunAgain,
+    required this.onRerunFailedJobs,
+  });
+
+  final PipelineRun run;
+  final bool busy;
+  final VoidCallback onCancel;
+  final VoidCallback onRunAgain;
+  final VoidCallback onRerunFailedJobs;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final failed =
+        run.status == RunStatus.failed || run.status == RunStatus.partiallySucceeded;
+    return Wrap(
+      spacing: 8,
+      runSpacing: 8,
+      children: [
+        if (!run.status.isFinished && run.status != RunStatus.cancelling)
+          OutlinedButton.icon(
+            onPressed: busy ? null : onCancel,
+            icon: const Icon(Icons.stop_circle_outlined),
+            label: Text(l10n.cancelRun),
+          ),
+        if (run.status.isFinished && run.definitionId != null)
+          FilledButton.tonalIcon(
+            onPressed: busy ? null : onRunAgain,
+            icon: const Icon(Icons.replay),
+            label: Text(l10n.runAgain),
+          ),
+        if (failed)
+          OutlinedButton.icon(
+            onPressed: busy ? null : onRerunFailedJobs,
+            icon: const Icon(Icons.restart_alt),
+            label: Text(l10n.rerunFailedJobs),
+          ),
+      ],
+    );
   }
 }
 

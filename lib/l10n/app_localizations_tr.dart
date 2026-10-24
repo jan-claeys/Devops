@@ -512,6 +512,31 @@ class AppLocalizationsTr extends AppLocalizations {
       'İşlem hattı çalıştırmalarında işlem yapmak için belirtecinizde Build (Read & execute) kapsamı gerekir.';
 
   @override
+  String get cancelRun => 'Çalıştırmayı iptal et';
+
+  @override
+  String get cancelRunTitle => 'Bu çalıştırma iptal edilsin mi?';
+
+  @override
+  String get cancelRunBody =>
+      'Çalışan işler durdurulur ve henüz başlamamış olanlar atlanır.';
+
+  @override
+  String get keepRunning => 'Çalışmaya devam et';
+
+  @override
+  String get runAgain => 'Yeniden çalıştır';
+
+  @override
+  String get rerunFailedJobs => 'Başarısız işleri yeniden çalıştır';
+
+  @override
+  String get runStarted => 'Çalıştırma başlatıldı';
+
+  @override
+  String get open => 'Aç';
+
+  @override
   String get pullRequests => 'Çekme istekleri';
 
   @override

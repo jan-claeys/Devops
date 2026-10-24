@@ -334,6 +334,32 @@ class DevOpsApi {
           ]);
   }
 
+  /// Stops [run], a build; jobs that haven't started are skipped.
+  Future<void> cancelRun(PipelineRun run) =>
+      _send('PATCH', '${_buildUrl(run)}?api-version=$_apiVersion', {'status': 'cancelling'});
+
+  /// Starts a new run of the pipeline of [run], a build, on the same branch
+  /// and commit and with the same parameters.
+  Future<PipelineRun> runAgain(PipelineRun run) async {
+    final json = await _post(
+      '$baseUrl/${Uri.encodeComponent(run.project)}/_apis/build/builds?api-version=$_apiVersion',
+      {
+        'definition': {'id': run.definitionId},
+        'sourceBranch': ?run.sourceBranch,
+        'sourceVersion': ?run.sourceVersion,
+        if (run.templateParameters.isNotEmpty) 'templateParameters': run.templateParameters,
+      },
+    );
+    return PipelineRun.fromJson(json);
+  }
+
+  /// Runs the failed jobs of [run], a build, again; the run itself goes on.
+  Future<void> rerunFailedJobs(PipelineRun run) =>
+      _send('PATCH', '${_buildUrl(run)}?retry=true&api-version=$_apiVersion', const {});
+
+  String _buildUrl(PipelineRun run) =>
+      '$baseUrl/${Uri.encodeComponent(run.project)}/_apis/build/builds/${run.id}';
+
   /// The latest releases of the classic release pipelines in all [projects],
   /// newest first.
   Future<List<PipelineRun>> getReleases({

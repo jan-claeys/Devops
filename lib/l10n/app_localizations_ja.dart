@@ -506,6 +506,30 @@ class AppLocalizationsJa extends AppLocalizations {
       'パイプライン実行を操作するには、トークンの Build (Read & execute) スコープが必要です。';
 
   @override
+  String get cancelRun => '実行をキャンセル';
+
+  @override
+  String get cancelRunTitle => 'この実行をキャンセルしますか?';
+
+  @override
+  String get cancelRunBody => '実行中のジョブは停止され、まだ開始していないジョブはスキップされます。';
+
+  @override
+  String get keepRunning => '実行を続ける';
+
+  @override
+  String get runAgain => '再実行';
+
+  @override
+  String get rerunFailedJobs => '失敗したジョブを再実行';
+
+  @override
+  String get runStarted => '実行を開始しました';
+
+  @override
+  String get open => '開く';
+
+  @override
   String get pullRequests => 'プル リクエスト';
 
   @override

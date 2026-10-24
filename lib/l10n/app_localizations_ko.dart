@@ -506,6 +506,30 @@ class AppLocalizationsKo extends AppLocalizations {
       '파이프라인 실행 작업에는 토큰에 Build (Read & execute) 범위가 필요합니다.';
 
   @override
+  String get cancelRun => '실행 취소';
+
+  @override
+  String get cancelRunTitle => '이 실행을 취소할까요?';
+
+  @override
+  String get cancelRunBody => '실행 중인 작업은 중지되고 아직 시작되지 않은 작업은 건너뜁니다.';
+
+  @override
+  String get keepRunning => '계속 실행';
+
+  @override
+  String get runAgain => '다시 실행';
+
+  @override
+  String get rerunFailedJobs => '실패한 작업 다시 실행';
+
+  @override
+  String get runStarted => '실행이 시작되었습니다';
+
+  @override
+  String get open => '열기';
+
+  @override
   String get pullRequests => '끌어오기 요청';
 
   @override

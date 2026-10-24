@@ -511,6 +511,31 @@ class AppLocalizationsHi extends AppLocalizations {
       'पाइपलाइन रन पर कार्रवाई के लिए आपके टोकन में Build (Read & execute) स्कोप चाहिए।';
 
   @override
+  String get cancelRun => 'रन रद्द करें';
+
+  @override
+  String get cancelRunTitle => 'यह रन रद्द करें?';
+
+  @override
+  String get cancelRunBody =>
+      'चल रहे जॉब रोक दिए जाते हैं और जो शुरू नहीं हुए वे छोड़ दिए जाते हैं।';
+
+  @override
+  String get keepRunning => 'चलने दें';
+
+  @override
+  String get runAgain => 'फिर से चलाएँ';
+
+  @override
+  String get rerunFailedJobs => 'विफल जॉब फिर से चलाएँ';
+
+  @override
+  String get runStarted => 'रन शुरू हुआ';
+
+  @override
+  String get open => 'खोलें';
+
+  @override
   String get pullRequests => 'पुल रिक्वेस्ट';
 
   @override

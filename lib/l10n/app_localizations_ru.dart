@@ -521,6 +521,31 @@ class AppLocalizationsRu extends AppLocalizations {
       'Для действий с запусками конвейеров токену нужны права Build (Read & execute).';
 
   @override
+  String get cancelRun => 'Отменить запуск';
+
+  @override
+  String get cancelRunTitle => 'Отменить этот запуск?';
+
+  @override
+  String get cancelRunBody =>
+      'Выполняющиеся задания будут остановлены, а ещё не начатые — пропущены.';
+
+  @override
+  String get keepRunning => 'Продолжить';
+
+  @override
+  String get runAgain => 'Запустить снова';
+
+  @override
+  String get rerunFailedJobs => 'Перезапустить неудачные задания';
+
+  @override
+  String get runStarted => 'Запуск начат';
+
+  @override
+  String get open => 'Открыть';
+
+  @override
   String get pullRequests => 'Pull request’ы';
 
   @override

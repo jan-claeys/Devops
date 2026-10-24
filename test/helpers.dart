@@ -404,6 +404,16 @@ class FakeDevOps {
       });
     }
     final builds = RegExp(r'/([^/]+)/_apis/build/builds$').firstMatch(path);
+    if (builds != null && request.method == 'POST') {
+      // Queues a new run.
+      return _json({
+        'id': 1000,
+        'buildNumber': '20261021.1',
+        'status': 'notStarted',
+        'definition': (jsonDecode(request.body) as Map)['definition'],
+        'project': {'id': '1', 'name': Uri.decodeComponent(builds[1]!)},
+      });
+    }
     if (builds != null) {
       final project = Uri.decodeComponent(builds[1]!);
       final query = request.url.queryParameters;
@@ -426,7 +436,7 @@ class FakeDevOps {
       return records == null ? http.Response('', 204) : _json({'records': records});
     }
     final build = RegExp(r'/_apis/build/builds/(\d+)$').firstMatch(path);
-    if (build != null) {
+    if (build != null && request.method == 'GET') {
       final run = runs[int.parse(build[1]!)];
       return run == null ? http.Response('', 404) : _json(run);
     }

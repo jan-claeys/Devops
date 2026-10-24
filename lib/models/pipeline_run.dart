@@ -115,6 +115,8 @@ class PipelineRun {
     this.kind = RunKind.build,
     this.definitionId,
     this.sourceBranch,
+    this.sourceVersion,
+    this.templateParameters = const {},
     this.requestedFor,
     this.queueTime,
     this.startTime,
@@ -139,6 +141,12 @@ class PipelineRun {
   /// The pipeline the run belongs to, within its [project].
   final int? definitionId;
   final String? sourceBranch;
+
+  /// The commit a build ran on.
+  final String? sourceVersion;
+
+  /// The parameters a YAML pipeline ran with.
+  final Map<String, dynamic> templateParameters;
   final Identity? requestedFor;
 
   /// When a build was queued or a release was created.
@@ -181,6 +189,9 @@ class PipelineRun {
         project: (json['project'] as Map?)?['name'] as String? ?? '',
         definitionId: (json['definition'] as Map?)?['id'] as int?,
         sourceBranch: json['sourceBranch'] as String?,
+        sourceVersion: json['sourceVersion'] as String?,
+        templateParameters:
+            (json['templateParameters'] as Map?)?.cast<String, dynamic>() ?? const {},
         requestedFor: Identity.fromJson(json['requestedFor']),
         queueTime: _date(json['queueTime']),
         startTime: _date(json['startTime']),
