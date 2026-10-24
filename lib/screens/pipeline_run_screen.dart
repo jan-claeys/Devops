@@ -7,6 +7,7 @@ import '../l10n/l10n.dart';
 import '../models/pipeline_log.dart';
 import '../models/pipeline_run.dart';
 import '../services/app_state.dart';
+import '../services/devops_api.dart';
 import '../services/links.dart';
 import '../services/logging.dart';
 import '../widgets/error_action.dart';
@@ -44,6 +45,10 @@ class PipelineRunScreen extends StatefulWidget {
 class _PipelineRunScreenState extends State<PipelineRunScreen> {
   PipelineRun? _run;
   Timeline? _timeline;
+  List<PendingApproval> _approvals = const [];
+
+  /// The approval that is being approved or rejected.
+  String? _responding;
   Object? _error;
   Timer? _refresh;
   bool _visible = true;
@@ -104,10 +109,12 @@ class _PipelineRunScreenState extends State<PipelineRunScreen> {
         run = await api.getPipelineRun(widget.project, widget.id);
         records = await timeline;
       }
+      final approvals = run.isRelease ? run.approvals : await _buildApprovals(api, records);
       if (!mounted) return;
       setState(() {
         _run = run;
         _timeline = records;
+        _approvals = approvals;
         _error = null;
       });
       unawaited(_loadExcerpts(records));
@@ -120,6 +127,41 @@ class _PipelineRunScreenState extends State<PipelineRunScreen> {
         if (mounted && _visible) _load();
       });
     }
+  }
+
+  Future<List<PendingApproval>> _buildApprovals(DevOpsApi api, Timeline timeline) async {
+    try {
+      return await api.getApprovals(widget.project, timeline.pendingApprovals);
+    } catch (e, st) {
+      logFailure(_log, 'Loading the approvals of run ${widget.id} failed', e, st);
+      return _approvals;
+    }
+  }
+
+  Future<void> _respond(PendingApproval approval, bool approve) async {
+    final l10n = context.l10n;
+    final messenger = ScaffoldMessenger.of(context);
+    final comment = await showDialog<String>(
+      context: context,
+      builder: (_) => _ApprovalDialog(stage: approval.stage, approve: approve),
+    );
+    if (comment == null || !mounted) return;
+    setState(() => _responding = approval.id);
+    try {
+      await AppScope.read(context)
+          .api!
+          .respondToApproval(widget.project, approval, approve: approve, comment: comment);
+      messenger.showSnackBar(
+          SnackBar(content: Text(approve ? l10n.stageApproved : l10n.stageRejected)));
+      if (mounted) await _load();
+    } catch (e, st) {
+      logFailure(_log, 'Responding to approval ${approval.id} failed', e, st);
+      if (mounted) {
+        showActionError(context, e,
+            scopeHint: approval.isRelease ? l10n.releaseScopeHint : l10n.buildScopeHint);
+      }
+    }
+    if (mounted) setState(() => _responding = null);
   }
 
   /// The log of a task is complete once it finished, so it is fetched once.
@@ -232,6 +274,10 @@ class _PipelineRunScreenState extends State<PipelineRunScreen> {
       ),
       const SizedBox(height: 16),
       Row(children: [RunStatusBadge(run.status)]),
+      if (_approvals.isNotEmpty) ...[
+        const SizedBox(height: 16),
+        _ApprovalsCard(approvals: _approvals, responding: _responding, onRespond: _respond),
+      ],
       if (errors.isNotEmpty) ...[
         const SizedBox(height: 16),
         _ErrorsCard(errors: errors, timeline: timeline, excerpts: _excerpts),
@@ -328,6 +374,116 @@ class _PipelineRunScreenState extends State<PipelineRunScreen> {
               ),
       ),
     ];
+  }
+}
+
+/// The approvals the stages wait for, each with buttons to approve or
+/// reject it.
+class _ApprovalsCard extends StatelessWidget {
+  const _ApprovalsCard({required this.approvals, required this.responding, required this.onRespond});
+
+  final List<PendingApproval> approvals;
+
+  /// The id of the approval that is being responded to.
+  final String? responding;
+  final void Function(PendingApproval approval, bool approve) onRespond;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final l10n = context.l10n;
+    final muted = theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.onSurfaceVariant);
+    return SectionCard(
+      title: l10n.approvals,
+      color: const Color(0xFFFF9D00).withValues(alpha: 0.08),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          for (final (i, approval) in approvals.indexed) ...[
+            if (i > 0) const Divider(height: 24),
+            if (approval.stage.isNotEmpty)
+              Text(approval.stage, style: theme.textTheme.titleSmall),
+            if (approval.approvers.isNotEmpty)
+              Text(l10n.waitingForApprovalBy(approval.approvers.join(', ')), style: muted),
+            if (approval.instructions != null) ...[
+              const SizedBox(height: 4),
+              SelectableText(approval.instructions!),
+            ],
+            const SizedBox(height: 8),
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: [
+                FilledButton.icon(
+                  onPressed: responding == null ? () => onRespond(approval, true) : null,
+                  icon: responding == approval.id
+                      ? const SizedBox.square(
+                          dimension: 18, child: CircularProgressIndicator(strokeWidth: 2))
+                      : const Icon(Icons.check),
+                  label: Text(l10n.voteApprove),
+                ),
+                OutlinedButton.icon(
+                  onPressed: responding == null ? () => onRespond(approval, false) : null,
+                  icon: const Icon(Icons.close),
+                  label: Text(l10n.voteReject),
+                ),
+              ],
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+/// Asks to confirm a response to an approval, with an optional comment.
+/// Pops the comment, or null when canceled.
+class _ApprovalDialog extends StatefulWidget {
+  const _ApprovalDialog({required this.stage, required this.approve});
+
+  final String stage;
+  final bool approve;
+
+  @override
+  State<_ApprovalDialog> createState() => _ApprovalDialogState();
+}
+
+class _ApprovalDialogState extends State<_ApprovalDialog> {
+  final _comment = TextEditingController();
+
+  @override
+  void dispose() {
+    _comment.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    return AlertDialog(
+      title: Text(widget.approve ? l10n.approveStage(widget.stage) : l10n.rejectStage(widget.stage)),
+      content: TextField(
+        controller: _comment,
+        autofocus: true,
+        minLines: 1,
+        maxLines: 4,
+        textCapitalization: TextCapitalization.sentences,
+        decoration: InputDecoration(
+          hintText: l10n.approvalCommentHint,
+          border: const OutlineInputBorder(),
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: Text(l10n.cancel),
+        ),
+        FilledButton(
+          onPressed: () => Navigator.of(context).pop(_comment.text.trim()),
+          child: Text(widget.approve ? l10n.voteApprove : l10n.voteReject),
+        ),
+      ],
+    );
   }
 }
 

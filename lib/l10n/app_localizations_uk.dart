@@ -484,7 +484,7 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get releaseScopeHint =>
-      'Для випусків токену потрібні права Release (Read).';
+      'Для випусків токену потрібні права Release (Read, write, & execute).';
 
   @override
   String get artifact => 'Артефакт';
@@ -493,6 +493,32 @@ class AppLocalizationsUk extends AppLocalizations {
   String waitingForApprovalBy(String names) {
     return 'Очікує схвалення: $names';
   }
+
+  @override
+  String get approvals => 'Затвердження';
+
+  @override
+  String approveStage(String stage) {
+    return 'Схвалити $stage?';
+  }
+
+  @override
+  String rejectStage(String stage) {
+    return 'Відхилити $stage?';
+  }
+
+  @override
+  String get approvalCommentHint => 'Коментар (необов’язково)';
+
+  @override
+  String get stageApproved => 'Етап схвалено';
+
+  @override
+  String get stageRejected => 'Етап відхилено';
+
+  @override
+  String get buildScopeHint =>
+      'Для дій із запусками конвеєрів токену потрібні права Build (Read & execute).';
 
   @override
   String get pullRequests => 'Pull request’и';

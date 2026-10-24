@@ -479,7 +479,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get releaseScopeHint =>
-      'Releases need the Release (Read) scope on your token.';
+      'Releases need the Release (Read, write, & execute) scope on your token.';
 
   @override
   String get artifact => 'Artifact';
@@ -488,6 +488,32 @@ class AppLocalizationsEn extends AppLocalizations {
   String waitingForApprovalBy(String names) {
     return 'Waiting for approval by $names';
   }
+
+  @override
+  String get approvals => 'Approvals';
+
+  @override
+  String approveStage(String stage) {
+    return 'Approve $stage?';
+  }
+
+  @override
+  String rejectStage(String stage) {
+    return 'Reject $stage?';
+  }
+
+  @override
+  String get approvalCommentHint => 'Comment (optional)';
+
+  @override
+  String get stageApproved => 'Stage approved';
+
+  @override
+  String get stageRejected => 'Stage rejected';
+
+  @override
+  String get buildScopeHint =>
+      'Acting on pipeline runs needs the Build (Read & execute) scope on your token.';
 
   @override
   String get pullRequests => 'Pull requests';

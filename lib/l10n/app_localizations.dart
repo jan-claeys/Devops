@@ -941,7 +941,7 @@ abstract class AppLocalizations {
   /// No description provided for @releaseScopeHint.
   ///
   /// In en, this message translates to:
-  /// **'Releases need the Release (Read) scope on your token.'**
+  /// **'Releases need the Release (Read, write, & execute) scope on your token.'**
   String get releaseScopeHint;
 
   /// No description provided for @artifact.
@@ -955,6 +955,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Waiting for approval by {names}'**
   String waitingForApprovalBy(String names);
+
+  /// No description provided for @approvals.
+  ///
+  /// In en, this message translates to:
+  /// **'Approvals'**
+  String get approvals;
+
+  /// No description provided for @approveStage.
+  ///
+  /// In en, this message translates to:
+  /// **'Approve {stage}?'**
+  String approveStage(String stage);
+
+  /// No description provided for @rejectStage.
+  ///
+  /// In en, this message translates to:
+  /// **'Reject {stage}?'**
+  String rejectStage(String stage);
+
+  /// No description provided for @approvalCommentHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Comment (optional)'**
+  String get approvalCommentHint;
+
+  /// No description provided for @stageApproved.
+  ///
+  /// In en, this message translates to:
+  /// **'Stage approved'**
+  String get stageApproved;
+
+  /// No description provided for @stageRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Stage rejected'**
+  String get stageRejected;
+
+  /// No description provided for @buildScopeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Acting on pipeline runs needs the Build (Read & execute) scope on your token.'**
+  String get buildScopeHint;
 
   /// No description provided for @pullRequests.
   ///

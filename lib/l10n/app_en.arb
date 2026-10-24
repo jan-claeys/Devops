@@ -187,12 +187,25 @@
   "builds": "Builds",
   "releases": "Releases",
   "loadReleasesFailed": "Couldn't load the releases",
-  "releaseScopeHint": "Releases need the Release (Read) scope on your token.",
+  "releaseScopeHint": "Releases need the Release (Read, write, & execute) scope on your token.",
   "artifact": "Artifact",
   "waitingForApprovalBy": "Waiting for approval by {names}",
   "@waitingForApprovalBy": {
     "placeholders": {"names": {"type": "String"}}
   },
+  "approvals": "Approvals",
+  "approveStage": "Approve {stage}?",
+  "@approveStage": {
+    "placeholders": {"stage": {"type": "String"}}
+  },
+  "rejectStage": "Reject {stage}?",
+  "@rejectStage": {
+    "placeholders": {"stage": {"type": "String"}}
+  },
+  "approvalCommentHint": "Comment (optional)",
+  "stageApproved": "Stage approved",
+  "stageRejected": "Stage rejected",
+  "buildScopeHint": "Acting on pipeline runs needs the Build (Read & execute) scope on your token.",
 
   "pullRequests": "Pull requests",
   "searchPullRequestsHint": "Search by title, ID, branch or person",

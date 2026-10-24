@@ -482,7 +482,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get releaseScopeHint =>
-      'Las versiones necesitan el ámbito Release (Read) en tu token.';
+      'Las versiones necesitan el ámbito Release (Read, write, & execute) en tu token.';
 
   @override
   String get artifact => 'Artefacto';
@@ -491,6 +491,32 @@ class AppLocalizationsEs extends AppLocalizations {
   String waitingForApprovalBy(String names) {
     return 'Esperando la aprobación de $names';
   }
+
+  @override
+  String get approvals => 'Aprobaciones';
+
+  @override
+  String approveStage(String stage) {
+    return '¿Aprobar $stage?';
+  }
+
+  @override
+  String rejectStage(String stage) {
+    return '¿Rechazar $stage?';
+  }
+
+  @override
+  String get approvalCommentHint => 'Comentario (opcional)';
+
+  @override
+  String get stageApproved => 'Fase aprobada';
+
+  @override
+  String get stageRejected => 'Fase rechazada';
+
+  @override
+  String get buildScopeHint =>
+      'Para actuar sobre ejecuciones de pipelines, tu token necesita el ámbito Build (Read & execute).';
 
   @override
   String get pullRequests => 'Pull requests';

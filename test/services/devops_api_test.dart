@@ -372,6 +372,49 @@ void main() {
       expect(fake.requests.single.url.path, '/contoso/Contoso/_apis/release/releases/3');
     });
 
+    group('approvals', () {
+      test('getApprovals reads the pending approvals with their steps', () async {
+        fake.approvals.addAll([
+          {'id': 'a1', 'status': 'pending', 'steps': []},
+          {'id': 'a2', 'status': 'approved', 'steps': []},
+        ]);
+        final approvals = await api.getApprovals('Contoso', {'a1': 'Prod', 'a2': 'Test'});
+        expect(approvals.map((a) => (a.id, a.stage)), [('a1', 'Prod')]);
+        expect(fake.requests.single.url.toString(),
+            'https://dev.azure.com/contoso/Contoso/_apis/pipelines/approvals'
+            '?approvalIds=a1,a2&\$expand=steps&api-version=7.1');
+      });
+
+      test('getApprovals asks nothing without approvals', () async {
+        expect(await api.getApprovals('Contoso', {}), isEmpty);
+        expect(fake.requests, isEmpty);
+      });
+
+      test('respondToApproval updates a YAML approval', () async {
+        await api.respondToApproval(
+            'Contoso', const PendingApproval(id: 'a1', stage: 'Prod'),
+            approve: true, comment: 'Go');
+        final request = fake.requests.single;
+        expect(request.method, 'PATCH');
+        expect(request.url.toString(),
+            'https://dev.azure.com/contoso/Contoso/_apis/pipelines/approvals?api-version=7.1');
+        expect(jsonDecode(request.body), [
+          {'approvalId': 'a1', 'status': 'approved', 'comment': 'Go'},
+        ]);
+      });
+
+      test('respondToApproval updates a release approval', () async {
+        await api.respondToApproval(
+            'Contoso', const PendingApproval(id: '7', stage: 'Prod', isRelease: true),
+            approve: false);
+        final request = fake.requests.single;
+        expect(request.method, 'PATCH');
+        expect(request.url.toString(),
+            'https://vsrm.dev.azure.com/contoso/Contoso/_apis/release/approvals/7?api-version=7.1');
+        expect(jsonDecode(request.body), {'status': 'rejected', 'comments': ''});
+      });
+    });
+
     test('runWebUrl links to the results page', () {
       final run = PipelineRun.fromJson(runJson(4, project: 'My Project'));
       expect(api.runWebUrl(run),

@@ -487,7 +487,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get releaseScopeHint =>
-      'تحتاج الإصدارات إلى النطاق Release (Read) في الرمز المميز.';
+      'تحتاج الإصدارات إلى النطاق Release (Read, write, & execute) في الرمز المميز.';
 
   @override
   String get artifact => 'العنصر';
@@ -496,6 +496,32 @@ class AppLocalizationsAr extends AppLocalizations {
   String waitingForApprovalBy(String names) {
     return 'بانتظار موافقة $names';
   }
+
+  @override
+  String get approvals => 'الموافقات';
+
+  @override
+  String approveStage(String stage) {
+    return 'الموافقة على $stage؟';
+  }
+
+  @override
+  String rejectStage(String stage) {
+    return 'رفض $stage؟';
+  }
+
+  @override
+  String get approvalCommentHint => 'تعليق (اختياري)';
+
+  @override
+  String get stageApproved => 'تمت الموافقة على المرحلة';
+
+  @override
+  String get stageRejected => 'تم رفض المرحلة';
+
+  @override
+  String get buildScopeHint =>
+      'يتطلب التعامل مع تشغيلات المسارات النطاق Build (Read & execute) في الرمز المميز.';
 
   @override
   String get pullRequests => 'طلبات السحب';

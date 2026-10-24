@@ -468,7 +468,8 @@ class AppLocalizationsKo extends AppLocalizations {
   String get loadReleasesFailed => '릴리스를 불러오지 못했습니다';
 
   @override
-  String get releaseScopeHint => '릴리스를 보려면 토큰에 Release (Read) 범위가 필요합니다.';
+  String get releaseScopeHint =>
+      '릴리스에는 토큰에 Release (Read, write, & execute) 범위가 필요합니다.';
 
   @override
   String get artifact => '아티팩트';
@@ -477,6 +478,32 @@ class AppLocalizationsKo extends AppLocalizations {
   String waitingForApprovalBy(String names) {
     return '$names의 승인 대기 중';
   }
+
+  @override
+  String get approvals => '승인';
+
+  @override
+  String approveStage(String stage) {
+    return '$stage을(를) 승인할까요?';
+  }
+
+  @override
+  String rejectStage(String stage) {
+    return '$stage을(를) 거부할까요?';
+  }
+
+  @override
+  String get approvalCommentHint => '댓글 (선택 사항)';
+
+  @override
+  String get stageApproved => '단계가 승인되었습니다';
+
+  @override
+  String get stageRejected => '단계가 거부되었습니다';
+
+  @override
+  String get buildScopeHint =>
+      '파이프라인 실행 작업에는 토큰에 Build (Read & execute) 범위가 필요합니다.';
 
   @override
   String get pullRequests => '끌어오기 요청';

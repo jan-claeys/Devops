@@ -484,7 +484,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get releaseScopeHint =>
-      'Для выпусков токену нужны права Release (Read).';
+      'Для выпусков токену нужны права Release (Read, write, & execute).';
 
   @override
   String get artifact => 'Артефакт';
@@ -493,6 +493,32 @@ class AppLocalizationsRu extends AppLocalizations {
   String waitingForApprovalBy(String names) {
     return 'Ожидает утверждения: $names';
   }
+
+  @override
+  String get approvals => 'Утверждения';
+
+  @override
+  String approveStage(String stage) {
+    return 'Одобрить $stage?';
+  }
+
+  @override
+  String rejectStage(String stage) {
+    return 'Отклонить $stage?';
+  }
+
+  @override
+  String get approvalCommentHint => 'Комментарий (необязательно)';
+
+  @override
+  String get stageApproved => 'Этап одобрен';
+
+  @override
+  String get stageRejected => 'Этап отклонён';
+
+  @override
+  String get buildScopeHint =>
+      'Для действий с запусками конвейеров токену нужны права Build (Read & execute).';
 
   @override
   String get pullRequests => 'Pull request’ы';

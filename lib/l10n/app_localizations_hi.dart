@@ -474,7 +474,7 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get releaseScopeHint =>
-      'रिलीज़ के लिए आपके टोकन में Release (Read) स्कोप चाहिए।';
+      'रिलीज़ के लिए आपके टोकन में Release (Read, write, & execute) स्कोप चाहिए।';
 
   @override
   String get artifact => 'आर्टिफ़ैक्ट';
@@ -483,6 +483,32 @@ class AppLocalizationsHi extends AppLocalizations {
   String waitingForApprovalBy(String names) {
     return '$names के अनुमोदन की प्रतीक्षा';
   }
+
+  @override
+  String get approvals => 'स्वीकृतियाँ';
+
+  @override
+  String approveStage(String stage) {
+    return '$stage को स्वीकृत करें?';
+  }
+
+  @override
+  String rejectStage(String stage) {
+    return '$stage को अस्वीकार करें?';
+  }
+
+  @override
+  String get approvalCommentHint => 'टिप्पणी (वैकल्पिक)';
+
+  @override
+  String get stageApproved => 'चरण स्वीकृत किया गया';
+
+  @override
+  String get stageRejected => 'चरण अस्वीकार किया गया';
+
+  @override
+  String get buildScopeHint =>
+      'पाइपलाइन रन पर कार्रवाई के लिए आपके टोकन में Build (Read & execute) स्कोप चाहिए।';
 
   @override
   String get pullRequests => 'पुल रिक्वेस्ट';

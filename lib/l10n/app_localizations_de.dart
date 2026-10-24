@@ -483,7 +483,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get releaseScopeHint =>
-      'Für Releases braucht dein Token den Bereich Release (Read).';
+      'Für Releases braucht dein Token den Bereich Release (Read, write, & execute).';
 
   @override
   String get artifact => 'Artefakt';
@@ -492,6 +492,32 @@ class AppLocalizationsDe extends AppLocalizations {
   String waitingForApprovalBy(String names) {
     return 'Wartet auf Genehmigung von $names';
   }
+
+  @override
+  String get approvals => 'Genehmigungen';
+
+  @override
+  String approveStage(String stage) {
+    return '$stage genehmigen?';
+  }
+
+  @override
+  String rejectStage(String stage) {
+    return '$stage ablehnen?';
+  }
+
+  @override
+  String get approvalCommentHint => 'Kommentar (optional)';
+
+  @override
+  String get stageApproved => 'Phase genehmigt';
+
+  @override
+  String get stageRejected => 'Phase abgelehnt';
+
+  @override
+  String get buildScopeHint =>
+      'Für Aktionen an Pipeline-Ausführungen braucht dein Token den Bereich Build (Read & execute).';
 
   @override
   String get pullRequests => 'Pull Requests';

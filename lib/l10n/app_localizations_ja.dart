@@ -468,7 +468,8 @@ class AppLocalizationsJa extends AppLocalizations {
   String get loadReleasesFailed => 'リリースを読み込めませんでした';
 
   @override
-  String get releaseScopeHint => 'リリースにはトークンの Release (Read) スコープが必要です。';
+  String get releaseScopeHint =>
+      'リリースにはトークンの Release (Read, write, & execute) スコープが必要です。';
 
   @override
   String get artifact => '成果物';
@@ -477,6 +478,32 @@ class AppLocalizationsJa extends AppLocalizations {
   String waitingForApprovalBy(String names) {
     return '$names の承認待ち';
   }
+
+  @override
+  String get approvals => '承認';
+
+  @override
+  String approveStage(String stage) {
+    return '$stage を承認しますか?';
+  }
+
+  @override
+  String rejectStage(String stage) {
+    return '$stage を拒否しますか?';
+  }
+
+  @override
+  String get approvalCommentHint => 'コメント (任意)';
+
+  @override
+  String get stageApproved => 'ステージを承認しました';
+
+  @override
+  String get stageRejected => 'ステージを拒否しました';
+
+  @override
+  String get buildScopeHint =>
+      'パイプライン実行を操作するには、トークンの Build (Read & execute) スコープが必要です。';
 
   @override
   String get pullRequests => 'プル リクエスト';

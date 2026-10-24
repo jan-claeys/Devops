@@ -158,8 +158,13 @@ Map<String, dynamic> environmentJson(
       'rank': rank,
       'status': status,
       'preDeployApprovals': [
-        for (final approver in pendingApprovers)
-          {'status': 'pending', 'isAutomated': false, 'approver': {'displayName': approver}},
+        for (final (i, approver) in pendingApprovers.indexed)
+          {
+            'id': id * 100 + i,
+            'status': 'pending',
+            'isAutomated': false,
+            'approver': {'displayName': approver},
+          },
       ],
       'deploySteps': [
         if (tasks.isNotEmpty)
@@ -261,6 +266,9 @@ class FakeDevOps {
   /// The content of attachments, by their guid.
   final attachments = <String, List<int>>{};
 
+  /// Approvals of YAML pipelines, with the ids of [timelines].
+  final approvals = <Map<String, dynamic>>[];
+
   /// Releases of classic release pipelines, by id, all in Contoso.
   final releases = <int, Map<String, dynamic>>{};
 
@@ -358,6 +366,15 @@ class FakeDevOps {
         'value': [
           for (final id in pullRequestWorkItems[int.parse(prWorkItems[1]!)] ?? const [])
             {'id': '$id', 'url': 'https://dev.azure.com/contoso/_apis/wit/workItems/$id'},
+        ],
+      });
+    }
+    if (path.endsWith('/_apis/pipelines/approvals') && request.method == 'GET') {
+      final ids = request.url.queryParameters['approvalIds']?.split(',') ?? const [];
+      return _json({
+        'value': [
+          for (final a in approvals)
+            if (ids.contains(a['id'])) a,
         ],
       });
     }

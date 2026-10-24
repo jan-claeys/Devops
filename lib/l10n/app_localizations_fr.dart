@@ -482,7 +482,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get releaseScopeHint =>
-      'Les releases nécessitent la portée Release (Read) sur votre jeton.';
+      'Les releases nécessitent la portée Release (Read, write, & execute) sur votre jeton.';
 
   @override
   String get artifact => 'Artefact';
@@ -491,6 +491,32 @@ class AppLocalizationsFr extends AppLocalizations {
   String waitingForApprovalBy(String names) {
     return 'En attente d’approbation de $names';
   }
+
+  @override
+  String get approvals => 'Approbations';
+
+  @override
+  String approveStage(String stage) {
+    return 'Approuver $stage ?';
+  }
+
+  @override
+  String rejectStage(String stage) {
+    return 'Rejeter $stage ?';
+  }
+
+  @override
+  String get approvalCommentHint => 'Commentaire (facultatif)';
+
+  @override
+  String get stageApproved => 'Étape approuvée';
+
+  @override
+  String get stageRejected => 'Étape rejetée';
+
+  @override
+  String get buildScopeHint =>
+      'Agir sur les exécutions de pipeline nécessite la portée Build (Read & execute) sur votre jeton.';
 
   @override
   String get pullRequests => 'Pull requests';

@@ -485,7 +485,7 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get releaseScopeHint =>
-      'Wydania wymagają zakresu Release (Read) w tokenie.';
+      'Wydania wymagają zakresu Release (Read, write, & execute) w tokenie.';
 
   @override
   String get artifact => 'Artefakt';
@@ -494,6 +494,32 @@ class AppLocalizationsPl extends AppLocalizations {
   String waitingForApprovalBy(String names) {
     return 'Oczekuje na zatwierdzenie przez: $names';
   }
+
+  @override
+  String get approvals => 'Zatwierdzenia';
+
+  @override
+  String approveStage(String stage) {
+    return 'Zatwierdzić $stage?';
+  }
+
+  @override
+  String rejectStage(String stage) {
+    return 'Odrzucić $stage?';
+  }
+
+  @override
+  String get approvalCommentHint => 'Komentarz (opcjonalnie)';
+
+  @override
+  String get stageApproved => 'Etap zatwierdzony';
+
+  @override
+  String get stageRejected => 'Etap odrzucony';
+
+  @override
+  String get buildScopeHint =>
+      'Działania na uruchomieniach potoków wymagają zakresu Build (Read & execute) w tokenie.';
 
   @override
   String get pullRequests => 'Pull requesty';

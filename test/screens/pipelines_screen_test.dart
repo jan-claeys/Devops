@@ -353,7 +353,9 @@ void main() {
       expect(find.byType(PipelineRunScreen), findsOneWidget);
       expect(find.text('Release-7'), findsWidgets);
       expect(find.text('20261020.7'), findsOneWidget);
-      expect(find.text(en.waitingForApprovalBy('Ann')), findsOneWidget);
+      // On the stage and in the approvals.
+      expect(find.text(en.waitingForApprovalBy('Ann')), findsNWidgets(2));
+      expect(find.text(en.approvals), findsOneWidget);
       expect(find.text(en.tasksProgress(2, 2)), findsOneWidget);
       expect(fake.requests.last.url.path, '/contoso/Contoso/_apis/release/releases/7');
 

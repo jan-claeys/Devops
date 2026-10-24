@@ -480,7 +480,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get releaseScopeHint =>
-      'Voor releases heeft je token de scope Release (Read) nodig.';
+      'Voor releases heeft je token de scope Release (Read, write, & execute) nodig.';
 
   @override
   String get artifact => 'Artefact';
@@ -489,6 +489,32 @@ class AppLocalizationsNl extends AppLocalizations {
   String waitingForApprovalBy(String names) {
     return 'Wacht op goedkeuring van $names';
   }
+
+  @override
+  String get approvals => 'Goedkeuringen';
+
+  @override
+  String approveStage(String stage) {
+    return '$stage goedkeuren?';
+  }
+
+  @override
+  String rejectStage(String stage) {
+    return '$stage afwijzen?';
+  }
+
+  @override
+  String get approvalCommentHint => 'Opmerking (optioneel)';
+
+  @override
+  String get stageApproved => 'Fase goedgekeurd';
+
+  @override
+  String get stageRejected => 'Fase afgewezen';
+
+  @override
+  String get buildScopeHint =>
+      'Om pipeline-runs te beheren heeft je token de scope Build (Read & execute) nodig.';
 
   @override
   String get pullRequests => 'Pull requests';

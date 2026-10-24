@@ -465,7 +465,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get loadReleasesFailed => '无法加载发布';
 
   @override
-  String get releaseScopeHint => '发布需要令牌具有 Release (Read) 范围。';
+  String get releaseScopeHint =>
+      '发布需要令牌具有 Release (Read, write, & execute) 范围。';
 
   @override
   String get artifact => '项目';
@@ -474,6 +475,31 @@ class AppLocalizationsZh extends AppLocalizations {
   String waitingForApprovalBy(String names) {
     return '等待 $names 审批';
   }
+
+  @override
+  String get approvals => '审批';
+
+  @override
+  String approveStage(String stage) {
+    return '批准 $stage？';
+  }
+
+  @override
+  String rejectStage(String stage) {
+    return '拒绝 $stage？';
+  }
+
+  @override
+  String get approvalCommentHint => '评论（可选）';
+
+  @override
+  String get stageApproved => '阶段已批准';
+
+  @override
+  String get stageRejected => '阶段已拒绝';
+
+  @override
+  String get buildScopeHint => '操作管道运行需要令牌具有 Build (Read & execute) 范围。';
 
   @override
   String get pullRequests => '拉取请求';

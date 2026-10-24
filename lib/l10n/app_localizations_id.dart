@@ -477,7 +477,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get releaseScopeHint =>
-      'Rilis memerlukan cakupan Release (Read) pada token Anda.';
+      'Rilis memerlukan cakupan Release (Read, write, & execute) pada token Anda.';
 
   @override
   String get artifact => 'Artefak';
@@ -486,6 +486,32 @@ class AppLocalizationsId extends AppLocalizations {
   String waitingForApprovalBy(String names) {
     return 'Menunggu persetujuan dari $names';
   }
+
+  @override
+  String get approvals => 'Persetujuan';
+
+  @override
+  String approveStage(String stage) {
+    return 'Setujui $stage?';
+  }
+
+  @override
+  String rejectStage(String stage) {
+    return 'Tolak $stage?';
+  }
+
+  @override
+  String get approvalCommentHint => 'Komentar (opsional)';
+
+  @override
+  String get stageApproved => 'Tahap disetujui';
+
+  @override
+  String get stageRejected => 'Tahap ditolak';
+
+  @override
+  String get buildScopeHint =>
+      'Bertindak pada eksekusi pipeline memerlukan cakupan Build (Read & execute) pada token Anda.';
 
   @override
   String get pullRequests => 'Pull request';

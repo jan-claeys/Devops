@@ -481,7 +481,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get releaseScopeHint =>
-      'As versões precisam do escopo Release (Read) no seu token.';
+      'As versões precisam do escopo Release (Read, write, & execute) no seu token.';
 
   @override
   String get artifact => 'Artefato';
@@ -490,6 +490,32 @@ class AppLocalizationsPt extends AppLocalizations {
   String waitingForApprovalBy(String names) {
     return 'Aguardando aprovação de $names';
   }
+
+  @override
+  String get approvals => 'Aprovações';
+
+  @override
+  String approveStage(String stage) {
+    return 'Aprovar $stage?';
+  }
+
+  @override
+  String rejectStage(String stage) {
+    return 'Rejeitar $stage?';
+  }
+
+  @override
+  String get approvalCommentHint => 'Comentário (opcional)';
+
+  @override
+  String get stageApproved => 'Fase aprovada';
+
+  @override
+  String get stageRejected => 'Fase rejeitada';
+
+  @override
+  String get buildScopeHint =>
+      'Para agir em execuções de pipeline, o seu token precisa do escopo Build (Read & execute).';
 
   @override
   String get pullRequests => 'Pull requests';

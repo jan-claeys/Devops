@@ -303,6 +303,37 @@ class DevOpsApi {
     return PipelineRun.fromJson(json);
   }
 
+  /// The approvals of YAML stages in [project] that still wait, from the ids
+  /// and stage names of [Timeline.pendingApprovals].
+  Future<List<PendingApproval>> getApprovals(String project, Map<String, String> stages) async {
+    if (stages.isEmpty) return const [];
+    final json = await _get('$baseUrl/${Uri.encodeComponent(project)}/_apis/pipelines/approvals'
+        '?approvalIds=${stages.keys.join(',')}&\$expand=steps&api-version=$_apiVersion');
+    return [
+      for (final a in ((json['value'] as List?) ?? const []).cast<Map<String, dynamic>>())
+        if (a['status'] == 'pending')
+          PendingApproval.fromJson(a, stage: stages[a['id']] ?? ''),
+    ];
+  }
+
+  /// Approves or rejects [approval] in [project], with an optional [comment].
+  Future<void> respondToApproval(
+    String project,
+    PendingApproval approval, {
+    required bool approve,
+    String comment = '',
+  }) {
+    final status = approve ? 'approved' : 'rejected';
+    final apis = '${Uri.encodeComponent(project)}/_apis';
+    return approval.isRelease
+        ? _send('PATCH',
+            '$releaseUrl/$apis/release/approvals/${approval.id}?api-version=$_apiVersion',
+            {'status': status, 'comments': comment})
+        : _send('PATCH', '$baseUrl/$apis/pipelines/approvals?api-version=$_apiVersion', [
+            {'approvalId': approval.id, 'status': status, 'comment': comment},
+          ]);
+  }
+
   /// The latest releases of the classic release pipelines in all [projects],
   /// newest first.
   Future<List<PipelineRun>> getReleases({
@@ -513,8 +544,11 @@ class DevOpsApi {
     // The timeline of a run that hasn't started yet is empty or null.
     if (code == 204 || response.bodyBytes.isEmpty) return const {};
     try {
-      return (jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>?) ??
-          const {};
+      // Some actions answer with a list, which nothing reads.
+      return switch (jsonDecode(utf8.decode(response.bodyBytes))) {
+        final Map<String, dynamic> json => json,
+        _ => const {},
+      };
     } on FormatException {
       // Azure DevOps answers with an HTML sign-in page when the PAT is invalid.
       final signIn = response.headers['content-type']?.contains('html') ?? false;

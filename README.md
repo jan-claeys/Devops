@@ -1,6 +1,6 @@
 # DevOps
 
-A Flutter app for viewing and commenting on your Azure DevOps work items (tickets), viewing, voting on and discussing pull requests and following your pipeline runs on your phone or desktop.
+A Flutter app for viewing and commenting on your Azure DevOps work items (tickets), viewing, voting on and discussing pull requests and following and approving your pipeline runs on your phone or desktop.
 
 ## Features
 
@@ -25,6 +25,7 @@ A Flutter app for viewing and commenting on your Azure DevOps work items (ticket
   - Show all runs, only builds or only releases; filter on active runs and search by pipeline, branch or person; refreshes automatically while a run is in progress or waiting for approval
   - Running builds and release stages show an estimated progress bar, based on how long the last successful run took
   - Run details: progress bar, stages with their jobs and tasks (status, duration, errors and warnings), with a button to open the run in the browser
+  - *Approvals*: the stages waiting for approval, with who may approve and the instructions; *Approve* or *Reject* one with an optional comment. Works for the approval checks of YAML pipelines (*Approvals and checks* on an environment or other resource) and the pre- and post-deployment approvals of classic releases; other checks, such as business hours or an Azure function, run by themselves
   - Failed runs list their errors with the step that logged them and the log lines leading up to the first error
   - YAML pipelines (including deployment stages), classic build pipelines and classic release pipelines; releases show their stages, the artifact version and who still has to approve a stage
 - **Pipeline logs**: the log of each step, opened at its first error; show only errors and warnings, jump to the previous / next error and copy the log
@@ -86,8 +87,8 @@ Most scopes only need Read; the ones the app also acts with, such as **Code** to
      | **Work Items** | Read & write (`vso.work_write`) | WIQL queries, work item details, links, comments and attachments/images; commenting |
      | **Code** | Read & write (`vso.code_write`) | Pull requests, their reviewers, comment threads and linked work items; voting and commenting |
      | **Project and Team** | Read (`vso.project`) | Listing the projects in the organization (also used to verify the connection) |
-     | **Build** | Read (`vso.build`) | Pipeline runs and their stages, jobs and tasks |
-     | **Release** | Read (`vso.release`) | Releases of classic release pipelines, their stages and approvals |
+     | **Build** | Read & execute (`vso.build_execute`) | Pipeline runs and their stages, jobs and tasks; approving stages of YAML pipelines |
+     | **Release** | Read, write, & execute (`vso.release_execute`) | Releases of classic release pipelines, their stages and approvals; approving release stages |
 
      Click *Show all scopes* if a scope is not visible. Do not choose *Full access*.
 5. Click **Create** and copy the token right away – Azure DevOps shows it only once.
@@ -98,7 +99,7 @@ A token can never do more than your own account. You also need:
 - An access level of at least **Stakeholder** (or **Basic**) in the organization.
 - Read access to the projects and area paths whose work items you want to see (by default, members of a project's *Readers* or *Contributors* group have this), and *Edit work items in this node* on the area path to comment (granted to *Contributors* by default).
 - Read access to the repositories whose pull requests you want to see (granted to *Readers* and *Contributors* by default), and *Contribute to pull requests* to vote and comment (granted to *Contributors* by default).
-- The *View builds* permission on the pipelines and *View releases* on the release pipelines you want to follow (also granted to *Readers* and *Contributors* by default).
+- The *View builds* permission on the pipelines and *View releases* on the release pipelines you want to follow (also granted to *Readers* and *Contributors* by default). To approve a stage, you need to be one of its approvers, or in a group that is.
 
 Tokens created before the pipelines and pull requests were added lack the **Build**, **Release** and **Code** scopes: the *Pipelines* tab then reports *Not authorized*, or only shows the builds with a warning that the releases couldn't be loaded, and the *Pull requests* tab reports *Not authorized* with a hint about the **Code** scope. Edit the token in Azure DevOps to add the scopes (the token itself stays the same) or create a new one.
 

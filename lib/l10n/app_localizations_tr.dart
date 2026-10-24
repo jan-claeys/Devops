@@ -475,7 +475,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get releaseScopeHint =>
-      'Sürümler için belirtecinizde Release (Read) kapsamı gerekir.';
+      'Sürümler için belirtecinizde Release (Read, write, & execute) kapsamı gerekir.';
 
   @override
   String get artifact => 'Yapıt';
@@ -484,6 +484,32 @@ class AppLocalizationsTr extends AppLocalizations {
   String waitingForApprovalBy(String names) {
     return '$names onayı bekleniyor';
   }
+
+  @override
+  String get approvals => 'Onaylar';
+
+  @override
+  String approveStage(String stage) {
+    return '$stage onaylansın mı?';
+  }
+
+  @override
+  String rejectStage(String stage) {
+    return '$stage reddedilsin mi?';
+  }
+
+  @override
+  String get approvalCommentHint => 'Yorum (isteğe bağlı)';
+
+  @override
+  String get stageApproved => 'Aşama onaylandı';
+
+  @override
+  String get stageRejected => 'Aşama reddedildi';
+
+  @override
+  String get buildScopeHint =>
+      'İşlem hattı çalıştırmalarında işlem yapmak için belirtecinizde Build (Read & execute) kapsamı gerekir.';
 
   @override
   String get pullRequests => 'Çekme istekleri';
