@@ -621,6 +621,12 @@ class AppLocalizationsTr extends AppLocalizations {
   String get writeReply => 'Yanıt yazın…';
 
   @override
+  String get resolveThread => 'Çözüldü olarak işaretle';
+
+  @override
+  String get reactivateThread => 'Yeniden etkinleştir';
+
+  @override
   String get runErrors => 'Hatalar';
 
   @override

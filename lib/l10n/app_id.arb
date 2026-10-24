@@ -187,6 +187,8 @@
   "send": "Kirim",
   "reply": "Balas",
   "writeReply": "Tulis balasan…",
+  "resolveThread": "Selesaikan",
+  "reactivateThread": "Aktifkan kembali",
 
   "runErrors": "Kesalahan",
   "viewLog": "Lihat log",

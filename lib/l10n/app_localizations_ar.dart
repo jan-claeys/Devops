@@ -638,6 +638,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get writeReply => 'اكتب ردًا…';
 
   @override
+  String get resolveThread => 'حل';
+
+  @override
+  String get reactivateThread => 'إعادة تنشيط';
+
+  @override
   String get runErrors => 'الأخطاء';
 
   @override

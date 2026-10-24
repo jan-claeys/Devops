@@ -489,5 +489,22 @@ void main() {
       expect(jsonDecode(request.body),
           {'parentCommentId': 1, 'content': 'Because', 'commentType': 'text'});
     });
+
+    test('resolveThread sets the status of the thread', () async {
+      final thread = PullRequestThread.fromJson({
+        'id': 3,
+        'comments': [
+          {'id': 1, 'content': 'Why?'},
+        ],
+      })!;
+      await api.resolveThread(pr, thread);
+      await api.resolveThread(pr, thread, resolved: false);
+      expect(fake.requests.map((r) => r.method), ['PATCH', 'PATCH']);
+      expect(fake.requests.first.url.toString(), '$prUrl/threads/3?api-version=7.1');
+      expect(fake.requests.map((r) => jsonDecode(r.body)), [
+        {'status': 'fixed'},
+        {'status': 'active'},
+      ]);
+    });
   });
 }

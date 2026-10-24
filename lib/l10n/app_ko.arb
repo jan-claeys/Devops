@@ -187,6 +187,8 @@
   "send": "보내기",
   "reply": "답글",
   "writeReply": "답글 작성…",
+  "resolveThread": "해결",
+  "reactivateThread": "다시 활성화",
 
   "runErrors": "오류",
   "viewLog": "로그 보기",

@@ -610,6 +610,12 @@ class AppLocalizationsJa extends AppLocalizations {
   String get writeReply => '返信を入力…';
 
   @override
+  String get resolveThread => '解決';
+
+  @override
+  String get reactivateThread => '再アクティブ化';
+
+  @override
   String get runErrors => 'エラー';
 
   @override

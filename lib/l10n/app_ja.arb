@@ -187,6 +187,8 @@
   "send": "送信",
   "reply": "返信",
   "writeReply": "返信を入力…",
+  "resolveThread": "解決",
+  "reactivateThread": "再アクティブ化",
 
   "runErrors": "エラー",
   "viewLog": "ログを表示",

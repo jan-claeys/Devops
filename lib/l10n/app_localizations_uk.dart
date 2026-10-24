@@ -634,6 +634,12 @@ class AppLocalizationsUk extends AppLocalizations {
   String get writeReply => 'Напишіть відповідь…';
 
   @override
+  String get resolveThread => 'Вирішити';
+
+  @override
+  String get reactivateThread => 'Відкрити знову';
+
+  @override
   String get runErrors => 'Помилки';
 
   @override

@@ -634,6 +634,12 @@ class AppLocalizationsRu extends AppLocalizations {
   String get writeReply => 'Напишите ответ…';
 
   @override
+  String get resolveThread => 'Решить';
+
+  @override
+  String get reactivateThread => 'Открыть снова';
+
+  @override
   String get runErrors => 'Ошибки';
 
   @override

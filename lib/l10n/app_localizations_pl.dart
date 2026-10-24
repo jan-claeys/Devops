@@ -635,6 +635,12 @@ class AppLocalizationsPl extends AppLocalizations {
   String get writeReply => 'Napisz odpowiedź…';
 
   @override
+  String get resolveThread => 'Rozwiąż';
+
+  @override
+  String get reactivateThread => 'Aktywuj ponownie';
+
+  @override
   String get runErrors => 'Błędy';
 
   @override

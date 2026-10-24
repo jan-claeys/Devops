@@ -187,6 +187,8 @@
   "send": "Gönder",
   "reply": "Yanıtla",
   "writeReply": "Yanıt yazın…",
+  "resolveThread": "Çözüldü olarak işaretle",
+  "reactivateThread": "Yeniden etkinleştir",
 
   "runErrors": "Hatalar",
   "viewLog": "Günlüğü görüntüle",

@@ -187,6 +187,8 @@
   "send": "Надіслати",
   "reply": "Відповісти",
   "writeReply": "Напишіть відповідь…",
+  "resolveThread": "Вирішити",
+  "reactivateThread": "Відкрити знову",
 
   "runErrors": "Помилки",
   "viewLog": "Показати журнал",

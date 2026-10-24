@@ -627,6 +627,12 @@ class AppLocalizationsNl extends AppLocalizations {
   String get writeReply => 'Schrijf een antwoord…';
 
   @override
+  String get resolveThread => 'Oplossen';
+
+  @override
+  String get reactivateThread => 'Heropenen';
+
+  @override
   String get runErrors => 'Fouten';
 
   @override

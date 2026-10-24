@@ -187,6 +187,8 @@
   "send": "Enviar",
   "reply": "Responder",
   "writeReply": "Escreva uma resposta…",
+  "resolveThread": "Resolver",
+  "reactivateThread": "Reativar",
 
   "runErrors": "Erros",
   "viewLog": "Ver log",

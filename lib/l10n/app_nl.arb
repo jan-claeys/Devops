@@ -187,6 +187,8 @@
   "send": "Versturen",
   "reply": "Antwoorden",
   "writeReply": "Schrijf een antwoord…",
+  "resolveThread": "Oplossen",
+  "reactivateThread": "Heropenen",
 
   "runErrors": "Fouten",
   "viewLog": "Log bekijken",

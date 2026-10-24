@@ -187,6 +187,8 @@
   "send": "إرسال",
   "reply": "رد",
   "writeReply": "اكتب ردًا…",
+  "resolveThread": "حل",
+  "reactivateThread": "إعادة تنشيط",
 
   "runErrors": "الأخطاء",
   "viewLog": "عرض السجل",

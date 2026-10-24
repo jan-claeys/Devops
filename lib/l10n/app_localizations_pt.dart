@@ -630,6 +630,12 @@ class AppLocalizationsPt extends AppLocalizations {
   String get writeReply => 'Escreva uma resposta…';
 
   @override
+  String get resolveThread => 'Resolver';
+
+  @override
+  String get reactivateThread => 'Reativar';
+
+  @override
   String get runErrors => 'Erros';
 
   @override

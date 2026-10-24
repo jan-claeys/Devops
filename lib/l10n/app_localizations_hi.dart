@@ -621,6 +621,12 @@ class AppLocalizationsHi extends AppLocalizations {
   String get writeReply => 'जवाब लिखें…';
 
   @override
+  String get resolveThread => 'हल करें';
+
+  @override
+  String get reactivateThread => 'फिर से सक्रिय करें';
+
+  @override
   String get runErrors => 'त्रुटियाँ';
 
   @override

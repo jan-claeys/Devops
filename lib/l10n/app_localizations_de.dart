@@ -632,6 +632,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get writeReply => 'Antwort schreiben…';
 
   @override
+  String get resolveThread => 'Auflösen';
+
+  @override
+  String get reactivateThread => 'Reaktivieren';
+
+  @override
   String get runErrors => 'Fehler';
 
   @override

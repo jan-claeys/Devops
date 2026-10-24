@@ -628,6 +628,12 @@ class AppLocalizationsIt extends AppLocalizations {
   String get writeReply => 'Scrivi una risposta…';
 
   @override
+  String get resolveThread => 'Risolvi';
+
+  @override
+  String get reactivateThread => 'Riattiva';
+
+  @override
   String get runErrors => 'Errori';
 
   @override

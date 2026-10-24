@@ -606,6 +606,12 @@ class AppLocalizationsZh extends AppLocalizations {
   String get writeReply => '写回复…';
 
   @override
+  String get resolveThread => '解决';
+
+  @override
+  String get reactivateThread => '重新激活';
+
+  @override
   String get runErrors => '错误';
 
   @override

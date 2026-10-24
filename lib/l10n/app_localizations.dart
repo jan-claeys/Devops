@@ -1202,6 +1202,18 @@ abstract class AppLocalizations {
   /// **'Write a reply…'**
   String get writeReply;
 
+  /// No description provided for @resolveThread.
+  ///
+  /// In en, this message translates to:
+  /// **'Resolve'**
+  String get resolveThread;
+
+  /// No description provided for @reactivateThread.
+  ///
+  /// In en, this message translates to:
+  /// **'Reactivate'**
+  String get reactivateThread;
+
   /// No description provided for @runErrors.
   ///
   /// In en, this message translates to:

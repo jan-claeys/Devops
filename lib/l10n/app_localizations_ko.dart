@@ -610,6 +610,12 @@ class AppLocalizationsKo extends AppLocalizations {
   String get writeReply => '답글 작성…';
 
   @override
+  String get resolveThread => '해결';
+
+  @override
+  String get reactivateThread => '다시 활성화';
+
+  @override
   String get runErrors => '오류';
 
   @override

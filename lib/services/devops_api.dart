@@ -470,6 +470,11 @@ class DevOpsApi {
         'commentType': 'text',
       });
 
+  /// Marks [thread] on [pr] as resolved (fixed), or active again.
+  Future<void> resolveThread(PullRequest pr, PullRequestThread thread, {bool resolved = true}) =>
+      _send('PATCH', '${_pullRequestUrl(pr)}/threads/${thread.id}?api-version=$_apiVersion',
+          {'status': resolved ? 'fixed' : 'active'});
+
   String _pullRequestUrl(PullRequest pr) =>
       '$baseUrl/${Uri.encodeComponent(pr.project)}/_apis/git/repositories/'
       '${pr.repositoryId}/pullRequests/${pr.id}';

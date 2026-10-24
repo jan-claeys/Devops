@@ -630,6 +630,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get writeReply => 'Escribe una respuesta…';
 
   @override
+  String get resolveThread => 'Resolver';
+
+  @override
+  String get reactivateThread => 'Reactivar';
+
+  @override
   String get runErrors => 'Errores';
 
   @override

@@ -149,6 +149,9 @@ class PullRequestThread {
         _ => false,
       };
 
+  /// Active and pending discussions can be resolved.
+  bool get isActive => status == 'active' || status == 'pending';
+
   DateTime? get lastUpdated => comments.map((c) => c.publishedDate).nonNulls.lastOrNull;
 
   /// Null for threads without comments from people, such as vote updates.

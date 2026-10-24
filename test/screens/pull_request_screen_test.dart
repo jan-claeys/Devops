@@ -141,4 +141,24 @@ void main() {
         {'parentCommentId': 1, 'content': 'To fix the login', 'commentType': 'text'});
     expect(find.widgetWithText(TextField, en.writeReply), findsNothing);
   });
+
+  testWidgets('resolves a discussion', (tester) async {
+    await pumpScreen(tester, 7);
+    await tester.tap(find.text(en.resolveThread));
+    await tester.pumpAndSettle();
+
+    final patch = fake.requests.singleWhere((r) => r.method == 'PATCH');
+    expect(patch.url.path, endsWith('/pullRequests/7/threads/3'));
+    expect(jsonDecode(patch.body), {'status': 'fixed'});
+  });
+
+  testWidgets('reactivates a resolved discussion', (tester) async {
+    (fake.threads[7]!.single)['status'] = 'fixed';
+    await pumpScreen(tester, 7);
+    expect(find.text(en.resolveThread), findsNothing);
+    await tester.tap(find.text(en.reactivateThread));
+    await tester.pumpAndSettle();
+    expect(jsonDecode(fake.requests.singleWhere((r) => r.method == 'PATCH').body),
+        {'status': 'active'});
+  });
 }

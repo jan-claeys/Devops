@@ -124,6 +124,10 @@ class _PullRequestScreenState extends State<PullRequestScreen> {
       () => AppScope.read(context).api!.createPullRequestThread(pr, text),
       'Commenting on pull request ${pr.id} failed');
 
+  Future<bool> _resolve(PullRequest pr, PullRequestThread thread, bool resolved) => _act(
+      () => AppScope.read(context).api!.resolveThread(pr, thread, resolved: resolved),
+      'Changing the status of thread ${thread.id} of pull request ${pr.id} failed');
+
   Future<bool> _reply(PullRequest pr, PullRequestThread thread, String text) => _act(
       () => AppScope.read(context).api!.replyToThread(pr, thread, text),
       'Replying to thread ${thread.id} of pull request ${pr.id} failed');
@@ -367,6 +371,7 @@ class _PullRequestScreenState extends State<PullRequestScreen> {
                   mentions: detail.mentions,
                   onOpenWorkItem: _openWorkItem,
                   onReply: (text) => _reply(pr, thread, text),
+                  onResolve: (resolved) => _resolve(pr, thread, resolved),
                 ),
               ],
           ],
@@ -497,6 +502,7 @@ class _ThreadView extends StatefulWidget {
     required this.mentions,
     required this.onOpenWorkItem,
     required this.onReply,
+    required this.onResolve,
   });
 
   final PullRequestThread thread;
@@ -506,12 +512,22 @@ class _ThreadView extends StatefulWidget {
   /// Tells whether the reply was saved.
   final Future<bool> Function(String text) onReply;
 
+  /// Resolves the thread, or reactivates it when false.
+  final Future<bool> Function(bool resolved) onResolve;
+
   @override
   State<_ThreadView> createState() => _ThreadViewState();
 }
 
 class _ThreadViewState extends State<_ThreadView> {
   bool _replying = false;
+  bool _resolving = false;
+
+  Future<void> _resolve(bool resolved) async {
+    setState(() => _resolving = true);
+    await widget.onResolve(resolved);
+    if (mounted) setState(() => _resolving = false);
+  }
 
   Future<bool> _reply(String text) async {
     final sent = await widget.onReply(text);
@@ -593,14 +609,24 @@ class _ThreadViewState extends State<_ThreadView> {
           padding: const EdgeInsets.only(left: 44, top: 8),
           child: _replying
               ? CommentComposer(hint: l10n.writeReply, autofocus: true, onSend: _reply)
-              : Align(
-                  alignment: AlignmentDirectional.centerStart,
-                  child: TextButton.icon(
-                    style: TextButton.styleFrom(visualDensity: VisualDensity.compact),
-                    onPressed: () => setState(() => _replying = true),
-                    icon: const Icon(Icons.reply, size: 18),
-                    label: Text(l10n.reply),
-                  ),
+              : Wrap(
+                  spacing: 8,
+                  children: [
+                    TextButton.icon(
+                      style: TextButton.styleFrom(visualDensity: VisualDensity.compact),
+                      onPressed: () => setState(() => _replying = true),
+                      icon: const Icon(Icons.reply, size: 18),
+                      label: Text(l10n.reply),
+                    ),
+                    if (thread.isActive || thread.isResolved)
+                      TextButton.icon(
+                        style: TextButton.styleFrom(visualDensity: VisualDensity.compact),
+                        onPressed: _resolving ? null : () => _resolve(!thread.isResolved),
+                        icon: Icon(thread.isResolved ? Icons.replay : Icons.check, size: 18),
+                        label: Text(
+                            thread.isResolved ? l10n.reactivateThread : l10n.resolveThread),
+                      ),
+                  ],
                 ),
         ),
       ],

@@ -238,6 +238,8 @@
   "send": "Send",
   "reply": "Reply",
   "writeReply": "Write a reply…",
+  "resolveThread": "Resolve",
+  "reactivateThread": "Reactivate",
 
   "runErrors": "Errors",
   "viewLog": "View log",

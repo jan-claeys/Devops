@@ -187,6 +187,8 @@
   "send": "发送",
   "reply": "回复",
   "writeReply": "写回复…",
+  "resolveThread": "解决",
+  "reactivateThread": "重新激活",
 
   "runErrors": "错误",
   "viewLog": "查看日志",
