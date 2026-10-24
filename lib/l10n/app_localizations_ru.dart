@@ -63,7 +63,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'В разделе Scopes выберите Custom defined и включите только права, перечисленные выше, каждое с уровнем Read.';
+      'В разделе Scopes выберите Custom defined и включите только права, перечисленные выше, каждое с уровнем, указанным рядом.';
 
   @override
   String get tokenHelpStep4 =>
@@ -509,7 +509,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get codeScopeHint =>
-      'Для pull request’ов токену нужны права Code (Read).';
+      'Для pull request’ов токену нужны права Code (Read & write).';
 
   @override
   String get noPullRequestsTitle => 'Нет pull request’ов';
@@ -585,6 +585,41 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get threadResolved => 'Решено';
+
+  @override
+  String get voteApprove => 'Одобрить';
+
+  @override
+  String get voteApproveWithSuggestions => 'Одобрить с предложениями';
+
+  @override
+  String get voteWaitForAuthor => 'Ждать автора';
+
+  @override
+  String get voteReject => 'Отклонить';
+
+  @override
+  String get voteReset => 'Сбросить голос';
+
+  @override
+  String get otherVotes => 'Другие варианты';
+
+  @override
+  String get rejectConfirmTitle => 'Отклонить этот pull request?';
+
+  @override
+  String get rejectConfirmBody =>
+      'Pull request нельзя завершить, пока ваш голос — «Отклонено».';
+
+  @override
+  String get voteSaved => 'Голос сохранён';
+
+  @override
+  String get cancel => 'Отмена';
+
+  @override
+  String get actionDenied =>
+      'Azure DevOps не разрешил это действие. Проверьте, что у токена есть нужные права, а у учётной записи — разрешение.';
 
   @override
   String get runErrors => 'Ошибки';

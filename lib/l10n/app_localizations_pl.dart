@@ -63,7 +63,7 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'W sekcji Scopes wybierz Custom defined i zaznacz tylko zakresy wymienione powyżej, każdy z opcją Read.';
+      'W sekcji Scopes wybierz Custom defined i zaznacz tylko zakresy wymienione powyżej, każdy z uprawnieniem podanym obok.';
 
   @override
   String get tokenHelpStep4 =>
@@ -510,7 +510,7 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get codeScopeHint =>
-      'Pull requesty wymagają zakresu Code (Read) w tokenie.';
+      'Pull requesty wymagają zakresu Code (Read & write) w tokenie.';
 
   @override
   String get noPullRequestsTitle => 'Brak pull requestów';
@@ -586,6 +586,41 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get threadResolved => 'Rozwiązany';
+
+  @override
+  String get voteApprove => 'Zatwierdź';
+
+  @override
+  String get voteApproveWithSuggestions => 'Zatwierdź z sugestiami';
+
+  @override
+  String get voteWaitForAuthor => 'Czekaj na autora';
+
+  @override
+  String get voteReject => 'Odrzuć';
+
+  @override
+  String get voteReset => 'Resetuj głos';
+
+  @override
+  String get otherVotes => 'Inne głosy';
+
+  @override
+  String get rejectConfirmTitle => 'Odrzucić ten pull request?';
+
+  @override
+  String get rejectConfirmBody =>
+      'Pull requestu nie można ukończyć, dopóki Twój głos to Odrzucony.';
+
+  @override
+  String get voteSaved => 'Głos zapisany';
+
+  @override
+  String get cancel => 'Anuluj';
+
+  @override
+  String get actionDenied =>
+      'Azure DevOps na to nie pozwolił. Sprawdź, czy token ma właściwy zakres, a konto odpowiednie uprawnienia.';
 
   @override
   String get runErrors => 'Błędy';

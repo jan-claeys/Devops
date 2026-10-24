@@ -63,7 +63,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'Scopes altında Custom defined\'ı seçin ve yalnızca yukarıda listelenen kapsamları Read olarak etkinleştirin.';
+      'Scopes altında Custom defined\'ı seçin ve yalnızca yukarıda listelenen kapsamları, yanında gösterilen izinle etkinleştirin.';
 
   @override
   String get tokenHelpStep4 =>
@@ -500,7 +500,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get codeScopeHint =>
-      'Çekme istekleri için belirtecinizde Code (Read) kapsamı gerekir.';
+      'Çekme istekleri için belirtecinizde Code (Read & write) kapsamı gerekir.';
 
   @override
   String get noPullRequestsTitle => 'Çekme isteği yok';
@@ -572,6 +572,41 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get threadResolved => 'Çözüldü';
+
+  @override
+  String get voteApprove => 'Onayla';
+
+  @override
+  String get voteApproveWithSuggestions => 'Önerilerle onayla';
+
+  @override
+  String get voteWaitForAuthor => 'Yazarı bekle';
+
+  @override
+  String get voteReject => 'Reddet';
+
+  @override
+  String get voteReset => 'Oyu sıfırla';
+
+  @override
+  String get otherVotes => 'Diğer oylar';
+
+  @override
+  String get rejectConfirmTitle => 'Bu çekme isteği reddedilsin mi?';
+
+  @override
+  String get rejectConfirmBody =>
+      'Oyunuz Reddedildi olduğu sürece çekme isteği tamamlanamaz.';
+
+  @override
+  String get voteSaved => 'Oy kaydedildi';
+
+  @override
+  String get cancel => 'İptal';
+
+  @override
+  String get actionDenied =>
+      'Azure DevOps buna izin vermedi. Belirtecinizin doğru kapsama ve hesabınızın izne sahip olduğunu kontrol edin.';
 
   @override
   String get runErrors => 'Hatalar';

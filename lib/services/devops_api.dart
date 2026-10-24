@@ -445,6 +445,14 @@ class DevOpsApi {
     ];
   }
 
+  /// Votes on [pr] as the user the token belongs to, who becomes a reviewer
+  /// if they aren't one yet.
+  Future<void> votePullRequest(PullRequest pr, ReviewVote vote) async {
+    final me = await getCurrentUserId();
+    await _send('PUT', '${_pullRequestUrl(pr)}/reviewers/$me?api-version=$_apiVersion',
+        {'vote': vote.value});
+  }
+
   String _pullRequestUrl(PullRequest pr) =>
       '$baseUrl/${Uri.encodeComponent(pr.project)}/_apis/git/repositories/'
       '${pr.repositoryId}/pullRequests/${pr.id}';
@@ -454,13 +462,14 @@ class DevOpsApi {
     return _decode(response);
   }
 
-  Future<Map<String, dynamic>> _post(String url, Object body) async {
-    final response = await _client.post(
-      Uri.parse(url),
-      headers: {..._headers, 'Content-Type': 'application/json'},
-      body: jsonEncode(body),
-    );
-    return _decode(response);
+  Future<Map<String, dynamic>> _post(String url, Object body) => _send('POST', url, body);
+
+  /// Sends [body] as JSON with [method].
+  Future<Map<String, dynamic>> _send(String method, String url, Object body) async {
+    final request = http.Request(method, Uri.parse(url))
+      ..headers.addAll({..._headers, 'Content-Type': 'application/json'})
+      ..body = jsonEncode(body);
+    return _decode(await http.Response.fromStream(await _client.send(request)));
   }
 
   Map<String, String> get _headers => {

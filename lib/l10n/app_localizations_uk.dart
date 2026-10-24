@@ -63,7 +63,7 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'У розділі Scopes виберіть Custom defined і ввімкніть лише права, перелічені вище, кожне з рівнем Read.';
+      'У розділі Scopes виберіть Custom defined і ввімкніть лише права, перелічені вище, кожне з рівнем, указаним поруч.';
 
   @override
   String get tokenHelpStep4 =>
@@ -509,7 +509,7 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get codeScopeHint =>
-      'Для pull request’ів токену потрібні права Code (Read).';
+      'Для pull request’ів токену потрібні права Code (Read & write).';
 
   @override
   String get noPullRequestsTitle => 'Немає pull request’ів';
@@ -585,6 +585,41 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get threadResolved => 'Вирішено';
+
+  @override
+  String get voteApprove => 'Схвалити';
+
+  @override
+  String get voteApproveWithSuggestions => 'Схвалити з пропозиціями';
+
+  @override
+  String get voteWaitForAuthor => 'Чекати на автора';
+
+  @override
+  String get voteReject => 'Відхилити';
+
+  @override
+  String get voteReset => 'Скинути голос';
+
+  @override
+  String get otherVotes => 'Інші варіанти';
+
+  @override
+  String get rejectConfirmTitle => 'Відхилити цей pull request?';
+
+  @override
+  String get rejectConfirmBody =>
+      'Pull request не можна завершити, доки ваш голос — «Відхилено».';
+
+  @override
+  String get voteSaved => 'Голос збережено';
+
+  @override
+  String get cancel => 'Скасувати';
+
+  @override
+  String get actionDenied =>
+      'Azure DevOps не дозволив цю дію. Перевірте, що токен має потрібні права, а обліковий запис — дозвіл.';
 
   @override
   String get runErrors => 'Помилки';

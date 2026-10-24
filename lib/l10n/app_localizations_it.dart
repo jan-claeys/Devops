@@ -64,7 +64,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'In Scopes scegli Custom defined e attiva solo gli ambiti indicati sopra, ciascuno con Read.';
+      'In Scopes scegli Custom defined e attiva solo gli ambiti indicati sopra, ciascuno con l’autorizzazione mostrata accanto.';
 
   @override
   String get tokenHelpStep4 =>
@@ -505,7 +505,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get codeScopeHint =>
-      'Le pull request richiedono l’ambito Code (Read) nel token.';
+      'Le pull request richiedono l’ambito Code (Read & write) nel token.';
 
   @override
   String get noPullRequestsTitle => 'Nessuna pull request';
@@ -579,6 +579,41 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get threadResolved => 'Risolto';
+
+  @override
+  String get voteApprove => 'Approva';
+
+  @override
+  String get voteApproveWithSuggestions => 'Approva con suggerimenti';
+
+  @override
+  String get voteWaitForAuthor => 'Attendi l’autore';
+
+  @override
+  String get voteReject => 'Rifiuta';
+
+  @override
+  String get voteReset => 'Reimposta voto';
+
+  @override
+  String get otherVotes => 'Altri voti';
+
+  @override
+  String get rejectConfirmTitle => 'Rifiutare questa pull request?';
+
+  @override
+  String get rejectConfirmBody =>
+      'La pull request non può essere completata finché il tuo voto è Rifiutato.';
+
+  @override
+  String get voteSaved => 'Voto salvato';
+
+  @override
+  String get cancel => 'Annulla';
+
+  @override
+  String get actionDenied =>
+      'Azure DevOps non lo ha consentito. Verifica che il token abbia l’ambito giusto e che il tuo account abbia l’autorizzazione.';
 
   @override
   String get runErrors => 'Errori';

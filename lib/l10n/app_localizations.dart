@@ -227,7 +227,7 @@ abstract class AppLocalizations {
   /// No description provided for @tokenHelpStep3.
   ///
   /// In en, this message translates to:
-  /// **'Under Scopes, choose Custom defined and enable only the scopes listed above, each with Read.'**
+  /// **'Under Scopes, choose Custom defined and enable only the scopes listed above, each with the permission shown next to it.'**
   String get tokenHelpStep3;
 
   /// No description provided for @tokenHelpStep4.
@@ -983,7 +983,7 @@ abstract class AppLocalizations {
   /// No description provided for @codeScopeHint.
   ///
   /// In en, this message translates to:
-  /// **'Pull requests need the Code (Read) scope on your token.'**
+  /// **'Pull requests need the Code (Read & write) scope on your token.'**
   String get codeScopeHint;
 
   /// No description provided for @noPullRequestsTitle.
@@ -1111,6 +1111,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Resolved'**
   String get threadResolved;
+
+  /// No description provided for @voteApprove.
+  ///
+  /// In en, this message translates to:
+  /// **'Approve'**
+  String get voteApprove;
+
+  /// No description provided for @voteApproveWithSuggestions.
+  ///
+  /// In en, this message translates to:
+  /// **'Approve with suggestions'**
+  String get voteApproveWithSuggestions;
+
+  /// No description provided for @voteWaitForAuthor.
+  ///
+  /// In en, this message translates to:
+  /// **'Wait for author'**
+  String get voteWaitForAuthor;
+
+  /// No description provided for @voteReject.
+  ///
+  /// In en, this message translates to:
+  /// **'Reject'**
+  String get voteReject;
+
+  /// No description provided for @voteReset.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset vote'**
+  String get voteReset;
+
+  /// No description provided for @otherVotes.
+  ///
+  /// In en, this message translates to:
+  /// **'Other votes'**
+  String get otherVotes;
+
+  /// No description provided for @rejectConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reject this pull request?'**
+  String get rejectConfirmTitle;
+
+  /// No description provided for @rejectConfirmBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The pull request can\'t be completed as long as your vote is Rejected.'**
+  String get rejectConfirmBody;
+
+  /// No description provided for @voteSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Vote saved'**
+  String get voteSaved;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @actionDenied.
+  ///
+  /// In en, this message translates to:
+  /// **'Azure DevOps didn\'t allow this. Check that your token has the right scope and that your account has permission.'**
+  String get actionDenied;
 
   /// No description provided for @runErrors.
   ///

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:devops/models/pipeline_run.dart';
+import 'package:devops/models/pull_request.dart';
 import 'package:devops/models/work_item.dart';
 import 'package:devops/services/devops_api.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -443,6 +444,22 @@ void main() {
           .toString(), 'Boom');
       expect(DevOpsException(DevOpsError.notFound, statusCode: 404).toString(),
           'Azure DevOps error notFound (404)');
+    });
+  });
+
+  group('actions', () {
+    late PullRequest pr;
+    const prUrl =
+        'https://dev.azure.com/contoso/Contoso/_apis/git/repositories/repo-web/pullRequests/7';
+
+    setUp(() => pr = PullRequest.fromJson(pullRequestJson(7)));
+
+    test('votePullRequest puts the vote of the signed in user', () async {
+      await api.votePullRequest(pr, ReviewVote.rejected);
+      final request = fake.requests.last;
+      expect(request.method, 'PUT');
+      expect(request.url.toString(), '$prUrl/reviewers/$meId?api-version=7.1');
+      expect(jsonDecode(request.body), {'vote': -10});
     });
   });
 }

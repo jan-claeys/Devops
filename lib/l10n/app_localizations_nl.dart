@@ -63,7 +63,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'Kies bij Scopes voor Custom defined en vink alleen de scopes hierboven aan, telkens met Read.';
+      'Kies bij Scopes voor Custom defined en vink alleen de scopes hierboven aan, telkens met de rechten die ernaast staan.';
 
   @override
   String get tokenHelpStep4 =>
@@ -504,7 +504,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get codeScopeHint =>
-      'Voor pull requests heeft je token de scope Code (Read) nodig.';
+      'Voor pull requests heeft je token de scope Code (Read & write) nodig.';
 
   @override
   String get noPullRequestsTitle => 'Geen pull requests';
@@ -578,6 +578,41 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get threadResolved => 'Opgelost';
+
+  @override
+  String get voteApprove => 'Goedkeuren';
+
+  @override
+  String get voteApproveWithSuggestions => 'Goedkeuren met suggesties';
+
+  @override
+  String get voteWaitForAuthor => 'Wachten op auteur';
+
+  @override
+  String get voteReject => 'Afwijzen';
+
+  @override
+  String get voteReset => 'Stem intrekken';
+
+  @override
+  String get otherVotes => 'Andere stemmen';
+
+  @override
+  String get rejectConfirmTitle => 'Deze pull request afwijzen?';
+
+  @override
+  String get rejectConfirmBody =>
+      'De pull request kan niet worden afgerond zolang je stem Afgewezen is.';
+
+  @override
+  String get voteSaved => 'Stem opgeslagen';
+
+  @override
+  String get cancel => 'Annuleren';
+
+  @override
+  String get actionDenied =>
+      'Azure DevOps stond dit niet toe. Controleer of je token de juiste scope heeft en of je account de rechten heeft.';
 
   @override
   String get runErrors => 'Fouten';

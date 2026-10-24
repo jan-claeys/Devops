@@ -60,7 +60,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get tokenHelpStep2 => '选择你的组织和过期日期。';
 
   @override
-  String get tokenHelpStep3 => '在 Scopes 下选择 Custom defined，并只为上面列出的范围启用 Read。';
+  String get tokenHelpStep3 =>
+      '在 Scopes 下选择 Custom defined，并只启用上面列出的范围，每个范围使用旁边显示的权限。';
 
   @override
   String get tokenHelpStep4 => '选择 Create，复制令牌并粘贴到上方。令牌只显示一次。';
@@ -487,7 +488,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get loadPullRequestsFailed => '无法加载拉取请求';
 
   @override
-  String get codeScopeHint => '拉取请求需要令牌具有 Code (Read) 范围。';
+  String get codeScopeHint => '拉取请求需要令牌具有 Code (Read & write) 范围。';
 
   @override
   String get noPullRequestsTitle => '没有拉取请求';
@@ -558,6 +559,39 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get threadResolved => '已解决';
+
+  @override
+  String get voteApprove => '批准';
+
+  @override
+  String get voteApproveWithSuggestions => '批准并提出建议';
+
+  @override
+  String get voteWaitForAuthor => '等待作者';
+
+  @override
+  String get voteReject => '拒绝';
+
+  @override
+  String get voteReset => '重置投票';
+
+  @override
+  String get otherVotes => '其他投票';
+
+  @override
+  String get rejectConfirmTitle => '拒绝此拉取请求？';
+
+  @override
+  String get rejectConfirmBody => '只要你的投票为“已拒绝”，此拉取请求就无法完成。';
+
+  @override
+  String get voteSaved => '投票已保存';
+
+  @override
+  String get cancel => '取消';
+
+  @override
+  String get actionDenied => 'Azure DevOps 不允许此操作。请检查令牌是否具有正确的范围，以及你的帐户是否有权限。';
 
   @override
   String get runErrors => '错误';

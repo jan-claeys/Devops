@@ -62,7 +62,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'Scopes で Custom defined を選び、上記のスコープのみをそれぞれ Read で有効にします。';
+      'Scopes で Custom defined を選び、上記のスコープのみを、それぞれ横に表示された権限で有効にします。';
 
   @override
   String get tokenHelpStep4 =>
@@ -491,7 +491,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get loadPullRequestsFailed => 'プル リクエストを読み込めませんでした';
 
   @override
-  String get codeScopeHint => 'プル リクエストにはトークンの Code (Read) スコープが必要です。';
+  String get codeScopeHint => 'プル リクエストにはトークンの Code (Read & write) スコープが必要です。';
 
   @override
   String get noPullRequestsTitle => 'プル リクエストはありません';
@@ -562,6 +562,40 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get threadResolved => '解決済み';
+
+  @override
+  String get voteApprove => '承認';
+
+  @override
+  String get voteApproveWithSuggestions => '提案付きで承認';
+
+  @override
+  String get voteWaitForAuthor => '作成者を待機';
+
+  @override
+  String get voteReject => '拒否';
+
+  @override
+  String get voteReset => '投票をリセット';
+
+  @override
+  String get otherVotes => 'その他の投票';
+
+  @override
+  String get rejectConfirmTitle => 'このプル リクエストを拒否しますか?';
+
+  @override
+  String get rejectConfirmBody => 'あなたの投票が拒否の間は、プル リクエストを完了できません。';
+
+  @override
+  String get voteSaved => '投票を保存しました';
+
+  @override
+  String get cancel => 'キャンセル';
+
+  @override
+  String get actionDenied =>
+      'Azure DevOps により許可されませんでした。トークンに正しいスコープがあり、アカウントに権限があることを確認してください。';
 
   @override
   String get runErrors => 'エラー';

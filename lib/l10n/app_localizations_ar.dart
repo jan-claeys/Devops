@@ -63,7 +63,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'ضمن Scopes، اختر Custom defined وفعّل فقط النطاقات المذكورة أعلاه، كلٌّ منها بصلاحية Read.';
+      'ضمن Scopes، اختر Custom defined وفعّل فقط النطاقات المذكورة أعلاه، كلٌّ منها بالصلاحية الظاهرة بجانبه.';
 
   @override
   String get tokenHelpStep4 =>
@@ -512,7 +512,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get codeScopeHint =>
-      'تحتاج طلبات السحب إلى النطاق Code (Read) في الرمز المميز.';
+      'تحتاج طلبات السحب إلى النطاق Code (Read & write) في الرمز المميز.';
 
   @override
   String get noPullRequestsTitle => 'لا توجد طلبات سحب';
@@ -589,6 +589,41 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get threadResolved => 'تم الحل';
+
+  @override
+  String get voteApprove => 'موافقة';
+
+  @override
+  String get voteApproveWithSuggestions => 'موافقة مع اقتراحات';
+
+  @override
+  String get voteWaitForAuthor => 'انتظار المؤلف';
+
+  @override
+  String get voteReject => 'رفض';
+
+  @override
+  String get voteReset => 'إعادة تعيين التصويت';
+
+  @override
+  String get otherVotes => 'تصويتات أخرى';
+
+  @override
+  String get rejectConfirmTitle => 'هل تريد رفض طلب السحب هذا؟';
+
+  @override
+  String get rejectConfirmBody =>
+      'لا يمكن إكمال طلب السحب طالما أن تصويتك هو مرفوض.';
+
+  @override
+  String get voteSaved => 'تم حفظ التصويت';
+
+  @override
+  String get cancel => 'إلغاء';
+
+  @override
+  String get actionDenied =>
+      'لم يسمح Azure DevOps بذلك. تحقّق من أن الرمز المميز لديه النطاق الصحيح وأن حسابك لديه الإذن.';
 
   @override
   String get runErrors => 'الأخطاء';

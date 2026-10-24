@@ -64,7 +64,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'Sous Scopes, choisissez Custom defined et activez uniquement les portées indiquées ci-dessus, chacune avec Read.';
+      'Sous Scopes, choisissez Custom defined et activez uniquement les portées indiquées ci-dessus, chacune avec l’autorisation affichée à côté.';
 
   @override
   String get tokenHelpStep4 =>
@@ -508,7 +508,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get codeScopeHint =>
-      'Les pull requests nécessitent la portée Code (Read) sur votre jeton.';
+      'Les pull requests nécessitent la portée Code (Read & write) sur votre jeton.';
 
   @override
   String get noPullRequestsTitle => 'Aucune pull request';
@@ -582,6 +582,41 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get threadResolved => 'Résolu';
+
+  @override
+  String get voteApprove => 'Approuver';
+
+  @override
+  String get voteApproveWithSuggestions => 'Approuver avec suggestions';
+
+  @override
+  String get voteWaitForAuthor => 'Attendre l’auteur';
+
+  @override
+  String get voteReject => 'Rejeter';
+
+  @override
+  String get voteReset => 'Réinitialiser le vote';
+
+  @override
+  String get otherVotes => 'Autres votes';
+
+  @override
+  String get rejectConfirmTitle => 'Rejeter cette pull request ?';
+
+  @override
+  String get rejectConfirmBody =>
+      'La pull request ne peut pas être terminée tant que votre vote est Rejeté.';
+
+  @override
+  String get voteSaved => 'Vote enregistré';
+
+  @override
+  String get cancel => 'Annuler';
+
+  @override
+  String get actionDenied =>
+      'Azure DevOps n’a pas autorisé cette action. Vérifiez que votre jeton a la bonne portée et que votre compte a l’autorisation.';
 
   @override
   String get runErrors => 'Erreurs';

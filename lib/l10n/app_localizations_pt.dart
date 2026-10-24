@@ -64,7 +64,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'Em Scopes, escolha Custom defined e ative apenas os escopos indicados acima, cada um com Read.';
+      'Em Scopes, escolha Custom defined e ative apenas os escopos indicados acima, cada um com a permissão mostrada ao lado.';
 
   @override
   String get tokenHelpStep4 =>
@@ -507,7 +507,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get codeScopeHint =>
-      'Os pull requests precisam do escopo Code (Read) no seu token.';
+      'Os pull requests precisam do escopo Code (Read & write) no seu token.';
 
   @override
   String get noPullRequestsTitle => 'Nenhum pull request';
@@ -581,6 +581,41 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get threadResolved => 'Resolvido';
+
+  @override
+  String get voteApprove => 'Aprovar';
+
+  @override
+  String get voteApproveWithSuggestions => 'Aprovar com sugestões';
+
+  @override
+  String get voteWaitForAuthor => 'Aguardar o autor';
+
+  @override
+  String get voteReject => 'Rejeitar';
+
+  @override
+  String get voteReset => 'Redefinir voto';
+
+  @override
+  String get otherVotes => 'Outros votos';
+
+  @override
+  String get rejectConfirmTitle => 'Rejeitar este pull request?';
+
+  @override
+  String get rejectConfirmBody =>
+      'O pull request não pode ser concluído enquanto o seu voto for Rejeitado.';
+
+  @override
+  String get voteSaved => 'Voto salvo';
+
+  @override
+  String get cancel => 'Cancelar';
+
+  @override
+  String get actionDenied =>
+      'O Azure DevOps não permitiu isto. Verifique se o seu token tem o escopo certo e se a sua conta tem permissão.';
 
   @override
   String get runErrors => 'Erros';

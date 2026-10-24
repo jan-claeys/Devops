@@ -63,7 +63,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'Di Scopes, pilih Custom defined dan aktifkan hanya cakupan yang tercantum di atas, masing-masing dengan Read.';
+      'Di Scopes, pilih Custom defined dan aktifkan hanya cakupan yang tercantum di atas, masing-masing dengan izin yang tertera di sebelahnya.';
 
   @override
   String get tokenHelpStep4 =>
@@ -502,7 +502,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get codeScopeHint =>
-      'Pull request memerlukan cakupan Code (Read) pada token Anda.';
+      'Pull request memerlukan cakupan Code (Read & write) pada token Anda.';
 
   @override
   String get noPullRequestsTitle => 'Tidak ada pull request';
@@ -575,6 +575,41 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get threadResolved => 'Terselesaikan';
+
+  @override
+  String get voteApprove => 'Setujui';
+
+  @override
+  String get voteApproveWithSuggestions => 'Setujui dengan saran';
+
+  @override
+  String get voteWaitForAuthor => 'Tunggu penulis';
+
+  @override
+  String get voteReject => 'Tolak';
+
+  @override
+  String get voteReset => 'Atur ulang suara';
+
+  @override
+  String get otherVotes => 'Suara lain';
+
+  @override
+  String get rejectConfirmTitle => 'Tolak pull request ini?';
+
+  @override
+  String get rejectConfirmBody =>
+      'Pull request tidak dapat diselesaikan selama suara Anda Ditolak.';
+
+  @override
+  String get voteSaved => 'Suara disimpan';
+
+  @override
+  String get cancel => 'Batal';
+
+  @override
+  String get actionDenied =>
+      'Azure DevOps tidak mengizinkan ini. Periksa apakah token Anda memiliki cakupan yang tepat dan akun Anda memiliki izin.';
 
   @override
   String get runErrors => 'Kesalahan';

@@ -418,6 +418,8 @@ class FakeDevOps {
       final item = items[int.parse(single[1]!)];
       return item == null ? http.Response('', 404) : _json(item);
     }
+    // Actions such as votes and comments succeed.
+    if (request.method != 'GET') return _json({});
     return http.Response('', 404);
   });
 

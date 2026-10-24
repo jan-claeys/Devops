@@ -62,7 +62,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'Scopes에서 Custom defined를 선택하고 위에 나열된 범위만 각각 Read로 켭니다.';
+      'Scopes에서 Custom defined를 선택하고 위에 나열된 범위만 각각 옆에 표시된 권한으로 켭니다.';
 
   @override
   String get tokenHelpStep4 =>
@@ -491,7 +491,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get loadPullRequestsFailed => '끌어오기 요청을 불러오지 못했습니다';
 
   @override
-  String get codeScopeHint => '끌어오기 요청을 보려면 토큰에 Code (Read) 범위가 필요합니다.';
+  String get codeScopeHint => '끌어오기 요청에는 토큰에 Code (Read & write) 범위가 필요합니다.';
 
   @override
   String get noPullRequestsTitle => '끌어오기 요청 없음';
@@ -562,6 +562,40 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get threadResolved => '해결됨';
+
+  @override
+  String get voteApprove => '승인';
+
+  @override
+  String get voteApproveWithSuggestions => '제안과 함께 승인';
+
+  @override
+  String get voteWaitForAuthor => '작성자 대기';
+
+  @override
+  String get voteReject => '거부';
+
+  @override
+  String get voteReset => '투표 초기화';
+
+  @override
+  String get otherVotes => '다른 투표';
+
+  @override
+  String get rejectConfirmTitle => '이 끌어오기 요청을 거부할까요?';
+
+  @override
+  String get rejectConfirmBody => '투표가 거부인 동안에는 끌어오기 요청을 완료할 수 없습니다.';
+
+  @override
+  String get voteSaved => '투표가 저장되었습니다';
+
+  @override
+  String get cancel => '취소';
+
+  @override
+  String get actionDenied =>
+      'Azure DevOps에서 허용하지 않았습니다. 토큰에 올바른 범위가 있고 계정에 권한이 있는지 확인하세요.';
 
   @override
   String get runErrors => '오류';

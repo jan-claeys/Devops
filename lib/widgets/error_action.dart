@@ -4,6 +4,24 @@ import '../l10n/l10n.dart';
 import '../screens/settings_screen.dart';
 import '../services/devops_api.dart';
 
+/// Tells why an action, such as a vote or a comment, failed. Azure DevOps
+/// answers 401 or 403 when the token lacks the scope in [scopeHint] or the
+/// account lacks the permission, so both are named then.
+void showActionError(BuildContext context, Object error, {required String scopeHint}) {
+  final l10n = context.l10n;
+  final message = switch (error) {
+    DevOpsException(kind: DevOpsError.unauthorized, :final serverMessage) ||
+    DevOpsException(statusCode: 403, :final serverMessage) =>
+      [l10n.actionDenied, scopeHint, ?serverMessage].join('\n'),
+    _ => l10n.error(error),
+  };
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    content: Text(message),
+    showCloseIcon: true,
+    duration: const Duration(seconds: 8),
+  ));
+}
+
 /// Button below an error: to the settings when the token is invalid or has
 /// expired, as trying again won't help then; otherwise it tries again.
 class ErrorAction extends StatelessWidget {

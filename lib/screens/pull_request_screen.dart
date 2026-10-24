@@ -37,6 +37,7 @@ class PullRequestScreen extends StatefulWidget {
 
 class _PullRequestScreenState extends State<PullRequestScreen> {
   late Future<_Detail> _future;
+  bool _voting = false;
 
   @override
   void didChangeDependencies() {
@@ -56,6 +57,11 @@ class _PullRequestScreenState extends State<PullRequestScreen> {
   Future<_Detail> _fetch() async {
     final api = AppScope.read(context).api!;
     final pr = await api.getPullRequest(widget.project, widget.id);
+    final me = await api.getCurrentUserId().then<String?>((id) => id,
+        onError: (Object e, StackTrace st) {
+      logFailure(_log, 'Loading the current user failed', e, st);
+      return null;
+    });
     final results = await Future.wait([
       api.getPullRequestThreads(pr).catchError((Object e, StackTrace st) {
         logFailure(_log, 'Loading the threads of pull request ${pr.id} failed', e, st);
@@ -78,6 +84,7 @@ class _PullRequestScreenState extends State<PullRequestScreen> {
       pullRequest: pr,
       threads: results[0] as List<PullRequestThread>,
       workItems: results[1] as List<WorkItem>,
+      me: me,
     );
   }
 
@@ -85,6 +92,46 @@ class _PullRequestScreenState extends State<PullRequestScreen> {
   void _reload() => setState(() {
         _future = _load();
       });
+
+  Future<void> _vote(PullRequest pr, ReviewVote vote) async {
+    final l10n = context.l10n;
+    if (vote == ReviewVote.rejected && !await _confirmReject()) return;
+    if (!mounted) return;
+    setState(() => _voting = true);
+    try {
+      await AppScope.read(context).api!.votePullRequest(pr, vote);
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.voteSaved)));
+      _reload();
+    } catch (e, st) {
+      logFailure(_log, 'Voting on pull request ${pr.id} failed', e, st);
+      if (mounted) showActionError(context, e, scopeHint: l10n.codeScopeHint);
+    } finally {
+      if (mounted) setState(() => _voting = false);
+    }
+  }
+
+  Future<bool> _confirmReject() async {
+    final l10n = context.l10n;
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(l10n.rejectConfirmTitle),
+        content: Text(l10n.rejectConfirmBody),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: Text(l10n.cancel),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: Text(l10n.voteReject),
+          ),
+        ],
+      ),
+    );
+    return confirmed ?? false;
+  }
 
   void _openWorkItem(int id) => Navigator.of(context)
       .push(MaterialPageRoute(builder: (_) => WorkItemDetailScreen(id: id)));
@@ -245,13 +292,23 @@ class _PullRequestScreenState extends State<PullRequestScreen> {
       SectionCard(
         title: l10n.reviewers,
         padding: pr.reviewers.isEmpty ? null : const EdgeInsets.symmetric(vertical: 4),
-        child: pr.reviewers.isEmpty
-            ? Text(l10n.noReviewers, style: muted)
-            : Column(
-                children: [
-                  for (final reviewer in pr.reviewers) _ReviewerTile(reviewer),
-                ],
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            if (pr.reviewers.isEmpty)
+              Text(l10n.noReviewers, style: muted)
+            else
+              for (final reviewer in pr.reviewers) _ReviewerTile(reviewer),
+            if (pr.isOpen) ...[
+              const SizedBox(height: 8),
+              _VoteBar(
+                current: detail.myVote,
+                busy: _voting,
+                onVote: (vote) => _vote(pr, vote),
               ),
+            ],
+          ],
+        ),
       ),
       if (detail.workItems.isNotEmpty) ...[
         const SizedBox(height: 16),
@@ -296,11 +353,26 @@ class _PullRequestScreenState extends State<PullRequestScreen> {
 }
 
 class _Detail {
-  _Detail({required this.pullRequest, required this.threads, required this.workItems});
+  _Detail({
+    required this.pullRequest,
+    required this.threads,
+    required this.workItems,
+    this.me,
+  });
 
   final PullRequest pullRequest;
   final List<PullRequestThread> threads;
   final List<WorkItem> workItems;
+
+  /// Id of the signed in user, unless it couldn't be loaded.
+  final String? me;
+
+  ReviewVote get myVote =>
+      pullRequest.reviewers
+          .where((r) => me != null && r.identity.id?.toLowerCase() == me!.toLowerCase())
+          .firstOrNull
+          ?.vote ??
+      ReviewVote.none;
 
   /// Comments only hold the guid of a mentioned person; the people taking
   /// part in the pull request are the ones mentioned most.
@@ -335,6 +407,61 @@ class _ReviewerTile extends StatelessWidget {
         if (reviewer.isRequired) l10n.requiredReviewer,
       ].join(' · ')),
       trailing: Icon(style.icon, color: style.color),
+    );
+  }
+}
+
+/// Approve, or pick another vote from a menu, as the signed in user.
+class _VoteBar extends StatelessWidget {
+  const _VoteBar({required this.current, required this.busy, required this.onVote});
+
+  final ReviewVote current;
+  final bool busy;
+  final ValueChanged<ReviewVote> onVote;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final scheme = Theme.of(context).colorScheme;
+    final others = [
+      (ReviewVote.approvedWithSuggestions, l10n.voteApproveWithSuggestions),
+      (ReviewVote.waitingForAuthor, l10n.voteWaitForAuthor),
+      (ReviewVote.rejected, l10n.voteReject),
+      (ReviewVote.none, l10n.voteReset),
+    ];
+    return Wrap(
+      spacing: 8,
+      runSpacing: 8,
+      children: [
+        FilledButton.icon(
+          onPressed: busy || current == ReviewVote.approved
+              ? null
+              : () => onVote(ReviewVote.approved),
+          icon: busy
+              ? const SizedBox.square(
+                  dimension: 18, child: CircularProgressIndicator(strokeWidth: 2))
+              : const Icon(Icons.check),
+          label: Text(l10n.voteApprove),
+        ),
+        MenuAnchor(
+          menuChildren: [
+            for (final (vote, label) in others)
+              MenuItemButton(
+                leadingIcon: Icon(ReviewVoteStyle.of(vote, scheme).icon,
+                    color: ReviewVoteStyle.of(vote, scheme).color),
+                onPressed: vote == current ? null : () => onVote(vote),
+                child: Text(label),
+              ),
+          ],
+          builder: (context, controller, _) => OutlinedButton.icon(
+            onPressed: busy
+                ? null
+                : () => controller.isOpen ? controller.close() : controller.open(),
+            icon: const Icon(Icons.arrow_drop_down),
+            label: Text(l10n.otherVotes),
+          ),
+        ),
+      ],
     );
   }
 }

@@ -1,6 +1,6 @@
 # DevOps
 
-A Flutter app for viewing your Azure DevOps work items (tickets) and pull requests and following your pipeline runs on your phone or desktop.
+A Flutter app for viewing your Azure DevOps work items (tickets) and pull requests, voting on pull requests and following your pipeline runs on your phone or desktop.
 
 ## Features
 
@@ -18,6 +18,7 @@ A Flutter app for viewing your Azure DevOps work items (tickets) and pull reques
 - **Pull requests** of the selected projects with status, branches, author and reviewer votes
   - Scope: *Reviewing*, *Created by me* or *All*; filter on open pull requests and search by title, ID, branch, repository or person
   - Details: description, source and target branch, merge conflicts, labels, reviewers with their vote, linked work items and the comment threads (with file and resolved status), with a button to open the pull request in the browser
+  - Vote on an open pull request: *Approve*, or *Approve with suggestions*, *Wait for author*, *Reject* (asks first) and *Reset vote* from the menu next to it; voting on a pull request you don't review yet adds you as a reviewer
 - **Pipelines**: the latest builds and releases of the selected projects with status, branch, duration and who started them
   - Show all runs, only builds or only releases; filter on active runs and search by pipeline, branch or person; refreshes automatically while a run is in progress or waiting for approval
   - Running builds and release stages show an estimated progress bar, based on how long the last successful run took
@@ -67,7 +68,7 @@ The connection is verified before it is saved. The PAT is kept in secure storage
 
 ### Create a Personal Access Token
 
-The app only reads data, so a read-only token is enough. Microsoft's official guide: [Use personal access tokens](https://learn.microsoft.com/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate).
+Most scopes only need Read; the ones the app also acts with, such as **Code** to vote on pull requests, need more. Microsoft's official guide: [Use personal access tokens](https://learn.microsoft.com/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate).
 
 1. Sign in to your organization (`https://dev.azure.com/{yourorganization}`).
 2. Open **User settings** (the icon next to your profile picture, top right) → **Personal access tokens**.
@@ -76,12 +77,12 @@ The app only reads data, so a read-only token is enough. Microsoft's official gu
    - **Name** – for example `DevOps app`.
    - **Organization** – the organization you will connect to (or *All accessible organizations*).
    - **Expiration** – up to one year; when the token expires, the app reports *Not authorized* and you need to enter a new token in *Settings*.
-   - **Scopes** – choose **Custom defined** and select only:
+   - **Scopes** – choose **Custom defined** and select only these, each with the permission listed:
 
      | Scope | Permission | Used for |
      | --- | --- | --- |
      | **Work Items** | Read (`vso.work`) | WIQL queries, work item details, links, comments and attachments/images |
-     | **Code** | Read (`vso.code`) | Pull requests, their reviewers, comment threads and linked work items |
+     | **Code** | Read & write (`vso.code_write`) | Pull requests, their reviewers, comment threads and linked work items; voting |
      | **Project and Team** | Read (`vso.project`) | Listing the projects in the organization (also used to verify the connection) |
      | **Build** | Read (`vso.build`) | Pipeline runs and their stages, jobs and tasks |
      | **Release** | Read (`vso.release`) | Releases of classic release pipelines, their stages and approvals |
@@ -94,10 +95,12 @@ A token can never do more than your own account. You also need:
 
 - An access level of at least **Stakeholder** (or **Basic**) in the organization.
 - Read access to the projects and area paths whose work items you want to see (by default, members of a project's *Readers* or *Contributors* group have this).
-- Read access to the repositories whose pull requests you want to see (granted to *Readers* and *Contributors* by default).
+- Read access to the repositories whose pull requests you want to see (granted to *Readers* and *Contributors* by default), and *Contribute to pull requests* to vote (granted to *Contributors* by default).
 - The *View builds* permission on the pipelines and *View releases* on the release pipelines you want to follow (also granted to *Readers* and *Contributors* by default).
 
 Tokens created before the pipelines and pull requests were added lack the **Build**, **Release** and **Code** scopes: the *Pipelines* tab then reports *Not authorized*, or only shows the builds with a warning that the releases couldn't be loaded, and the *Pull requests* tab reports *Not authorized* with a hint about the **Code** scope. Edit the token in Azure DevOps to add the scopes (the token itself stays the same) or create a new one.
+
+When Azure DevOps refuses an action, such as a vote with a token that only has **Code (Read)**, the app says so and names the scope and permission the action needs, along with the message from Azure DevOps.
 
 Releases are read from the release management API: `vsrm.dev.azure.com/{organization}` (or `{organization}.vsrm.visualstudio.com`). On Azure DevOps Server it is the collection URL itself.
 

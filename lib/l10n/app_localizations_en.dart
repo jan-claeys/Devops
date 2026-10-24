@@ -63,7 +63,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'Under Scopes, choose Custom defined and enable only the scopes listed above, each with Read.';
+      'Under Scopes, choose Custom defined and enable only the scopes listed above, each with the permission shown next to it.';
 
   @override
   String get tokenHelpStep4 =>
@@ -503,7 +503,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get codeScopeHint =>
-      'Pull requests need the Code (Read) scope on your token.';
+      'Pull requests need the Code (Read & write) scope on your token.';
 
   @override
   String get noPullRequestsTitle => 'No pull requests';
@@ -577,6 +577,41 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get threadResolved => 'Resolved';
+
+  @override
+  String get voteApprove => 'Approve';
+
+  @override
+  String get voteApproveWithSuggestions => 'Approve with suggestions';
+
+  @override
+  String get voteWaitForAuthor => 'Wait for author';
+
+  @override
+  String get voteReject => 'Reject';
+
+  @override
+  String get voteReset => 'Reset vote';
+
+  @override
+  String get otherVotes => 'Other votes';
+
+  @override
+  String get rejectConfirmTitle => 'Reject this pull request?';
+
+  @override
+  String get rejectConfirmBody =>
+      'The pull request can\'t be completed as long as your vote is Rejected.';
+
+  @override
+  String get voteSaved => 'Vote saved';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get actionDenied =>
+      'Azure DevOps didn\'t allow this. Check that your token has the right scope and that your account has permission.';
 
   @override
   String get runErrors => 'Errors';

@@ -18,6 +18,15 @@ enum ReviewVote {
         -10 => rejected,
         _ => none,
       };
+
+  /// The number Azure DevOps stores for the vote.
+  int get value => switch (this) {
+        approved => 10,
+        approvedWithSuggestions => 5,
+        none => 0,
+        waitingForAuthor => -5,
+        rejected => -10,
+      };
 }
 
 class Reviewer {

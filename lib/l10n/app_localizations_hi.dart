@@ -63,7 +63,7 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'Scopes में Custom defined चुनें और केवल ऊपर दिए गए स्कोप को Read के साथ चालू करें।';
+      'Scopes में Custom defined चुनें और केवल ऊपर दिए गए स्कोप को उनके बगल में दिखाई गई अनुमति के साथ चालू करें।';
 
   @override
   String get tokenHelpStep4 =>
@@ -498,7 +498,7 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get codeScopeHint =>
-      'पुल रिक्वेस्ट के लिए आपके टोकन में Code (Read) स्कोप चाहिए।';
+      'पुल रिक्वेस्ट के लिए आपके टोकन में Code (Read & write) स्कोप चाहिए।';
 
   @override
   String get noPullRequestsTitle => 'कोई पुल रिक्वेस्ट नहीं';
@@ -572,6 +572,41 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get threadResolved => 'हल किया गया';
+
+  @override
+  String get voteApprove => 'स्वीकृत करें';
+
+  @override
+  String get voteApproveWithSuggestions => 'सुझावों के साथ स्वीकृत करें';
+
+  @override
+  String get voteWaitForAuthor => 'लेखक की प्रतीक्षा करें';
+
+  @override
+  String get voteReject => 'अस्वीकार करें';
+
+  @override
+  String get voteReset => 'वोट रीसेट करें';
+
+  @override
+  String get otherVotes => 'अन्य वोट';
+
+  @override
+  String get rejectConfirmTitle => 'इस पुल रिक्वेस्ट को अस्वीकार करें?';
+
+  @override
+  String get rejectConfirmBody =>
+      'जब तक आपका वोट अस्वीकृत है, पुल रिक्वेस्ट पूरा नहीं किया जा सकता।';
+
+  @override
+  String get voteSaved => 'वोट सहेजा गया';
+
+  @override
+  String get cancel => 'रद्द करें';
+
+  @override
+  String get actionDenied =>
+      'Azure DevOps ने इसकी अनुमति नहीं दी। जाँचें कि आपके टोकन में सही स्कोप है और आपके खाते को अनुमति है।';
 
   @override
   String get runErrors => 'त्रुटियाँ';
