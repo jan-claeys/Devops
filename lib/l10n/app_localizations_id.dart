@@ -612,6 +612,12 @@ class AppLocalizationsId extends AppLocalizations {
       'Azure DevOps tidak mengizinkan ini. Periksa apakah token Anda memiliki cakupan yang tepat dan akun Anda memiliki izin.';
 
   @override
+  String get writeComment => 'Tulis komentar…';
+
+  @override
+  String get send => 'Kirim';
+
+  @override
   String get runErrors => 'Kesalahan';
 
   @override

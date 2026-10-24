@@ -616,6 +616,12 @@ class AppLocalizationsIt extends AppLocalizations {
       'Azure DevOps non lo ha consentito. Verifica che il token abbia l’ambito giusto e che il tuo account abbia l’autorizzazione.';
 
   @override
+  String get writeComment => 'Scrivi un commento…';
+
+  @override
+  String get send => 'Invia';
+
+  @override
   String get runErrors => 'Errori';
 
   @override

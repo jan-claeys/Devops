@@ -7,6 +7,7 @@ import '../models/work_item.dart';
 import '../services/app_state.dart';
 import '../services/links.dart';
 import '../services/logging.dart';
+import '../widgets/comment_composer.dart';
 import '../widgets/devops_markdown.dart';
 import '../widgets/error_action.dart';
 import '../widgets/pull_request_visuals.dart';
@@ -93,23 +94,35 @@ class _PullRequestScreenState extends State<PullRequestScreen> {
         _future = _load();
       });
 
+  /// Runs [action] and shows the result; when it fails, tells why. Returns
+  /// whether it succeeded.
+  Future<bool> _act(Future<void> Function() action, String failure) async {
+    try {
+      await action();
+      if (mounted) _reload();
+      return true;
+    } catch (e, st) {
+      logFailure(_log, failure, e, st);
+      if (mounted) showActionError(context, e, scopeHint: context.l10n.codeScopeHint);
+      return false;
+    }
+  }
+
   Future<void> _vote(PullRequest pr, ReviewVote vote) async {
     final l10n = context.l10n;
+    final messenger = ScaffoldMessenger.of(context);
     if (vote == ReviewVote.rejected && !await _confirmReject()) return;
     if (!mounted) return;
     setState(() => _voting = true);
-    try {
-      await AppScope.read(context).api!.votePullRequest(pr, vote);
-      if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.voteSaved)));
-      _reload();
-    } catch (e, st) {
-      logFailure(_log, 'Voting on pull request ${pr.id} failed', e, st);
-      if (mounted) showActionError(context, e, scopeHint: l10n.codeScopeHint);
-    } finally {
-      if (mounted) setState(() => _voting = false);
-    }
+    final voted = await _act(() => AppScope.read(context).api!.votePullRequest(pr, vote),
+        'Voting on pull request ${pr.id} failed');
+    if (voted) messenger.showSnackBar(SnackBar(content: Text(l10n.voteSaved)));
+    if (mounted) setState(() => _voting = false);
   }
+
+  Future<bool> _comment(PullRequest pr, String text) => _act(
+      () => AppScope.read(context).api!.createPullRequestThread(pr, text),
+      'Commenting on pull request ${pr.id} failed');
 
   Future<bool> _confirmReject() async {
     final l10n = context.l10n;
@@ -333,20 +346,25 @@ class _PullRequestScreenState extends State<PullRequestScreen> {
       const SizedBox(height: 16),
       SectionCard(
         title: l10n.commentsCount(detail.threads.length),
-        child: detail.threads.isEmpty
-            ? Text(l10n.noComments, style: muted)
-            : Column(
-                children: [
-                  for (final (i, thread) in detail.threads.indexed) ...[
-                    if (i > 0) const Divider(height: 24),
-                    _ThreadView(
-                      thread: thread,
-                      mentions: detail.mentions,
-                      onOpenWorkItem: _openWorkItem,
-                    ),
-                  ],
-                ],
-              ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // The newest discussion comes first, so a new one is started on top.
+            CommentComposer(hint: l10n.writeComment, onSend: (text) => _comment(pr, text)),
+            const SizedBox(height: 16),
+            if (detail.threads.isEmpty)
+              Text(l10n.noComments, style: muted)
+            else
+              for (final (i, thread) in detail.threads.indexed) ...[
+                if (i > 0) const Divider(height: 24),
+                _ThreadView(
+                  thread: thread,
+                  mentions: detail.mentions,
+                  onOpenWorkItem: _openWorkItem,
+                ),
+              ],
+          ],
+        ),
       ),
     ];
   }

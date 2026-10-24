@@ -609,6 +609,12 @@ class AppLocalizationsTr extends AppLocalizations {
       'Azure DevOps buna izin vermedi. Belirtecinizin doğru kapsama ve hesabınızın izne sahip olduğunu kontrol edin.';
 
   @override
+  String get writeComment => 'Yorum yazın…';
+
+  @override
+  String get send => 'Gönder';
+
+  @override
   String get runErrors => 'Hatalar';
 
   @override

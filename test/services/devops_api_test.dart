@@ -461,5 +461,18 @@ void main() {
       expect(request.url.toString(), '$prUrl/reviewers/$meId?api-version=7.1');
       expect(jsonDecode(request.body), {'vote': -10});
     });
+
+    test('createPullRequestThread starts an active discussion', () async {
+      await api.createPullRequestThread(pr, 'Looks *good*');
+      final request = fake.requests.last;
+      expect(request.method, 'POST');
+      expect(request.url.toString(), '$prUrl/threads?api-version=7.1');
+      expect(jsonDecode(request.body), {
+        'comments': [
+          {'parentCommentId': 0, 'content': 'Looks *good*', 'commentType': 'text'},
+        ],
+        'status': 'active',
+      });
+    });
   });
 }

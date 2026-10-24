@@ -598,6 +598,12 @@ class AppLocalizationsKo extends AppLocalizations {
       'Azure DevOps에서 허용하지 않았습니다. 토큰에 올바른 범위가 있고 계정에 권한이 있는지 확인하세요.';
 
   @override
+  String get writeComment => '댓글 작성…';
+
+  @override
+  String get send => '보내기';
+
+  @override
   String get runErrors => '오류';
 
   @override

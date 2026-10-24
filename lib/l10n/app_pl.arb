@@ -183,6 +183,8 @@
   "voteSaved": "Głos zapisany",
   "cancel": "Anuluj",
   "actionDenied": "Azure DevOps na to nie pozwolił. Sprawdź, czy token ma właściwy zakres, a konto odpowiednie uprawnienia.",
+  "writeComment": "Napisz komentarz…",
+  "send": "Wyślij",
 
   "runErrors": "Błędy",
   "viewLog": "Pokaż log",

@@ -1178,6 +1178,18 @@ abstract class AppLocalizations {
   /// **'Azure DevOps didn\'t allow this. Check that your token has the right scope and that your account has permission.'**
   String get actionDenied;
 
+  /// No description provided for @writeComment.
+  ///
+  /// In en, this message translates to:
+  /// **'Write a comment…'**
+  String get writeComment;
+
+  /// No description provided for @send.
+  ///
+  /// In en, this message translates to:
+  /// **'Send'**
+  String get send;
+
   /// No description provided for @runErrors.
   ///
   /// In en, this message translates to:

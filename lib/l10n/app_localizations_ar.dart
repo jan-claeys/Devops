@@ -626,6 +626,12 @@ class AppLocalizationsAr extends AppLocalizations {
       'لم يسمح Azure DevOps بذلك. تحقّق من أن الرمز المميز لديه النطاق الصحيح وأن حسابك لديه الإذن.';
 
   @override
+  String get writeComment => 'اكتب تعليقًا…';
+
+  @override
+  String get send => 'إرسال';
+
+  @override
   String get runErrors => 'الأخطاء';
 
   @override

@@ -623,6 +623,12 @@ class AppLocalizationsPl extends AppLocalizations {
       'Azure DevOps na to nie pozwolił. Sprawdź, czy token ma właściwy zakres, a konto odpowiednie uprawnienia.';
 
   @override
+  String get writeComment => 'Napisz komentarz…';
+
+  @override
+  String get send => 'Wyślij';
+
+  @override
   String get runErrors => 'Błędy';
 
   @override

@@ -615,6 +615,12 @@ class AppLocalizationsNl extends AppLocalizations {
       'Azure DevOps stond dit niet toe. Controleer of je token de juiste scope heeft en of je account de rechten heeft.';
 
   @override
+  String get writeComment => 'Schrijf een reactie…';
+
+  @override
+  String get send => 'Versturen';
+
+  @override
   String get runErrors => 'Fouten';
 
   @override

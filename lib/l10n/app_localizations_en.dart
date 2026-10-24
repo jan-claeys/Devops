@@ -614,6 +614,12 @@ class AppLocalizationsEn extends AppLocalizations {
       'Azure DevOps didn\'t allow this. Check that your token has the right scope and that your account has permission.';
 
   @override
+  String get writeComment => 'Write a comment…';
+
+  @override
+  String get send => 'Send';
+
+  @override
   String get runErrors => 'Errors';
 
   @override

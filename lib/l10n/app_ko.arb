@@ -183,6 +183,8 @@
   "voteSaved": "투표가 저장되었습니다",
   "cancel": "취소",
   "actionDenied": "Azure DevOps에서 허용하지 않았습니다. 토큰에 올바른 범위가 있고 계정에 권한이 있는지 확인하세요.",
+  "writeComment": "댓글 작성…",
+  "send": "보내기",
 
   "runErrors": "오류",
   "viewLog": "로그 보기",

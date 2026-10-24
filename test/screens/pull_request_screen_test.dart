@@ -78,4 +78,37 @@ void main() {
       expect(find.text(en.voteApprove), findsNothing);
     });
   });
+
+  group('comment', () {
+    Iterable<Object?> posted() => fake.requests
+        .where((r) => r.method == 'POST' && r.url.path.endsWith('/threads'))
+        .map((r) => (jsonDecode(r.body) as Map)['comments']);
+
+    testWidgets('starts a discussion and clears the field', (tester) async {
+      await pumpScreen(tester, 7);
+      await tester.enterText(find.widgetWithText(TextField, en.writeComment), 'Nice work');
+      await tester.pump();
+      await tester.tap(find.byTooltip(en.send));
+      await tester.pumpAndSettle();
+      expect(posted(), [
+        [
+          {'parentCommentId': 0, 'content': 'Nice work', 'commentType': 'text'},
+        ],
+      ]);
+      expect(find.text('Nice work'), findsNothing);
+    });
+
+    testWidgets('keeps the text when the token may not comment', (tester) async {
+      await pumpScreen(tester, 7);
+      fake
+        ..failWith = 401
+        ..failPath = '/threads';
+      await tester.enterText(find.widgetWithText(TextField, en.writeComment), 'Nice work');
+      await tester.pump();
+      await tester.tap(find.byTooltip(en.send));
+      await tester.pumpAndSettle();
+      expect(find.text('Nice work'), findsOneWidget);
+      expect(find.textContaining(en.codeScopeHint), findsOneWidget);
+    });
+  });
 }

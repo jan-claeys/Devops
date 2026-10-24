@@ -453,6 +453,15 @@ class DevOpsApi {
         {'vote': vote.value});
   }
 
+  /// Starts a discussion on [pr] with a comment in Markdown.
+  Future<void> createPullRequestThread(PullRequest pr, String content) =>
+      _post('${_pullRequestUrl(pr)}/threads?api-version=$_apiVersion', {
+        'comments': [
+          {'parentCommentId': 0, 'content': content, 'commentType': 'text'},
+        ],
+        'status': 'active',
+      });
+
   String _pullRequestUrl(PullRequest pr) =>
       '$baseUrl/${Uri.encodeComponent(pr.project)}/_apis/git/repositories/'
       '${pr.repositoryId}/pullRequests/${pr.id}';

@@ -618,6 +618,12 @@ class AppLocalizationsPt extends AppLocalizations {
       'O Azure DevOps não permitiu isto. Verifique se o seu token tem o escopo certo e se a sua conta tem permissão.';
 
   @override
+  String get writeComment => 'Escreva um comentário…';
+
+  @override
+  String get send => 'Enviar';
+
+  @override
   String get runErrors => 'Erros';
 
   @override

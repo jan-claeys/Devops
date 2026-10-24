@@ -622,6 +622,12 @@ class AppLocalizationsRu extends AppLocalizations {
       'Azure DevOps не разрешил это действие. Проверьте, что у токена есть нужные права, а у учётной записи — разрешение.';
 
   @override
+  String get writeComment => 'Напишите комментарий…';
+
+  @override
+  String get send => 'Отправить';
+
+  @override
   String get runErrors => 'Ошибки';
 
   @override

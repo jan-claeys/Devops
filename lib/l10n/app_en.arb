@@ -234,6 +234,8 @@
   "voteSaved": "Vote saved",
   "cancel": "Cancel",
   "actionDenied": "Azure DevOps didn't allow this. Check that your token has the right scope and that your account has permission.",
+  "writeComment": "Write a comment…",
+  "send": "Send",
 
   "runErrors": "Errors",
   "viewLog": "View log",

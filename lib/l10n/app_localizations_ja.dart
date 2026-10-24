@@ -598,6 +598,12 @@ class AppLocalizationsJa extends AppLocalizations {
       'Azure DevOps により許可されませんでした。トークンに正しいスコープがあり、アカウントに権限があることを確認してください。';
 
   @override
+  String get writeComment => 'コメントを入力…';
+
+  @override
+  String get send => '送信';
+
+  @override
   String get runErrors => 'エラー';
 
   @override

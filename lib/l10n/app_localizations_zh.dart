@@ -594,6 +594,12 @@ class AppLocalizationsZh extends AppLocalizations {
   String get actionDenied => 'Azure DevOps 不允许此操作。请检查令牌是否具有正确的范围，以及你的帐户是否有权限。';
 
   @override
+  String get writeComment => '写评论…';
+
+  @override
+  String get send => '发送';
+
+  @override
   String get runErrors => '错误';
 
   @override

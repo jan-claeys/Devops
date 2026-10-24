@@ -183,6 +183,8 @@
   "voteSaved": "Stimme gespeichert",
   "cancel": "Abbrechen",
   "actionDenied": "Azure DevOps hat das nicht erlaubt. Prüfe, ob dein Token den richtigen Bereich hat und dein Konto die Berechtigung.",
+  "writeComment": "Kommentar schreiben…",
+  "send": "Senden",
 
   "runErrors": "Fehler",
   "viewLog": "Log anzeigen",

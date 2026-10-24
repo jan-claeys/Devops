@@ -183,6 +183,8 @@
   "voteSaved": "投票を保存しました",
   "cancel": "キャンセル",
   "actionDenied": "Azure DevOps により許可されませんでした。トークンに正しいスコープがあり、アカウントに権限があることを確認してください。",
+  "writeComment": "コメントを入力…",
+  "send": "送信",
 
   "runErrors": "エラー",
   "viewLog": "ログを表示",

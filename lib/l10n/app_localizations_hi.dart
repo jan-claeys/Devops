@@ -609,6 +609,12 @@ class AppLocalizationsHi extends AppLocalizations {
       'Azure DevOps ने इसकी अनुमति नहीं दी। जाँचें कि आपके टोकन में सही स्कोप है और आपके खाते को अनुमति है।';
 
   @override
+  String get writeComment => 'टिप्पणी लिखें…';
+
+  @override
+  String get send => 'भेजें';
+
+  @override
   String get runErrors => 'त्रुटियाँ';
 
   @override

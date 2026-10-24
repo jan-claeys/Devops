@@ -619,6 +619,12 @@ class AppLocalizationsFr extends AppLocalizations {
       'Azure DevOps n’a pas autorisé cette action. Vérifiez que votre jeton a la bonne portée et que votre compte a l’autorisation.';
 
   @override
+  String get writeComment => 'Écrire un commentaire…';
+
+  @override
+  String get send => 'Envoyer';
+
+  @override
   String get runErrors => 'Erreurs';
 
   @override

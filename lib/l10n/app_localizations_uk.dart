@@ -622,6 +622,12 @@ class AppLocalizationsUk extends AppLocalizations {
       'Azure DevOps не дозволив цю дію. Перевірте, що токен має потрібні права, а обліковий запис — дозвіл.';
 
   @override
+  String get writeComment => 'Напишіть коментар…';
+
+  @override
+  String get send => 'Надіслати';
+
+  @override
   String get runErrors => 'Помилки';
 
   @override

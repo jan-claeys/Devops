@@ -1,6 +1,6 @@
 # DevOps
 
-A Flutter app for viewing your Azure DevOps work items (tickets) and pull requests, voting on pull requests and following your pipeline runs on your phone or desktop.
+A Flutter app for viewing your Azure DevOps work items (tickets) and pull requests, voting on and discussing pull requests and following your pipeline runs on your phone or desktop.
 
 ## Features
 
@@ -19,6 +19,7 @@ A Flutter app for viewing your Azure DevOps work items (tickets) and pull reques
   - Scope: *Reviewing*, *Created by me* or *All*; filter on open pull requests and search by title, ID, branch, repository or person
   - Details: description, source and target branch, merge conflicts, labels, reviewers with their vote, linked work items and the comment threads (with file and resolved status), with a button to open the pull request in the browser
   - Vote on an open pull request: *Approve*, or *Approve with suggestions*, *Wait for author*, *Reject* (asks first) and *Reset vote* from the menu next to it; voting on a pull request you don't review yet adds you as a reviewer
+  - Start a new discussion with a comment (Markdown) at the top of the comments
 - **Pipelines**: the latest builds and releases of the selected projects with status, branch, duration and who started them
   - Show all runs, only builds or only releases; filter on active runs and search by pipeline, branch or person; refreshes automatically while a run is in progress or waiting for approval
   - Running builds and release stages show an estimated progress bar, based on how long the last successful run took
@@ -82,7 +83,7 @@ Most scopes only need Read; the ones the app also acts with, such as **Code** to
      | Scope | Permission | Used for |
      | --- | --- | --- |
      | **Work Items** | Read (`vso.work`) | WIQL queries, work item details, links, comments and attachments/images |
-     | **Code** | Read & write (`vso.code_write`) | Pull requests, their reviewers, comment threads and linked work items; voting |
+     | **Code** | Read & write (`vso.code_write`) | Pull requests, their reviewers, comment threads and linked work items; voting and commenting |
      | **Project and Team** | Read (`vso.project`) | Listing the projects in the organization (also used to verify the connection) |
      | **Build** | Read (`vso.build`) | Pipeline runs and their stages, jobs and tasks |
      | **Release** | Read (`vso.release`) | Releases of classic release pipelines, their stages and approvals |
@@ -95,7 +96,7 @@ A token can never do more than your own account. You also need:
 
 - An access level of at least **Stakeholder** (or **Basic**) in the organization.
 - Read access to the projects and area paths whose work items you want to see (by default, members of a project's *Readers* or *Contributors* group have this).
-- Read access to the repositories whose pull requests you want to see (granted to *Readers* and *Contributors* by default), and *Contribute to pull requests* to vote (granted to *Contributors* by default).
+- Read access to the repositories whose pull requests you want to see (granted to *Readers* and *Contributors* by default), and *Contribute to pull requests* to vote and comment (granted to *Contributors* by default).
 - The *View builds* permission on the pipelines and *View releases* on the release pipelines you want to follow (also granted to *Readers* and *Contributors* by default).
 
 Tokens created before the pipelines and pull requests were added lack the **Build**, **Release** and **Code** scopes: the *Pipelines* tab then reports *Not authorized*, or only shows the builds with a warning that the releases couldn't be loaded, and the *Pull requests* tab reports *Not authorized* with a hint about the **Code** scope. Edit the token in Azure DevOps to add the scopes (the token itself stays the same) or create a new one.
