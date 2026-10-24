@@ -615,6 +615,12 @@ class AppLocalizationsTr extends AppLocalizations {
   String get send => 'Gönder';
 
   @override
+  String get reply => 'Yanıtla';
+
+  @override
+  String get writeReply => 'Yanıt yazın…';
+
+  @override
   String get runErrors => 'Hatalar';
 
   @override

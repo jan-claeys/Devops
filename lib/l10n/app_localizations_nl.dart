@@ -621,6 +621,12 @@ class AppLocalizationsNl extends AppLocalizations {
   String get send => 'Versturen';
 
   @override
+  String get reply => 'Antwoorden';
+
+  @override
+  String get writeReply => 'Schrijf een antwoord…';
+
+  @override
   String get runErrors => 'Fouten';
 
   @override

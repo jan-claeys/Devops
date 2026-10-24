@@ -615,6 +615,12 @@ class AppLocalizationsHi extends AppLocalizations {
   String get send => 'भेजें';
 
   @override
+  String get reply => 'जवाब दें';
+
+  @override
+  String get writeReply => 'जवाब लिखें…';
+
+  @override
   String get runErrors => 'त्रुटियाँ';
 
   @override

@@ -620,6 +620,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get send => 'Send';
 
   @override
+  String get reply => 'Reply';
+
+  @override
+  String get writeReply => 'Write a reply…';
+
+  @override
   String get runErrors => 'Errors';
 
   @override

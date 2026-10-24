@@ -185,6 +185,8 @@
   "actionDenied": "Azure DevOps tidak mengizinkan ini. Periksa apakah token Anda memiliki cakupan yang tepat dan akun Anda memiliki izin.",
   "writeComment": "Tulis komentar…",
   "send": "Kirim",
+  "reply": "Balas",
+  "writeReply": "Tulis balasan…",
 
   "runErrors": "Kesalahan",
   "viewLog": "Lihat log",

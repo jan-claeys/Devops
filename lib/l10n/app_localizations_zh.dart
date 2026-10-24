@@ -600,6 +600,12 @@ class AppLocalizationsZh extends AppLocalizations {
   String get send => '发送';
 
   @override
+  String get reply => '回复';
+
+  @override
+  String get writeReply => '写回复…';
+
+  @override
   String get runErrors => '错误';
 
   @override

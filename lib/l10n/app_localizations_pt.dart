@@ -624,6 +624,12 @@ class AppLocalizationsPt extends AppLocalizations {
   String get send => 'Enviar';
 
   @override
+  String get reply => 'Responder';
+
+  @override
+  String get writeReply => 'Escreva uma resposta…';
+
+  @override
   String get runErrors => 'Erros';
 
   @override

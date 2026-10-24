@@ -628,6 +628,12 @@ class AppLocalizationsUk extends AppLocalizations {
   String get send => 'Надіслати';
 
   @override
+  String get reply => 'Відповісти';
+
+  @override
+  String get writeReply => 'Напишіть відповідь…';
+
+  @override
   String get runErrors => 'Помилки';
 
   @override

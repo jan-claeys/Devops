@@ -474,5 +474,20 @@ void main() {
         'status': 'active',
       });
     });
+
+    test('replyToThread answers the first comment', () async {
+      final thread = PullRequestThread.fromJson({
+        'id': 3,
+        'comments': [
+          {'id': 1, 'content': 'Why?'},
+        ],
+      })!;
+      await api.replyToThread(pr, thread, 'Because');
+      final request = fake.requests.last;
+      expect(request.method, 'POST');
+      expect(request.url.toString(), '$prUrl/threads/3/comments?api-version=7.1');
+      expect(jsonDecode(request.body),
+          {'parentCommentId': 1, 'content': 'Because', 'commentType': 'text'});
+    });
   });
 }

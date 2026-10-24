@@ -604,6 +604,12 @@ class AppLocalizationsKo extends AppLocalizations {
   String get send => '보내기';
 
   @override
+  String get reply => '답글';
+
+  @override
+  String get writeReply => '답글 작성…';
+
+  @override
   String get runErrors => '오류';
 
   @override

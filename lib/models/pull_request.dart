@@ -134,7 +134,9 @@ class PullRequest {
 
 /// A discussion on a pull request, on the whole of it or on a file.
 class PullRequestThread {
-  const PullRequestThread({required this.comments, this.status, this.filePath});
+  const PullRequestThread({required this.id, required this.comments, this.status, this.filePath});
+
+  final int id;
 
   /// Comments people wrote, oldest first; system messages are left out.
   final List<PullRequestComment> comments;
@@ -159,6 +161,7 @@ class PullRequestThread {
     ]..sort((a, b) => (a.publishedDate ?? DateTime(0)).compareTo(b.publishedDate ?? DateTime(0)));
     if (comments.isEmpty) return null;
     return PullRequestThread(
+      id: (json['id'] as num?)?.toInt() ?? 0,
       comments: comments,
       status: json['status'] as String?,
       filePath: (json['threadContext'] as Map?)?['filePath'] as String?,
@@ -167,7 +170,15 @@ class PullRequestThread {
 }
 
 class PullRequestComment {
-  const PullRequestComment({required this.content, this.author, this.publishedDate});
+  const PullRequestComment({
+    required this.content,
+    this.id = 0,
+    this.author,
+    this.publishedDate,
+  });
+
+  /// Numbers the comments within their thread.
+  final int id;
 
   /// Markdown.
   final String content;
@@ -175,6 +186,7 @@ class PullRequestComment {
   final DateTime? publishedDate;
 
   factory PullRequestComment.fromJson(Map<String, dynamic> json) => PullRequestComment(
+        id: (json['id'] as num?)?.toInt() ?? 0,
         content: json['content'] as String? ?? '',
         author: Identity.fromJson(json['author']),
         publishedDate: _date(json['publishedDate']),

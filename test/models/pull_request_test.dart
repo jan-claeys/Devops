@@ -52,14 +52,17 @@ void main() {
     expect(PullRequestThread.fromJson({'isDeleted': true, 'comments': []}), isNull);
 
     final thread = PullRequestThread.fromJson({
+      'id': 4,
       'status': 'wontFix',
       'comments': [
-        {'content': 'Second', 'publishedDate': '2026-10-20T11:00:00Z'},
+        {'id': 2, 'content': 'Second', 'publishedDate': '2026-10-20T11:00:00Z'},
         {'content': 'Gone', 'isDeleted': true},
         {'content': 'First', 'publishedDate': '2026-10-20T10:00:00Z'},
       ],
     })!;
+    expect(thread.id, 4);
     expect(thread.comments.map((c) => c.content), ['First', 'Second']);
+    expect(thread.comments.last.id, 2);
     expect(thread.isResolved, isTrue);
     expect(thread.lastUpdated, DateTime.parse('2026-10-20T11:00:00Z').toLocal());
   });

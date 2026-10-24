@@ -622,6 +622,12 @@ class AppLocalizationsIt extends AppLocalizations {
   String get send => 'Invia';
 
   @override
+  String get reply => 'Rispondi';
+
+  @override
+  String get writeReply => 'Scrivi una risposta…';
+
+  @override
   String get runErrors => 'Errori';
 
   @override

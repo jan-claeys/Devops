@@ -185,6 +185,8 @@
   "actionDenied": "Azure DevOps n’a pas autorisé cette action. Vérifiez que votre jeton a la bonne portée et que votre compte a l’autorisation.",
   "writeComment": "Écrire un commentaire…",
   "send": "Envoyer",
+  "reply": "Répondre",
+  "writeReply": "Écrire une réponse…",
 
   "runErrors": "Erreurs",
   "viewLog": "Voir le journal",

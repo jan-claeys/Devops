@@ -632,6 +632,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get send => 'إرسال';
 
   @override
+  String get reply => 'رد';
+
+  @override
+  String get writeReply => 'اكتب ردًا…';
+
+  @override
   String get runErrors => 'الأخطاء';
 
   @override

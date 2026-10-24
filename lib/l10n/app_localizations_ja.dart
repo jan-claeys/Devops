@@ -604,6 +604,12 @@ class AppLocalizationsJa extends AppLocalizations {
   String get send => '送信';
 
   @override
+  String get reply => '返信';
+
+  @override
+  String get writeReply => '返信を入力…';
+
+  @override
   String get runErrors => 'エラー';
 
   @override

@@ -185,6 +185,8 @@
   "actionDenied": "Azure DevOps non lo ha consentito. Verifica che il token abbia l’ambito giusto e che il tuo account abbia l’autorizzazione.",
   "writeComment": "Scrivi un commento…",
   "send": "Invia",
+  "reply": "Rispondi",
+  "writeReply": "Scrivi una risposta…",
 
   "runErrors": "Errori",
   "viewLog": "Visualizza log",

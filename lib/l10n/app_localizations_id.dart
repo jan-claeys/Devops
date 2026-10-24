@@ -618,6 +618,12 @@ class AppLocalizationsId extends AppLocalizations {
   String get send => 'Kirim';
 
   @override
+  String get reply => 'Balas';
+
+  @override
+  String get writeReply => 'Tulis balasan…';
+
+  @override
   String get runErrors => 'Kesalahan';
 
   @override

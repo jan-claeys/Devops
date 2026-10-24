@@ -1190,6 +1190,18 @@ abstract class AppLocalizations {
   /// **'Send'**
   String get send;
 
+  /// No description provided for @reply.
+  ///
+  /// In en, this message translates to:
+  /// **'Reply'**
+  String get reply;
+
+  /// No description provided for @writeReply.
+  ///
+  /// In en, this message translates to:
+  /// **'Write a reply…'**
+  String get writeReply;
+
   /// No description provided for @runErrors.
   ///
   /// In en, this message translates to:

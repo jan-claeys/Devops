@@ -17,6 +17,20 @@ void main() {
     fake = FakeDevOps()
       ..addPullRequest(pullRequestJson(7, reviewers: [('Me', 0), ('Ann', 10)]))
       ..addPullRequest(pullRequestJson(8, status: 'completed', reviewers: [('Me', 10)]));
+    fake.threads[7] = [
+      {
+        'id': 3,
+        'status': 'active',
+        'comments': [
+          {
+            'id': 1,
+            'content': 'Why this change?',
+            'author': {'displayName': 'Ann', 'id': 'id-Ann'},
+            'publishedDate': '2026-10-20T10:00:00Z',
+          },
+        ],
+      },
+    ];
   });
 
   Future<void> pumpScreen(WidgetTester tester, int id) async {
@@ -110,5 +124,21 @@ void main() {
       expect(find.text('Nice work'), findsOneWidget);
       expect(find.textContaining(en.codeScopeHint), findsOneWidget);
     });
+  });
+
+  testWidgets('replies to a discussion', (tester) async {
+    await pumpScreen(tester, 7);
+    await tester.tap(find.text(en.reply));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.widgetWithText(TextField, en.writeReply), 'To fix the login');
+    await tester.pump();
+    await tester.tap(find.byTooltip(en.send).last);
+    await tester.pumpAndSettle();
+
+    final reply = fake.requests.singleWhere((r) => r.method == 'POST');
+    expect(reply.url.path, endsWith('/pullRequests/7/threads/3/comments'));
+    expect(jsonDecode(reply.body),
+        {'parentCommentId': 1, 'content': 'To fix the login', 'commentType': 'text'});
+    expect(find.widgetWithText(TextField, en.writeReply), findsNothing);
   });
 }

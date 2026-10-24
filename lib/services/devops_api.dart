@@ -462,6 +462,14 @@ class DevOpsApi {
         'status': 'active',
       });
 
+  /// Replies to the comment that started [thread] on [pr], in Markdown.
+  Future<void> replyToThread(PullRequest pr, PullRequestThread thread, String content) =>
+      _post('${_pullRequestUrl(pr)}/threads/${thread.id}/comments?api-version=$_apiVersion', {
+        'parentCommentId': thread.comments.first.id,
+        'content': content,
+        'commentType': 'text',
+      });
+
   String _pullRequestUrl(PullRequest pr) =>
       '$baseUrl/${Uri.encodeComponent(pr.project)}/_apis/git/repositories/'
       '${pr.repositoryId}/pullRequests/${pr.id}';

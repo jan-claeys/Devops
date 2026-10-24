@@ -124,6 +124,10 @@ class _PullRequestScreenState extends State<PullRequestScreen> {
       () => AppScope.read(context).api!.createPullRequestThread(pr, text),
       'Commenting on pull request ${pr.id} failed');
 
+  Future<bool> _reply(PullRequest pr, PullRequestThread thread, String text) => _act(
+      () => AppScope.read(context).api!.replyToThread(pr, thread, text),
+      'Replying to thread ${thread.id} of pull request ${pr.id} failed');
+
   Future<bool> _confirmReject() async {
     final l10n = context.l10n;
     final confirmed = await showDialog<bool>(
@@ -358,9 +362,11 @@ class _PullRequestScreenState extends State<PullRequestScreen> {
               for (final (i, thread) in detail.threads.indexed) ...[
                 if (i > 0) const Divider(height: 24),
                 _ThreadView(
+                  key: ValueKey(thread.id),
                   thread: thread,
                   mentions: detail.mentions,
                   onOpenWorkItem: _openWorkItem,
+                  onReply: (text) => _reply(pr, thread, text),
                 ),
               ],
           ],
@@ -484,19 +490,38 @@ class _VoteBar extends StatelessWidget {
   }
 }
 
-class _ThreadView extends StatelessWidget {
+class _ThreadView extends StatefulWidget {
   const _ThreadView({
+    super.key,
     required this.thread,
     required this.mentions,
     required this.onOpenWorkItem,
+    required this.onReply,
   });
 
   final PullRequestThread thread;
   final Map<String, String> mentions;
   final ValueChanged<int> onOpenWorkItem;
 
+  /// Tells whether the reply was saved.
+  final Future<bool> Function(String text) onReply;
+
+  @override
+  State<_ThreadView> createState() => _ThreadViewState();
+}
+
+class _ThreadViewState extends State<_ThreadView> {
+  bool _replying = false;
+
+  Future<bool> _reply(String text) async {
+    final sent = await widget.onReply(text);
+    if (sent && mounted) setState(() => _replying = false);
+    return sent;
+  }
+
   @override
   Widget build(BuildContext context) {
+    final thread = widget.thread;
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
     final l10n = context.l10n;
@@ -553,8 +578,8 @@ class _ThreadView extends StatelessWidget {
                       const SizedBox(height: 4),
                       DevOpsMarkdown(
                         comment.content,
-                        mentions: mentions,
-                        onOpenWorkItem: onOpenWorkItem,
+                        mentions: widget.mentions,
+                        onOpenWorkItem: widget.onOpenWorkItem,
                         imageHeaders: AppScope.read(context).api?.headersFor,
                       ),
                     ],
@@ -563,6 +588,21 @@ class _ThreadView extends StatelessWidget {
               ],
             ),
           ),
+        // Lined up with the replies.
+        Padding(
+          padding: const EdgeInsets.only(left: 44, top: 8),
+          child: _replying
+              ? CommentComposer(hint: l10n.writeReply, autofocus: true, onSend: _reply)
+              : Align(
+                  alignment: AlignmentDirectional.centerStart,
+                  child: TextButton.icon(
+                    style: TextButton.styleFrom(visualDensity: VisualDensity.compact),
+                    onPressed: () => setState(() => _replying = true),
+                    icon: const Icon(Icons.reply, size: 18),
+                    label: Text(l10n.reply),
+                  ),
+                ),
+        ),
       ],
     );
   }

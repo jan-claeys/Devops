@@ -185,6 +185,8 @@
   "actionDenied": "Azure DevOps buna izin vermedi. Belirtecinizin doğru kapsama ve hesabınızın izne sahip olduğunu kontrol edin.",
   "writeComment": "Yorum yazın…",
   "send": "Gönder",
+  "reply": "Yanıtla",
+  "writeReply": "Yanıt yazın…",
 
   "runErrors": "Hatalar",
   "viewLog": "Günlüğü görüntüle",

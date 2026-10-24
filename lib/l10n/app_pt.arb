@@ -185,6 +185,8 @@
   "actionDenied": "O Azure DevOps não permitiu isto. Verifique se o seu token tem o escopo certo e se a sua conta tem permissão.",
   "writeComment": "Escreva um comentário…",
   "send": "Enviar",
+  "reply": "Responder",
+  "writeReply": "Escreva uma resposta…",
 
   "runErrors": "Erros",
   "viewLog": "Ver log",

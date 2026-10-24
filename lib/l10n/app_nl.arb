@@ -185,6 +185,8 @@
   "actionDenied": "Azure DevOps stond dit niet toe. Controleer of je token de juiste scope heeft en of je account de rechten heeft.",
   "writeComment": "Schrijf een reactie…",
   "send": "Versturen",
+  "reply": "Antwoorden",
+  "writeReply": "Schrijf een antwoord…",
 
   "runErrors": "Fouten",
   "viewLog": "Log bekijken",
