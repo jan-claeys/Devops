@@ -189,6 +189,7 @@
   "writeReply": "写回复…",
   "resolveThread": "解决",
   "reactivateThread": "重新激活",
+  "workItemScopeHint": "评论工单需要令牌具有 Work Items (Read & write) 范围。",
 
   "runErrors": "错误",
   "viewLog": "查看日志",

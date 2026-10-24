@@ -1214,6 +1214,12 @@ abstract class AppLocalizations {
   /// **'Reactivate'**
   String get reactivateThread;
 
+  /// No description provided for @workItemScopeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Commenting on tickets needs the Work Items (Read & write) scope on your token.'**
+  String get workItemScopeHint;
+
   /// No description provided for @runErrors.
   ///
   /// In en, this message translates to:

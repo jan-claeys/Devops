@@ -189,6 +189,7 @@
   "writeReply": "Escreva uma resposta…",
   "resolveThread": "Resolver",
   "reactivateThread": "Reativar",
+  "workItemScopeHint": "Para comentar em tickets, o seu token precisa do escopo Work Items (Read & write).",
 
   "runErrors": "Erros",
   "viewLog": "Ver log",

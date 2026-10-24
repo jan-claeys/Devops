@@ -189,6 +189,7 @@
   "writeReply": "답글 작성…",
   "resolveThread": "해결",
   "reactivateThread": "다시 활성화",
+  "workItemScopeHint": "티켓에 댓글을 달려면 토큰에 Work Items (Read & write) 범위가 필요합니다.",
 
   "runErrors": "오류",
   "viewLog": "로그 보기",

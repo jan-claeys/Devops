@@ -189,6 +189,7 @@
   "writeReply": "Tulis balasan…",
   "resolveThread": "Selesaikan",
   "reactivateThread": "Aktifkan kembali",
+  "workItemScopeHint": "Mengomentari tiket memerlukan cakupan Work Items (Read & write) pada token Anda.",
 
   "runErrors": "Kesalahan",
   "viewLog": "Lihat log",

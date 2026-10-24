@@ -640,6 +640,10 @@ class AppLocalizationsUk extends AppLocalizations {
   String get reactivateThread => 'Відкрити знову';
 
   @override
+  String get workItemScopeHint =>
+      'Щоб коментувати тікети, токену потрібні права Work Items (Read & write).';
+
+  @override
   String get runErrors => 'Помилки';
 
   @override

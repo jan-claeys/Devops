@@ -189,6 +189,7 @@
   "writeReply": "Schrijf een antwoord…",
   "resolveThread": "Oplossen",
   "reactivateThread": "Heropenen",
+  "workItemScopeHint": "Om op tickets te reageren heeft je token de scope Work Items (Read & write) nodig.",
 
   "runErrors": "Fouten",
   "viewLog": "Log bekijken",

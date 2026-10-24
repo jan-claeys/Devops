@@ -169,6 +169,18 @@ void main() {
     expect(fake.requests.single.url.queryParameters['\$expand'], 'relations');
   });
 
+  test('addWorkItemComment posts the text as HTML', () async {
+    final item = WorkItem.fromJson(workItemJson(42, project: 'My Project'));
+    await api.addWorkItemComment(item, 'Fixed in <b>v2</b>\nThanks & bye');
+    final request = fake.requests.single;
+    expect(request.method, 'POST');
+    expect(request.url.toString(),
+        'https://dev.azure.com/contoso/My%20Project/_apis/wit/workItems/42/comments'
+        '?api-version=7.1-preview.4');
+    expect(jsonDecode(request.body),
+        {'text': 'Fixed in &lt;b&gt;v2&lt;/b&gt;<br>Thanks &amp; bye'});
+  });
+
   test('getComments reads the newest first', () async {
     fake.comments[5] = [
       {'text': 'second', 'createdDate': '2026-01-02T00:00:00Z'},

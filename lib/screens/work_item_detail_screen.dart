@@ -7,6 +7,7 @@ import '../services/app_state.dart';
 import '../services/links.dart';
 import '../services/logging.dart';
 import '../widgets/attachments.dart';
+import '../widgets/comment_composer.dart';
 import '../widgets/devops_html.dart';
 import '../widgets/devops_markdown.dart';
 import '../widgets/error_action.dart';
@@ -87,6 +88,18 @@ class _WorkItemDetailScreenState extends State<WorkItemDetailScreen> {
   void _reload() => setState(() {
         _future = _load();
       });
+
+  Future<bool> _comment(WorkItem item, String text) async {
+    try {
+      await AppScope.read(context).api!.addWorkItemComment(item, text);
+      if (mounted) _reload();
+      return true;
+    } catch (e, st) {
+      logFailure(_log, 'Commenting on work item ${item.id} failed', e, st);
+      if (mounted) showActionError(context, e, scopeHint: context.l10n.workItemScopeHint);
+      return false;
+    }
+  }
 
   void _openLinked(int id) {
     if (widget.onOpenWorkItem != null) {
@@ -325,18 +338,23 @@ class _WorkItemDetailScreenState extends State<WorkItemDetailScreen> {
       const SizedBox(height: 16),
       SectionCard(
         title: l10n.commentsCount(detail.comments.length),
-        child: detail.comments.isEmpty
-            ? Text(l10n.noComments,
-                style: theme.textTheme.bodyMedium
-                    ?.copyWith(color: theme.colorScheme.onSurfaceVariant))
-            : Column(
-                children: [
-                  for (final (i, c) in detail.comments.indexed) ...[
-                    if (i > 0) const Divider(height: 24),
-                    _CommentView(comment: c, onOpenWorkItem: _openLinked),
-                  ],
-                ],
-              ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // The newest comment comes first, so a new one is written on top.
+            CommentComposer(hint: l10n.writeComment, onSend: (text) => _comment(item, text)),
+            const SizedBox(height: 16),
+            if (detail.comments.isEmpty)
+              Text(l10n.noComments,
+                  style: theme.textTheme.bodyMedium
+                      ?.copyWith(color: theme.colorScheme.onSurfaceVariant))
+            else
+              for (final (i, c) in detail.comments.indexed) ...[
+                if (i > 0) const Divider(height: 24),
+                _CommentView(comment: c, onOpenWorkItem: _openLinked),
+              ],
+          ],
+        ),
       ),
     ];
   }

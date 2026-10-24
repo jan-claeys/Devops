@@ -204,6 +204,14 @@ class DevOpsApi {
         .toList();
   }
 
+  /// Adds a comment of plain [text] to [item]. Comments are HTML: Markdown
+  /// needs an API version that Azure DevOps Server doesn't have.
+  Future<void> addWorkItemComment(WorkItem item, String text) => _post(
+        '$baseUrl/${Uri.encodeComponent(item.project)}/_apis/wit/workItems/${item.id}/comments'
+        '?api-version=7.1-preview.4',
+        {'text': const HtmlEscape(HtmlEscapeMode.element).convert(text).replaceAll('\n', '<br>')},
+      );
+
   /// The latest runs of the pipelines in all [projects], newest first; only
   /// those requested for the user with id [requestedFor], when given.
   Future<List<PipelineRun>> getPipelineRuns({

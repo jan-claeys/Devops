@@ -189,6 +189,7 @@
   "writeReply": "Écrire une réponse…",
   "resolveThread": "Résoudre",
   "reactivateThread": "Réactiver",
+  "workItemScopeHint": "Commenter des tickets nécessite la portée Work Items (Read & write) sur votre jeton.",
 
   "runErrors": "Erreurs",
   "viewLog": "Voir le journal",

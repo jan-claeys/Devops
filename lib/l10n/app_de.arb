@@ -189,6 +189,7 @@
   "writeReply": "Antwort schreiben…",
   "resolveThread": "Auflösen",
   "reactivateThread": "Reaktivieren",
+  "workItemScopeHint": "Zum Kommentieren von Tickets braucht dein Token den Bereich Work Items (Read & write).",
 
   "runErrors": "Fehler",
   "viewLog": "Log anzeigen",

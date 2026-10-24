@@ -1,6 +1,6 @@
 # DevOps
 
-A Flutter app for viewing your Azure DevOps work items (tickets) and pull requests, voting on and discussing pull requests and following your pipeline runs on your phone or desktop.
+A Flutter app for viewing and commenting on your Azure DevOps work items (tickets), viewing, voting on and discussing pull requests and following your pipeline runs on your phone or desktop.
 
 ## Features
 
@@ -14,6 +14,7 @@ A Flutter app for viewing your Azure DevOps work items (tickets) and pull reques
   - Filter on open items only and on work item type (Bug, Task, User Story, ...)
   - Search by title, ID, tag or assignee; pull to refresh
 - **Work item details**: description (or repro steps, acceptance criteria and the other fields of the work item type), state, assignee, priority, effort, original estimate / remaining / completed work, area and iteration path, tags, parent, child and other linked items, attachments and comments (including rendered @mentions and pasted or embedded images), with a button to open the item in the browser
+  - Add a comment at the top of the comments
   - Images open full screen and can be zoomed; other attachments are downloaded and opened with an app on the device (on the web, downloaded by the browser), asking first for large files
 - **Pull requests** of the selected projects with status, branches, author and reviewer votes
   - Scope: *Reviewing*, *Created by me* or *All*; filter on open pull requests and search by title, ID, branch, repository or person
@@ -82,7 +83,7 @@ Most scopes only need Read; the ones the app also acts with, such as **Code** to
 
      | Scope | Permission | Used for |
      | --- | --- | --- |
-     | **Work Items** | Read (`vso.work`) | WIQL queries, work item details, links, comments and attachments/images |
+     | **Work Items** | Read & write (`vso.work_write`) | WIQL queries, work item details, links, comments and attachments/images; commenting |
      | **Code** | Read & write (`vso.code_write`) | Pull requests, their reviewers, comment threads and linked work items; voting and commenting |
      | **Project and Team** | Read (`vso.project`) | Listing the projects in the organization (also used to verify the connection) |
      | **Build** | Read (`vso.build`) | Pipeline runs and their stages, jobs and tasks |
@@ -95,7 +96,7 @@ Most scopes only need Read; the ones the app also acts with, such as **Code** to
 A token can never do more than your own account. You also need:
 
 - An access level of at least **Stakeholder** (or **Basic**) in the organization.
-- Read access to the projects and area paths whose work items you want to see (by default, members of a project's *Readers* or *Contributors* group have this).
+- Read access to the projects and area paths whose work items you want to see (by default, members of a project's *Readers* or *Contributors* group have this), and *Edit work items in this node* on the area path to comment (granted to *Contributors* by default).
 - Read access to the repositories whose pull requests you want to see (granted to *Readers* and *Contributors* by default), and *Contribute to pull requests* to vote and comment (granted to *Contributors* by default).
 - The *View builds* permission on the pipelines and *View releases* on the release pipelines you want to follow (also granted to *Readers* and *Contributors* by default).
 

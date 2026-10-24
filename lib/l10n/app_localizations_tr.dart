@@ -627,6 +627,10 @@ class AppLocalizationsTr extends AppLocalizations {
   String get reactivateThread => 'Yeniden etkinleştir';
 
   @override
+  String get workItemScopeHint =>
+      'Biletlere yorum yapmak için belirtecinizde Work Items (Read & write) kapsamı gerekir.';
+
+  @override
   String get runErrors => 'Hatalar';
 
   @override

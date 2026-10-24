@@ -640,6 +640,10 @@ class AppLocalizationsRu extends AppLocalizations {
   String get reactivateThread => 'Открыть снова';
 
   @override
+  String get workItemScopeHint =>
+      'Чтобы комментировать тикеты, токену нужны права Work Items (Read & write).';
+
+  @override
   String get runErrors => 'Ошибки';
 
   @override

@@ -189,6 +189,7 @@
   "writeReply": "返信を入力…",
   "resolveThread": "解決",
   "reactivateThread": "再アクティブ化",
+  "workItemScopeHint": "チケットにコメントするには、トークンの Work Items (Read & write) スコープが必要です。",
 
   "runErrors": "エラー",
   "viewLog": "ログを表示",

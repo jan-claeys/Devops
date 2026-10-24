@@ -637,6 +637,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get reactivateThread => 'Réactiver';
 
   @override
+  String get workItemScopeHint =>
+      'Commenter des tickets nécessite la portée Work Items (Read & write) sur votre jeton.';
+
+  @override
   String get runErrors => 'Erreurs';
 
   @override

@@ -189,6 +189,7 @@
   "writeReply": "اكتب ردًا…",
   "resolveThread": "حل",
   "reactivateThread": "إعادة تنشيط",
+  "workItemScopeHint": "يتطلب التعليق على التذاكر النطاق Work Items (Read & write) في الرمز المميز.",
 
   "runErrors": "الأخطاء",
   "viewLog": "عرض السجل",

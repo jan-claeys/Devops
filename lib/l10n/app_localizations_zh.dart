@@ -612,6 +612,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get reactivateThread => '重新激活';
 
   @override
+  String get workItemScopeHint => '评论工单需要令牌具有 Work Items (Read & write) 范围。';
+
+  @override
   String get runErrors => '错误';
 
   @override

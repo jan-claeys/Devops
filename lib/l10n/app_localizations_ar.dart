@@ -644,6 +644,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get reactivateThread => 'إعادة تنشيط';
 
   @override
+  String get workItemScopeHint =>
+      'يتطلب التعليق على التذاكر النطاق Work Items (Read & write) في الرمز المميز.';
+
+  @override
   String get runErrors => 'الأخطاء';
 
   @override

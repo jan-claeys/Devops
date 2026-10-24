@@ -189,6 +189,7 @@
   "writeReply": "जवाब लिखें…",
   "resolveThread": "हल करें",
   "reactivateThread": "फिर से सक्रिय करें",
+  "workItemScopeHint": "टिकट पर टिप्पणी करने के लिए आपके टोकन में Work Items (Read & write) स्कोप चाहिए।",
 
   "runErrors": "त्रुटियाँ",
   "viewLog": "लॉग देखें",

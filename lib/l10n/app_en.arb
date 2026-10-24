@@ -240,6 +240,7 @@
   "writeReply": "Write a reply…",
   "resolveThread": "Resolve",
   "reactivateThread": "Reactivate",
+  "workItemScopeHint": "Commenting on tickets needs the Work Items (Read & write) scope on your token.",
 
   "runErrors": "Errors",
   "viewLog": "View log",

@@ -633,6 +633,10 @@ class AppLocalizationsNl extends AppLocalizations {
   String get reactivateThread => 'Heropenen';
 
   @override
+  String get workItemScopeHint =>
+      'Om op tickets te reageren heeft je token de scope Work Items (Read & write) nodig.';
+
+  @override
   String get runErrors => 'Fouten';
 
   @override

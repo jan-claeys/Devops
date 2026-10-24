@@ -641,6 +641,10 @@ class AppLocalizationsPl extends AppLocalizations {
   String get reactivateThread => 'Aktywuj ponownie';
 
   @override
+  String get workItemScopeHint =>
+      'Komentowanie zgłoszeń wymaga zakresu Work Items (Read & write) w tokenie.';
+
+  @override
   String get runErrors => 'Błędy';
 
   @override

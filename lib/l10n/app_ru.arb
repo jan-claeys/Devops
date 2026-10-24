@@ -189,6 +189,7 @@
   "writeReply": "Напишите ответ…",
   "resolveThread": "Решить",
   "reactivateThread": "Открыть снова",
+  "workItemScopeHint": "Чтобы комментировать тикеты, токену нужны права Work Items (Read & write).",
 
   "runErrors": "Ошибки",
   "viewLog": "Показать журнал",

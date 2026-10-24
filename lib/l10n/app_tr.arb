@@ -189,6 +189,7 @@
   "writeReply": "Yanıt yazın…",
   "resolveThread": "Çözüldü olarak işaretle",
   "reactivateThread": "Yeniden etkinleştir",
+  "workItemScopeHint": "Biletlere yorum yapmak için belirtecinizde Work Items (Read & write) kapsamı gerekir.",
 
   "runErrors": "Hatalar",
   "viewLog": "Günlüğü görüntüle",

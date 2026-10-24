@@ -627,6 +627,10 @@ class AppLocalizationsHi extends AppLocalizations {
   String get reactivateThread => 'फिर से सक्रिय करें';
 
   @override
+  String get workItemScopeHint =>
+      'टिकट पर टिप्पणी करने के लिए आपके टोकन में Work Items (Read & write) स्कोप चाहिए।';
+
+  @override
   String get runErrors => 'त्रुटियाँ';
 
   @override

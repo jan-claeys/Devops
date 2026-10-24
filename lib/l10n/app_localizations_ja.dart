@@ -616,6 +616,10 @@ class AppLocalizationsJa extends AppLocalizations {
   String get reactivateThread => '再アクティブ化';
 
   @override
+  String get workItemScopeHint =>
+      'チケットにコメントするには、トークンの Work Items (Read & write) スコープが必要です。';
+
+  @override
   String get runErrors => 'エラー';
 
   @override

@@ -632,6 +632,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reactivateThread => 'Reactivate';
 
   @override
+  String get workItemScopeHint =>
+      'Commenting on tickets needs the Work Items (Read & write) scope on your token.';
+
+  @override
   String get runErrors => 'Errors';
 
   @override

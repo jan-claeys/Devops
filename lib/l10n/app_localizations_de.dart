@@ -638,6 +638,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get reactivateThread => 'Reaktivieren';
 
   @override
+  String get workItemScopeHint =>
+      'Zum Kommentieren von Tickets braucht dein Token den Bereich Work Items (Read & write).';
+
+  @override
   String get runErrors => 'Fehler';
 
   @override

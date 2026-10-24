@@ -189,6 +189,7 @@
   "writeReply": "Napisz odpowiedź…",
   "resolveThread": "Rozwiąż",
   "reactivateThread": "Aktywuj ponownie",
+  "workItemScopeHint": "Komentowanie zgłoszeń wymaga zakresu Work Items (Read & write) w tokenie.",
 
   "runErrors": "Błędy",
   "viewLog": "Pokaż log",

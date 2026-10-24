@@ -616,6 +616,10 @@ class AppLocalizationsKo extends AppLocalizations {
   String get reactivateThread => '다시 활성화';
 
   @override
+  String get workItemScopeHint =>
+      '티켓에 댓글을 달려면 토큰에 Work Items (Read & write) 범위가 필요합니다.';
+
+  @override
   String get runErrors => '오류';
 
   @override

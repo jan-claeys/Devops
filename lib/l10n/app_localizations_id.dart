@@ -630,6 +630,10 @@ class AppLocalizationsId extends AppLocalizations {
   String get reactivateThread => 'Aktifkan kembali';
 
   @override
+  String get workItemScopeHint =>
+      'Mengomentari tiket memerlukan cakupan Work Items (Read & write) pada token Anda.';
+
+  @override
   String get runErrors => 'Kesalahan';
 
   @override
