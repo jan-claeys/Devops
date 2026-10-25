@@ -21,7 +21,7 @@ A Flutter app for viewing, commenting on and assigning your Azure DevOps work it
 - **Pull requests** of the selected projects with status, branches, author and reviewer votes
   - Scope: *Reviewing*, *Created by me* or *All*; filter on open pull requests and search by title, ID, branch, repository or person
   - Details: description, source and target branch, merge conflicts, labels, reviewers with their vote, linked work items and the comment threads (with file and resolved status), with a button to open the pull request in the browser
-  - Vote on an open pull request: *Approve*, or *Approve with suggestions*, *Wait for author*, *Reject* (asks first) and *Reset vote* from the menu next to it; voting on a pull request you don't review yet adds you as a reviewer
+  - Vote on an open pull request: *Approve*, or *Approve with suggestions*, *Wait for author*, *Reject* and *Reset vote* from the menu next to it. *Wait for author* and *Reject* ask first, with room for an optional reason that is posted as a comment; voting on a pull request you don't review yet adds you as a reviewer
   - Start a new discussion with a comment (Markdown) at the top of the comments, *Reply* to one, and *Resolve* or *Reactivate* it
   - *Files* tab: the files the pull request changes, compared with the commit its branches have in common, each with the lines it adds and removes (+X / −Y) and the totals; tap a file for a compact unified diff with three lines of context. Binary files and files over 1 MB or 20,000 lines aren't compared; the lines of the first 100 files are counted right away, those of the others once opened
 - **Pipelines**: the latest builds and releases of the selected projects with status, branch, duration and who started them
