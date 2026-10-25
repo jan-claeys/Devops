@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="shortcut_my_pull_requests_short">我的 PR</string>
+    <string name="shortcut_my_pull_requests_long">我的拉取请求</string>
+    <string name="shortcut_active_runs_short">运行中</string>
+    <string name="shortcut_active_runs_long">正在运行的管道</string>
+    <string name="shortcut_search_short">搜索</string>
+    <string name="shortcut_search_long">搜索工单</string>
+</resources>

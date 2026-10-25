@@ -39,6 +39,7 @@ A Flutter app for viewing and commenting on your Azure DevOps work items (ticket
 - **Run notifications** (Android): the progress of running builds and releases in a notification, on Android 16 as a Live Update with a chip in the status bar; several runs share one notification and each shows its result when it finishes
   - Follows *My runs* (default), *All runs* or nothing, under *Settings → Notifications*; turning them on asks for permission to post notifications
   - Runs are refreshed every 15 seconds while the app is open and, as long as a run is going, in the background through a foreground service; runs that start while the app is closed are picked up the next time it is opened
+- **App shortcuts** (Android): long-press the app icon, or drag a shortcut to the home screen, for *My pull requests* (your open pull requests, created or to review), *Active runs* (the pipelines tab filtered on runs that are going) and *Search* (the tickets with the cursor in the search field)
 - **Open Azure DevOps links in the app** (Android): share a link to a work item, pull request, build or release to *DevOps* (for example from Teams or the browser), or let Android open those links with the app directly
   - Works for `dev.azure.com/{organization}`, `{organization}.visualstudio.com` and, when shared, on-premises collection URLs; links of another organization show a message instead
   - Opening links directly needs to be turned on once, since the app can't verify these domains: *Settings → Apps → DevOps → Open by default → Add link*, select `dev.azure.com` and `*.visualstudio.com`. *Open in DevOps* then still opens the browser
@@ -60,7 +61,7 @@ flutter pub get
 flutter run
 ```
 
-Supported platforms in this repo: Android, iOS, Windows and Web. The home screen widgets and run notifications are Android only.
+Supported platforms in this repo: Android, iOS, Windows and Web. The home screen widgets, run notifications and app shortcuts are Android only.
 
 ### Connect to Azure DevOps
 
@@ -132,6 +133,7 @@ lib/
 │   ├── logging.dart              Logging and optional Sentry error reporting
 │   ├── links.dart                Links opened with or shared to the app, opening the browser (Android)
 │   ├── run_notifications.dart    Progress notifications of running pipeline runs (Android)
+│   ├── shortcuts.dart            App shortcuts on a long press on the app icon (Android)
 │   └── home_widget_service.dart  Data feed for the Android home screen widgets
 ├── screens/
 │   ├── home_screen.dart          Tabs for the overview, tickets, pull requests and pipelines

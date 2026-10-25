@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="shortcut_my_pull_requests_short">PR saya</string>
+    <string name="shortcut_my_pull_requests_long">Pull request saya</string>
+    <string name="shortcut_active_runs_short">Aktif</string>
+    <string name="shortcut_active_runs_long">Eksekusi pipeline aktif</string>
+    <string name="shortcut_search_short">Cari</string>
+    <string name="shortcut_search_long">Cari tiket</string>
+</resources>

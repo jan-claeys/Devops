@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="shortcut_my_pull_requests_short">मेरे PR</string>
+    <string name="shortcut_my_pull_requests_long">मेरे पुल रिक्वेस्ट</string>
+    <string name="shortcut_active_runs_short">सक्रिय रन</string>
+    <string name="shortcut_active_runs_long">सक्रिय पाइपलाइन रन</string>
+    <string name="shortcut_search_short">खोजें</string>
+    <string name="shortcut_search_long">टिकट खोजें</string>
+</resources>

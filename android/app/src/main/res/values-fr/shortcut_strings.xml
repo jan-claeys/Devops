@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="shortcut_my_pull_requests_short">Mes PR</string>
+    <string name="shortcut_my_pull_requests_long">Mes pull requests</string>
+    <string name="shortcut_active_runs_short">En cours</string>
+    <string name="shortcut_active_runs_long">Exécutions en cours</string>
+    <string name="shortcut_search_short">Rechercher</string>
+    <string name="shortcut_search_long">Rechercher des tickets</string>
+</resources>

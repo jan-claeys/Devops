@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Offered by a long press on the app icon. They open the app the way a
+     home screen widget row does, so home_widget hands the link to Dart
+     (lib/services/shortcuts.dart). -->
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="my_pull_requests"
+        android:enabled="true"
+        android:icon="@drawable/ic_shortcut_pull_requests"
+        android:shortcutShortLabel="@string/shortcut_my_pull_requests_short"
+        android:shortcutLongLabel="@string/shortcut_my_pull_requests_long">
+        <intent
+            android:action="es.antonborri.home_widget.action.LAUNCH"
+            android:targetPackage="io.github.jan_claeys.devops"
+            android:targetClass="io.github.jan_claeys.devops.MainActivity"
+            android:data="devops://shortcut/my-pull-requests" />
+    </shortcut>
+    <shortcut
+        android:shortcutId="active_runs"
+        android:enabled="true"
+        android:icon="@drawable/ic_shortcut_active_runs"
+        android:shortcutShortLabel="@string/shortcut_active_runs_short"
+        android:shortcutLongLabel="@string/shortcut_active_runs_long">
+        <intent
+            android:action="es.antonborri.home_widget.action.LAUNCH"
+            android:targetPackage="io.github.jan_claeys.devops"
+            android:targetClass="io.github.jan_claeys.devops.MainActivity"
+            android:data="devops://shortcut/active-runs" />
+    </shortcut>
+    <shortcut
+        android:shortcutId="search"
+        android:enabled="true"
+        android:icon="@drawable/ic_shortcut_search"
+        android:shortcutShortLabel="@string/shortcut_search_short"
+        android:shortcutLongLabel="@string/shortcut_search_long">
+        <intent
+            android:action="es.antonborri.home_widget.action.LAUNCH"
+            android:targetPackage="io.github.jan_claeys.devops"
+            android:targetClass="io.github.jan_claeys.devops.MainActivity"
+            android:data="devops://shortcut/search" />
+    </shortcut>
+</shortcuts>

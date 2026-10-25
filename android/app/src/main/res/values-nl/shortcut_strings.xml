@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="shortcut_my_pull_requests_short">Mijn PR\'s</string>
+    <string name="shortcut_my_pull_requests_long">Mijn pull requests</string>
+    <string name="shortcut_active_runs_short">Actieve runs</string>
+    <string name="shortcut_active_runs_long">Actieve pipeline-runs</string>
+    <string name="shortcut_search_short">Zoeken</string>
+    <string name="shortcut_search_long">Tickets zoeken</string>
+</resources>

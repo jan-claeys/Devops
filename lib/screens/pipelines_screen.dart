@@ -26,10 +26,10 @@ class PipelinesScreen extends StatefulWidget {
   static const refreshInterval = Duration(seconds: 15);
 
   @override
-  State<PipelinesScreen> createState() => _PipelinesScreenState();
+  State<PipelinesScreen> createState() => PipelinesScreenState();
 }
 
-class _PipelinesScreenState extends State<PipelinesScreen> {
+class PipelinesScreenState extends State<PipelinesScreen> {
   static const _wideBreakpoint = 840.0;
 
   final _search = TextEditingController();
@@ -84,6 +84,16 @@ class _PipelinesScreenState extends State<PipelinesScreen> {
       _load(silent: true);
     }
     _visible = visible;
+  }
+
+  /// Shows the runs that are going, of builds and releases alike.
+  void showActive() {
+    _search.clear();
+    setState(() {
+      _activeOnly = true;
+      _kind = null;
+      _selected = null;
+    });
   }
 
   @override
