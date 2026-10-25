@@ -702,6 +702,16 @@ class AppLocalizationsDe extends AppLocalizations {
       'Der Pull Request kann nicht abgeschlossen werden, solange deine Stimme Abgelehnt ist.';
 
   @override
+  String get waitForAuthorConfirmTitle => 'Auf den Autor warten?';
+
+  @override
+  String get voteReasonHint => 'Grund (optional)';
+
+  @override
+  String get voteReasonHelper =>
+      'Wird als Kommentar zum Pull Request gepostet.';
+
+  @override
   String get voteSaved => 'Stimme gespeichert';
 
   @override

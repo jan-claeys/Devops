@@ -690,6 +690,16 @@ class AppLocalizationsHi extends AppLocalizations {
       'जब तक आपका वोट अस्वीकृत है, पुल रिक्वेस्ट पूरा नहीं किया जा सकता।';
 
   @override
+  String get waitForAuthorConfirmTitle => 'लेखक की प्रतीक्षा करें?';
+
+  @override
+  String get voteReasonHint => 'कारण (वैकल्पिक)';
+
+  @override
+  String get voteReasonHelper =>
+      'पुल रिक्वेस्ट पर टिप्पणी के रूप में पोस्ट किया जाता है।';
+
+  @override
   String get voteSaved => 'वोट सहेजा गया';
 
   @override

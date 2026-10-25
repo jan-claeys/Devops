@@ -1310,6 +1310,24 @@ abstract class AppLocalizations {
   /// **'The pull request can\'t be completed as long as your vote is Rejected.'**
   String get rejectConfirmBody;
 
+  /// No description provided for @waitForAuthorConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Wait for the author?'**
+  String get waitForAuthorConfirmTitle;
+
+  /// No description provided for @voteReasonHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Reason (optional)'**
+  String get voteReasonHint;
+
+  /// No description provided for @voteReasonHelper.
+  ///
+  /// In en, this message translates to:
+  /// **'Posted as a comment on the pull request.'**
+  String get voteReasonHelper;
+
   /// No description provided for @voteSaved.
   ///
   /// In en, this message translates to:

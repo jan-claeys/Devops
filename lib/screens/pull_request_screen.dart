@@ -131,12 +131,30 @@ class _PullRequestScreenState extends State<PullRequestScreen>
   Future<void> _vote(PullRequest pr, ReviewVote vote) async {
     final l10n = context.l10n;
     final messenger = ScaffoldMessenger.of(context);
-    if (vote == ReviewVote.rejected && !await _confirmReject()) return;
+    // Rejecting or waiting for the author asks first, with room for why.
+    var reason = '';
+    if (vote == ReviewVote.rejected || vote == ReviewVote.waitingForAuthor) {
+      final entered = await showDialog<String>(
+        context: context,
+        builder: (_) => vote == ReviewVote.rejected
+            ? _VoteDialog(
+                title: l10n.rejectConfirmTitle,
+                body: l10n.rejectConfirmBody,
+                confirm: l10n.voteReject,
+              )
+            : _VoteDialog(title: l10n.waitForAuthorConfirmTitle, confirm: l10n.voteWaitForAuthor),
+      );
+      if (entered == null) return;
+      reason = entered;
+    }
     if (!mounted) return;
     setState(() => _voting = true);
     final voted = await _act(() => AppScope.read(context).api!.votePullRequest(pr, vote),
         'Voting on pull request ${pr.id} failed');
-    if (voted) messenger.showSnackBar(SnackBar(content: Text(l10n.voteSaved)));
+    if (voted) {
+      messenger.showSnackBar(SnackBar(content: Text(l10n.voteSaved)));
+      if (reason.isNotEmpty && mounted) await _comment(pr, reason);
+    }
     if (mounted) setState(() => _voting = false);
   }
 
@@ -151,28 +169,6 @@ class _PullRequestScreenState extends State<PullRequestScreen>
   Future<bool> _reply(PullRequest pr, PullRequestThread thread, String text) => _act(
       () => AppScope.read(context).api!.replyToThread(pr, thread, text),
       'Replying to thread ${thread.id} of pull request ${pr.id} failed');
-
-  Future<bool> _confirmReject() async {
-    final l10n = context.l10n;
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(l10n.rejectConfirmTitle),
-        content: Text(l10n.rejectConfirmBody),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            child: Text(l10n.cancel),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.of(context).pop(true),
-            child: Text(l10n.voteReject),
-          ),
-        ],
-      ),
-    );
-    return confirmed ?? false;
-  }
 
   void _openWorkItem(int id) => Navigator.of(context)
       .push(MaterialPageRoute(builder: (_) => WorkItemDetailScreen(id: id)));
@@ -536,6 +532,70 @@ class _VoteBar extends StatelessWidget {
             icon: const Icon(Icons.arrow_drop_down),
             label: Text(l10n.otherVotes),
           ),
+        ),
+      ],
+    );
+  }
+}
+
+/// Asks to confirm a vote, with an optional reason that is posted as a
+/// comment. Pops the reason, or null when canceled.
+class _VoteDialog extends StatefulWidget {
+  const _VoteDialog({required this.title, this.body, required this.confirm});
+
+  final String title;
+  final String? body;
+  final String confirm;
+
+  @override
+  State<_VoteDialog> createState() => _VoteDialogState();
+}
+
+class _VoteDialogState extends State<_VoteDialog> {
+  final _reason = TextEditingController();
+
+  @override
+  void dispose() {
+    _reason.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    return AlertDialog(
+      title: Text(widget.title),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (widget.body != null) ...[
+            Text(widget.body!),
+            const SizedBox(height: 16),
+          ],
+          TextField(
+            controller: _reason,
+            autofocus: true,
+            minLines: 1,
+            maxLines: 4,
+            textCapitalization: TextCapitalization.sentences,
+            decoration: InputDecoration(
+              hintText: l10n.voteReasonHint,
+              helperText: l10n.voteReasonHelper,
+              helperMaxLines: 2,
+              border: const OutlineInputBorder(),
+            ),
+          ),
+        ],
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: Text(l10n.cancel),
+        ),
+        FilledButton(
+          onPressed: () => Navigator.of(context).pop(_reason.text.trim()),
+          child: Text(widget.confirm),
         ),
       ],
     );

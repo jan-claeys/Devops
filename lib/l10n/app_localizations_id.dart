@@ -692,6 +692,16 @@ class AppLocalizationsId extends AppLocalizations {
       'Pull request tidak dapat diselesaikan selama suara Anda Ditolak.';
 
   @override
+  String get waitForAuthorConfirmTitle => 'Tunggu penulis?';
+
+  @override
+  String get voteReasonHint => 'Alasan (opsional)';
+
+  @override
+  String get voteReasonHelper =>
+      'Diposting sebagai komentar pada pull request.';
+
+  @override
   String get voteSaved => 'Suara disimpan';
 
   @override

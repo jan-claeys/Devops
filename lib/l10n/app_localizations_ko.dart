@@ -678,6 +678,15 @@ class AppLocalizationsKo extends AppLocalizations {
   String get rejectConfirmBody => '투표가 거부인 동안에는 끌어오기 요청을 완료할 수 없습니다.';
 
   @override
+  String get waitForAuthorConfirmTitle => '작성자를 기다릴까요?';
+
+  @override
+  String get voteReasonHint => '이유 (선택 사항)';
+
+  @override
+  String get voteReasonHelper => '끌어오기 요청에 댓글로 게시됩니다.';
+
+  @override
   String get voteSaved => '투표가 저장되었습니다';
 
   @override

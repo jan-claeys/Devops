@@ -75,6 +75,61 @@ void main() {
       expect(votes(), [
         {'vote': -10},
       ]);
+      // Without a reason no comment is posted.
+      expect(fake.requests.where((r) => r.method == 'POST'), isEmpty);
+    });
+
+    testWidgets('posts the reason for rejecting as a comment', (tester) async {
+      await pumpScreen(tester, 7);
+      await tester.tap(find.text(en.otherVotes));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text(en.voteReject));
+      await tester.pumpAndSettle();
+      await tester.enterText(
+          find.widgetWithText(TextField, en.voteReasonHint), ' Breaks the login ');
+      await tester.tap(find.widgetWithText(FilledButton, en.voteReject));
+      await tester.pumpAndSettle();
+      expect(votes(), [
+        {'vote': -10},
+      ]);
+      final comment = fake.requests.singleWhere((r) => r.method == 'POST');
+      expect(comment.url.path, endsWith('/pullRequests/7/threads'));
+      expect((jsonDecode(comment.body) as Map)['comments'], [
+        {'parentCommentId': 0, 'content': 'Breaks the login', 'commentType': 'text'},
+      ]);
+    });
+
+    testWidgets('asks before waiting for the author, with a reason', (tester) async {
+      await pumpScreen(tester, 7);
+      await tester.tap(find.text(en.otherVotes));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text(en.voteWaitForAuthor));
+      await tester.pumpAndSettle();
+      expect(find.text(en.waitForAuthorConfirmTitle), findsOneWidget);
+      await tester.enterText(find.widgetWithText(TextField, en.voteReasonHint), 'Add a test');
+      await tester.tap(find.widgetWithText(FilledButton, en.voteWaitForAuthor));
+      await tester.pumpAndSettle();
+      expect(votes(), [
+        {'vote': -5},
+      ]);
+      expect(fake.requests.where((r) => r.method == 'POST' && r.url.path.endsWith('/threads')),
+          hasLength(1));
+    });
+
+    testWidgets('does not post the reason when the vote fails', (tester) async {
+      await pumpScreen(tester, 7);
+      fake
+        ..failWith = 401
+        ..failPath = '/reviewers/';
+      await tester.tap(find.text(en.otherVotes));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text(en.voteReject));
+      await tester.pumpAndSettle();
+      await tester.enterText(
+          find.widgetWithText(TextField, en.voteReasonHint), 'Breaks the login');
+      await tester.tap(find.widgetWithText(FilledButton, en.voteReject));
+      await tester.pumpAndSettle();
+      expect(fake.requests.where((r) => r.method == 'POST'), isEmpty);
     });
 
     testWidgets('names the Code scope when the token may not vote', (tester) async {

@@ -705,6 +705,15 @@ class AppLocalizationsRu extends AppLocalizations {
       'Pull request нельзя завершить, пока ваш голос — «Отклонено».';
 
   @override
+  String get waitForAuthorConfirmTitle => 'Ждать автора?';
+
+  @override
+  String get voteReasonHint => 'Причина (необязательно)';
+
+  @override
+  String get voteReasonHelper => 'Публикуется как комментарий к pull request.';
+
+  @override
   String get voteSaved => 'Голос сохранён';
 
   @override

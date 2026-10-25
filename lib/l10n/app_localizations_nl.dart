@@ -696,6 +696,16 @@ class AppLocalizationsNl extends AppLocalizations {
       'De pull request kan niet worden afgerond zolang je stem Afgewezen is.';
 
   @override
+  String get waitForAuthorConfirmTitle => 'Wachten op de auteur?';
+
+  @override
+  String get voteReasonHint => 'Reden (optioneel)';
+
+  @override
+  String get voteReasonHelper =>
+      'Wordt als opmerking op de pull request geplaatst.';
+
+  @override
   String get voteSaved => 'Stem opgeslagen';
 
   @override

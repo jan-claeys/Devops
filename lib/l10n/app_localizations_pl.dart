@@ -706,6 +706,16 @@ class AppLocalizationsPl extends AppLocalizations {
       'Pull requestu nie można ukończyć, dopóki Twój głos to Odrzucony.';
 
   @override
+  String get waitForAuthorConfirmTitle => 'Czekać na autora?';
+
+  @override
+  String get voteReasonHint => 'Powód (opcjonalnie)';
+
+  @override
+  String get voteReasonHelper =>
+      'Zostanie opublikowany jako komentarz do pull requestu.';
+
+  @override
   String get voteSaved => 'Głos zapisany';
 
   @override

@@ -678,6 +678,15 @@ class AppLocalizationsJa extends AppLocalizations {
   String get rejectConfirmBody => 'あなたの投票が拒否の間は、プル リクエストを完了できません。';
 
   @override
+  String get waitForAuthorConfirmTitle => '作成者を待機しますか?';
+
+  @override
+  String get voteReasonHint => '理由 (任意)';
+
+  @override
+  String get voteReasonHelper => 'プル リクエストにコメントとして投稿されます。';
+
+  @override
   String get voteSaved => '投票を保存しました';
 
   @override

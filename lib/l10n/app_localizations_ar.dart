@@ -707,6 +707,15 @@ class AppLocalizationsAr extends AppLocalizations {
       'لا يمكن إكمال طلب السحب طالما أن تصويتك هو مرفوض.';
 
   @override
+  String get waitForAuthorConfirmTitle => 'هل تريد انتظار المؤلف؟';
+
+  @override
+  String get voteReasonHint => 'السبب (اختياري)';
+
+  @override
+  String get voteReasonHelper => 'يُنشر كتعليق على طلب السحب.';
+
+  @override
   String get voteSaved => 'تم حفظ التصويت';
 
   @override

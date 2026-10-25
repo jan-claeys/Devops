@@ -700,6 +700,15 @@ class AppLocalizationsFr extends AppLocalizations {
       'La pull request ne peut pas être terminée tant que votre vote est Rejeté.';
 
   @override
+  String get waitForAuthorConfirmTitle => 'Attendre l’auteur ?';
+
+  @override
+  String get voteReasonHint => 'Raison (facultatif)';
+
+  @override
+  String get voteReasonHelper => 'Publiée en commentaire sur la pull request.';
+
+  @override
   String get voteSaved => 'Vote enregistré';
 
   @override

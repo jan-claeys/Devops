@@ -690,6 +690,15 @@ class AppLocalizationsTr extends AppLocalizations {
       'Oyunuz Reddedildi olduğu sürece çekme isteği tamamlanamaz.';
 
   @override
+  String get waitForAuthorConfirmTitle => 'Yazar beklensin mi?';
+
+  @override
+  String get voteReasonHint => 'Neden (isteğe bağlı)';
+
+  @override
+  String get voteReasonHelper => 'Çekme isteğine yorum olarak gönderilir.';
+
+  @override
   String get voteSaved => 'Oy kaydedildi';
 
   @override

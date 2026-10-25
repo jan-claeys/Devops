@@ -674,6 +674,15 @@ class AppLocalizationsZh extends AppLocalizations {
   String get rejectConfirmBody => '只要你的投票为“已拒绝”，此拉取请求就无法完成。';
 
   @override
+  String get waitForAuthorConfirmTitle => '等待作者？';
+
+  @override
+  String get voteReasonHint => '原因（可选）';
+
+  @override
+  String get voteReasonHelper => '将作为评论发布到此拉取请求。';
+
+  @override
   String get voteSaved => '投票已保存';
 
   @override
