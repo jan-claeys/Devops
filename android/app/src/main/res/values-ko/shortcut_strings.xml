@@ -4,6 +4,5 @@
     <string name="shortcut_my_pull_requests_long">내 끌어오기 요청</string>
     <string name="shortcut_active_runs_short">실행 중</string>
     <string name="shortcut_active_runs_long">실행 중인 파이프라인</string>
-    <string name="shortcut_search_short">검색</string>
-    <string name="shortcut_search_long">티켓 검색</string>
+    <string name="shortcut_tickets">티켓</string>
 </resources>

@@ -21,7 +21,6 @@ class HomeScreenState extends State<HomeScreen> {
   static const _railBreakpoint = 600.0;
 
   int _index = 0;
-  final _workItems = GlobalKey<WorkItemsScreenState>();
   final _pullRequests = GlobalKey<PullRequestsScreenState>();
   final _pipelines = GlobalKey<PipelinesScreenState>();
 
@@ -38,11 +37,8 @@ class HomeScreenState extends State<HomeScreen> {
       case AppShortcut.activeRuns:
         setState(() => _index = 3);
         _pipelines.currentState?.showActive();
-      case AppShortcut.search:
+      case AppShortcut.tickets:
         setState(() => _index = 1);
-        // Once the tab is shown, so the keyboard opens with it.
-        WidgetsBinding.instance
-            .addPostFrameCallback((_) => _workItems.currentState?.focusSearch());
     }
   }
 
@@ -65,7 +61,7 @@ class HomeScreenState extends State<HomeScreen> {
             },
             onShowPipelines: () => select(3),
           ),
-          WorkItemsScreen(key: _workItems),
+          const WorkItemsScreen(),
           PullRequestsScreen(key: _pullRequests),
           PipelinesScreen(key: _pipelines),
         ].indexed)

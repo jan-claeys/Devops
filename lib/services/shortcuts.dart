@@ -8,8 +8,8 @@ enum AppShortcut {
   /// The pipeline runs that are going.
   activeRuns('devops://shortcut/active-runs'),
 
-  /// The search field of the tickets.
-  search('devops://shortcut/search');
+  /// The tickets.
+  tickets('devops://shortcut/tickets');
 
   const AppShortcut(this.uri);
 

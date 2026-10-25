@@ -4,6 +4,5 @@
     <string name="shortcut_my_pull_requests_long">Meine Pull Requests</string>
     <string name="shortcut_active_runs_short">Aktive Läufe</string>
     <string name="shortcut_active_runs_long">Aktive Pipeline-Läufe</string>
-    <string name="shortcut_search_short">Suchen</string>
-    <string name="shortcut_search_long">Tickets suchen</string>
+    <string name="shortcut_tickets">Tickets</string>
 </resources>

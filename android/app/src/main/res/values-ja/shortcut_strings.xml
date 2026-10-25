@@ -4,6 +4,5 @@
     <string name="shortcut_my_pull_requests_long">自分のプル リクエスト</string>
     <string name="shortcut_active_runs_short">実行中</string>
     <string name="shortcut_active_runs_long">実行中のパイプライン</string>
-    <string name="shortcut_search_short">検索</string>
-    <string name="shortcut_search_long">チケットを検索</string>
+    <string name="shortcut_tickets">チケット</string>
 </resources>

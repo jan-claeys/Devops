@@ -28,15 +28,14 @@
             android:data="devops://shortcut/active-runs" />
     </shortcut>
     <shortcut
-        android:shortcutId="search"
+        android:shortcutId="tickets"
         android:enabled="true"
-        android:icon="@drawable/ic_shortcut_search"
-        android:shortcutShortLabel="@string/shortcut_search_short"
-        android:shortcutLongLabel="@string/shortcut_search_long">
+        android:icon="@drawable/ic_shortcut_tickets"
+        android:shortcutShortLabel="@string/shortcut_tickets">
         <intent
             android:action="es.antonborri.home_widget.action.LAUNCH"
             android:targetPackage="io.github.jan_claeys.devops"
             android:targetClass="io.github.jan_claeys.devops.MainActivity"
-            android:data="devops://shortcut/search" />
+            android:data="devops://shortcut/tickets" />
     </shortcut>
 </shortcuts>

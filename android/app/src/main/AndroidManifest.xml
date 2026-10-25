@@ -34,7 +34,7 @@
               android:name="flutter_deeplinking_enabled"
               android:value="false"
               />
-            <!-- My pull requests, active runs and search, on a long press on
+            <!-- My pull requests, active runs and tickets, on a long press on
                  the app icon. -->
             <meta-data
               android:name="android.app.shortcuts"

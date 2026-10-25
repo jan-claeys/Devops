@@ -22,7 +22,7 @@ void main() {
 
   test('recognizes the links of the app shortcuts', () {
     expect(AppShortcut.fromUri(Uri.parse('devops://shortcut/active-runs')), AppShortcut.activeRuns);
-    expect(AppShortcut.fromUri(Uri.parse('devops://shortcut/search')), AppShortcut.search);
+    expect(AppShortcut.fromUri(Uri.parse('devops://shortcut/tickets')), AppShortcut.tickets);
     expect(AppShortcut.fromUri(Uri.parse('devops://pipelines')), isNull);
     expect(AppShortcut.fromUri(null), isNull);
   });
@@ -60,15 +60,11 @@ void main() {
     await close(tester);
   });
 
-  testWidgets('puts the cursor in the search field of the tickets', (tester) async {
+  testWidgets('shows the tickets', (tester) async {
     final home = await pumpHome(tester);
-    home.showShortcut(AppShortcut.search);
+    home.showShortcut(AppShortcut.tickets);
     await tester.pumpAndSettle();
     expect(bar(tester).selectedIndex, 1);
-    final field = tester.widget<EditableText>(find.descendant(
-        of: find.widgetWithText(SearchBar, en.searchTicketsHint),
-        matching: find.byType(EditableText)));
-    expect(field.focusNode.hasFocus, isTrue);
     await close(tester);
   });
 }

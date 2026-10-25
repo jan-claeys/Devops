@@ -4,6 +4,5 @@
     <string name="shortcut_my_pull_requests_long">طلبات السحب الخاصة بي</string>
     <string name="shortcut_active_runs_short">النشطة</string>
     <string name="shortcut_active_runs_long">التشغيلات النشطة</string>
-    <string name="shortcut_search_short">بحث</string>
-    <string name="shortcut_search_long">البحث في التذاكر</string>
+    <string name="shortcut_tickets">التذاكر</string>
 </resources>

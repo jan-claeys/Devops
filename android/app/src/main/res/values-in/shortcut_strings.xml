@@ -4,6 +4,5 @@
     <string name="shortcut_my_pull_requests_long">Pull request saya</string>
     <string name="shortcut_active_runs_short">Aktif</string>
     <string name="shortcut_active_runs_long">Eksekusi pipeline aktif</string>
-    <string name="shortcut_search_short">Cari</string>
-    <string name="shortcut_search_long">Cari tiket</string>
+    <string name="shortcut_tickets">Tiket</string>
 </resources>

@@ -20,14 +20,13 @@ class WorkItemsScreen extends StatefulWidget {
   const WorkItemsScreen({super.key});
 
   @override
-  State<WorkItemsScreen> createState() => WorkItemsScreenState();
+  State<WorkItemsScreen> createState() => _WorkItemsScreenState();
 }
 
-class WorkItemsScreenState extends State<WorkItemsScreen> {
+class _WorkItemsScreenState extends State<WorkItemsScreen> {
   static const _wideBreakpoint = 840.0;
 
   final _search = TextEditingController();
-  final _searchFocus = FocusNode();
   WorkItemScope _scope = WorkItemScope.assignedToMe;
   bool _openOnly = true;
   final Set<String> _types = {};
@@ -54,18 +53,7 @@ class WorkItemsScreenState extends State<WorkItemsScreen> {
   @override
   void dispose() {
     _search.dispose();
-    _searchFocus.dispose();
     super.dispose();
-  }
-
-  /// Puts the cursor in the search field, emptied, as the search shortcut
-  /// does.
-  void focusSearch() {
-    setState(() {
-      _search.clear();
-      _selectedId = null;
-    });
-    _searchFocus.requestFocus();
   }
 
   Future<void> _load() async {
@@ -257,7 +245,6 @@ class WorkItemsScreenState extends State<WorkItemsScreen> {
                 padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
                 child: SearchBar(
                   controller: _search,
-                  focusNode: _searchFocus,
                   hintText: l10n.searchTicketsHint,
                   leading: const Icon(Icons.search),
                   trailing: [

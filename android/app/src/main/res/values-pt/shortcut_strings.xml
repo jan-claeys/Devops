@@ -4,6 +4,5 @@
     <string name="shortcut_my_pull_requests_long">Meus pull requests</string>
     <string name="shortcut_active_runs_short">Em execução</string>
     <string name="shortcut_active_runs_long">Execuções em andamento</string>
-    <string name="shortcut_search_short">Pesquisar</string>
-    <string name="shortcut_search_long">Pesquisar tickets</string>
+    <string name="shortcut_tickets">Tickets</string>
 </resources>

@@ -4,6 +4,5 @@
     <string name="shortcut_my_pull_requests_long">Мої pull request’и</string>
     <string name="shortcut_active_runs_short">Активні</string>
     <string name="shortcut_active_runs_long">Активні запуски</string>
-    <string name="shortcut_search_short">Пошук</string>
-    <string name="shortcut_search_long">Пошук тікетів</string>
+    <string name="shortcut_tickets">Тікети</string>
 </resources>
