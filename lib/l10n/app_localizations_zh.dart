@@ -611,6 +611,45 @@ class AppLocalizationsZh extends AppLocalizations {
   String get threadResolved => '已解决';
 
   @override
+  String get overviewTab => '概览';
+
+  @override
+  String get filesTab => '文件';
+
+  @override
+  String filesChanged(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '已更改 $count 个文件',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get noFileChanges => '此拉取请求未更改任何文件。';
+
+  @override
+  String get loadFilesFailed => '无法加载已更改的文件';
+
+  @override
+  String get loadFileFailed => '无法加载此文件';
+
+  @override
+  String get binaryFile => '二进制文件';
+
+  @override
+  String get fileTooLarge => '文件太大，无法在此比较';
+
+  @override
+  String get noContentChanges => '内容无更改';
+
+  @override
+  String renamedFrom(String path) {
+    return '从 $path 重命名';
+  }
+
+  @override
   String get voteApprove => '批准';
 
   @override

@@ -642,6 +642,46 @@ class AppLocalizationsAr extends AppLocalizations {
   String get threadResolved => 'تم الحل';
 
   @override
+  String get overviewTab => 'نظرة عامة';
+
+  @override
+  String get filesTab => 'الملفات';
+
+  @override
+  String filesChanged(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'تم تغيير $count ملفات',
+      one: 'تم تغيير ملف واحد',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get noFileChanges => 'لا يغيّر طلب السحب هذا أي ملفات.';
+
+  @override
+  String get loadFilesFailed => 'تعذّر تحميل الملفات التي تم تغييرها';
+
+  @override
+  String get loadFileFailed => 'تعذّر تحميل هذا الملف';
+
+  @override
+  String get binaryFile => 'ملف ثنائي';
+
+  @override
+  String get fileTooLarge => 'أكبر من أن تتم مقارنته هنا';
+
+  @override
+  String get noContentChanges => 'لا توجد تغييرات في المحتوى';
+
+  @override
+  String renamedFrom(String path) {
+    return 'أُعيدت تسميته من $path';
+  }
+
+  @override
   String get voteApprove => 'موافقة';
 
   @override

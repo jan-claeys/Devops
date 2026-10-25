@@ -549,6 +549,50 @@ void main() {
 
     setUp(() => pr = PullRequest.fromJson(pullRequestJson(7)));
 
+    test('getPullRequestChanges reads all pages of the latest iteration', () async {
+      final requests = <Uri>[];
+      final client = MockClient((request) async {
+        requests.add(request.url);
+        if (request.url.path.endsWith('/iterations')) {
+          return http.Response(
+              jsonEncode({
+                'value': [
+                  {'id': 1},
+                  {'id': 3},
+                  {'id': 2},
+                ],
+              }),
+              200);
+        }
+        final first = request.url.queryParameters[r'$skip'] == '0';
+        return http.Response(
+            jsonEncode({
+              'changeEntries': [
+                {
+                  'changeType': 'edit',
+                  'item': {'path': first ? '/z.txt' : '/a.txt', 'objectId': 'x'},
+                },
+              ],
+              'nextSkip': first ? 1 : 0,
+            }),
+            200);
+      });
+      final changes = await DevOpsApi(organization: 'contoso', pat: 'secret', client: client)
+          .getPullRequestChanges(pr);
+      expect(changes.map((c) => c.path), ['/a.txt', '/z.txt']);
+      expect(requests[1].path, endsWith('/pullRequests/7/iterations/3/changes'));
+      expect(requests[1].queryParameters[r'$compareTo'], '0');
+      expect(requests.map((u) => u.queryParameters[r'$skip']), [null, '0', '1']);
+    });
+
+    test('getBlob downloads the content of a git object', () async {
+      fake.blobs['abc'] = 'hello';
+      expect(utf8.decode(await api.getBlob(pr, 'abc')), 'hello');
+      final request = fake.requests.single;
+      expect(request.url.path, '/contoso/Contoso/_apis/git/repositories/repo-web/blobs/abc');
+      expect(request.url.queryParameters[r'$format'], 'octetstream');
+    });
+
     test('votePullRequest puts the vote of the signed in user', () async {
       await api.votePullRequest(pr, ReviewVote.rejected);
       final request = fake.requests.last;

@@ -615,6 +615,45 @@ class AppLocalizationsJa extends AppLocalizations {
   String get threadResolved => '解決済み';
 
   @override
+  String get overviewTab => '概要';
+
+  @override
+  String get filesTab => 'ファイル';
+
+  @override
+  String filesChanged(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count 個のファイルを変更',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get noFileChanges => 'このプル リクエストではファイルは変更されていません。';
+
+  @override
+  String get loadFilesFailed => '変更されたファイルを読み込めませんでした';
+
+  @override
+  String get loadFileFailed => 'このファイルを読み込めませんでした';
+
+  @override
+  String get binaryFile => 'バイナリ ファイル';
+
+  @override
+  String get fileTooLarge => '大きすぎるためここでは比較できません';
+
+  @override
+  String get noContentChanges => '内容の変更はありません';
+
+  @override
+  String renamedFrom(String path) {
+    return '$path から名前を変更';
+  }
+
+  @override
   String get voteApprove => '承認';
 
   @override

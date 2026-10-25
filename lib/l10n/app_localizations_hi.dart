@@ -625,6 +625,46 @@ class AppLocalizationsHi extends AppLocalizations {
   String get threadResolved => 'हल किया गया';
 
   @override
+  String get overviewTab => 'अवलोकन';
+
+  @override
+  String get filesTab => 'फ़ाइलें';
+
+  @override
+  String filesChanged(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count फ़ाइलें बदलीं',
+      one: '1 फ़ाइल बदली',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get noFileChanges => 'यह पुल रिक्वेस्ट कोई फ़ाइल नहीं बदलता।';
+
+  @override
+  String get loadFilesFailed => 'बदली गई फ़ाइलें लोड नहीं हो सकीं';
+
+  @override
+  String get loadFileFailed => 'यह फ़ाइल लोड नहीं हो सकी';
+
+  @override
+  String get binaryFile => 'बाइनरी फ़ाइल';
+
+  @override
+  String get fileTooLarge => 'यहाँ तुलना करने के लिए बहुत बड़ी';
+
+  @override
+  String get noContentChanges => 'सामग्री में कोई बदलाव नहीं';
+
+  @override
+  String renamedFrom(String path) {
+    return '$path से नाम बदला गया';
+  }
+
+  @override
   String get voteApprove => 'स्वीकृत करें';
 
   @override

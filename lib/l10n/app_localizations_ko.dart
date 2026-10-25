@@ -615,6 +615,45 @@ class AppLocalizationsKo extends AppLocalizations {
   String get threadResolved => '해결됨';
 
   @override
+  String get overviewTab => '개요';
+
+  @override
+  String get filesTab => '파일';
+
+  @override
+  String filesChanged(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '파일 $count개 변경됨',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get noFileChanges => '이 끌어오기 요청은 파일을 변경하지 않습니다.';
+
+  @override
+  String get loadFilesFailed => '변경된 파일을 불러올 수 없습니다';
+
+  @override
+  String get loadFileFailed => '이 파일을 불러올 수 없습니다';
+
+  @override
+  String get binaryFile => '이진 파일';
+
+  @override
+  String get fileTooLarge => '너무 커서 여기에서 비교할 수 없습니다';
+
+  @override
+  String get noContentChanges => '내용 변경 없음';
+
+  @override
+  String renamedFrom(String path) {
+    return '$path에서 이름 변경됨';
+  }
+
+  @override
   String get voteApprove => '승인';
 
   @override

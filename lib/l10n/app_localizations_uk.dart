@@ -638,6 +638,48 @@ class AppLocalizationsUk extends AppLocalizations {
   String get threadResolved => 'Вирішено';
 
   @override
+  String get overviewTab => 'Огляд';
+
+  @override
+  String get filesTab => 'Файли';
+
+  @override
+  String filesChanged(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Змінено $count файлу',
+      many: 'Змінено $count файлів',
+      few: 'Змінено $count файли',
+      one: 'Змінено 1 файл',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get noFileChanges => 'Цей pull request не змінює файлів.';
+
+  @override
+  String get loadFilesFailed => 'Не вдалося завантажити змінені файли';
+
+  @override
+  String get loadFileFailed => 'Не вдалося завантажити цей файл';
+
+  @override
+  String get binaryFile => 'Двійковий файл';
+
+  @override
+  String get fileTooLarge => 'Завеликий для порівняння тут';
+
+  @override
+  String get noContentChanges => 'Вміст не змінився';
+
+  @override
+  String renamedFrom(String path) {
+    return 'Перейменовано з $path';
+  }
+
+  @override
   String get voteApprove => 'Схвалити';
 
   @override

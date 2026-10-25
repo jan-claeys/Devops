@@ -540,6 +540,42 @@ class DevOpsApi {
       _send('PATCH', '${_pullRequestUrl(pr)}/threads/${thread.id}?api-version=$_apiVersion',
           {'status': resolved ? 'fixed' : 'active'});
 
+  /// The files [pr] changes in its latest iteration, compared with the commit
+  /// its branches have in common, sorted by path.
+  Future<List<PullRequestChange>> getPullRequestChanges(PullRequest pr) async {
+    final iterations = await _get('${_pullRequestUrl(pr)}/iterations?api-version=$_apiVersion');
+    final latest = [
+      for (final i in ((iterations['value'] as List?) ?? const []).cast<Map<String, dynamic>>())
+        ?(i['id'] as num?)?.toInt(),
+    ].fold(0, (a, b) => a > b ? a : b);
+    if (latest == 0) return const [];
+    final changes = <PullRequestChange>[];
+    var skip = 0;
+    do {
+      final json = await _get('${_pullRequestUrl(pr)}/iterations/$latest/changes'
+          '?\$top=2000&\$skip=$skip&\$compareTo=0&api-version=$_apiVersion');
+      for (final c in ((json['changeEntries'] as List?) ?? const []).cast<Map<String, dynamic>>()) {
+        if (PullRequestChange.fromJson(c) case final change?) changes.add(change);
+      }
+      skip = (json['nextSkip'] as num?)?.toInt() ?? 0;
+    } while (skip > 0);
+    return changes..sort((a, b) => a.path.compareTo(b.path));
+  }
+
+  /// The content of the git object [objectId] in the repository of [pr].
+  Future<List<int>> getBlob(PullRequest pr, String objectId) async {
+    final url = '$baseUrl/${Uri.encodeComponent(pr.project)}/_apis/git/repositories/'
+        '${pr.repositoryId}/blobs/$objectId?\$format=octetstream&api-version=$_apiVersion';
+    final response = await _client
+        .get(Uri.parse(url), headers: {..._headers, 'Accept': 'application/octet-stream'});
+    _check(response);
+    // A sign-in page instead of the file when the PAT is invalid.
+    if (response.headers['content-type']?.contains('html') ?? false) {
+      throw DevOpsException(DevOpsError.unauthorized, statusCode: response.statusCode);
+    }
+    return response.bodyBytes;
+  }
+
   String _pullRequestUrl(PullRequest pr) =>
       '$baseUrl/${Uri.encodeComponent(pr.project)}/_apis/git/repositories/'
       '${pr.repositoryId}/pullRequests/${pr.id}';

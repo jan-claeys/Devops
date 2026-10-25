@@ -638,6 +638,48 @@ class AppLocalizationsRu extends AppLocalizations {
   String get threadResolved => 'Решено';
 
   @override
+  String get overviewTab => 'Обзор';
+
+  @override
+  String get filesTab => 'Файлы';
+
+  @override
+  String filesChanged(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Изменено $count файла',
+      many: 'Изменено $count файлов',
+      few: 'Изменено $count файла',
+      one: 'Изменён 1 файл',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get noFileChanges => 'Этот pull request не изменяет файлы.';
+
+  @override
+  String get loadFilesFailed => 'Не удалось загрузить изменённые файлы';
+
+  @override
+  String get loadFileFailed => 'Не удалось загрузить этот файл';
+
+  @override
+  String get binaryFile => 'Двоичный файл';
+
+  @override
+  String get fileTooLarge => 'Слишком большой для сравнения здесь';
+
+  @override
+  String get noContentChanges => 'Содержимое не изменилось';
+
+  @override
+  String renamedFrom(String path) {
+    return 'Переименован из $path';
+  }
+
+  @override
   String get voteApprove => 'Одобрить';
 
   @override

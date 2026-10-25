@@ -10,6 +10,7 @@ import '../services/logging.dart';
 import '../widgets/comment_composer.dart';
 import '../widgets/devops_markdown.dart';
 import '../widgets/error_action.dart';
+import '../widgets/pull_request_files.dart';
 import '../widgets/pull_request_visuals.dart';
 import '../widgets/section_card.dart';
 import '../widgets/work_item_visuals.dart';
@@ -36,9 +37,27 @@ class PullRequestScreen extends StatefulWidget {
   State<PullRequestScreen> createState() => _PullRequestScreenState();
 }
 
-class _PullRequestScreenState extends State<PullRequestScreen> {
+class _PullRequestScreenState extends State<PullRequestScreen>
+    with SingleTickerProviderStateMixin {
   late Future<_Detail> _future;
   bool _voting = false;
+  late final TabController _tabs = TabController(length: 2, vsync: this)
+    ..addListener(() {
+      if (mounted) setState(() => _filesOpened |= _tabs.index == 1);
+    });
+
+  /// The files are loaded the first time their tab is opened, and kept
+  /// while the overview is shown.
+  bool _filesOpened = false;
+
+  /// Changes on every reload, so the files are loaded again too.
+  int _generation = 0;
+
+  @override
+  void dispose() {
+    _tabs.dispose();
+    super.dispose();
+  }
 
   @override
   void didChangeDependencies() {
@@ -92,6 +111,7 @@ class _PullRequestScreenState extends State<PullRequestScreen> {
   // A block body: setState must not get the Future back from the closure.
   void _reload() => setState(() {
         _future = _load();
+        _generation++;
       });
 
   /// Runs [action] and shows the result; when it fails, tells why. Returns
@@ -192,6 +212,15 @@ class _PullRequestScreenState extends State<PullRequestScreen> {
                   title: Text(detail == null
                       ? '!${widget.id}'
                       : '${detail.pullRequest.repositoryName} !${widget.id}'),
+                  bottom: detail == null
+                      ? null
+                      : TabBar(
+                          controller: _tabs,
+                          tabs: [
+                            Tab(text: context.l10n.overviewTab),
+                            Tab(text: context.l10n.filesTab),
+                          ],
+                        ),
                 ),
                 if (snapshot.hasError)
                   SliverFillRemaining(
@@ -219,11 +248,29 @@ class _PullRequestScreenState extends State<PullRequestScreen> {
                     hasScrollBody: false,
                     child: Center(child: CircularProgressIndicator()),
                   )
-                else
-                  SliverPadding(
-                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 96),
-                    sliver: SliverList.list(children: _buildBody(detail)),
+                else ...[
+                  SliverVisibility(
+                    visible: _tabs.index == 0,
+                    sliver: SliverPadding(
+                      padding: const EdgeInsets.fromLTRB(16, 16, 16, 96),
+                      sliver: SliverList.list(children: _buildBody(detail)),
+                    ),
                   ),
+                  if (_filesOpened)
+                    SliverVisibility(
+                      visible: _tabs.index == 1,
+                      maintainState: true,
+                      sliver: SliverPadding(
+                        padding: const EdgeInsets.fromLTRB(16, 8, 16, 96),
+                        sliver: SliverToBoxAdapter(
+                          child: PullRequestFiles(
+                            key: ValueKey(_generation),
+                            pullRequest: detail.pullRequest,
+                          ),
+                        ),
+                      ),
+                    ),
+                ],
               ],
             ),
           ),

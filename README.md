@@ -21,6 +21,7 @@ A Flutter app for viewing and commenting on your Azure DevOps work items (ticket
   - Details: description, source and target branch, merge conflicts, labels, reviewers with their vote, linked work items and the comment threads (with file and resolved status), with a button to open the pull request in the browser
   - Vote on an open pull request: *Approve*, or *Approve with suggestions*, *Wait for author*, *Reject* (asks first) and *Reset vote* from the menu next to it; voting on a pull request you don't review yet adds you as a reviewer
   - Start a new discussion with a comment (Markdown) at the top of the comments, *Reply* to one, and *Resolve* or *Reactivate* it
+  - *Files* tab: the files the pull request changes, compared with the commit its branches have in common, each with the lines it adds and removes (+X / −Y) and the totals; tap a file for a compact unified diff with three lines of context. Binary files and files over 1 MB or 20,000 lines aren't compared; the lines of the first 100 files are counted right away, those of the others once opened
 - **Pipelines**: the latest builds and releases of the selected projects with status, branch, duration and who started them
   - Show all runs, only builds or only releases; filter on active runs and search by pipeline, branch or person; refreshes automatically while a run is in progress or waiting for approval
   - Running builds and release stages show an estimated progress bar, based on how long the last successful run took
@@ -120,7 +121,8 @@ lib/
 │   ├── pipeline_run.dart         Builds, releases and their timeline (stages, jobs, tasks)
 │   ├── pipeline_log.dart         Log lines with their errors and warnings
 │   ├── run_estimates.dart        Expected duration of running builds and release stages
-│   ├── pull_request.dart         Pull requests, reviewers and comment threads
+│   ├── pull_request.dart         Pull requests, reviewers, comment threads and changed files
+│   ├── file_diff.dart            Line diff of two versions of a file, as unified diff hunks
 │   ├── devops_link.dart          Reading Azure DevOps links of work items, pull requests and runs
 │   └── dashboard_summary.dart    What waits for the user, for the overview
 ├── services/
@@ -146,6 +148,7 @@ lib/
 │   ├── work_item_visuals.dart    Type/state icons and colours
 │   ├── pipeline_visuals.dart     Run status icons and colours
 │   ├── pull_request_visuals.dart Pull request status and vote icons
+│   ├── pull_request_files.dart   Changed files of a pull request and their diffs
 │   ├── attachments.dart          Attachment list and inline / full screen images
 │   ├── devops_html.dart          HTML fields and comments, with their images
 │   └── ...                       Shared cards, empty states, Markdown, project picker

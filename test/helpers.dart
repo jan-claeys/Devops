@@ -277,6 +277,11 @@ class FakeDevOps {
   final threads = <int, List<Map<String, dynamic>>>{};
   final pullRequestWorkItems = <int, List<int>>{};
 
+  /// The change entries of the latest iteration of pull requests, and the
+  /// content of git objects by id.
+  final changes = <int, List<Map<String, dynamic>>>{};
+  final blobs = <String, String>{};
+
   void addPullRequest(Map<String, dynamic> pr) => pullRequests[pr['pullRequestId'] as int] = pr;
 
   /// When set, requests answer with this status code; with [failPath] only
@@ -355,6 +360,31 @@ class FakeDevOps {
     if (pullRequest != null) {
       final json = pullRequests[int.parse(pullRequest[1]!)];
       return json == null ? http.Response('', 404) : _json(json);
+    }
+    final iterations = RegExp(r'/pullRequests/(\d+)/iterations$').firstMatch(path);
+    if (iterations != null) {
+      final known = changes.containsKey(int.parse(iterations[1]!));
+      return _json({
+        'value': [
+          if (known) ...[
+            {'id': 1},
+            {'id': 2},
+          ],
+        ],
+      });
+    }
+    final iterationChanges =
+        RegExp(r'/pullRequests/(\d+)/iterations/2/changes$').firstMatch(path);
+    if (iterationChanges != null) {
+      return _json({'changeEntries': changes[int.parse(iterationChanges[1]!)] ?? []});
+    }
+    final blob = RegExp(r'/blobs/(\w+)$').firstMatch(path);
+    if (blob != null) {
+      final text = blobs[blob[1]!];
+      return text == null
+          ? http.Response('', 404)
+          : http.Response.bytes(utf8.encode(text), 200,
+              headers: {'content-type': 'application/octet-stream'});
     }
     final prThreads = RegExp(r'/pullRequests/(\d+)/threads$').firstMatch(path);
     if (prThreads != null) {

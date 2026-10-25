@@ -244,6 +244,22 @@
   "voteWaitingForAuthor": "Waiting for author",
   "voteRejected": "Rejected",
   "threadResolved": "Resolved",
+  "overviewTab": "Overview",
+  "filesTab": "Files",
+  "filesChanged": "{count, plural, =1{1 file changed} other{{count} files changed}}",
+  "@filesChanged": {
+    "placeholders": {"count": {"type": "int"}}
+  },
+  "noFileChanges": "This pull request doesn't change any files.",
+  "loadFilesFailed": "Couldn't load the changed files",
+  "loadFileFailed": "Couldn't load this file",
+  "binaryFile": "Binary file",
+  "fileTooLarge": "Too large to compare here",
+  "noContentChanges": "No changes to the content",
+  "renamedFrom": "Renamed from {path}",
+  "@renamedFrom": {
+    "placeholders": {"path": {"type": "String"}}
+  },
   "voteApprove": "Approve",
   "voteApproveWithSuggestions": "Approve with suggestions",
   "voteWaitForAuthor": "Wait for author",

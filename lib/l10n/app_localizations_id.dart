@@ -628,6 +628,45 @@ class AppLocalizationsId extends AppLocalizations {
   String get threadResolved => 'Terselesaikan';
 
   @override
+  String get overviewTab => 'Ikhtisar';
+
+  @override
+  String get filesTab => 'File';
+
+  @override
+  String filesChanged(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count file diubah',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get noFileChanges => 'Pull request ini tidak mengubah file apa pun.';
+
+  @override
+  String get loadFilesFailed => 'Tidak dapat memuat file yang diubah';
+
+  @override
+  String get loadFileFailed => 'Tidak dapat memuat file ini';
+
+  @override
+  String get binaryFile => 'File biner';
+
+  @override
+  String get fileTooLarge => 'Terlalu besar untuk dibandingkan di sini';
+
+  @override
+  String get noContentChanges => 'Tidak ada perubahan pada isi';
+
+  @override
+  String renamedFrom(String path) {
+    return 'Diganti namanya dari $path';
+  }
+
+  @override
   String get voteApprove => 'Setujui';
 
   @override

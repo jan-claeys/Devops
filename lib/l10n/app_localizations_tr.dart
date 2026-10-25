@@ -625,6 +625,46 @@ class AppLocalizationsTr extends AppLocalizations {
   String get threadResolved => 'Çözüldü';
 
   @override
+  String get overviewTab => 'Genel bakış';
+
+  @override
+  String get filesTab => 'Dosyalar';
+
+  @override
+  String filesChanged(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count dosya değişti',
+      one: '1 dosya değişti',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get noFileChanges => 'Bu çekme isteği hiçbir dosyayı değiştirmiyor.';
+
+  @override
+  String get loadFilesFailed => 'Değişen dosyalar yüklenemedi';
+
+  @override
+  String get loadFileFailed => 'Bu dosya yüklenemedi';
+
+  @override
+  String get binaryFile => 'İkili dosya';
+
+  @override
+  String get fileTooLarge => 'Burada karşılaştırmak için çok büyük';
+
+  @override
+  String get noContentChanges => 'İçerikte değişiklik yok';
+
+  @override
+  String renamedFrom(String path) {
+    return '$path adından yeniden adlandırıldı';
+  }
+
+  @override
   String get voteApprove => 'Onayla';
 
   @override

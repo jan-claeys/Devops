@@ -161,4 +161,90 @@ void main() {
     expect(jsonDecode(fake.requests.singleWhere((r) => r.method == 'PATCH').body),
         {'status': 'active'});
   });
+
+  group('files', () {
+    setUp(() {
+      fake.changes[7] = [
+        {
+          'changeType': 'edit',
+          'item': {'path': '/config/app.yaml', 'objectId': 'new', 'originalObjectId': 'old'},
+        },
+        {
+          'changeType': 'add',
+          'item': {'path': '/docs/notes.md', 'objectId': 'notes'},
+        },
+        {
+          'changeType': 'edit',
+          'item': {'path': '/config', 'isFolder': true},
+        },
+      ];
+      fake.blobs.addAll({
+        'old': 'name: web\nreplicas: 2\nport: 80\n',
+        'new': 'name: web\nreplicas: 3\nport: 80\n',
+        'notes': 'one\ntwo\n',
+      });
+    });
+
+    Future<void> openFiles(WidgetTester tester) async {
+      await pumpScreen(tester, 7);
+      await tester.tap(find.text(en.filesTab));
+      await tester.pumpAndSettle();
+    }
+
+    testWidgets('lists the changed files with their added and removed lines', (tester) async {
+      await openFiles(tester);
+      expect(find.text(en.filesChanged(2)), findsOneWidget);
+      expect(find.text('app.yaml'), findsOneWidget);
+      expect(find.text('config'), findsOneWidget);
+      expect(find.text('notes.md'), findsOneWidget);
+      expect(find.text('+1 −1'), findsOneWidget);
+      expect(find.text('+2 −0'), findsOneWidget);
+      // The totals.
+      expect(find.text('+3 −1'), findsOneWidget);
+      // The overview is hidden meanwhile.
+      expect(find.text(en.reviewers), findsNothing);
+    });
+
+    testWidgets('opens the diff of a file', (tester) async {
+      await openFiles(tester);
+      await tester.tap(find.text('app.yaml'));
+      await tester.pumpAndSettle();
+      expect(find.text('@@ -1,3 +1,3 @@'), findsOneWidget);
+      expect(find.text('- replicas: 2'), findsOneWidget);
+      expect(find.text('+ replicas: 3'), findsOneWidget);
+      expect(find.text('  port: 80'), findsOneWidget);
+    });
+
+    testWidgets('loads the files once, and again on refresh', (tester) async {
+      await openFiles(tester);
+      int loads() => fake.requests.where((r) => r.url.path.endsWith('/changes')).length;
+      expect(loads(), 1);
+
+      await tester.tap(find.text(en.overviewTab));
+      await tester.pumpAndSettle();
+      expect(find.text(en.reviewers), findsOneWidget);
+      await tester.tap(find.text(en.filesTab));
+      await tester.pumpAndSettle();
+      expect(loads(), 1);
+
+      await tester.fling(find.text('app.yaml'), const Offset(0, 1000), 1000);
+      await tester.pumpAndSettle();
+      expect(loads(), 2);
+    });
+
+    testWidgets('says when a file could not be loaded', (tester) async {
+      fake.blobs.remove('notes');
+      await openFiles(tester);
+      await tester.tap(find.text('notes.md'));
+      await tester.pumpAndSettle();
+      expect(find.text(en.loadFileFailed), findsOneWidget);
+      expect(find.text('+1 −1'), findsOneWidget);
+    });
+
+    testWidgets('says when nothing changed', (tester) async {
+      fake.changes[7] = [];
+      await openFiles(tester);
+      expect(find.text(en.noFileChanges), findsOneWidget);
+    });
+  });
 }

@@ -1202,6 +1202,66 @@ abstract class AppLocalizations {
   /// **'Resolved'**
   String get threadResolved;
 
+  /// No description provided for @overviewTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Overview'**
+  String get overviewTab;
+
+  /// No description provided for @filesTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Files'**
+  String get filesTab;
+
+  /// No description provided for @filesChanged.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 file changed} other{{count} files changed}}'**
+  String filesChanged(int count);
+
+  /// No description provided for @noFileChanges.
+  ///
+  /// In en, this message translates to:
+  /// **'This pull request doesn\'t change any files.'**
+  String get noFileChanges;
+
+  /// No description provided for @loadFilesFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load the changed files'**
+  String get loadFilesFailed;
+
+  /// No description provided for @loadFileFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load this file'**
+  String get loadFileFailed;
+
+  /// No description provided for @binaryFile.
+  ///
+  /// In en, this message translates to:
+  /// **'Binary file'**
+  String get binaryFile;
+
+  /// No description provided for @fileTooLarge.
+  ///
+  /// In en, this message translates to:
+  /// **'Too large to compare here'**
+  String get fileTooLarge;
+
+  /// No description provided for @noContentChanges.
+  ///
+  /// In en, this message translates to:
+  /// **'No changes to the content'**
+  String get noContentChanges;
+
+  /// No description provided for @renamedFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'Renamed from {path}'**
+  String renamedFrom(String path);
+
   /// No description provided for @voteApprove.
   ///
   /// In en, this message translates to:

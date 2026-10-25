@@ -634,6 +634,47 @@ class AppLocalizationsEs extends AppLocalizations {
   String get threadResolved => 'Resuelto';
 
   @override
+  String get overviewTab => 'Resumen';
+
+  @override
+  String get filesTab => 'Archivos';
+
+  @override
+  String filesChanged(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count archivos modificados',
+      one: '1 archivo modificado',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get noFileChanges => 'Esta pull request no modifica ningún archivo.';
+
+  @override
+  String get loadFilesFailed =>
+      'No se pudieron cargar los archivos modificados';
+
+  @override
+  String get loadFileFailed => 'No se pudo cargar este archivo';
+
+  @override
+  String get binaryFile => 'Archivo binario';
+
+  @override
+  String get fileTooLarge => 'Demasiado grande para compararlo aquí';
+
+  @override
+  String get noContentChanges => 'Sin cambios en el contenido';
+
+  @override
+  String renamedFrom(String path) {
+    return 'Renombrado desde $path';
+  }
+
+  @override
   String get voteApprove => 'Aprobar';
 
   @override
