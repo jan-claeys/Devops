@@ -18,6 +18,15 @@ enum ReviewVote {
         -10 => rejected,
         _ => none,
       };
+
+  /// The number Azure DevOps stores for the vote.
+  int get value => switch (this) {
+        approved => 10,
+        approvedWithSuggestions => 5,
+        none => 0,
+        waitingForAuthor => -5,
+        rejected => -10,
+      };
 }
 
 class Reviewer {
@@ -125,7 +134,9 @@ class PullRequest {
 
 /// A discussion on a pull request, on the whole of it or on a file.
 class PullRequestThread {
-  const PullRequestThread({required this.comments, this.status, this.filePath});
+  const PullRequestThread({required this.id, required this.comments, this.status, this.filePath});
+
+  final int id;
 
   /// Comments people wrote, oldest first; system messages are left out.
   final List<PullRequestComment> comments;
@@ -137,6 +148,9 @@ class PullRequestThread {
         'fixed' || 'wontFix' || 'closed' || 'byDesign' => true,
         _ => false,
       };
+
+  /// Active and pending discussions can be resolved.
+  bool get isActive => status == 'active' || status == 'pending';
 
   DateTime? get lastUpdated => comments.map((c) => c.publishedDate).nonNulls.lastOrNull;
 
@@ -150,6 +164,7 @@ class PullRequestThread {
     ]..sort((a, b) => (a.publishedDate ?? DateTime(0)).compareTo(b.publishedDate ?? DateTime(0)));
     if (comments.isEmpty) return null;
     return PullRequestThread(
+      id: (json['id'] as num?)?.toInt() ?? 0,
       comments: comments,
       status: json['status'] as String?,
       filePath: (json['threadContext'] as Map?)?['filePath'] as String?,
@@ -158,7 +173,15 @@ class PullRequestThread {
 }
 
 class PullRequestComment {
-  const PullRequestComment({required this.content, this.author, this.publishedDate});
+  const PullRequestComment({
+    required this.content,
+    this.id = 0,
+    this.author,
+    this.publishedDate,
+  });
+
+  /// Numbers the comments within their thread.
+  final int id;
 
   /// Markdown.
   final String content;
@@ -166,10 +189,75 @@ class PullRequestComment {
   final DateTime? publishedDate;
 
   factory PullRequestComment.fromJson(Map<String, dynamic> json) => PullRequestComment(
+        id: (json['id'] as num?)?.toInt() ?? 0,
         content: json['content'] as String? ?? '',
         author: Identity.fromJson(json['author']),
         publishedDate: _date(json['publishedDate']),
       );
+}
+
+/// How a pull request changes a file.
+enum FileChangeKind { add, edit, delete, rename }
+
+/// A file a pull request adds, edits, deletes or renames, with the git
+/// objects of its content before and after.
+class PullRequestChange {
+  const PullRequestChange({
+    required this.path,
+    required this.kind,
+    this.originalPath,
+    this.objectId,
+    this.originalObjectId,
+  });
+
+  final String path;
+  final FileChangeKind kind;
+
+  /// The path before a rename.
+  final String? originalPath;
+
+  /// The content after the change; none for a deleted file.
+  final String? objectId;
+
+  /// The content before the change; none for an added file.
+  final String? originalObjectId;
+
+  String get fileName => path.split('/').last;
+
+  /// The folder of the file, without the leading slash; empty at the root.
+  String get folder {
+    final i = path.lastIndexOf('/');
+    return i <= 0 ? '' : path.substring(1, i);
+  }
+
+  /// Null for folders, which only change through their files.
+  static PullRequestChange? fromJson(Map<String, dynamic> json) {
+    final item = (json['item'] as Map?) ?? const {};
+    final path = item['path'] as String?;
+    if (path == null || item['isFolder'] == true || item['gitObjectType'] == 'tree') return null;
+    // Several kinds can be combined, such as "edit, rename".
+    final types = '${json['changeType']}'.split(',').map((t) => t.trim()).toSet();
+    final kind = types.contains('delete')
+        ? FileChangeKind.delete
+        : types.contains('add')
+            ? FileChangeKind.add
+            : types.contains('rename') && !types.contains('edit')
+                ? FileChangeKind.rename
+                : FileChangeKind.edit;
+    final originalPath = json['originalPath'] as String? ?? json['sourceServerItem'] as String?;
+    return PullRequestChange(
+      path: path,
+      kind: kind,
+      originalPath: types.contains('rename') && originalPath != path ? originalPath : null,
+      objectId: kind == FileChangeKind.delete ? null : item['objectId'] as String?,
+      originalObjectId: switch (kind) {
+        FileChangeKind.add => null,
+        // The content of a deleted file is the last one it had.
+        FileChangeKind.delete => item['originalObjectId'] as String? ?? item['objectId'] as String?,
+        _ => item['originalObjectId'] as String?,
+      },
+    );
+  }
 }
 
 DateTime? _date(Object? value) => value is String ? DateTime.tryParse(value)?.toLocal() : null;

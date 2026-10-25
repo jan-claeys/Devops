@@ -63,7 +63,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'Under Scopes, choose Custom defined and enable only the scopes listed above, each with Read.';
+      'Under Scopes, choose Custom defined and enable only the scopes listed above, each with the permission shown next to it.';
 
   @override
   String get tokenHelpStep4 =>
@@ -479,7 +479,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get releaseScopeHint =>
-      'Releases need the Release (Read) scope on your token.';
+      'Releases need the Release (Read, write, & execute) scope on your token.';
 
   @override
   String get artifact => 'Artifact';
@@ -488,6 +488,57 @@ class AppLocalizationsEn extends AppLocalizations {
   String waitingForApprovalBy(String names) {
     return 'Waiting for approval by $names';
   }
+
+  @override
+  String get approvals => 'Approvals';
+
+  @override
+  String approveStage(String stage) {
+    return 'Approve $stage?';
+  }
+
+  @override
+  String rejectStage(String stage) {
+    return 'Reject $stage?';
+  }
+
+  @override
+  String get approvalCommentHint => 'Comment (optional)';
+
+  @override
+  String get stageApproved => 'Stage approved';
+
+  @override
+  String get stageRejected => 'Stage rejected';
+
+  @override
+  String get buildScopeHint =>
+      'Acting on pipeline runs needs the Build (Read & execute) scope on your token.';
+
+  @override
+  String get cancelRun => 'Cancel run';
+
+  @override
+  String get cancelRunTitle => 'Cancel this run?';
+
+  @override
+  String get cancelRunBody =>
+      'Jobs that are running are stopped and the ones that haven\'t started are skipped.';
+
+  @override
+  String get keepRunning => 'Keep running';
+
+  @override
+  String get runAgain => 'Run again';
+
+  @override
+  String get rerunFailedJobs => 'Rerun failed jobs';
+
+  @override
+  String get runStarted => 'Run started';
+
+  @override
+  String get open => 'Open';
 
   @override
   String get pullRequests => 'Pull requests';
@@ -503,7 +554,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get codeScopeHint =>
-      'Pull requests need the Code (Read) scope on your token.';
+      'Pull requests need the Code (Read & write) scope on your token.';
 
   @override
   String get noPullRequestsTitle => 'No pull requests';
@@ -577,6 +628,152 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get threadResolved => 'Resolved';
+
+  @override
+  String get overviewTab => 'Overview';
+
+  @override
+  String get filesTab => 'Files';
+
+  @override
+  String filesChanged(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count files changed',
+      one: '1 file changed',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get noFileChanges => 'This pull request doesn\'t change any files.';
+
+  @override
+  String get loadFilesFailed => 'Couldn\'t load the changed files';
+
+  @override
+  String get loadFileFailed => 'Couldn\'t load this file';
+
+  @override
+  String get binaryFile => 'Binary file';
+
+  @override
+  String get fileTooLarge => 'Too large to compare here';
+
+  @override
+  String get noContentChanges => 'No changes to the content';
+
+  @override
+  String renamedFrom(String path) {
+    return 'Renamed from $path';
+  }
+
+  @override
+  String get voteApprove => 'Approve';
+
+  @override
+  String get voteApproveWithSuggestions => 'Approve with suggestions';
+
+  @override
+  String get voteWaitForAuthor => 'Wait for author';
+
+  @override
+  String get voteReject => 'Reject';
+
+  @override
+  String get voteReset => 'Reset vote';
+
+  @override
+  String get otherVotes => 'Other votes';
+
+  @override
+  String get rejectConfirmTitle => 'Reject this pull request?';
+
+  @override
+  String get rejectConfirmBody =>
+      'The pull request can\'t be completed as long as your vote is Rejected.';
+
+  @override
+  String get waitForAuthorConfirmTitle => 'Wait for the author?';
+
+  @override
+  String get voteReasonHint => 'Reason (optional)';
+
+  @override
+  String get voteReasonHelper => 'Posted as a comment on the pull request.';
+
+  @override
+  String get voteSaved => 'Vote saved';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get actionDenied =>
+      'Azure DevOps didn\'t allow this. Check that your token has the right scope and that your account has permission.';
+
+  @override
+  String get writeComment => 'Write a comment…';
+
+  @override
+  String get send => 'Send';
+
+  @override
+  String get reply => 'Reply';
+
+  @override
+  String get writeReply => 'Write a reply…';
+
+  @override
+  String get resolveThread => 'Resolve';
+
+  @override
+  String get reactivateThread => 'Reactivate';
+
+  @override
+  String get workItemScopeHint =>
+      'Commenting on tickets needs the Work Items (Read & write) scope on your token.';
+
+  @override
+  String get changeAssignee => 'Change assignee';
+
+  @override
+  String get searchPeopleHint => 'Search people';
+
+  @override
+  String get assignToMe => 'Assign to me';
+
+  @override
+  String assignedToName(String name) {
+    return 'Assigned to $name';
+  }
+
+  @override
+  String get ticketUnassigned => 'Ticket unassigned';
+
+  @override
+  String get assignScopeHint =>
+      'Assigning tickets needs the Work Items (Read & write) scope on your token.';
+
+  @override
+  String get membersLoadFailed =>
+      'Couldn\'t load the team members. That needs the Project and Team (Read) scope on your token.';
+
+  @override
+  String get noPeopleFound => 'No one found';
+
+  @override
+  String get copyLink => 'Copy link';
+
+  @override
+  String get shareTicket => 'Share';
+
+  @override
+  String get linkCopied => 'Link copied';
+
+  @override
+  String get undo => 'Undo';
 
   @override
   String get runErrors => 'Errors';

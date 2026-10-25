@@ -1,6 +1,6 @@
 # DevOps
 
-A Flutter app for viewing your Azure DevOps work items (tickets) and pull requests and following your pipeline runs on your phone or desktop.
+A Flutter app for viewing, commenting on and assigning your Azure DevOps work items (tickets), viewing, voting on and discussing pull requests and following, approving, re-running and canceling your pipeline runs on your phone or desktop.
 
 ## Features
 
@@ -13,15 +13,23 @@ A Flutter app for viewing your Azure DevOps work items (tickets) and pull reques
   - Scope: *Assigned to me*, *Created by me* or *All*
   - Filter on open items only and on work item type (Bug, Task, User Story, ...)
   - Search by title, ID, tag or assignee; pull to refresh
+  - Swipe a ticket right to assign it to yourself (with *Undo*), or left to copy its link or share it, for example to Teams or Slack
 - **Work item details**: description (or repro steps, acceptance criteria and the other fields of the work item type), state, assignee, priority, effort, original estimate / remaining / completed work, area and iteration path, tags, parent, child and other linked items, attachments and comments (including rendered @mentions and pasted or embedded images), with a button to open the item in the browser
+  - Add a comment at the top of the comments
+  - Tap the assignee to assign the item to yourself, to a member of one of the project's teams or to no one
   - Images open full screen and can be zoomed; other attachments are downloaded and opened with an app on the device (on the web, downloaded by the browser), asking first for large files
 - **Pull requests** of the selected projects with status, branches, author and reviewer votes
   - Scope: *Reviewing*, *Created by me* or *All*; filter on open pull requests and search by title, ID, branch, repository or person
   - Details: description, source and target branch, merge conflicts, labels, reviewers with their vote, linked work items and the comment threads (with file and resolved status), with a button to open the pull request in the browser
+  - Vote on an open pull request: *Approve*, or *Approve with suggestions*, *Wait for author*, *Reject* and *Reset vote* from the menu next to it. *Wait for author* and *Reject* ask first, with room for an optional reason that is posted as a comment; voting on a pull request you don't review yet adds you as a reviewer
+  - Start a new discussion with a comment (Markdown) at the top of the comments, *Reply* to one, and *Resolve* or *Reactivate* it
+  - *Files* tab: the files the pull request changes, compared with the commit its branches have in common, each with the lines it adds and removes (+X / −Y) and the totals; tap a file for a compact unified diff with three lines of context. Binary files and files over 1 MB or 20,000 lines aren't compared; the lines of the first 100 files are counted right away, those of the others once opened
 - **Pipelines**: the latest builds and releases of the selected projects with status, branch, duration and who started them
   - Show all runs, only builds or only releases; filter on active runs and search by pipeline, branch or person; refreshes automatically while a run is in progress or waiting for approval
   - Running builds and release stages show an estimated progress bar, based on how long the last successful run took
   - Run details: progress bar, stages with their jobs and tasks (status, duration, errors and warnings), with a button to open the run in the browser
+  - Builds: *Cancel run* while it is going (asks first), *Run again* once it finished (a new run of the same pipeline on the same branch, commit and parameters, with a link to open it) and *Rerun failed jobs* of a failed run. Classic releases are deployed stage by stage in the browser
+  - *Approvals*: the stages waiting for approval, with who may approve and the instructions; *Approve* or *Reject* one with an optional comment. Works for the approval checks of YAML pipelines (*Approvals and checks* on an environment or other resource) and the pre- and post-deployment approvals of classic releases; other checks, such as business hours or an Azure function, run by themselves
   - Failed runs list their errors with the step that logged them and the log lines leading up to the first error
   - YAML pipelines (including deployment stages), classic build pipelines and classic release pipelines; releases show their stages, the artifact version and who still has to approve a stage
 - **Pipeline logs**: the log of each step, opened at its first error; show only errors and warnings, jump to the previous / next error and copy the log
@@ -33,6 +41,7 @@ A Flutter app for viewing your Azure DevOps work items (tickets) and pull reques
 - **Run notifications** (Android): the progress of running builds and releases in a notification, on Android 16 as a Live Update with a chip in the status bar; several runs share one notification and each shows its result when it finishes
   - Follows *My runs* (default), *All runs* or nothing, under *Settings → Notifications*; turning them on asks for permission to post notifications
   - Runs are refreshed every 15 seconds while the app is open and, as long as a run is going, in the background through a foreground service; runs that start while the app is closed are picked up the next time it is opened
+- **App shortcuts** (Android): long-press the app icon, or drag a shortcut to the home screen, for *My pull requests* (your open pull requests, created or to review), *Active runs* (the pipelines tab filtered on runs that are going) and *Tickets* (the tickets tab)
 - **Open Azure DevOps links in the app** (Android): share a link to a work item, pull request, build or release to *DevOps* (for example from Teams or the browser), or let Android open those links with the app directly
   - Works for `dev.azure.com/{organization}`, `{organization}.visualstudio.com` and, when shared, on-premises collection URLs; links of another organization show a message instead
   - Opening links directly needs to be turned on once, since the app can't verify these domains: *Settings → Apps → DevOps → Open by default → Add link*, select `dev.azure.com` and `*.visualstudio.com`. *Open in DevOps* then still opens the browser
@@ -54,7 +63,7 @@ flutter pub get
 flutter run
 ```
 
-Supported platforms in this repo: Android, iOS, Windows and Web. The home screen widgets and run notifications are Android only.
+Supported platforms in this repo: Android, iOS, Windows and Web. The home screen widgets, run notifications and app shortcuts are Android only.
 
 ### Connect to Azure DevOps
 
@@ -67,7 +76,7 @@ The connection is verified before it is saved. The PAT is kept in secure storage
 
 ### Create a Personal Access Token
 
-The app only reads data, so a read-only token is enough. Microsoft's official guide: [Use personal access tokens](https://learn.microsoft.com/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate).
+Most scopes only need Read; the ones the app also acts with, such as **Code** to vote on pull requests, need more. Microsoft's official guide: [Use personal access tokens](https://learn.microsoft.com/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate).
 
 1. Sign in to your organization (`https://dev.azure.com/{yourorganization}`).
 2. Open **User settings** (the icon next to your profile picture, top right) → **Personal access tokens**.
@@ -76,15 +85,15 @@ The app only reads data, so a read-only token is enough. Microsoft's official gu
    - **Name** – for example `DevOps app`.
    - **Organization** – the organization you will connect to (or *All accessible organizations*).
    - **Expiration** – up to one year; when the token expires, the app reports *Not authorized* and you need to enter a new token in *Settings*.
-   - **Scopes** – choose **Custom defined** and select only:
+   - **Scopes** – choose **Custom defined** and select only these, each with the permission listed:
 
      | Scope | Permission | Used for |
      | --- | --- | --- |
-     | **Work Items** | Read (`vso.work`) | WIQL queries, work item details, links, comments and attachments/images |
-     | **Code** | Read (`vso.code`) | Pull requests, their reviewers, comment threads and linked work items |
-     | **Project and Team** | Read (`vso.project`) | Listing the projects in the organization (also used to verify the connection) |
-     | **Build** | Read (`vso.build`) | Pipeline runs and their stages, jobs and tasks |
-     | **Release** | Read (`vso.release`) | Releases of classic release pipelines, their stages and approvals |
+     | **Work Items** | Read & write (`vso.work_write`) | WIQL queries, work item details, links, comments and attachments/images; commenting and assigning |
+     | **Code** | Read & write (`vso.code_write`) | Pull requests, their reviewers, comment threads and linked work items; voting and commenting |
+     | **Project and Team** | Read (`vso.project`) | Listing the projects in the organization (also used to verify the connection) and the team members to assign tickets to |
+     | **Build** | Read & execute (`vso.build_execute`) | Pipeline runs and their stages, jobs and tasks; approving stages of YAML pipelines, canceling and running builds again |
+     | **Release** | Read, write, & execute (`vso.release_execute`) | Releases of classic release pipelines, their stages and approvals; approving release stages |
 
      Click *Show all scopes* if a scope is not visible. Do not choose *Full access*.
 5. Click **Create** and copy the token right away – Azure DevOps shows it only once.
@@ -93,11 +102,13 @@ The app only reads data, so a read-only token is enough. Microsoft's official gu
 A token can never do more than your own account. You also need:
 
 - An access level of at least **Stakeholder** (or **Basic**) in the organization.
-- Read access to the projects and area paths whose work items you want to see (by default, members of a project's *Readers* or *Contributors* group have this).
-- Read access to the repositories whose pull requests you want to see (granted to *Readers* and *Contributors* by default).
-- The *View builds* permission on the pipelines and *View releases* on the release pipelines you want to follow (also granted to *Readers* and *Contributors* by default).
+- Read access to the projects and area paths whose work items you want to see (by default, members of a project's *Readers* or *Contributors* group have this), and *Edit work items in this node* on the area path to comment (granted to *Contributors* by default).
+- Read access to the repositories whose pull requests you want to see (granted to *Readers* and *Contributors* by default), and *Contribute to pull requests* to vote and comment (granted to *Contributors* by default).
+- The *View builds* permission on the pipelines and *View releases* on the release pipelines you want to follow (also granted to *Readers* and *Contributors* by default). To approve a stage, you need to be one of its approvers, or in a group that is. To run a pipeline again you need *Queue builds*, to cancel a run *Stop builds*.
 
 Tokens created before the pipelines and pull requests were added lack the **Build**, **Release** and **Code** scopes: the *Pipelines* tab then reports *Not authorized*, or only shows the builds with a warning that the releases couldn't be loaded, and the *Pull requests* tab reports *Not authorized* with a hint about the **Code** scope. Edit the token in Azure DevOps to add the scopes (the token itself stays the same) or create a new one.
+
+When Azure DevOps refuses an action, such as a vote with a token that only has **Code (Read)**, the app says so and names the scope and permission the action needs, along with the message from Azure DevOps.
 
 Releases are read from the release management API: `vsrm.dev.azure.com/{organization}` (or `{organization}.vsrm.visualstudio.com`). On Azure DevOps Server it is the collection URL itself.
 
@@ -113,7 +124,8 @@ lib/
 │   ├── pipeline_run.dart         Builds, releases and their timeline (stages, jobs, tasks)
 │   ├── pipeline_log.dart         Log lines with their errors and warnings
 │   ├── run_estimates.dart        Expected duration of running builds and release stages
-│   ├── pull_request.dart         Pull requests, reviewers and comment threads
+│   ├── pull_request.dart         Pull requests, reviewers, comment threads and changed files
+│   ├── file_diff.dart            Line diff of two versions of a file, as unified diff hunks
 │   ├── devops_link.dart          Reading Azure DevOps links of work items, pull requests and runs
 │   └── dashboard_summary.dart    What waits for the user, for the overview
 ├── services/
@@ -123,6 +135,7 @@ lib/
 │   ├── logging.dart              Logging and optional Sentry error reporting
 │   ├── links.dart                Links opened with or shared to the app, opening the browser (Android)
 │   ├── run_notifications.dart    Progress notifications of running pipeline runs (Android)
+│   ├── shortcuts.dart            App shortcuts on a long press on the app icon (Android)
 │   └── home_widget_service.dart  Data feed for the Android home screen widgets
 ├── screens/
 │   ├── home_screen.dart          Tabs for the overview, tickets, pull requests and pipelines
@@ -139,6 +152,8 @@ lib/
 │   ├── work_item_visuals.dart    Type/state icons and colours
 │   ├── pipeline_visuals.dart     Run status icons and colours
 │   ├── pull_request_visuals.dart Pull request status and vote icons
+│   ├── pull_request_files.dart   Changed files of a pull request and their diffs
+│   ├── assignee_picker.dart      Bottom sheet to pick whom to assign a ticket to
 │   ├── attachments.dart          Attachment list and inline / full screen images
 │   ├── devops_html.dart          HTML fields and comments, with their images
 │   └── ...                       Shared cards, empty states, Markdown, project picker

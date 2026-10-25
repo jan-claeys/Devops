@@ -64,7 +64,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'Em Scopes, escolha Custom defined e ative apenas os escopos indicados acima, cada um com Read.';
+      'Em Scopes, escolha Custom defined e ative apenas os escopos indicados acima, cada um com a permissão mostrada ao lado.';
 
   @override
   String get tokenHelpStep4 =>
@@ -481,7 +481,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get releaseScopeHint =>
-      'As versões precisam do escopo Release (Read) no seu token.';
+      'As versões precisam do escopo Release (Read, write, & execute) no seu token.';
 
   @override
   String get artifact => 'Artefato';
@@ -490,6 +490,57 @@ class AppLocalizationsPt extends AppLocalizations {
   String waitingForApprovalBy(String names) {
     return 'Aguardando aprovação de $names';
   }
+
+  @override
+  String get approvals => 'Aprovações';
+
+  @override
+  String approveStage(String stage) {
+    return 'Aprovar $stage?';
+  }
+
+  @override
+  String rejectStage(String stage) {
+    return 'Rejeitar $stage?';
+  }
+
+  @override
+  String get approvalCommentHint => 'Comentário (opcional)';
+
+  @override
+  String get stageApproved => 'Fase aprovada';
+
+  @override
+  String get stageRejected => 'Fase rejeitada';
+
+  @override
+  String get buildScopeHint =>
+      'Para agir em execuções de pipeline, o seu token precisa do escopo Build (Read & execute).';
+
+  @override
+  String get cancelRun => 'Cancelar execução';
+
+  @override
+  String get cancelRunTitle => 'Cancelar esta execução?';
+
+  @override
+  String get cancelRunBody =>
+      'Os jobs em execução são parados e os que ainda não começaram são ignorados.';
+
+  @override
+  String get keepRunning => 'Continuar';
+
+  @override
+  String get runAgain => 'Executar novamente';
+
+  @override
+  String get rerunFailedJobs => 'Executar novamente os jobs com falha';
+
+  @override
+  String get runStarted => 'Execução iniciada';
+
+  @override
+  String get open => 'Abrir';
 
   @override
   String get pullRequests => 'Pull requests';
@@ -507,7 +558,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get codeScopeHint =>
-      'Os pull requests precisam do escopo Code (Read) no seu token.';
+      'Os pull requests precisam do escopo Code (Read & write) no seu token.';
 
   @override
   String get noPullRequestsTitle => 'Nenhum pull request';
@@ -581,6 +632,153 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get threadResolved => 'Resolvido';
+
+  @override
+  String get overviewTab => 'Visão geral';
+
+  @override
+  String get filesTab => 'Arquivos';
+
+  @override
+  String filesChanged(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count arquivos alterados',
+      one: '1 arquivo alterado',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get noFileChanges => 'Este pull request não altera nenhum arquivo.';
+
+  @override
+  String get loadFilesFailed =>
+      'Não foi possível carregar os arquivos alterados';
+
+  @override
+  String get loadFileFailed => 'Não foi possível carregar este arquivo';
+
+  @override
+  String get binaryFile => 'Arquivo binário';
+
+  @override
+  String get fileTooLarge => 'Grande demais para comparar aqui';
+
+  @override
+  String get noContentChanges => 'Sem alterações no conteúdo';
+
+  @override
+  String renamedFrom(String path) {
+    return 'Renomeado de $path';
+  }
+
+  @override
+  String get voteApprove => 'Aprovar';
+
+  @override
+  String get voteApproveWithSuggestions => 'Aprovar com sugestões';
+
+  @override
+  String get voteWaitForAuthor => 'Aguardar o autor';
+
+  @override
+  String get voteReject => 'Rejeitar';
+
+  @override
+  String get voteReset => 'Redefinir voto';
+
+  @override
+  String get otherVotes => 'Outros votos';
+
+  @override
+  String get rejectConfirmTitle => 'Rejeitar este pull request?';
+
+  @override
+  String get rejectConfirmBody =>
+      'O pull request não pode ser concluído enquanto o seu voto for Rejeitado.';
+
+  @override
+  String get waitForAuthorConfirmTitle => 'Aguardar o autor?';
+
+  @override
+  String get voteReasonHint => 'Motivo (opcional)';
+
+  @override
+  String get voteReasonHelper => 'Publicado como comentário no pull request.';
+
+  @override
+  String get voteSaved => 'Voto salvo';
+
+  @override
+  String get cancel => 'Cancelar';
+
+  @override
+  String get actionDenied =>
+      'O Azure DevOps não permitiu isto. Verifique se o seu token tem o escopo certo e se a sua conta tem permissão.';
+
+  @override
+  String get writeComment => 'Escreva um comentário…';
+
+  @override
+  String get send => 'Enviar';
+
+  @override
+  String get reply => 'Responder';
+
+  @override
+  String get writeReply => 'Escreva uma resposta…';
+
+  @override
+  String get resolveThread => 'Resolver';
+
+  @override
+  String get reactivateThread => 'Reativar';
+
+  @override
+  String get workItemScopeHint =>
+      'Para comentar em tickets, o seu token precisa do escopo Work Items (Read & write).';
+
+  @override
+  String get changeAssignee => 'Alterar responsável';
+
+  @override
+  String get searchPeopleHint => 'Pesquisar pessoas';
+
+  @override
+  String get assignToMe => 'Atribuir a mim';
+
+  @override
+  String assignedToName(String name) {
+    return 'Atribuído a $name';
+  }
+
+  @override
+  String get ticketUnassigned => 'Ticket sem responsável';
+
+  @override
+  String get assignScopeHint =>
+      'Para atribuir tickets, o seu token precisa do escopo Work Items (Read & write).';
+
+  @override
+  String get membersLoadFailed =>
+      'Não foi possível carregar os membros da equipa. Para isso, o seu token precisa do escopo Project and Team (Read).';
+
+  @override
+  String get noPeopleFound => 'Ninguém encontrado';
+
+  @override
+  String get copyLink => 'Copiar link';
+
+  @override
+  String get shareTicket => 'Partilhar';
+
+  @override
+  String get linkCopied => 'Link copiado';
+
+  @override
+  String get undo => 'Desfazer';
 
   @override
   String get runErrors => 'Erros';

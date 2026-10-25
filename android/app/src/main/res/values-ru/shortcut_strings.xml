@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="shortcut_my_pull_requests_short">Мои PR</string>
+    <string name="shortcut_my_pull_requests_long">Мои pull request’ы</string>
+    <string name="shortcut_active_runs_short">Активные</string>
+    <string name="shortcut_active_runs_long">Активные запуски</string>
+    <string name="shortcut_tickets">Тикеты</string>
+</resources>

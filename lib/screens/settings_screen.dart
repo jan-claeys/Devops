@@ -350,17 +350,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 }
 
-/// Lists the token scopes the app needs, one per row, so they are easy to tick
-/// off in Azure DevOps. Names match the Azure DevOps UI and stay untranslated.
+/// Lists the token scopes the app needs with their permission, one per row,
+/// so they are easy to tick off in Azure DevOps. Names match the Azure DevOps
+/// UI and stay untranslated.
 class _RequiredScopes extends StatelessWidget {
   const _RequiredScopes();
 
   static const _scopes = [
-    (Icons.assignment_outlined, 'Work Items'),
-    (Icons.code, 'Code'),
-    (Icons.rocket_launch_outlined, 'Build'),
-    (Icons.account_tree_outlined, 'Release'),
-    (Icons.groups_outlined, 'Project and Team'),
+    (Icons.assignment_outlined, 'Work Items', 'Read & write'),
+    (Icons.code, 'Code', 'Read & write'),
+    (Icons.rocket_launch_outlined, 'Build', 'Read & execute'),
+    (Icons.account_tree_outlined, 'Release', 'Read, write, & execute'),
+    (Icons.groups_outlined, 'Project and Team', 'Read'),
   ];
 
   @override
@@ -382,7 +383,7 @@ class _RequiredScopes extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 4),
-            for (final (icon, name) in _scopes)
+            for (final (icon, name, permission) in _scopes)
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 6),
                 child: Row(
@@ -397,7 +398,7 @@ class _RequiredScopes extends StatelessWidget {
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Text(
-                        'Read',
+                        permission,
                         style: theme.textTheme.labelMedium?.copyWith(
                           color: scheme.onSecondaryContainer,
                         ),

@@ -19,6 +19,7 @@ import 'services/home_widget_service.dart';
 import 'services/links.dart';
 import 'services/logging.dart';
 import 'services/run_notifications.dart';
+import 'services/shortcuts.dart';
 
 Future<void> main() async {
   await runWithErrorReporting(() async {
@@ -71,17 +72,24 @@ class _DevOpsAppState extends State<DevOpsApp> {
     super.dispose();
   }
 
+  /// A tap on a home screen widget row or a run notification, or an app
+  /// shortcut.
   void _openFromWidget(Uri? uri) {
-    if (uri?.toString() == RunNotifications.pipelinesUri) return _showPipelines();
+    if (uri?.toString() == RunNotifications.pipelinesUri) {
+      return _showHome((home) => home.showPipelines());
+    }
+    if (AppShortcut.fromUri(uri) case final shortcut?) {
+      return _showHome((home) => home.showShortcut(shortcut));
+    }
     if (HomeWidgets.linkFromUri(uri) case final link?) _open(link);
   }
 
-  /// Shows the pipelines tab, closing whatever is opened on top of it.
-  void _showPipelines() {
+  /// Shows a tab of the home screen, closing whatever is opened on top of it.
+  void _showHome(void Function(HomeScreenState home) show) {
     if (!AppScope.read(context).isConfigured) return;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _navigator.currentState?.popUntil((r) => r.isFirst);
-      _home.currentState?.showPipelines();
+      if (_home.currentState case final home?) show(home);
     });
   }
 

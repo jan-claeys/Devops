@@ -63,7 +63,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'ضمن Scopes، اختر Custom defined وفعّل فقط النطاقات المذكورة أعلاه، كلٌّ منها بصلاحية Read.';
+      'ضمن Scopes، اختر Custom defined وفعّل فقط النطاقات المذكورة أعلاه، كلٌّ منها بالصلاحية الظاهرة بجانبه.';
 
   @override
   String get tokenHelpStep4 =>
@@ -487,7 +487,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get releaseScopeHint =>
-      'تحتاج الإصدارات إلى النطاق Release (Read) في الرمز المميز.';
+      'تحتاج الإصدارات إلى النطاق Release (Read, write, & execute) في الرمز المميز.';
 
   @override
   String get artifact => 'العنصر';
@@ -496,6 +496,57 @@ class AppLocalizationsAr extends AppLocalizations {
   String waitingForApprovalBy(String names) {
     return 'بانتظار موافقة $names';
   }
+
+  @override
+  String get approvals => 'الموافقات';
+
+  @override
+  String approveStage(String stage) {
+    return 'الموافقة على $stage؟';
+  }
+
+  @override
+  String rejectStage(String stage) {
+    return 'رفض $stage؟';
+  }
+
+  @override
+  String get approvalCommentHint => 'تعليق (اختياري)';
+
+  @override
+  String get stageApproved => 'تمت الموافقة على المرحلة';
+
+  @override
+  String get stageRejected => 'تم رفض المرحلة';
+
+  @override
+  String get buildScopeHint =>
+      'يتطلب التعامل مع تشغيلات المسارات النطاق Build (Read & execute) في الرمز المميز.';
+
+  @override
+  String get cancelRun => 'إلغاء التشغيل';
+
+  @override
+  String get cancelRunTitle => 'هل تريد إلغاء هذا التشغيل؟';
+
+  @override
+  String get cancelRunBody =>
+      'ستتوقف المهام قيد التشغيل وسيتم تخطي المهام التي لم تبدأ بعد.';
+
+  @override
+  String get keepRunning => 'متابعة التشغيل';
+
+  @override
+  String get runAgain => 'تشغيل مرة أخرى';
+
+  @override
+  String get rerunFailedJobs => 'إعادة تشغيل المهام الفاشلة';
+
+  @override
+  String get runStarted => 'بدأ التشغيل';
+
+  @override
+  String get open => 'فتح';
 
   @override
   String get pullRequests => 'طلبات السحب';
@@ -512,7 +563,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get codeScopeHint =>
-      'تحتاج طلبات السحب إلى النطاق Code (Read) في الرمز المميز.';
+      'تحتاج طلبات السحب إلى النطاق Code (Read & write) في الرمز المميز.';
 
   @override
   String get noPullRequestsTitle => 'لا توجد طلبات سحب';
@@ -589,6 +640,152 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get threadResolved => 'تم الحل';
+
+  @override
+  String get overviewTab => 'نظرة عامة';
+
+  @override
+  String get filesTab => 'الملفات';
+
+  @override
+  String filesChanged(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'تم تغيير $count ملفات',
+      one: 'تم تغيير ملف واحد',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get noFileChanges => 'لا يغيّر طلب السحب هذا أي ملفات.';
+
+  @override
+  String get loadFilesFailed => 'تعذّر تحميل الملفات التي تم تغييرها';
+
+  @override
+  String get loadFileFailed => 'تعذّر تحميل هذا الملف';
+
+  @override
+  String get binaryFile => 'ملف ثنائي';
+
+  @override
+  String get fileTooLarge => 'أكبر من أن تتم مقارنته هنا';
+
+  @override
+  String get noContentChanges => 'لا توجد تغييرات في المحتوى';
+
+  @override
+  String renamedFrom(String path) {
+    return 'أُعيدت تسميته من $path';
+  }
+
+  @override
+  String get voteApprove => 'موافقة';
+
+  @override
+  String get voteApproveWithSuggestions => 'موافقة مع اقتراحات';
+
+  @override
+  String get voteWaitForAuthor => 'انتظار المؤلف';
+
+  @override
+  String get voteReject => 'رفض';
+
+  @override
+  String get voteReset => 'إعادة تعيين التصويت';
+
+  @override
+  String get otherVotes => 'تصويتات أخرى';
+
+  @override
+  String get rejectConfirmTitle => 'هل تريد رفض طلب السحب هذا؟';
+
+  @override
+  String get rejectConfirmBody =>
+      'لا يمكن إكمال طلب السحب طالما أن تصويتك هو مرفوض.';
+
+  @override
+  String get waitForAuthorConfirmTitle => 'هل تريد انتظار المؤلف؟';
+
+  @override
+  String get voteReasonHint => 'السبب (اختياري)';
+
+  @override
+  String get voteReasonHelper => 'يُنشر كتعليق على طلب السحب.';
+
+  @override
+  String get voteSaved => 'تم حفظ التصويت';
+
+  @override
+  String get cancel => 'إلغاء';
+
+  @override
+  String get actionDenied =>
+      'لم يسمح Azure DevOps بذلك. تحقّق من أن الرمز المميز لديه النطاق الصحيح وأن حسابك لديه الإذن.';
+
+  @override
+  String get writeComment => 'اكتب تعليقًا…';
+
+  @override
+  String get send => 'إرسال';
+
+  @override
+  String get reply => 'رد';
+
+  @override
+  String get writeReply => 'اكتب ردًا…';
+
+  @override
+  String get resolveThread => 'حل';
+
+  @override
+  String get reactivateThread => 'إعادة تنشيط';
+
+  @override
+  String get workItemScopeHint =>
+      'يتطلب التعليق على التذاكر النطاق Work Items (Read & write) في الرمز المميز.';
+
+  @override
+  String get changeAssignee => 'تغيير المسؤول';
+
+  @override
+  String get searchPeopleHint => 'البحث عن أشخاص';
+
+  @override
+  String get assignToMe => 'إسناد إليّ';
+
+  @override
+  String assignedToName(String name) {
+    return 'تم الإسناد إلى $name';
+  }
+
+  @override
+  String get ticketUnassigned => 'تمت إزالة إسناد التذكرة';
+
+  @override
+  String get assignScopeHint =>
+      'يتطلب إسناد التذاكر النطاق Work Items (Read & write) في الرمز المميز.';
+
+  @override
+  String get membersLoadFailed =>
+      'تعذر تحميل أعضاء الفريق. يتطلب ذلك النطاق Project and Team (Read) في الرمز المميز.';
+
+  @override
+  String get noPeopleFound => 'لم يتم العثور على أحد';
+
+  @override
+  String get copyLink => 'نسخ الرابط';
+
+  @override
+  String get shareTicket => 'مشاركة';
+
+  @override
+  String get linkCopied => 'تم نسخ الرابط';
+
+  @override
+  String get undo => 'تراجع';
 
   @override
   String get runErrors => 'الأخطاء';

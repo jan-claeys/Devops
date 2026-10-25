@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="shortcut_my_pull_requests_short">طلباتي</string>
+    <string name="shortcut_my_pull_requests_long">طلبات السحب الخاصة بي</string>
+    <string name="shortcut_active_runs_short">النشطة</string>
+    <string name="shortcut_active_runs_long">التشغيلات النشطة</string>
+    <string name="shortcut_tickets">التذاكر</string>
+</resources>

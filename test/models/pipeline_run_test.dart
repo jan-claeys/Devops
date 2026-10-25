@@ -80,6 +80,21 @@ void main() {
       expect(timeline.roots.map((r) => r.name), ['Build', 'Deploy', 'Deploy']);
     });
 
+    test('finds the approvals that still wait, with their stage', () {
+      final approvals = Timeline([
+        for (final json in [
+          recordJson('s1', 'Stage', 'Production', state: 'pending', result: null),
+          recordJson('c1', 'Checkpoint', 'Checkpoint', parent: 's1', state: 'inProgress',
+              result: null),
+          recordJson('a1', 'Checkpoint.Approval', 'Approval', parent: 'c1',
+              state: 'inProgress', result: null),
+          recordJson('a2', 'Checkpoint.Approval', 'Approval', parent: 'c1'),
+        ])
+          TimelineRecord.fromJson(json),
+      ]).pendingApprovals;
+      expect(approvals, {'a1': 'Production'});
+    });
+
     test('skips phases and checkpoints', () {
       expect(timeline.children('s1').map((r) => r.id), ['j1']);
       expect(timeline.children('s2'), isEmpty);
@@ -157,6 +172,14 @@ void main() {
       ]);
     });
 
+    test('lists the approvals that stages wait for', () {
+      final run = PipelineRun.fromRelease(release, project: 'Contoso');
+      expect(run.approvals.map((a) => (a.id, a.stage, a.approvers.join(), a.isRelease)), [
+        ('200', 'Acceptance', 'Ann', true),
+        ('201', 'Acceptance', 'Bob', true),
+      ]);
+    });
+
     test('takes the status of the busiest or worst stage', () {
       RunStatus status(List<String> stages, {String release = 'active'}) =>
           PipelineRun.fromRelease(releaseJson(1, status: release, environments: [
@@ -215,5 +238,22 @@ void main() {
           [('Deploy', 'Deployment failed')]);
       expect(timeline.path(record), ['Test', 'Agent job', 'Deploy']);
     });
+  });
+
+  test('PendingApproval reads who may still approve', () {
+    final approval = PendingApproval.fromJson({
+      'id': 'a1',
+      'status': 'pending',
+      'instructions': '  Check the release notes ',
+      'steps': [
+        {'status': 'approved', 'assignedApprover': {'displayName': 'Ann'}},
+        {'status': 'pending', 'assignedApprover': {'displayName': 'Release managers'}},
+      ],
+    }, stage: 'Production');
+    expect(approval.id, 'a1');
+    expect(approval.stage, 'Production');
+    expect(approval.approvers, ['Release managers']);
+    expect(approval.instructions, 'Check the release notes');
+    expect(approval.isRelease, isFalse);
   });
 }

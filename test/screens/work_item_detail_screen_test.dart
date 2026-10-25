@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:devops/screens/work_item_detail_screen.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -302,6 +304,119 @@ void main() {
       fake.add(workItemJson(12));
       await pumpDetail(tester, id: 12);
       expect(find.textContaining('Attachments'), findsNothing);
+    });
+  });
+
+  group('comment', () {
+    Future<void> write(WidgetTester tester, String text) async {
+      await tester.enterText(find.widgetWithText(TextField, en.writeComment), text);
+      await tester.pump();
+      await tester.tap(find.byTooltip(en.send));
+      await tester.pumpAndSettle();
+    }
+
+    testWidgets('adds a comment and reloads', (tester) async {
+      await pumpDetail(tester);
+      await write(tester, 'On it');
+
+      final post = fake.requests
+          .singleWhere((r) => r.method == 'POST' && r.url.path.endsWith('/comments'));
+      expect(post.url.path, endsWith('/workItems/10/comments'));
+      expect(jsonDecode(post.body), {'text': 'On it'});
+      expect(find.text('On it'), findsNothing);
+      expect(fake.requests.where((r) => r.method == 'GET' && r.url.path.endsWith('/comments')),
+          hasLength(2));
+    });
+
+    testWidgets('names the Work Items scope when the token may not comment', (tester) async {
+      await pumpDetail(tester);
+      fake
+        ..failWith = 401
+        ..failPath = '/comments';
+      await write(tester, 'On it');
+      expect(find.textContaining(en.workItemScopeHint), findsOneWidget);
+      expect(find.text('On it'), findsOneWidget);
+    });
+  });
+
+  group('assignee', () {
+    Future<void> openPicker(WidgetTester tester) async {
+      await tester.tap(find.text('Jan Claeys').first);
+      await tester.pumpAndSettle();
+    }
+
+    List<dynamic> patches() => [
+          for (final r in fake.requests.where((r) => r.method == 'PATCH')) jsonDecode(r.body),
+        ];
+
+    testWidgets('assigns the ticket to a team member and reloads', (tester) async {
+      var changed = 0;
+      await pumpApp(
+        tester,
+        WorkItemDetailScreen(id: 10, onChanged: () => changed++),
+        state: connectedState(fake),
+        size: const Size(500, 3000),
+      );
+      await tester.pumpAndSettle();
+      await openPicker(tester);
+
+      expect(find.text(en.changeAssignee), findsOneWidget);
+      expect(find.text(en.assignToMe), findsOneWidget);
+      // Groups aren't people to assign to.
+      expect(find.textContaining('Contoso Team'), findsNothing);
+
+      await tester.enterText(find.widgetWithText(SearchBar, en.searchPeopleHint), 'anna');
+      await tester.pumpAndSettle();
+      expect(find.text('Piet Peeters'), findsNothing);
+      await tester.tap(find.text('Anna Aerts'));
+      await tester.pumpAndSettle();
+
+      expect(patches(), [
+        [
+          {'op': 'add', 'path': '/fields/System.AssignedTo', 'value': 'anna@contoso.com'},
+        ],
+      ]);
+      expect(find.text(en.assignedToName('Anna Aerts')), findsOneWidget);
+      expect(find.text('Anna Aerts'), findsWidgets);
+      expect(changed, 1);
+    });
+
+    testWidgets('assigns the ticket to the user', (tester) async {
+      await pumpDetail(tester);
+      await openPicker(tester);
+      await tester.tap(find.text(en.assignToMe));
+      await tester.pumpAndSettle();
+      expect((patches().single as List).single['value'], 'me@contoso.com');
+    });
+
+    testWidgets('leaves the ticket unassigned', (tester) async {
+      await pumpDetail(tester);
+      await openPicker(tester);
+      await tester.tap(find.text(en.unassigned));
+      await tester.pumpAndSettle();
+      expect((patches().single as List).single['value'], '');
+      expect(find.text(en.ticketUnassigned), findsOneWidget);
+    });
+
+    testWidgets('still offers the user when the team members fail', (tester) async {
+      await pumpDetail(tester);
+      fake
+        ..failWith = 401
+        ..failPath = '/teams';
+      await openPicker(tester);
+      expect(find.text(en.membersLoadFailed), findsOneWidget);
+      expect(find.text(en.assignToMe), findsOneWidget);
+    });
+
+    testWidgets('names the Work Items scope when the token may not assign', (tester) async {
+      await pumpDetail(tester);
+      await openPicker(tester);
+      fake
+        ..failWith = 401
+        ..failPath = '/workitems/10';
+      await tester.tap(find.text(en.assignToMe));
+      await tester.pumpAndSettle();
+      expect(find.textContaining(en.assignScopeHint), findsOneWidget);
     });
   });
 }

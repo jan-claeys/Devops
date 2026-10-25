@@ -54,7 +54,10 @@ void main() {
     expect(find.text(en.requiredScopes), findsOneWidget);
     expect(find.text('Project and Team'), findsOneWidget);
     expect(find.text('Code'), findsOneWidget);
-    expect(find.text('Read'), findsNWidgets(5));
+    expect(find.text('Read'), findsOneWidget);
+    expect(find.text('Read & write'), findsNWidgets(2));
+    expect(find.text('Read & execute'), findsOneWidget);
+    expect(find.text('Read, write, & execute'), findsOneWidget);
     expect(find.text(en.appearance), findsNothing);
     expect(find.text(en.signOut), findsNothing);
   });

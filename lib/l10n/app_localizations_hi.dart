@@ -63,7 +63,7 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'Scopes में Custom defined चुनें और केवल ऊपर दिए गए स्कोप को Read के साथ चालू करें।';
+      'Scopes में Custom defined चुनें और केवल ऊपर दिए गए स्कोप को उनके बगल में दिखाई गई अनुमति के साथ चालू करें।';
 
   @override
   String get tokenHelpStep4 =>
@@ -474,7 +474,7 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get releaseScopeHint =>
-      'रिलीज़ के लिए आपके टोकन में Release (Read) स्कोप चाहिए।';
+      'रिलीज़ के लिए आपके टोकन में Release (Read, write, & execute) स्कोप चाहिए।';
 
   @override
   String get artifact => 'आर्टिफ़ैक्ट';
@@ -483,6 +483,57 @@ class AppLocalizationsHi extends AppLocalizations {
   String waitingForApprovalBy(String names) {
     return '$names के अनुमोदन की प्रतीक्षा';
   }
+
+  @override
+  String get approvals => 'स्वीकृतियाँ';
+
+  @override
+  String approveStage(String stage) {
+    return '$stage को स्वीकृत करें?';
+  }
+
+  @override
+  String rejectStage(String stage) {
+    return '$stage को अस्वीकार करें?';
+  }
+
+  @override
+  String get approvalCommentHint => 'टिप्पणी (वैकल्पिक)';
+
+  @override
+  String get stageApproved => 'चरण स्वीकृत किया गया';
+
+  @override
+  String get stageRejected => 'चरण अस्वीकार किया गया';
+
+  @override
+  String get buildScopeHint =>
+      'पाइपलाइन रन पर कार्रवाई के लिए आपके टोकन में Build (Read & execute) स्कोप चाहिए।';
+
+  @override
+  String get cancelRun => 'रन रद्द करें';
+
+  @override
+  String get cancelRunTitle => 'यह रन रद्द करें?';
+
+  @override
+  String get cancelRunBody =>
+      'चल रहे जॉब रोक दिए जाते हैं और जो शुरू नहीं हुए वे छोड़ दिए जाते हैं।';
+
+  @override
+  String get keepRunning => 'चलने दें';
+
+  @override
+  String get runAgain => 'फिर से चलाएँ';
+
+  @override
+  String get rerunFailedJobs => 'विफल जॉब फिर से चलाएँ';
+
+  @override
+  String get runStarted => 'रन शुरू हुआ';
+
+  @override
+  String get open => 'खोलें';
 
   @override
   String get pullRequests => 'पुल रिक्वेस्ट';
@@ -498,7 +549,7 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get codeScopeHint =>
-      'पुल रिक्वेस्ट के लिए आपके टोकन में Code (Read) स्कोप चाहिए।';
+      'पुल रिक्वेस्ट के लिए आपके टोकन में Code (Read & write) स्कोप चाहिए।';
 
   @override
   String get noPullRequestsTitle => 'कोई पुल रिक्वेस्ट नहीं';
@@ -572,6 +623,153 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get threadResolved => 'हल किया गया';
+
+  @override
+  String get overviewTab => 'अवलोकन';
+
+  @override
+  String get filesTab => 'फ़ाइलें';
+
+  @override
+  String filesChanged(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count फ़ाइलें बदलीं',
+      one: '1 फ़ाइल बदली',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get noFileChanges => 'यह पुल रिक्वेस्ट कोई फ़ाइल नहीं बदलता।';
+
+  @override
+  String get loadFilesFailed => 'बदली गई फ़ाइलें लोड नहीं हो सकीं';
+
+  @override
+  String get loadFileFailed => 'यह फ़ाइल लोड नहीं हो सकी';
+
+  @override
+  String get binaryFile => 'बाइनरी फ़ाइल';
+
+  @override
+  String get fileTooLarge => 'यहाँ तुलना करने के लिए बहुत बड़ी';
+
+  @override
+  String get noContentChanges => 'सामग्री में कोई बदलाव नहीं';
+
+  @override
+  String renamedFrom(String path) {
+    return '$path से नाम बदला गया';
+  }
+
+  @override
+  String get voteApprove => 'स्वीकृत करें';
+
+  @override
+  String get voteApproveWithSuggestions => 'सुझावों के साथ स्वीकृत करें';
+
+  @override
+  String get voteWaitForAuthor => 'लेखक की प्रतीक्षा करें';
+
+  @override
+  String get voteReject => 'अस्वीकार करें';
+
+  @override
+  String get voteReset => 'वोट रीसेट करें';
+
+  @override
+  String get otherVotes => 'अन्य वोट';
+
+  @override
+  String get rejectConfirmTitle => 'इस पुल रिक्वेस्ट को अस्वीकार करें?';
+
+  @override
+  String get rejectConfirmBody =>
+      'जब तक आपका वोट अस्वीकृत है, पुल रिक्वेस्ट पूरा नहीं किया जा सकता।';
+
+  @override
+  String get waitForAuthorConfirmTitle => 'लेखक की प्रतीक्षा करें?';
+
+  @override
+  String get voteReasonHint => 'कारण (वैकल्पिक)';
+
+  @override
+  String get voteReasonHelper =>
+      'पुल रिक्वेस्ट पर टिप्पणी के रूप में पोस्ट किया जाता है।';
+
+  @override
+  String get voteSaved => 'वोट सहेजा गया';
+
+  @override
+  String get cancel => 'रद्द करें';
+
+  @override
+  String get actionDenied =>
+      'Azure DevOps ने इसकी अनुमति नहीं दी। जाँचें कि आपके टोकन में सही स्कोप है और आपके खाते को अनुमति है।';
+
+  @override
+  String get writeComment => 'टिप्पणी लिखें…';
+
+  @override
+  String get send => 'भेजें';
+
+  @override
+  String get reply => 'जवाब दें';
+
+  @override
+  String get writeReply => 'जवाब लिखें…';
+
+  @override
+  String get resolveThread => 'हल करें';
+
+  @override
+  String get reactivateThread => 'फिर से सक्रिय करें';
+
+  @override
+  String get workItemScopeHint =>
+      'टिकट पर टिप्पणी करने के लिए आपके टोकन में Work Items (Read & write) स्कोप चाहिए।';
+
+  @override
+  String get changeAssignee => 'असाइनी बदलें';
+
+  @override
+  String get searchPeopleHint => 'लोग खोजें';
+
+  @override
+  String get assignToMe => 'मुझे असाइन करें';
+
+  @override
+  String assignedToName(String name) {
+    return '$name को असाइन किया गया';
+  }
+
+  @override
+  String get ticketUnassigned => 'टिकट का असाइनमेंट हटाया गया';
+
+  @override
+  String get assignScopeHint =>
+      'टिकट असाइन करने के लिए आपके टोकन में Work Items (Read & write) स्कोप चाहिए।';
+
+  @override
+  String get membersLoadFailed =>
+      'टीम सदस्य लोड नहीं हो सके। इसके लिए आपके टोकन में Project and Team (Read) स्कोप चाहिए।';
+
+  @override
+  String get noPeopleFound => 'कोई नहीं मिला';
+
+  @override
+  String get copyLink => 'लिंक कॉपी करें';
+
+  @override
+  String get shareTicket => 'शेयर करें';
+
+  @override
+  String get linkCopied => 'लिंक कॉपी किया गया';
+
+  @override
+  String get undo => 'पूर्ववत करें';
 
   @override
   String get runErrors => 'त्रुटियाँ';

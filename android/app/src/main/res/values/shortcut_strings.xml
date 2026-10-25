@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App shortcuts, see xml/shortcuts.xml. Short labels fit under an icon. -->
+    <string name="shortcut_my_pull_requests_short">My PRs</string>
+    <string name="shortcut_my_pull_requests_long">My pull requests</string>
+    <string name="shortcut_active_runs_short">Active runs</string>
+    <string name="shortcut_active_runs_long">Active pipeline runs</string>
+    <string name="shortcut_tickets">Tickets</string>
+</resources>

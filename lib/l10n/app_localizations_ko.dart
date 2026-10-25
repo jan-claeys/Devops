@@ -62,7 +62,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'Scopes에서 Custom defined를 선택하고 위에 나열된 범위만 각각 Read로 켭니다.';
+      'Scopes에서 Custom defined를 선택하고 위에 나열된 범위만 각각 옆에 표시된 권한으로 켭니다.';
 
   @override
   String get tokenHelpStep4 =>
@@ -468,7 +468,8 @@ class AppLocalizationsKo extends AppLocalizations {
   String get loadReleasesFailed => '릴리스를 불러오지 못했습니다';
 
   @override
-  String get releaseScopeHint => '릴리스를 보려면 토큰에 Release (Read) 범위가 필요합니다.';
+  String get releaseScopeHint =>
+      '릴리스에는 토큰에 Release (Read, write, & execute) 범위가 필요합니다.';
 
   @override
   String get artifact => '아티팩트';
@@ -477,6 +478,56 @@ class AppLocalizationsKo extends AppLocalizations {
   String waitingForApprovalBy(String names) {
     return '$names의 승인 대기 중';
   }
+
+  @override
+  String get approvals => '승인';
+
+  @override
+  String approveStage(String stage) {
+    return '$stage을(를) 승인할까요?';
+  }
+
+  @override
+  String rejectStage(String stage) {
+    return '$stage을(를) 거부할까요?';
+  }
+
+  @override
+  String get approvalCommentHint => '댓글 (선택 사항)';
+
+  @override
+  String get stageApproved => '단계가 승인되었습니다';
+
+  @override
+  String get stageRejected => '단계가 거부되었습니다';
+
+  @override
+  String get buildScopeHint =>
+      '파이프라인 실행 작업에는 토큰에 Build (Read & execute) 범위가 필요합니다.';
+
+  @override
+  String get cancelRun => '실행 취소';
+
+  @override
+  String get cancelRunTitle => '이 실행을 취소할까요?';
+
+  @override
+  String get cancelRunBody => '실행 중인 작업은 중지되고 아직 시작되지 않은 작업은 건너뜁니다.';
+
+  @override
+  String get keepRunning => '계속 실행';
+
+  @override
+  String get runAgain => '다시 실행';
+
+  @override
+  String get rerunFailedJobs => '실패한 작업 다시 실행';
+
+  @override
+  String get runStarted => '실행이 시작되었습니다';
+
+  @override
+  String get open => '열기';
 
   @override
   String get pullRequests => '끌어오기 요청';
@@ -491,7 +542,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get loadPullRequestsFailed => '끌어오기 요청을 불러오지 못했습니다';
 
   @override
-  String get codeScopeHint => '끌어오기 요청을 보려면 토큰에 Code (Read) 범위가 필요합니다.';
+  String get codeScopeHint => '끌어오기 요청에는 토큰에 Code (Read & write) 범위가 필요합니다.';
 
   @override
   String get noPullRequestsTitle => '끌어오기 요청 없음';
@@ -562,6 +613,150 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get threadResolved => '해결됨';
+
+  @override
+  String get overviewTab => '개요';
+
+  @override
+  String get filesTab => '파일';
+
+  @override
+  String filesChanged(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '파일 $count개 변경됨',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get noFileChanges => '이 끌어오기 요청은 파일을 변경하지 않습니다.';
+
+  @override
+  String get loadFilesFailed => '변경된 파일을 불러올 수 없습니다';
+
+  @override
+  String get loadFileFailed => '이 파일을 불러올 수 없습니다';
+
+  @override
+  String get binaryFile => '이진 파일';
+
+  @override
+  String get fileTooLarge => '너무 커서 여기에서 비교할 수 없습니다';
+
+  @override
+  String get noContentChanges => '내용 변경 없음';
+
+  @override
+  String renamedFrom(String path) {
+    return '$path에서 이름 변경됨';
+  }
+
+  @override
+  String get voteApprove => '승인';
+
+  @override
+  String get voteApproveWithSuggestions => '제안과 함께 승인';
+
+  @override
+  String get voteWaitForAuthor => '작성자 대기';
+
+  @override
+  String get voteReject => '거부';
+
+  @override
+  String get voteReset => '투표 초기화';
+
+  @override
+  String get otherVotes => '다른 투표';
+
+  @override
+  String get rejectConfirmTitle => '이 끌어오기 요청을 거부할까요?';
+
+  @override
+  String get rejectConfirmBody => '투표가 거부인 동안에는 끌어오기 요청을 완료할 수 없습니다.';
+
+  @override
+  String get waitForAuthorConfirmTitle => '작성자를 기다릴까요?';
+
+  @override
+  String get voteReasonHint => '이유 (선택 사항)';
+
+  @override
+  String get voteReasonHelper => '끌어오기 요청에 댓글로 게시됩니다.';
+
+  @override
+  String get voteSaved => '투표가 저장되었습니다';
+
+  @override
+  String get cancel => '취소';
+
+  @override
+  String get actionDenied =>
+      'Azure DevOps에서 허용하지 않았습니다. 토큰에 올바른 범위가 있고 계정에 권한이 있는지 확인하세요.';
+
+  @override
+  String get writeComment => '댓글 작성…';
+
+  @override
+  String get send => '보내기';
+
+  @override
+  String get reply => '답글';
+
+  @override
+  String get writeReply => '답글 작성…';
+
+  @override
+  String get resolveThread => '해결';
+
+  @override
+  String get reactivateThread => '다시 활성화';
+
+  @override
+  String get workItemScopeHint =>
+      '티켓에 댓글을 달려면 토큰에 Work Items (Read & write) 범위가 필요합니다.';
+
+  @override
+  String get changeAssignee => '담당자 변경';
+
+  @override
+  String get searchPeopleHint => '사용자 검색';
+
+  @override
+  String get assignToMe => '나에게 할당';
+
+  @override
+  String assignedToName(String name) {
+    return '$name에게 할당됨';
+  }
+
+  @override
+  String get ticketUnassigned => '티켓 할당이 해제됨';
+
+  @override
+  String get assignScopeHint =>
+      '티켓을 할당하려면 토큰에 Work Items (Read & write) 범위가 필요합니다.';
+
+  @override
+  String get membersLoadFailed =>
+      '팀 구성원을 불러올 수 없습니다. 토큰에 Project and Team (Read) 범위가 필요합니다.';
+
+  @override
+  String get noPeopleFound => '찾을 수 없음';
+
+  @override
+  String get copyLink => '링크 복사';
+
+  @override
+  String get shareTicket => '공유';
+
+  @override
+  String get linkCopied => '링크가 복사됨';
+
+  @override
+  String get undo => '실행 취소';
 
   @override
   String get runErrors => '오류';

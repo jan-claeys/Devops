@@ -64,7 +64,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'In Scopes scegli Custom defined e attiva solo gli ambiti indicati sopra, ciascuno con Read.';
+      'In Scopes scegli Custom defined e attiva solo gli ambiti indicati sopra, ciascuno con l’autorizzazione mostrata accanto.';
 
   @override
   String get tokenHelpStep4 =>
@@ -481,7 +481,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get releaseScopeHint =>
-      'Le release richiedono l’ambito Release (Read) nel token.';
+      'Le release richiedono l’ambito Release (Read, write, & execute) nel token.';
 
   @override
   String get artifact => 'Artefatto';
@@ -490,6 +490,57 @@ class AppLocalizationsIt extends AppLocalizations {
   String waitingForApprovalBy(String names) {
     return 'In attesa dell’approvazione di $names';
   }
+
+  @override
+  String get approvals => 'Approvazioni';
+
+  @override
+  String approveStage(String stage) {
+    return 'Approvare $stage?';
+  }
+
+  @override
+  String rejectStage(String stage) {
+    return 'Rifiutare $stage?';
+  }
+
+  @override
+  String get approvalCommentHint => 'Commento (facoltativo)';
+
+  @override
+  String get stageApproved => 'Fase approvata';
+
+  @override
+  String get stageRejected => 'Fase rifiutata';
+
+  @override
+  String get buildScopeHint =>
+      'Per agire sulle esecuzioni delle pipeline il token richiede l’ambito Build (Read & execute).';
+
+  @override
+  String get cancelRun => 'Annulla esecuzione';
+
+  @override
+  String get cancelRunTitle => 'Annullare questa esecuzione?';
+
+  @override
+  String get cancelRunBody =>
+      'I job in esecuzione vengono fermati e quelli non ancora avviati vengono saltati.';
+
+  @override
+  String get keepRunning => 'Continua';
+
+  @override
+  String get runAgain => 'Esegui di nuovo';
+
+  @override
+  String get rerunFailedJobs => 'Riesegui i job non riusciti';
+
+  @override
+  String get runStarted => 'Esecuzione avviata';
+
+  @override
+  String get open => 'Apri';
 
   @override
   String get pullRequests => 'Pull request';
@@ -505,7 +556,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get codeScopeHint =>
-      'Le pull request richiedono l’ambito Code (Read) nel token.';
+      'Le pull request richiedono l’ambito Code (Read & write) nel token.';
 
   @override
   String get noPullRequestsTitle => 'Nessuna pull request';
@@ -579,6 +630,153 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get threadResolved => 'Risolto';
+
+  @override
+  String get overviewTab => 'Panoramica';
+
+  @override
+  String get filesTab => 'File';
+
+  @override
+  String filesChanged(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count file modificati',
+      one: '1 file modificato',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get noFileChanges => 'Questa pull request non modifica alcun file.';
+
+  @override
+  String get loadFilesFailed => 'Impossibile caricare i file modificati';
+
+  @override
+  String get loadFileFailed => 'Impossibile caricare questo file';
+
+  @override
+  String get binaryFile => 'File binario';
+
+  @override
+  String get fileTooLarge => 'Troppo grande per il confronto qui';
+
+  @override
+  String get noContentChanges => 'Nessuna modifica al contenuto';
+
+  @override
+  String renamedFrom(String path) {
+    return 'Rinominato da $path';
+  }
+
+  @override
+  String get voteApprove => 'Approva';
+
+  @override
+  String get voteApproveWithSuggestions => 'Approva con suggerimenti';
+
+  @override
+  String get voteWaitForAuthor => 'Attendi l’autore';
+
+  @override
+  String get voteReject => 'Rifiuta';
+
+  @override
+  String get voteReset => 'Reimposta voto';
+
+  @override
+  String get otherVotes => 'Altri voti';
+
+  @override
+  String get rejectConfirmTitle => 'Rifiutare questa pull request?';
+
+  @override
+  String get rejectConfirmBody =>
+      'La pull request non può essere completata finché il tuo voto è Rifiutato.';
+
+  @override
+  String get waitForAuthorConfirmTitle => 'Attendere l’autore?';
+
+  @override
+  String get voteReasonHint => 'Motivo (facoltativo)';
+
+  @override
+  String get voteReasonHelper =>
+      'Viene pubblicato come commento sulla pull request.';
+
+  @override
+  String get voteSaved => 'Voto salvato';
+
+  @override
+  String get cancel => 'Annulla';
+
+  @override
+  String get actionDenied =>
+      'Azure DevOps non lo ha consentito. Verifica che il token abbia l’ambito giusto e che il tuo account abbia l’autorizzazione.';
+
+  @override
+  String get writeComment => 'Scrivi un commento…';
+
+  @override
+  String get send => 'Invia';
+
+  @override
+  String get reply => 'Rispondi';
+
+  @override
+  String get writeReply => 'Scrivi una risposta…';
+
+  @override
+  String get resolveThread => 'Risolvi';
+
+  @override
+  String get reactivateThread => 'Riattiva';
+
+  @override
+  String get workItemScopeHint =>
+      'Per commentare i ticket il token richiede l’ambito Work Items (Read & write).';
+
+  @override
+  String get changeAssignee => 'Modifica assegnatario';
+
+  @override
+  String get searchPeopleHint => 'Cerca persone';
+
+  @override
+  String get assignToMe => 'Assegna a me';
+
+  @override
+  String assignedToName(String name) {
+    return 'Assegnato a $name';
+  }
+
+  @override
+  String get ticketUnassigned => 'Ticket non assegnato';
+
+  @override
+  String get assignScopeHint =>
+      'Per assegnare i ticket il token richiede l’ambito Work Items (Read & write).';
+
+  @override
+  String get membersLoadFailed =>
+      'Impossibile caricare i membri del team. Serve l’ambito Project and Team (Read) sul token.';
+
+  @override
+  String get noPeopleFound => 'Nessuno trovato';
+
+  @override
+  String get copyLink => 'Copia link';
+
+  @override
+  String get shareTicket => 'Condividi';
+
+  @override
+  String get linkCopied => 'Link copiato';
+
+  @override
+  String get undo => 'Annulla';
 
   @override
   String get runErrors => 'Errori';

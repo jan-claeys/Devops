@@ -34,6 +34,12 @@
               android:name="flutter_deeplinking_enabled"
               android:value="false"
               />
+            <!-- My pull requests, active runs and tickets, on a long press on
+                 the app icon. -->
+            <meta-data
+              android:name="android.app.shortcuts"
+              android:resource="@xml/shortcuts"
+              />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>

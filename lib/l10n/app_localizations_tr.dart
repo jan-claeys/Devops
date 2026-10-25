@@ -63,7 +63,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'Scopes altında Custom defined\'ı seçin ve yalnızca yukarıda listelenen kapsamları Read olarak etkinleştirin.';
+      'Scopes altında Custom defined\'ı seçin ve yalnızca yukarıda listelenen kapsamları, yanında gösterilen izinle etkinleştirin.';
 
   @override
   String get tokenHelpStep4 =>
@@ -475,7 +475,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get releaseScopeHint =>
-      'Sürümler için belirtecinizde Release (Read) kapsamı gerekir.';
+      'Sürümler için belirtecinizde Release (Read, write, & execute) kapsamı gerekir.';
 
   @override
   String get artifact => 'Yapıt';
@@ -484,6 +484,57 @@ class AppLocalizationsTr extends AppLocalizations {
   String waitingForApprovalBy(String names) {
     return '$names onayı bekleniyor';
   }
+
+  @override
+  String get approvals => 'Onaylar';
+
+  @override
+  String approveStage(String stage) {
+    return '$stage onaylansın mı?';
+  }
+
+  @override
+  String rejectStage(String stage) {
+    return '$stage reddedilsin mi?';
+  }
+
+  @override
+  String get approvalCommentHint => 'Yorum (isteğe bağlı)';
+
+  @override
+  String get stageApproved => 'Aşama onaylandı';
+
+  @override
+  String get stageRejected => 'Aşama reddedildi';
+
+  @override
+  String get buildScopeHint =>
+      'İşlem hattı çalıştırmalarında işlem yapmak için belirtecinizde Build (Read & execute) kapsamı gerekir.';
+
+  @override
+  String get cancelRun => 'Çalıştırmayı iptal et';
+
+  @override
+  String get cancelRunTitle => 'Bu çalıştırma iptal edilsin mi?';
+
+  @override
+  String get cancelRunBody =>
+      'Çalışan işler durdurulur ve henüz başlamamış olanlar atlanır.';
+
+  @override
+  String get keepRunning => 'Çalışmaya devam et';
+
+  @override
+  String get runAgain => 'Yeniden çalıştır';
+
+  @override
+  String get rerunFailedJobs => 'Başarısız işleri yeniden çalıştır';
+
+  @override
+  String get runStarted => 'Çalıştırma başlatıldı';
+
+  @override
+  String get open => 'Aç';
 
   @override
   String get pullRequests => 'Çekme istekleri';
@@ -500,7 +551,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get codeScopeHint =>
-      'Çekme istekleri için belirtecinizde Code (Read) kapsamı gerekir.';
+      'Çekme istekleri için belirtecinizde Code (Read & write) kapsamı gerekir.';
 
   @override
   String get noPullRequestsTitle => 'Çekme isteği yok';
@@ -572,6 +623,152 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get threadResolved => 'Çözüldü';
+
+  @override
+  String get overviewTab => 'Genel bakış';
+
+  @override
+  String get filesTab => 'Dosyalar';
+
+  @override
+  String filesChanged(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count dosya değişti',
+      one: '1 dosya değişti',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get noFileChanges => 'Bu çekme isteği hiçbir dosyayı değiştirmiyor.';
+
+  @override
+  String get loadFilesFailed => 'Değişen dosyalar yüklenemedi';
+
+  @override
+  String get loadFileFailed => 'Bu dosya yüklenemedi';
+
+  @override
+  String get binaryFile => 'İkili dosya';
+
+  @override
+  String get fileTooLarge => 'Burada karşılaştırmak için çok büyük';
+
+  @override
+  String get noContentChanges => 'İçerikte değişiklik yok';
+
+  @override
+  String renamedFrom(String path) {
+    return '$path adından yeniden adlandırıldı';
+  }
+
+  @override
+  String get voteApprove => 'Onayla';
+
+  @override
+  String get voteApproveWithSuggestions => 'Önerilerle onayla';
+
+  @override
+  String get voteWaitForAuthor => 'Yazarı bekle';
+
+  @override
+  String get voteReject => 'Reddet';
+
+  @override
+  String get voteReset => 'Oyu sıfırla';
+
+  @override
+  String get otherVotes => 'Diğer oylar';
+
+  @override
+  String get rejectConfirmTitle => 'Bu çekme isteği reddedilsin mi?';
+
+  @override
+  String get rejectConfirmBody =>
+      'Oyunuz Reddedildi olduğu sürece çekme isteği tamamlanamaz.';
+
+  @override
+  String get waitForAuthorConfirmTitle => 'Yazar beklensin mi?';
+
+  @override
+  String get voteReasonHint => 'Neden (isteğe bağlı)';
+
+  @override
+  String get voteReasonHelper => 'Çekme isteğine yorum olarak gönderilir.';
+
+  @override
+  String get voteSaved => 'Oy kaydedildi';
+
+  @override
+  String get cancel => 'İptal';
+
+  @override
+  String get actionDenied =>
+      'Azure DevOps buna izin vermedi. Belirtecinizin doğru kapsama ve hesabınızın izne sahip olduğunu kontrol edin.';
+
+  @override
+  String get writeComment => 'Yorum yazın…';
+
+  @override
+  String get send => 'Gönder';
+
+  @override
+  String get reply => 'Yanıtla';
+
+  @override
+  String get writeReply => 'Yanıt yazın…';
+
+  @override
+  String get resolveThread => 'Çözüldü olarak işaretle';
+
+  @override
+  String get reactivateThread => 'Yeniden etkinleştir';
+
+  @override
+  String get workItemScopeHint =>
+      'Biletlere yorum yapmak için belirtecinizde Work Items (Read & write) kapsamı gerekir.';
+
+  @override
+  String get changeAssignee => 'Atananı değiştir';
+
+  @override
+  String get searchPeopleHint => 'Kişi ara';
+
+  @override
+  String get assignToMe => 'Bana ata';
+
+  @override
+  String assignedToName(String name) {
+    return '$name kişisine atandı';
+  }
+
+  @override
+  String get ticketUnassigned => 'Bilet ataması kaldırıldı';
+
+  @override
+  String get assignScopeHint =>
+      'Bilet atamak için belirtecinizde Work Items (Read & write) kapsamı gerekir.';
+
+  @override
+  String get membersLoadFailed =>
+      'Ekip üyeleri yüklenemedi. Bunun için belirtecinizde Project and Team (Read) kapsamı gerekir.';
+
+  @override
+  String get noPeopleFound => 'Kimse bulunamadı';
+
+  @override
+  String get copyLink => 'Bağlantıyı kopyala';
+
+  @override
+  String get shareTicket => 'Paylaş';
+
+  @override
+  String get linkCopied => 'Bağlantı kopyalandı';
+
+  @override
+  String get undo => 'Geri al';
 
   @override
   String get runErrors => 'Hatalar';

@@ -63,7 +63,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'В разделе Scopes выберите Custom defined и включите только права, перечисленные выше, каждое с уровнем Read.';
+      'В разделе Scopes выберите Custom defined и включите только права, перечисленные выше, каждое с уровнем, указанным рядом.';
 
   @override
   String get tokenHelpStep4 =>
@@ -484,7 +484,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get releaseScopeHint =>
-      'Для выпусков токену нужны права Release (Read).';
+      'Для выпусков токену нужны права Release (Read, write, & execute).';
 
   @override
   String get artifact => 'Артефакт';
@@ -493,6 +493,57 @@ class AppLocalizationsRu extends AppLocalizations {
   String waitingForApprovalBy(String names) {
     return 'Ожидает утверждения: $names';
   }
+
+  @override
+  String get approvals => 'Утверждения';
+
+  @override
+  String approveStage(String stage) {
+    return 'Одобрить $stage?';
+  }
+
+  @override
+  String rejectStage(String stage) {
+    return 'Отклонить $stage?';
+  }
+
+  @override
+  String get approvalCommentHint => 'Комментарий (необязательно)';
+
+  @override
+  String get stageApproved => 'Этап одобрен';
+
+  @override
+  String get stageRejected => 'Этап отклонён';
+
+  @override
+  String get buildScopeHint =>
+      'Для действий с запусками конвейеров токену нужны права Build (Read & execute).';
+
+  @override
+  String get cancelRun => 'Отменить запуск';
+
+  @override
+  String get cancelRunTitle => 'Отменить этот запуск?';
+
+  @override
+  String get cancelRunBody =>
+      'Выполняющиеся задания будут остановлены, а ещё не начатые — пропущены.';
+
+  @override
+  String get keepRunning => 'Продолжить';
+
+  @override
+  String get runAgain => 'Запустить снова';
+
+  @override
+  String get rerunFailedJobs => 'Перезапустить неудачные задания';
+
+  @override
+  String get runStarted => 'Запуск начат';
+
+  @override
+  String get open => 'Открыть';
 
   @override
   String get pullRequests => 'Pull request’ы';
@@ -509,7 +560,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get codeScopeHint =>
-      'Для pull request’ов токену нужны права Code (Read).';
+      'Для pull request’ов токену нужны права Code (Read & write).';
 
   @override
   String get noPullRequestsTitle => 'Нет pull request’ов';
@@ -585,6 +636,154 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get threadResolved => 'Решено';
+
+  @override
+  String get overviewTab => 'Обзор';
+
+  @override
+  String get filesTab => 'Файлы';
+
+  @override
+  String filesChanged(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Изменено $count файла',
+      many: 'Изменено $count файлов',
+      few: 'Изменено $count файла',
+      one: 'Изменён 1 файл',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get noFileChanges => 'Этот pull request не изменяет файлы.';
+
+  @override
+  String get loadFilesFailed => 'Не удалось загрузить изменённые файлы';
+
+  @override
+  String get loadFileFailed => 'Не удалось загрузить этот файл';
+
+  @override
+  String get binaryFile => 'Двоичный файл';
+
+  @override
+  String get fileTooLarge => 'Слишком большой для сравнения здесь';
+
+  @override
+  String get noContentChanges => 'Содержимое не изменилось';
+
+  @override
+  String renamedFrom(String path) {
+    return 'Переименован из $path';
+  }
+
+  @override
+  String get voteApprove => 'Одобрить';
+
+  @override
+  String get voteApproveWithSuggestions => 'Одобрить с предложениями';
+
+  @override
+  String get voteWaitForAuthor => 'Ждать автора';
+
+  @override
+  String get voteReject => 'Отклонить';
+
+  @override
+  String get voteReset => 'Сбросить голос';
+
+  @override
+  String get otherVotes => 'Другие варианты';
+
+  @override
+  String get rejectConfirmTitle => 'Отклонить этот pull request?';
+
+  @override
+  String get rejectConfirmBody =>
+      'Pull request нельзя завершить, пока ваш голос — «Отклонено».';
+
+  @override
+  String get waitForAuthorConfirmTitle => 'Ждать автора?';
+
+  @override
+  String get voteReasonHint => 'Причина (необязательно)';
+
+  @override
+  String get voteReasonHelper => 'Публикуется как комментарий к pull request.';
+
+  @override
+  String get voteSaved => 'Голос сохранён';
+
+  @override
+  String get cancel => 'Отмена';
+
+  @override
+  String get actionDenied =>
+      'Azure DevOps не разрешил это действие. Проверьте, что у токена есть нужные права, а у учётной записи — разрешение.';
+
+  @override
+  String get writeComment => 'Напишите комментарий…';
+
+  @override
+  String get send => 'Отправить';
+
+  @override
+  String get reply => 'Ответить';
+
+  @override
+  String get writeReply => 'Напишите ответ…';
+
+  @override
+  String get resolveThread => 'Решить';
+
+  @override
+  String get reactivateThread => 'Открыть снова';
+
+  @override
+  String get workItemScopeHint =>
+      'Чтобы комментировать тикеты, токену нужны права Work Items (Read & write).';
+
+  @override
+  String get changeAssignee => 'Изменить исполнителя';
+
+  @override
+  String get searchPeopleHint => 'Поиск людей';
+
+  @override
+  String get assignToMe => 'Назначить мне';
+
+  @override
+  String assignedToName(String name) {
+    return 'Назначено: $name';
+  }
+
+  @override
+  String get ticketUnassigned => 'Исполнитель снят';
+
+  @override
+  String get assignScopeHint =>
+      'Чтобы назначать тикеты, токену нужны права Work Items (Read & write).';
+
+  @override
+  String get membersLoadFailed =>
+      'Не удалось загрузить участников команды. Для этого токену нужны права Project and Team (Read).';
+
+  @override
+  String get noPeopleFound => 'Никого не найдено';
+
+  @override
+  String get copyLink => 'Копировать ссылку';
+
+  @override
+  String get shareTicket => 'Поделиться';
+
+  @override
+  String get linkCopied => 'Ссылка скопирована';
+
+  @override
+  String get undo => 'Отменить';
 
   @override
   String get runErrors => 'Ошибки';

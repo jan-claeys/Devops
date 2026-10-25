@@ -60,7 +60,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get tokenHelpStep2 => '选择你的组织和过期日期。';
 
   @override
-  String get tokenHelpStep3 => '在 Scopes 下选择 Custom defined，并只为上面列出的范围启用 Read。';
+  String get tokenHelpStep3 =>
+      '在 Scopes 下选择 Custom defined，并只启用上面列出的范围，每个范围使用旁边显示的权限。';
 
   @override
   String get tokenHelpStep4 => '选择 Create，复制令牌并粘贴到上方。令牌只显示一次。';
@@ -464,7 +465,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get loadReleasesFailed => '无法加载发布';
 
   @override
-  String get releaseScopeHint => '发布需要令牌具有 Release (Read) 范围。';
+  String get releaseScopeHint =>
+      '发布需要令牌具有 Release (Read, write, & execute) 范围。';
 
   @override
   String get artifact => '项目';
@@ -473,6 +475,55 @@ class AppLocalizationsZh extends AppLocalizations {
   String waitingForApprovalBy(String names) {
     return '等待 $names 审批';
   }
+
+  @override
+  String get approvals => '审批';
+
+  @override
+  String approveStage(String stage) {
+    return '批准 $stage？';
+  }
+
+  @override
+  String rejectStage(String stage) {
+    return '拒绝 $stage？';
+  }
+
+  @override
+  String get approvalCommentHint => '评论（可选）';
+
+  @override
+  String get stageApproved => '阶段已批准';
+
+  @override
+  String get stageRejected => '阶段已拒绝';
+
+  @override
+  String get buildScopeHint => '操作管道运行需要令牌具有 Build (Read & execute) 范围。';
+
+  @override
+  String get cancelRun => '取消运行';
+
+  @override
+  String get cancelRunTitle => '取消此运行？';
+
+  @override
+  String get cancelRunBody => '正在运行的作业将停止，尚未开始的作业将被跳过。';
+
+  @override
+  String get keepRunning => '继续运行';
+
+  @override
+  String get runAgain => '再次运行';
+
+  @override
+  String get rerunFailedJobs => '重新运行失败的作业';
+
+  @override
+  String get runStarted => '运行已开始';
+
+  @override
+  String get open => '打开';
 
   @override
   String get pullRequests => '拉取请求';
@@ -487,7 +538,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get loadPullRequestsFailed => '无法加载拉取请求';
 
   @override
-  String get codeScopeHint => '拉取请求需要令牌具有 Code (Read) 范围。';
+  String get codeScopeHint => '拉取请求需要令牌具有 Code (Read & write) 范围。';
 
   @override
   String get noPullRequestsTitle => '没有拉取请求';
@@ -558,6 +609,147 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get threadResolved => '已解决';
+
+  @override
+  String get overviewTab => '概览';
+
+  @override
+  String get filesTab => '文件';
+
+  @override
+  String filesChanged(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '已更改 $count 个文件',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get noFileChanges => '此拉取请求未更改任何文件。';
+
+  @override
+  String get loadFilesFailed => '无法加载已更改的文件';
+
+  @override
+  String get loadFileFailed => '无法加载此文件';
+
+  @override
+  String get binaryFile => '二进制文件';
+
+  @override
+  String get fileTooLarge => '文件太大，无法在此比较';
+
+  @override
+  String get noContentChanges => '内容无更改';
+
+  @override
+  String renamedFrom(String path) {
+    return '从 $path 重命名';
+  }
+
+  @override
+  String get voteApprove => '批准';
+
+  @override
+  String get voteApproveWithSuggestions => '批准并提出建议';
+
+  @override
+  String get voteWaitForAuthor => '等待作者';
+
+  @override
+  String get voteReject => '拒绝';
+
+  @override
+  String get voteReset => '重置投票';
+
+  @override
+  String get otherVotes => '其他投票';
+
+  @override
+  String get rejectConfirmTitle => '拒绝此拉取请求？';
+
+  @override
+  String get rejectConfirmBody => '只要你的投票为“已拒绝”，此拉取请求就无法完成。';
+
+  @override
+  String get waitForAuthorConfirmTitle => '等待作者？';
+
+  @override
+  String get voteReasonHint => '原因（可选）';
+
+  @override
+  String get voteReasonHelper => '将作为评论发布到此拉取请求。';
+
+  @override
+  String get voteSaved => '投票已保存';
+
+  @override
+  String get cancel => '取消';
+
+  @override
+  String get actionDenied => 'Azure DevOps 不允许此操作。请检查令牌是否具有正确的范围，以及你的帐户是否有权限。';
+
+  @override
+  String get writeComment => '写评论…';
+
+  @override
+  String get send => '发送';
+
+  @override
+  String get reply => '回复';
+
+  @override
+  String get writeReply => '写回复…';
+
+  @override
+  String get resolveThread => '解决';
+
+  @override
+  String get reactivateThread => '重新激活';
+
+  @override
+  String get workItemScopeHint => '评论工单需要令牌具有 Work Items (Read & write) 范围。';
+
+  @override
+  String get changeAssignee => '更改负责人';
+
+  @override
+  String get searchPeopleHint => '搜索人员';
+
+  @override
+  String get assignToMe => '分配给我';
+
+  @override
+  String assignedToName(String name) {
+    return '已分配给 $name';
+  }
+
+  @override
+  String get ticketUnassigned => '已取消分配工单';
+
+  @override
+  String get assignScopeHint => '分配工单需要令牌具有 Work Items (Read & write) 范围。';
+
+  @override
+  String get membersLoadFailed =>
+      '无法加载团队成员。这需要令牌具有 Project and Team (Read) 范围。';
+
+  @override
+  String get noPeopleFound => '未找到任何人';
+
+  @override
+  String get copyLink => '复制链接';
+
+  @override
+  String get shareTicket => '分享';
+
+  @override
+  String get linkCopied => '链接已复制';
+
+  @override
+  String get undo => '撤消';
 
   @override
   String get runErrors => '错误';

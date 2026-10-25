@@ -7,8 +7,10 @@ import '../models/work_item.dart';
 import '../services/app_state.dart';
 import '../services/links.dart';
 import '../services/logging.dart';
+import '../widgets/comment_composer.dart';
 import '../widgets/devops_markdown.dart';
 import '../widgets/error_action.dart';
+import '../widgets/pull_request_files.dart';
 import '../widgets/pull_request_visuals.dart';
 import '../widgets/section_card.dart';
 import '../widgets/work_item_visuals.dart';
@@ -35,8 +37,27 @@ class PullRequestScreen extends StatefulWidget {
   State<PullRequestScreen> createState() => _PullRequestScreenState();
 }
 
-class _PullRequestScreenState extends State<PullRequestScreen> {
+class _PullRequestScreenState extends State<PullRequestScreen>
+    with SingleTickerProviderStateMixin {
   late Future<_Detail> _future;
+  bool _voting = false;
+  late final TabController _tabs = TabController(length: 2, vsync: this)
+    ..addListener(() {
+      if (mounted) setState(() => _filesOpened |= _tabs.index == 1);
+    });
+
+  /// The files are loaded the first time their tab is opened, and kept
+  /// while the overview is shown.
+  bool _filesOpened = false;
+
+  /// Changes on every reload, so the files are loaded again too.
+  int _generation = 0;
+
+  @override
+  void dispose() {
+    _tabs.dispose();
+    super.dispose();
+  }
 
   @override
   void didChangeDependencies() {
@@ -56,6 +77,11 @@ class _PullRequestScreenState extends State<PullRequestScreen> {
   Future<_Detail> _fetch() async {
     final api = AppScope.read(context).api!;
     final pr = await api.getPullRequest(widget.project, widget.id);
+    final me = await api.getCurrentUserId().then<String?>((id) => id,
+        onError: (Object e, StackTrace st) {
+      logFailure(_log, 'Loading the current user failed', e, st);
+      return null;
+    });
     final results = await Future.wait([
       api.getPullRequestThreads(pr).catchError((Object e, StackTrace st) {
         logFailure(_log, 'Loading the threads of pull request ${pr.id} failed', e, st);
@@ -78,13 +104,71 @@ class _PullRequestScreenState extends State<PullRequestScreen> {
       pullRequest: pr,
       threads: results[0] as List<PullRequestThread>,
       workItems: results[1] as List<WorkItem>,
+      me: me,
     );
   }
 
   // A block body: setState must not get the Future back from the closure.
   void _reload() => setState(() {
         _future = _load();
+        _generation++;
       });
+
+  /// Runs [action] and shows the result; when it fails, tells why. Returns
+  /// whether it succeeded.
+  Future<bool> _act(Future<void> Function() action, String failure) async {
+    try {
+      await action();
+      if (mounted) _reload();
+      return true;
+    } catch (e, st) {
+      logFailure(_log, failure, e, st);
+      if (mounted) showActionError(context, e, scopeHint: context.l10n.codeScopeHint);
+      return false;
+    }
+  }
+
+  Future<void> _vote(PullRequest pr, ReviewVote vote) async {
+    final l10n = context.l10n;
+    final messenger = ScaffoldMessenger.of(context);
+    // Rejecting or waiting for the author asks first, with room for why.
+    var reason = '';
+    if (vote == ReviewVote.rejected || vote == ReviewVote.waitingForAuthor) {
+      final entered = await showDialog<String>(
+        context: context,
+        builder: (_) => vote == ReviewVote.rejected
+            ? _VoteDialog(
+                title: l10n.rejectConfirmTitle,
+                body: l10n.rejectConfirmBody,
+                confirm: l10n.voteReject,
+              )
+            : _VoteDialog(title: l10n.waitForAuthorConfirmTitle, confirm: l10n.voteWaitForAuthor),
+      );
+      if (entered == null) return;
+      reason = entered;
+    }
+    if (!mounted) return;
+    setState(() => _voting = true);
+    final voted = await _act(() => AppScope.read(context).api!.votePullRequest(pr, vote),
+        'Voting on pull request ${pr.id} failed');
+    if (voted) {
+      messenger.showSnackBar(SnackBar(content: Text(l10n.voteSaved)));
+      if (reason.isNotEmpty && mounted) await _comment(pr, reason);
+    }
+    if (mounted) setState(() => _voting = false);
+  }
+
+  Future<bool> _comment(PullRequest pr, String text) => _act(
+      () => AppScope.read(context).api!.createPullRequestThread(pr, text),
+      'Commenting on pull request ${pr.id} failed');
+
+  Future<bool> _resolve(PullRequest pr, PullRequestThread thread, bool resolved) => _act(
+      () => AppScope.read(context).api!.resolveThread(pr, thread, resolved: resolved),
+      'Changing the status of thread ${thread.id} of pull request ${pr.id} failed');
+
+  Future<bool> _reply(PullRequest pr, PullRequestThread thread, String text) => _act(
+      () => AppScope.read(context).api!.replyToThread(pr, thread, text),
+      'Replying to thread ${thread.id} of pull request ${pr.id} failed');
 
   void _openWorkItem(int id) => Navigator.of(context)
       .push(MaterialPageRoute(builder: (_) => WorkItemDetailScreen(id: id)));
@@ -124,6 +208,15 @@ class _PullRequestScreenState extends State<PullRequestScreen> {
                   title: Text(detail == null
                       ? '!${widget.id}'
                       : '${detail.pullRequest.repositoryName} !${widget.id}'),
+                  bottom: detail == null
+                      ? null
+                      : TabBar(
+                          controller: _tabs,
+                          tabs: [
+                            Tab(text: context.l10n.overviewTab),
+                            Tab(text: context.l10n.filesTab),
+                          ],
+                        ),
                 ),
                 if (snapshot.hasError)
                   SliverFillRemaining(
@@ -151,11 +244,29 @@ class _PullRequestScreenState extends State<PullRequestScreen> {
                     hasScrollBody: false,
                     child: Center(child: CircularProgressIndicator()),
                   )
-                else
-                  SliverPadding(
-                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 96),
-                    sliver: SliverList.list(children: _buildBody(detail)),
+                else ...[
+                  SliverVisibility(
+                    visible: _tabs.index == 0,
+                    sliver: SliverPadding(
+                      padding: const EdgeInsets.fromLTRB(16, 16, 16, 96),
+                      sliver: SliverList.list(children: _buildBody(detail)),
+                    ),
                   ),
+                  if (_filesOpened)
+                    SliverVisibility(
+                      visible: _tabs.index == 1,
+                      maintainState: true,
+                      sliver: SliverPadding(
+                        padding: const EdgeInsets.fromLTRB(16, 8, 16, 96),
+                        sliver: SliverToBoxAdapter(
+                          child: PullRequestFiles(
+                            key: ValueKey(_generation),
+                            pullRequest: detail.pullRequest,
+                          ),
+                        ),
+                      ),
+                    ),
+                ],
               ],
             ),
           ),
@@ -245,13 +356,23 @@ class _PullRequestScreenState extends State<PullRequestScreen> {
       SectionCard(
         title: l10n.reviewers,
         padding: pr.reviewers.isEmpty ? null : const EdgeInsets.symmetric(vertical: 4),
-        child: pr.reviewers.isEmpty
-            ? Text(l10n.noReviewers, style: muted)
-            : Column(
-                children: [
-                  for (final reviewer in pr.reviewers) _ReviewerTile(reviewer),
-                ],
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            if (pr.reviewers.isEmpty)
+              Text(l10n.noReviewers, style: muted)
+            else
+              for (final reviewer in pr.reviewers) _ReviewerTile(reviewer),
+            if (pr.isOpen) ...[
+              const SizedBox(height: 8),
+              _VoteBar(
+                current: detail.myVote,
+                busy: _voting,
+                onVote: (vote) => _vote(pr, vote),
               ),
+            ],
+          ],
+        ),
       ),
       if (detail.workItems.isNotEmpty) ...[
         const SizedBox(height: 16),
@@ -276,31 +397,54 @@ class _PullRequestScreenState extends State<PullRequestScreen> {
       const SizedBox(height: 16),
       SectionCard(
         title: l10n.commentsCount(detail.threads.length),
-        child: detail.threads.isEmpty
-            ? Text(l10n.noComments, style: muted)
-            : Column(
-                children: [
-                  for (final (i, thread) in detail.threads.indexed) ...[
-                    if (i > 0) const Divider(height: 24),
-                    _ThreadView(
-                      thread: thread,
-                      mentions: detail.mentions,
-                      onOpenWorkItem: _openWorkItem,
-                    ),
-                  ],
-                ],
-              ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // The newest discussion comes first, so a new one is started on top.
+            CommentComposer(hint: l10n.writeComment, onSend: (text) => _comment(pr, text)),
+            const SizedBox(height: 16),
+            if (detail.threads.isEmpty)
+              Text(l10n.noComments, style: muted)
+            else
+              for (final (i, thread) in detail.threads.indexed) ...[
+                if (i > 0) const Divider(height: 24),
+                _ThreadView(
+                  key: ValueKey(thread.id),
+                  thread: thread,
+                  mentions: detail.mentions,
+                  onOpenWorkItem: _openWorkItem,
+                  onReply: (text) => _reply(pr, thread, text),
+                  onResolve: (resolved) => _resolve(pr, thread, resolved),
+                ),
+              ],
+          ],
+        ),
       ),
     ];
   }
 }
 
 class _Detail {
-  _Detail({required this.pullRequest, required this.threads, required this.workItems});
+  _Detail({
+    required this.pullRequest,
+    required this.threads,
+    required this.workItems,
+    this.me,
+  });
 
   final PullRequest pullRequest;
   final List<PullRequestThread> threads;
   final List<WorkItem> workItems;
+
+  /// Id of the signed in user, unless it couldn't be loaded.
+  final String? me;
+
+  ReviewVote get myVote =>
+      pullRequest.reviewers
+          .where((r) => me != null && r.identity.id?.toLowerCase() == me!.toLowerCase())
+          .firstOrNull
+          ?.vote ??
+      ReviewVote.none;
 
   /// Comments only hold the guid of a mentioned person; the people taking
   /// part in the pull request are the ones mentioned most.
@@ -339,19 +483,168 @@ class _ReviewerTile extends StatelessWidget {
   }
 }
 
-class _ThreadView extends StatelessWidget {
+/// Approve, or pick another vote from a menu, as the signed in user.
+class _VoteBar extends StatelessWidget {
+  const _VoteBar({required this.current, required this.busy, required this.onVote});
+
+  final ReviewVote current;
+  final bool busy;
+  final ValueChanged<ReviewVote> onVote;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final scheme = Theme.of(context).colorScheme;
+    final others = [
+      (ReviewVote.approvedWithSuggestions, l10n.voteApproveWithSuggestions),
+      (ReviewVote.waitingForAuthor, l10n.voteWaitForAuthor),
+      (ReviewVote.rejected, l10n.voteReject),
+      (ReviewVote.none, l10n.voteReset),
+    ];
+    return Wrap(
+      spacing: 8,
+      runSpacing: 8,
+      children: [
+        FilledButton.icon(
+          onPressed: busy || current == ReviewVote.approved
+              ? null
+              : () => onVote(ReviewVote.approved),
+          icon: busy
+              ? const SizedBox.square(
+                  dimension: 18, child: CircularProgressIndicator(strokeWidth: 2))
+              : const Icon(Icons.check),
+          label: Text(l10n.voteApprove),
+        ),
+        MenuAnchor(
+          menuChildren: [
+            for (final (vote, label) in others)
+              MenuItemButton(
+                leadingIcon: Icon(ReviewVoteStyle.of(vote, scheme).icon,
+                    color: ReviewVoteStyle.of(vote, scheme).color),
+                onPressed: vote == current ? null : () => onVote(vote),
+                child: Text(label),
+              ),
+          ],
+          builder: (context, controller, _) => OutlinedButton.icon(
+            onPressed: busy
+                ? null
+                : () => controller.isOpen ? controller.close() : controller.open(),
+            icon: const Icon(Icons.arrow_drop_down),
+            label: Text(l10n.otherVotes),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/// Asks to confirm a vote, with an optional reason that is posted as a
+/// comment. Pops the reason, or null when canceled.
+class _VoteDialog extends StatefulWidget {
+  const _VoteDialog({required this.title, this.body, required this.confirm});
+
+  final String title;
+  final String? body;
+  final String confirm;
+
+  @override
+  State<_VoteDialog> createState() => _VoteDialogState();
+}
+
+class _VoteDialogState extends State<_VoteDialog> {
+  final _reason = TextEditingController();
+
+  @override
+  void dispose() {
+    _reason.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    return AlertDialog(
+      title: Text(widget.title),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (widget.body != null) ...[
+            Text(widget.body!),
+            const SizedBox(height: 16),
+          ],
+          TextField(
+            controller: _reason,
+            autofocus: true,
+            minLines: 1,
+            maxLines: 4,
+            textCapitalization: TextCapitalization.sentences,
+            decoration: InputDecoration(
+              hintText: l10n.voteReasonHint,
+              helperText: l10n.voteReasonHelper,
+              helperMaxLines: 2,
+              border: const OutlineInputBorder(),
+            ),
+          ),
+        ],
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: Text(l10n.cancel),
+        ),
+        FilledButton(
+          onPressed: () => Navigator.of(context).pop(_reason.text.trim()),
+          child: Text(widget.confirm),
+        ),
+      ],
+    );
+  }
+}
+
+class _ThreadView extends StatefulWidget {
   const _ThreadView({
+    super.key,
     required this.thread,
     required this.mentions,
     required this.onOpenWorkItem,
+    required this.onReply,
+    required this.onResolve,
   });
 
   final PullRequestThread thread;
   final Map<String, String> mentions;
   final ValueChanged<int> onOpenWorkItem;
 
+  /// Tells whether the reply was saved.
+  final Future<bool> Function(String text) onReply;
+
+  /// Resolves the thread, or reactivates it when false.
+  final Future<bool> Function(bool resolved) onResolve;
+
+  @override
+  State<_ThreadView> createState() => _ThreadViewState();
+}
+
+class _ThreadViewState extends State<_ThreadView> {
+  bool _replying = false;
+  bool _resolving = false;
+
+  Future<void> _resolve(bool resolved) async {
+    setState(() => _resolving = true);
+    await widget.onResolve(resolved);
+    if (mounted) setState(() => _resolving = false);
+  }
+
+  Future<bool> _reply(String text) async {
+    final sent = await widget.onReply(text);
+    if (sent && mounted) setState(() => _replying = false);
+    return sent;
+  }
+
   @override
   Widget build(BuildContext context) {
+    final thread = widget.thread;
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
     final l10n = context.l10n;
@@ -408,8 +701,8 @@ class _ThreadView extends StatelessWidget {
                       const SizedBox(height: 4),
                       DevOpsMarkdown(
                         comment.content,
-                        mentions: mentions,
-                        onOpenWorkItem: onOpenWorkItem,
+                        mentions: widget.mentions,
+                        onOpenWorkItem: widget.onOpenWorkItem,
                         imageHeaders: AppScope.read(context).api?.headersFor,
                       ),
                     ],
@@ -418,6 +711,31 @@ class _ThreadView extends StatelessWidget {
               ],
             ),
           ),
+        // Lined up with the replies.
+        Padding(
+          padding: const EdgeInsets.only(left: 44, top: 8),
+          child: _replying
+              ? CommentComposer(hint: l10n.writeReply, autofocus: true, onSend: _reply)
+              : Wrap(
+                  spacing: 8,
+                  children: [
+                    TextButton.icon(
+                      style: TextButton.styleFrom(visualDensity: VisualDensity.compact),
+                      onPressed: () => setState(() => _replying = true),
+                      icon: const Icon(Icons.reply, size: 18),
+                      label: Text(l10n.reply),
+                    ),
+                    if (thread.isActive || thread.isResolved)
+                      TextButton.icon(
+                        style: TextButton.styleFrom(visualDensity: VisualDensity.compact),
+                        onPressed: _resolving ? null : () => _resolve(!thread.isResolved),
+                        icon: Icon(thread.isResolved ? Icons.replay : Icons.check, size: 18),
+                        label: Text(
+                            thread.isResolved ? l10n.reactivateThread : l10n.resolveThread),
+                      ),
+                  ],
+                ),
+        ),
       ],
     );
   }

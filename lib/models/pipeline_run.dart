@@ -66,6 +66,44 @@ List<RunIssue> _issues(Object? json, String typeKey) => [
           ),
     ];
 
+/// An approval a stage waits for: an approval check of a YAML pipeline, or
+/// a pre- or post-deployment approval of a classic release stage.
+class PendingApproval {
+  const PendingApproval({
+    required this.id,
+    required this.stage,
+    this.approvers = const [],
+    this.instructions,
+    this.isRelease = false,
+  });
+
+  /// A guid for a YAML pipeline, a number for a release.
+  final String id;
+  final String stage;
+
+  /// Who may still approve.
+  final List<String> approvers;
+  final String? instructions;
+  final bool isRelease;
+
+  /// An approval of a YAML pipeline, with its steps expanded; [stage] comes
+  /// from the timeline of the run.
+  factory PendingApproval.fromJson(Map<String, dynamic> json, {required String stage}) =>
+      PendingApproval(
+        id: json['id'] as String,
+        stage: stage,
+        approvers: [
+          for (final step in ((json['steps'] as List?) ?? const []).cast<Map<String, dynamic>>())
+            if (step['status'] == 'pending')
+              ?Identity.fromJson(step['assignedApprover'])?.displayName,
+        ],
+        instructions: switch (json['instructions']) {
+          final String text when text.trim().isNotEmpty => text.trim(),
+          _ => null,
+        },
+      );
+}
+
 /// A run of a pipeline: a build, or a release of a classic release pipeline.
 class PipelineRun {
   const PipelineRun({
@@ -77,6 +115,8 @@ class PipelineRun {
     this.kind = RunKind.build,
     this.definitionId,
     this.sourceBranch,
+    this.sourceVersion,
+    this.templateParameters = const {},
     this.requestedFor,
     this.queueTime,
     this.startTime,
@@ -86,6 +126,7 @@ class PipelineRun {
     this.webUrl,
     this.issues = const [],
     this.pendingApproverIds = const {},
+    this.approvals = const [],
   });
 
   final int id;
@@ -100,6 +141,12 @@ class PipelineRun {
   /// The pipeline the run belongs to, within its [project].
   final int? definitionId;
   final String? sourceBranch;
+
+  /// The commit a build ran on.
+  final String? sourceVersion;
+
+  /// The parameters a YAML pipeline ran with.
+  final Map<String, dynamic> templateParameters;
   final Identity? requestedFor;
 
   /// When a build was queued or a release was created.
@@ -123,6 +170,10 @@ class PipelineRun {
   /// Ids of the people and groups whose approval a release stage waits for.
   final Set<String> pendingApproverIds;
 
+  /// The approvals the stages of a release wait for; those of a build come
+  /// from its timeline.
+  final List<PendingApproval> approvals;
+
   bool get isRelease => kind == RunKind.release;
 
   factory PipelineRun.fromJson(Map<String, dynamic> json) => PipelineRun(
@@ -138,6 +189,9 @@ class PipelineRun {
         project: (json['project'] as Map?)?['name'] as String? ?? '',
         definitionId: (json['definition'] as Map?)?['id'] as int?,
         sourceBranch: json['sourceBranch'] as String?,
+        sourceVersion: json['sourceVersion'] as String?,
+        templateParameters:
+            (json['templateParameters'] as Map?)?.cast<String, dynamic>() ?? const {},
         requestedFor: Identity.fromJson(json['requestedFor']),
         queueTime: _date(json['queueTime']),
         startTime: _date(json['startTime']),
@@ -177,6 +231,7 @@ class PipelineRun {
       ],
       webUrl: (((json['_links'] as Map?)?['web']) as Map?)?['href'] as String?,
       pendingApproverIds: {for (final e in environments) ...e.approverIds},
+      approvals: [for (final e in environments) ...e.approvals],
     );
   }
 
@@ -333,6 +388,20 @@ class Timeline {
           if (r.type != 'Phase') r.name,
       ].reversed.toList();
 
+  /// The approvals of YAML stages that still wait, by id, with the name of
+  /// their stage.
+  Map<String, String> get pendingApprovals => {
+        for (final r in _records.values)
+          if (r.type == 'Checkpoint.Approval' && !r.status.isFinished) r.id: _stage(r),
+      };
+
+  String _stage(TimelineRecord record) {
+    for (TimelineRecord? r = record; r != null; r = _records[r.parentId]) {
+      if (r.type == 'Stage') return r.name;
+    }
+    return '';
+  }
+
   int get finishedTasks => tasks.where((t) => t.status.isFinished).length;
 
   /// Share of the tasks that finished, or null before the tasks are known.
@@ -368,14 +437,24 @@ class _ReleaseEnvironment {
       ..sort((a, b) => attempt(a).compareTo(attempt(b)));
     _phases = ((steps.lastOrNull?['releaseDeployPhases'] as List?) ?? const [])
         .cast<Map<String, dynamic>>();
-    final pending = [
+    final pendingJson = [
       for (final key in ['preDeployApprovals', 'postDeployApprovals'])
         for (final a in ((json[key] as List?) ?? const []).cast<Map<String, dynamic>>())
-          if (a['status'] == 'pending' && a['isAutomated'] != true)
-            ?Identity.fromJson(a['approver']),
+          if (a['status'] == 'pending' && a['isAutomated'] != true) a,
     ];
+    final pending = [for (final a in pendingJson) ?Identity.fromJson(a['approver'])];
     approvers = [for (final a in pending) a.displayName];
     approverIds = {for (final a in pending) ?a.id};
+    approvals = [
+      for (final a in pendingJson)
+        if (a['id'] case final num id)
+          PendingApproval(
+            id: '$id',
+            stage: name,
+            approvers: [?Identity.fromJson(a['approver'])?.displayName],
+            isRelease: true,
+          ),
+    ];
     final raw = json['status'] as String?;
     status = approvers.isNotEmpty
         ? RunStatus.waitingForApproval
@@ -410,6 +489,7 @@ class _ReleaseEnvironment {
   late final List<Map<String, dynamic>> _phases;
   late final List<String> approvers;
   late final Set<String> approverIds;
+  late final List<PendingApproval> approvals;
   late final RunStatus status;
   late final DateTime? startTime;
   late final DateTime? finishTime;

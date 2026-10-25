@@ -63,7 +63,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'Di Scopes, pilih Custom defined dan aktifkan hanya cakupan yang tercantum di atas, masing-masing dengan Read.';
+      'Di Scopes, pilih Custom defined dan aktifkan hanya cakupan yang tercantum di atas, masing-masing dengan izin yang tertera di sebelahnya.';
 
   @override
   String get tokenHelpStep4 =>
@@ -477,7 +477,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get releaseScopeHint =>
-      'Rilis memerlukan cakupan Release (Read) pada token Anda.';
+      'Rilis memerlukan cakupan Release (Read, write, & execute) pada token Anda.';
 
   @override
   String get artifact => 'Artefak';
@@ -486,6 +486,57 @@ class AppLocalizationsId extends AppLocalizations {
   String waitingForApprovalBy(String names) {
     return 'Menunggu persetujuan dari $names';
   }
+
+  @override
+  String get approvals => 'Persetujuan';
+
+  @override
+  String approveStage(String stage) {
+    return 'Setujui $stage?';
+  }
+
+  @override
+  String rejectStage(String stage) {
+    return 'Tolak $stage?';
+  }
+
+  @override
+  String get approvalCommentHint => 'Komentar (opsional)';
+
+  @override
+  String get stageApproved => 'Tahap disetujui';
+
+  @override
+  String get stageRejected => 'Tahap ditolak';
+
+  @override
+  String get buildScopeHint =>
+      'Bertindak pada eksekusi pipeline memerlukan cakupan Build (Read & execute) pada token Anda.';
+
+  @override
+  String get cancelRun => 'Batalkan eksekusi';
+
+  @override
+  String get cancelRunTitle => 'Batalkan eksekusi ini?';
+
+  @override
+  String get cancelRunBody =>
+      'Job yang sedang berjalan dihentikan dan yang belum dimulai dilewati.';
+
+  @override
+  String get keepRunning => 'Tetap jalankan';
+
+  @override
+  String get runAgain => 'Jalankan lagi';
+
+  @override
+  String get rerunFailedJobs => 'Jalankan ulang job yang gagal';
+
+  @override
+  String get runStarted => 'Eksekusi dimulai';
+
+  @override
+  String get open => 'Buka';
 
   @override
   String get pullRequests => 'Pull request';
@@ -502,7 +553,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get codeScopeHint =>
-      'Pull request memerlukan cakupan Code (Read) pada token Anda.';
+      'Pull request memerlukan cakupan Code (Read & write) pada token Anda.';
 
   @override
   String get noPullRequestsTitle => 'Tidak ada pull request';
@@ -575,6 +626,152 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get threadResolved => 'Terselesaikan';
+
+  @override
+  String get overviewTab => 'Ikhtisar';
+
+  @override
+  String get filesTab => 'File';
+
+  @override
+  String filesChanged(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count file diubah',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get noFileChanges => 'Pull request ini tidak mengubah file apa pun.';
+
+  @override
+  String get loadFilesFailed => 'Tidak dapat memuat file yang diubah';
+
+  @override
+  String get loadFileFailed => 'Tidak dapat memuat file ini';
+
+  @override
+  String get binaryFile => 'File biner';
+
+  @override
+  String get fileTooLarge => 'Terlalu besar untuk dibandingkan di sini';
+
+  @override
+  String get noContentChanges => 'Tidak ada perubahan pada isi';
+
+  @override
+  String renamedFrom(String path) {
+    return 'Diganti namanya dari $path';
+  }
+
+  @override
+  String get voteApprove => 'Setujui';
+
+  @override
+  String get voteApproveWithSuggestions => 'Setujui dengan saran';
+
+  @override
+  String get voteWaitForAuthor => 'Tunggu penulis';
+
+  @override
+  String get voteReject => 'Tolak';
+
+  @override
+  String get voteReset => 'Atur ulang suara';
+
+  @override
+  String get otherVotes => 'Suara lain';
+
+  @override
+  String get rejectConfirmTitle => 'Tolak pull request ini?';
+
+  @override
+  String get rejectConfirmBody =>
+      'Pull request tidak dapat diselesaikan selama suara Anda Ditolak.';
+
+  @override
+  String get waitForAuthorConfirmTitle => 'Tunggu penulis?';
+
+  @override
+  String get voteReasonHint => 'Alasan (opsional)';
+
+  @override
+  String get voteReasonHelper =>
+      'Diposting sebagai komentar pada pull request.';
+
+  @override
+  String get voteSaved => 'Suara disimpan';
+
+  @override
+  String get cancel => 'Batal';
+
+  @override
+  String get actionDenied =>
+      'Azure DevOps tidak mengizinkan ini. Periksa apakah token Anda memiliki cakupan yang tepat dan akun Anda memiliki izin.';
+
+  @override
+  String get writeComment => 'Tulis komentar…';
+
+  @override
+  String get send => 'Kirim';
+
+  @override
+  String get reply => 'Balas';
+
+  @override
+  String get writeReply => 'Tulis balasan…';
+
+  @override
+  String get resolveThread => 'Selesaikan';
+
+  @override
+  String get reactivateThread => 'Aktifkan kembali';
+
+  @override
+  String get workItemScopeHint =>
+      'Mengomentari tiket memerlukan cakupan Work Items (Read & write) pada token Anda.';
+
+  @override
+  String get changeAssignee => 'Ubah penerima tugas';
+
+  @override
+  String get searchPeopleHint => 'Cari orang';
+
+  @override
+  String get assignToMe => 'Tugaskan ke saya';
+
+  @override
+  String assignedToName(String name) {
+    return 'Ditugaskan ke $name';
+  }
+
+  @override
+  String get ticketUnassigned => 'Penugasan tiket dihapus';
+
+  @override
+  String get assignScopeHint =>
+      'Menugaskan tiket memerlukan cakupan Work Items (Read & write) pada token Anda.';
+
+  @override
+  String get membersLoadFailed =>
+      'Anggota tim tidak dapat dimuat. Ini memerlukan cakupan Project and Team (Read) pada token Anda.';
+
+  @override
+  String get noPeopleFound => 'Tidak ada yang ditemukan';
+
+  @override
+  String get copyLink => 'Salin tautan';
+
+  @override
+  String get shareTicket => 'Bagikan';
+
+  @override
+  String get linkCopied => 'Tautan disalin';
+
+  @override
+  String get undo => 'Urungkan';
 
   @override
   String get runErrors => 'Kesalahan';

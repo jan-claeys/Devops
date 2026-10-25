@@ -40,7 +40,7 @@ class DevOpsApi {
   final String releaseUrl;
   final http.Client _client;
   final String _auth;
-  String? _currentUserId;
+  Identity? _currentUser;
 
   static const _apiVersion = '7.1';
 
@@ -204,6 +204,57 @@ class DevOpsApi {
         .toList();
   }
 
+  /// Adds a comment of plain [text] to [item]. Comments are HTML: Markdown
+  /// needs an API version that Azure DevOps Server doesn't have.
+  Future<void> addWorkItemComment(WorkItem item, String text) => _post(
+        '$baseUrl/${Uri.encodeComponent(item.project)}/_apis/wit/workItems/${item.id}/comments'
+        '?api-version=7.1-preview.4',
+        {'text': const HtmlEscape(HtmlEscapeMode.element).convert(text).replaceAll('\n', '<br>')},
+      );
+
+  /// Assigns [item] to [assignee], or to no one when null, and returns the
+  /// updated item, without its relations.
+  Future<WorkItem> assignWorkItem(WorkItem item, Identity? assignee) async {
+    final json = await _send(
+      'PATCH',
+      '$baseUrl/_apis/wit/workitems/${item.id}?api-version=$_apiVersion',
+      [
+        {
+          'op': 'add',
+          'path': '/fields/System.AssignedTo',
+          // An empty value clears the field.
+          'value': assignee == null ? '' : assignee.uniqueName ?? assignee.displayName,
+        },
+      ],
+      contentType: 'application/json-patch+json',
+    );
+    return WorkItem.fromJson(json);
+  }
+
+  /// The people in the teams of [project], whom its tickets are usually
+  /// assigned to, sorted by name. Groups are left out.
+  Future<List<Identity>> getProjectMembers(String project) async {
+    final apis = '$baseUrl/_apis/projects/${Uri.encodeComponent(project)}/teams';
+    final teams = await _get('$apis?\$top=1000&api-version=$_apiVersion');
+    final perTeam = await Future.wait([
+      for (final team in ((teams['value'] as List?) ?? const []).cast<Map<String, dynamic>>())
+        _get('$apis/${team['id']}/members?\$top=1000&api-version=$_apiVersion'),
+    ]);
+    // Someone in several teams is listed once.
+    final byId = <String, Identity>{};
+    for (final json in perTeam) {
+      for (final member in ((json['value'] as List?) ?? const []).cast<Map<String, dynamic>>()) {
+        final identity = member['identity'];
+        if (identity is! Map<String, dynamic> || identity['isContainer'] == true) continue;
+        if (Identity.fromJson(identity) case Identity(:final id?) && final person) {
+          byId[id] = person;
+        }
+      }
+    }
+    return byId.values.toList()
+      ..sort((a, b) => a.displayName.toLowerCase().compareTo(b.displayName.toLowerCase()));
+  }
+
   /// The latest runs of the pipelines in all [projects], newest first; only
   /// those requested for the user with id [requestedFor], when given.
   Future<List<PipelineRun>> getPipelineRuns({
@@ -295,6 +346,63 @@ class DevOpsApi {
     return PipelineRun.fromJson(json);
   }
 
+  /// The approvals of YAML stages in [project] that still wait, from the ids
+  /// and stage names of [Timeline.pendingApprovals].
+  Future<List<PendingApproval>> getApprovals(String project, Map<String, String> stages) async {
+    if (stages.isEmpty) return const [];
+    final json = await _get('$baseUrl/${Uri.encodeComponent(project)}/_apis/pipelines/approvals'
+        '?approvalIds=${stages.keys.join(',')}&\$expand=steps&api-version=$_apiVersion');
+    return [
+      for (final a in ((json['value'] as List?) ?? const []).cast<Map<String, dynamic>>())
+        if (a['status'] == 'pending')
+          PendingApproval.fromJson(a, stage: stages[a['id']] ?? ''),
+    ];
+  }
+
+  /// Approves or rejects [approval] in [project], with an optional [comment].
+  Future<void> respondToApproval(
+    String project,
+    PendingApproval approval, {
+    required bool approve,
+    String comment = '',
+  }) {
+    final status = approve ? 'approved' : 'rejected';
+    final apis = '${Uri.encodeComponent(project)}/_apis';
+    return approval.isRelease
+        ? _send('PATCH',
+            '$releaseUrl/$apis/release/approvals/${approval.id}?api-version=$_apiVersion',
+            {'status': status, 'comments': comment})
+        : _send('PATCH', '$baseUrl/$apis/pipelines/approvals?api-version=$_apiVersion', [
+            {'approvalId': approval.id, 'status': status, 'comment': comment},
+          ]);
+  }
+
+  /// Stops [run], a build; jobs that haven't started are skipped.
+  Future<void> cancelRun(PipelineRun run) =>
+      _send('PATCH', '${_buildUrl(run)}?api-version=$_apiVersion', {'status': 'cancelling'});
+
+  /// Starts a new run of the pipeline of [run], a build, on the same branch
+  /// and commit and with the same parameters.
+  Future<PipelineRun> runAgain(PipelineRun run) async {
+    final json = await _post(
+      '$baseUrl/${Uri.encodeComponent(run.project)}/_apis/build/builds?api-version=$_apiVersion',
+      {
+        'definition': {'id': run.definitionId},
+        'sourceBranch': ?run.sourceBranch,
+        'sourceVersion': ?run.sourceVersion,
+        if (run.templateParameters.isNotEmpty) 'templateParameters': run.templateParameters,
+      },
+    );
+    return PipelineRun.fromJson(json);
+  }
+
+  /// Runs the failed jobs of [run], a build, again; the run itself goes on.
+  Future<void> rerunFailedJobs(PipelineRun run) =>
+      _send('PATCH', '${_buildUrl(run)}?retry=true&api-version=$_apiVersion', const {});
+
+  String _buildUrl(PipelineRun run) =>
+      '$baseUrl/${Uri.encodeComponent(run.project)}/_apis/build/builds/${run.id}';
+
   /// The latest releases of the classic release pipelines in all [projects],
   /// newest first.
   Future<List<PipelineRun>> getReleases({
@@ -373,14 +481,24 @@ class DevOpsApi {
     return response;
   }
 
-  /// Id of the user the token belongs to.
-  Future<String> getCurrentUserId() async {
-    if (_currentUserId case final id?) return id;
+  /// The user the token belongs to.
+  Future<Identity> getCurrentUser() async {
+    if (_currentUser case final user?) return user;
     final json = await _get('$baseUrl/_apis/connectionData');
-    final id = (json['authenticatedUser'] as Map?)?['id'] as String?;
+    final user = json['authenticatedUser'] as Map?;
+    final id = user?['id'] as String?;
     if (id == null) throw DevOpsException(DevOpsError.unexpectedResponse);
-    return _currentUserId = id;
+    // The email address, or DOMAIN\user on a server.
+    final account = ((user!['properties'] as Map?)?['Account'] as Map?)?[r'$value'];
+    return _currentUser = Identity(
+      displayName: user['providerDisplayName'] as String? ?? '',
+      id: id,
+      uniqueName: account is String && account.isNotEmpty ? account : null,
+    );
   }
+
+  /// Id of the user the token belongs to.
+  Future<String> getCurrentUserId() async => (await getCurrentUser()).id!;
 
   /// The pull requests of all [projects], newest first.
   Future<List<PullRequest>> getPullRequests({
@@ -445,6 +563,72 @@ class DevOpsApi {
     ];
   }
 
+  /// Votes on [pr] as the user the token belongs to, who becomes a reviewer
+  /// if they aren't one yet.
+  Future<void> votePullRequest(PullRequest pr, ReviewVote vote) async {
+    final me = await getCurrentUserId();
+    await _send('PUT', '${_pullRequestUrl(pr)}/reviewers/$me?api-version=$_apiVersion',
+        {'vote': vote.value});
+  }
+
+  /// Starts a discussion on [pr] with a comment in Markdown.
+  Future<void> createPullRequestThread(PullRequest pr, String content) =>
+      _post('${_pullRequestUrl(pr)}/threads?api-version=$_apiVersion', {
+        'comments': [
+          {'parentCommentId': 0, 'content': content, 'commentType': 'text'},
+        ],
+        'status': 'active',
+      });
+
+  /// Replies to the comment that started [thread] on [pr], in Markdown.
+  Future<void> replyToThread(PullRequest pr, PullRequestThread thread, String content) =>
+      _post('${_pullRequestUrl(pr)}/threads/${thread.id}/comments?api-version=$_apiVersion', {
+        'parentCommentId': thread.comments.first.id,
+        'content': content,
+        'commentType': 'text',
+      });
+
+  /// Marks [thread] on [pr] as resolved (fixed), or active again.
+  Future<void> resolveThread(PullRequest pr, PullRequestThread thread, {bool resolved = true}) =>
+      _send('PATCH', '${_pullRequestUrl(pr)}/threads/${thread.id}?api-version=$_apiVersion',
+          {'status': resolved ? 'fixed' : 'active'});
+
+  /// The files [pr] changes in its latest iteration, compared with the commit
+  /// its branches have in common, sorted by path.
+  Future<List<PullRequestChange>> getPullRequestChanges(PullRequest pr) async {
+    final iterations = await _get('${_pullRequestUrl(pr)}/iterations?api-version=$_apiVersion');
+    final latest = [
+      for (final i in ((iterations['value'] as List?) ?? const []).cast<Map<String, dynamic>>())
+        ?(i['id'] as num?)?.toInt(),
+    ].fold(0, (a, b) => a > b ? a : b);
+    if (latest == 0) return const [];
+    final changes = <PullRequestChange>[];
+    var skip = 0;
+    do {
+      final json = await _get('${_pullRequestUrl(pr)}/iterations/$latest/changes'
+          '?\$top=2000&\$skip=$skip&\$compareTo=0&api-version=$_apiVersion');
+      for (final c in ((json['changeEntries'] as List?) ?? const []).cast<Map<String, dynamic>>()) {
+        if (PullRequestChange.fromJson(c) case final change?) changes.add(change);
+      }
+      skip = (json['nextSkip'] as num?)?.toInt() ?? 0;
+    } while (skip > 0);
+    return changes..sort((a, b) => a.path.compareTo(b.path));
+  }
+
+  /// The content of the git object [objectId] in the repository of [pr].
+  Future<List<int>> getBlob(PullRequest pr, String objectId) async {
+    final url = '$baseUrl/${Uri.encodeComponent(pr.project)}/_apis/git/repositories/'
+        '${pr.repositoryId}/blobs/$objectId?\$format=octetstream&api-version=$_apiVersion';
+    final response = await _client
+        .get(Uri.parse(url), headers: {..._headers, 'Accept': 'application/octet-stream'});
+    _check(response);
+    // A sign-in page instead of the file when the PAT is invalid.
+    if (response.headers['content-type']?.contains('html') ?? false) {
+      throw DevOpsException(DevOpsError.unauthorized, statusCode: response.statusCode);
+    }
+    return response.bodyBytes;
+  }
+
   String _pullRequestUrl(PullRequest pr) =>
       '$baseUrl/${Uri.encodeComponent(pr.project)}/_apis/git/repositories/'
       '${pr.repositoryId}/pullRequests/${pr.id}';
@@ -454,13 +638,15 @@ class DevOpsApi {
     return _decode(response);
   }
 
-  Future<Map<String, dynamic>> _post(String url, Object body) async {
-    final response = await _client.post(
-      Uri.parse(url),
-      headers: {..._headers, 'Content-Type': 'application/json'},
-      body: jsonEncode(body),
-    );
-    return _decode(response);
+  Future<Map<String, dynamic>> _post(String url, Object body) => _send('POST', url, body);
+
+  /// Sends [body] as JSON with [method].
+  Future<Map<String, dynamic>> _send(String method, String url, Object body,
+      {String contentType = 'application/json'}) async {
+    final request = http.Request(method, Uri.parse(url))
+      ..headers.addAll({..._headers, 'Content-Type': contentType})
+      ..body = jsonEncode(body);
+    return _decode(await http.Response.fromStream(await _client.send(request)));
   }
 
   Map<String, String> get _headers => {
@@ -474,8 +660,11 @@ class DevOpsApi {
     // The timeline of a run that hasn't started yet is empty or null.
     if (code == 204 || response.bodyBytes.isEmpty) return const {};
     try {
-      return (jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>?) ??
-          const {};
+      // Some actions answer with a list, which nothing reads.
+      return switch (jsonDecode(utf8.decode(response.bodyBytes))) {
+        final Map<String, dynamic> json => json,
+        _ => const {},
+      };
     } on FormatException {
       // Azure DevOps answers with an HTML sign-in page when the PAT is invalid.
       final signIn = response.headers['content-type']?.contains('html') ?? false;

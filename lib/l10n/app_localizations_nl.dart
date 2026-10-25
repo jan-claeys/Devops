@@ -63,7 +63,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'Kies bij Scopes voor Custom defined en vink alleen de scopes hierboven aan, telkens met Read.';
+      'Kies bij Scopes voor Custom defined en vink alleen de scopes hierboven aan, telkens met de rechten die ernaast staan.';
 
   @override
   String get tokenHelpStep4 =>
@@ -480,7 +480,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get releaseScopeHint =>
-      'Voor releases heeft je token de scope Release (Read) nodig.';
+      'Voor releases heeft je token de scope Release (Read, write, & execute) nodig.';
 
   @override
   String get artifact => 'Artefact';
@@ -489,6 +489,57 @@ class AppLocalizationsNl extends AppLocalizations {
   String waitingForApprovalBy(String names) {
     return 'Wacht op goedkeuring van $names';
   }
+
+  @override
+  String get approvals => 'Goedkeuringen';
+
+  @override
+  String approveStage(String stage) {
+    return '$stage goedkeuren?';
+  }
+
+  @override
+  String rejectStage(String stage) {
+    return '$stage afwijzen?';
+  }
+
+  @override
+  String get approvalCommentHint => 'Opmerking (optioneel)';
+
+  @override
+  String get stageApproved => 'Fase goedgekeurd';
+
+  @override
+  String get stageRejected => 'Fase afgewezen';
+
+  @override
+  String get buildScopeHint =>
+      'Om pipeline-runs te beheren heeft je token de scope Build (Read & execute) nodig.';
+
+  @override
+  String get cancelRun => 'Run annuleren';
+
+  @override
+  String get cancelRunTitle => 'Deze run annuleren?';
+
+  @override
+  String get cancelRunBody =>
+      'Lopende jobs worden gestopt en jobs die nog niet gestart zijn worden overgeslagen.';
+
+  @override
+  String get keepRunning => 'Laten lopen';
+
+  @override
+  String get runAgain => 'Opnieuw uitvoeren';
+
+  @override
+  String get rerunFailedJobs => 'Mislukte jobs opnieuw uitvoeren';
+
+  @override
+  String get runStarted => 'Run gestart';
+
+  @override
+  String get open => 'Openen';
 
   @override
   String get pullRequests => 'Pull requests';
@@ -504,7 +555,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get codeScopeHint =>
-      'Voor pull requests heeft je token de scope Code (Read) nodig.';
+      'Voor pull requests heeft je token de scope Code (Read & write) nodig.';
 
   @override
   String get noPullRequestsTitle => 'Geen pull requests';
@@ -578,6 +629,153 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get threadResolved => 'Opgelost';
+
+  @override
+  String get overviewTab => 'Overzicht';
+
+  @override
+  String get filesTab => 'Bestanden';
+
+  @override
+  String filesChanged(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count bestanden gewijzigd',
+      one: '1 bestand gewijzigd',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get noFileChanges => 'Deze pull request wijzigt geen bestanden.';
+
+  @override
+  String get loadFilesFailed => 'Kon de gewijzigde bestanden niet laden';
+
+  @override
+  String get loadFileFailed => 'Kon dit bestand niet laden';
+
+  @override
+  String get binaryFile => 'Binair bestand';
+
+  @override
+  String get fileTooLarge => 'Te groot om hier te vergelijken';
+
+  @override
+  String get noContentChanges => 'Geen wijzigingen in de inhoud';
+
+  @override
+  String renamedFrom(String path) {
+    return 'Hernoemd van $path';
+  }
+
+  @override
+  String get voteApprove => 'Goedkeuren';
+
+  @override
+  String get voteApproveWithSuggestions => 'Goedkeuren met suggesties';
+
+  @override
+  String get voteWaitForAuthor => 'Wachten op auteur';
+
+  @override
+  String get voteReject => 'Afwijzen';
+
+  @override
+  String get voteReset => 'Stem intrekken';
+
+  @override
+  String get otherVotes => 'Andere stemmen';
+
+  @override
+  String get rejectConfirmTitle => 'Deze pull request afwijzen?';
+
+  @override
+  String get rejectConfirmBody =>
+      'De pull request kan niet worden afgerond zolang je stem Afgewezen is.';
+
+  @override
+  String get waitForAuthorConfirmTitle => 'Wachten op de auteur?';
+
+  @override
+  String get voteReasonHint => 'Reden (optioneel)';
+
+  @override
+  String get voteReasonHelper =>
+      'Wordt als opmerking op de pull request geplaatst.';
+
+  @override
+  String get voteSaved => 'Stem opgeslagen';
+
+  @override
+  String get cancel => 'Annuleren';
+
+  @override
+  String get actionDenied =>
+      'Azure DevOps stond dit niet toe. Controleer of je token de juiste scope heeft en of je account de rechten heeft.';
+
+  @override
+  String get writeComment => 'Schrijf een reactie…';
+
+  @override
+  String get send => 'Versturen';
+
+  @override
+  String get reply => 'Antwoorden';
+
+  @override
+  String get writeReply => 'Schrijf een antwoord…';
+
+  @override
+  String get resolveThread => 'Oplossen';
+
+  @override
+  String get reactivateThread => 'Heropenen';
+
+  @override
+  String get workItemScopeHint =>
+      'Om op tickets te reageren heeft je token de scope Work Items (Read & write) nodig.';
+
+  @override
+  String get changeAssignee => 'Toewijzing wijzigen';
+
+  @override
+  String get searchPeopleHint => 'Personen zoeken';
+
+  @override
+  String get assignToMe => 'Aan mij toewijzen';
+
+  @override
+  String assignedToName(String name) {
+    return 'Toegewezen aan $name';
+  }
+
+  @override
+  String get ticketUnassigned => 'Toewijzing van ticket verwijderd';
+
+  @override
+  String get assignScopeHint =>
+      'Om tickets toe te wijzen heeft je token de scope Work Items (Read & write) nodig.';
+
+  @override
+  String get membersLoadFailed =>
+      'De teamleden konden niet geladen worden. Daarvoor heeft je token de scope Project and Team (Read) nodig.';
+
+  @override
+  String get noPeopleFound => 'Niemand gevonden';
+
+  @override
+  String get copyLink => 'Link kopiëren';
+
+  @override
+  String get shareTicket => 'Delen';
+
+  @override
+  String get linkCopied => 'Link gekopieerd';
+
+  @override
+  String get undo => 'Ongedaan maken';
 
   @override
   String get runErrors => 'Fouten';

@@ -64,7 +64,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'Sous Scopes, choisissez Custom defined et activez uniquement les portées indiquées ci-dessus, chacune avec Read.';
+      'Sous Scopes, choisissez Custom defined et activez uniquement les portées indiquées ci-dessus, chacune avec l’autorisation affichée à côté.';
 
   @override
   String get tokenHelpStep4 =>
@@ -482,7 +482,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get releaseScopeHint =>
-      'Les releases nécessitent la portée Release (Read) sur votre jeton.';
+      'Les releases nécessitent la portée Release (Read, write, & execute) sur votre jeton.';
 
   @override
   String get artifact => 'Artefact';
@@ -491,6 +491,57 @@ class AppLocalizationsFr extends AppLocalizations {
   String waitingForApprovalBy(String names) {
     return 'En attente d’approbation de $names';
   }
+
+  @override
+  String get approvals => 'Approbations';
+
+  @override
+  String approveStage(String stage) {
+    return 'Approuver $stage ?';
+  }
+
+  @override
+  String rejectStage(String stage) {
+    return 'Rejeter $stage ?';
+  }
+
+  @override
+  String get approvalCommentHint => 'Commentaire (facultatif)';
+
+  @override
+  String get stageApproved => 'Étape approuvée';
+
+  @override
+  String get stageRejected => 'Étape rejetée';
+
+  @override
+  String get buildScopeHint =>
+      'Agir sur les exécutions de pipeline nécessite la portée Build (Read & execute) sur votre jeton.';
+
+  @override
+  String get cancelRun => 'Annuler l’exécution';
+
+  @override
+  String get cancelRunTitle => 'Annuler cette exécution ?';
+
+  @override
+  String get cancelRunBody =>
+      'Les jobs en cours sont arrêtés et ceux qui n’ont pas commencé sont ignorés.';
+
+  @override
+  String get keepRunning => 'Continuer';
+
+  @override
+  String get runAgain => 'Relancer';
+
+  @override
+  String get rerunFailedJobs => 'Relancer les jobs en échec';
+
+  @override
+  String get runStarted => 'Exécution lancée';
+
+  @override
+  String get open => 'Ouvrir';
 
   @override
   String get pullRequests => 'Pull requests';
@@ -508,7 +559,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get codeScopeHint =>
-      'Les pull requests nécessitent la portée Code (Read) sur votre jeton.';
+      'Les pull requests nécessitent la portée Code (Read & write) sur votre jeton.';
 
   @override
   String get noPullRequestsTitle => 'Aucune pull request';
@@ -582,6 +633,152 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get threadResolved => 'Résolu';
+
+  @override
+  String get overviewTab => 'Aperçu';
+
+  @override
+  String get filesTab => 'Fichiers';
+
+  @override
+  String filesChanged(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count fichiers modifiés',
+      one: '1 fichier modifié',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get noFileChanges => 'Cette pull request ne modifie aucun fichier.';
+
+  @override
+  String get loadFilesFailed => 'Impossible de charger les fichiers modifiés';
+
+  @override
+  String get loadFileFailed => 'Impossible de charger ce fichier';
+
+  @override
+  String get binaryFile => 'Fichier binaire';
+
+  @override
+  String get fileTooLarge => 'Trop volumineux pour être comparé ici';
+
+  @override
+  String get noContentChanges => 'Aucune modification du contenu';
+
+  @override
+  String renamedFrom(String path) {
+    return 'Renommé depuis $path';
+  }
+
+  @override
+  String get voteApprove => 'Approuver';
+
+  @override
+  String get voteApproveWithSuggestions => 'Approuver avec suggestions';
+
+  @override
+  String get voteWaitForAuthor => 'Attendre l’auteur';
+
+  @override
+  String get voteReject => 'Rejeter';
+
+  @override
+  String get voteReset => 'Réinitialiser le vote';
+
+  @override
+  String get otherVotes => 'Autres votes';
+
+  @override
+  String get rejectConfirmTitle => 'Rejeter cette pull request ?';
+
+  @override
+  String get rejectConfirmBody =>
+      'La pull request ne peut pas être terminée tant que votre vote est Rejeté.';
+
+  @override
+  String get waitForAuthorConfirmTitle => 'Attendre l’auteur ?';
+
+  @override
+  String get voteReasonHint => 'Raison (facultatif)';
+
+  @override
+  String get voteReasonHelper => 'Publiée en commentaire sur la pull request.';
+
+  @override
+  String get voteSaved => 'Vote enregistré';
+
+  @override
+  String get cancel => 'Annuler';
+
+  @override
+  String get actionDenied =>
+      'Azure DevOps n’a pas autorisé cette action. Vérifiez que votre jeton a la bonne portée et que votre compte a l’autorisation.';
+
+  @override
+  String get writeComment => 'Écrire un commentaire…';
+
+  @override
+  String get send => 'Envoyer';
+
+  @override
+  String get reply => 'Répondre';
+
+  @override
+  String get writeReply => 'Écrire une réponse…';
+
+  @override
+  String get resolveThread => 'Résoudre';
+
+  @override
+  String get reactivateThread => 'Réactiver';
+
+  @override
+  String get workItemScopeHint =>
+      'Commenter des tickets nécessite la portée Work Items (Read & write) sur votre jeton.';
+
+  @override
+  String get changeAssignee => 'Modifier l’attribution';
+
+  @override
+  String get searchPeopleHint => 'Rechercher des personnes';
+
+  @override
+  String get assignToMe => 'M’attribuer';
+
+  @override
+  String assignedToName(String name) {
+    return 'Attribué à $name';
+  }
+
+  @override
+  String get ticketUnassigned => 'Ticket non attribué';
+
+  @override
+  String get assignScopeHint =>
+      'Attribuer des tickets nécessite la portée Work Items (Read & write) sur votre jeton.';
+
+  @override
+  String get membersLoadFailed =>
+      'Impossible de charger les membres de l’équipe. Cela nécessite la portée Project and Team (Read) sur votre jeton.';
+
+  @override
+  String get noPeopleFound => 'Personne trouvé';
+
+  @override
+  String get copyLink => 'Copier le lien';
+
+  @override
+  String get shareTicket => 'Partager';
+
+  @override
+  String get linkCopied => 'Lien copié';
+
+  @override
+  String get undo => 'Annuler';
 
   @override
   String get runErrors => 'Erreurs';

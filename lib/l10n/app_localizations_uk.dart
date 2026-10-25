@@ -63,7 +63,7 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get tokenHelpStep3 =>
-      'У розділі Scopes виберіть Custom defined і ввімкніть лише права, перелічені вище, кожне з рівнем Read.';
+      'У розділі Scopes виберіть Custom defined і ввімкніть лише права, перелічені вище, кожне з рівнем, указаним поруч.';
 
   @override
   String get tokenHelpStep4 =>
@@ -484,7 +484,7 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get releaseScopeHint =>
-      'Для випусків токену потрібні права Release (Read).';
+      'Для випусків токену потрібні права Release (Read, write, & execute).';
 
   @override
   String get artifact => 'Артефакт';
@@ -493,6 +493,57 @@ class AppLocalizationsUk extends AppLocalizations {
   String waitingForApprovalBy(String names) {
     return 'Очікує схвалення: $names';
   }
+
+  @override
+  String get approvals => 'Затвердження';
+
+  @override
+  String approveStage(String stage) {
+    return 'Схвалити $stage?';
+  }
+
+  @override
+  String rejectStage(String stage) {
+    return 'Відхилити $stage?';
+  }
+
+  @override
+  String get approvalCommentHint => 'Коментар (необов’язково)';
+
+  @override
+  String get stageApproved => 'Етап схвалено';
+
+  @override
+  String get stageRejected => 'Етап відхилено';
+
+  @override
+  String get buildScopeHint =>
+      'Для дій із запусками конвеєрів токену потрібні права Build (Read & execute).';
+
+  @override
+  String get cancelRun => 'Скасувати запуск';
+
+  @override
+  String get cancelRunTitle => 'Скасувати цей запуск?';
+
+  @override
+  String get cancelRunBody =>
+      'Завдання, що виконуються, буде зупинено, а ще не розпочаті — пропущено.';
+
+  @override
+  String get keepRunning => 'Продовжити';
+
+  @override
+  String get runAgain => 'Запустити знову';
+
+  @override
+  String get rerunFailedJobs => 'Перезапустити невдалі завдання';
+
+  @override
+  String get runStarted => 'Запуск розпочато';
+
+  @override
+  String get open => 'Відкрити';
 
   @override
   String get pullRequests => 'Pull request’и';
@@ -509,7 +560,7 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get codeScopeHint =>
-      'Для pull request’ів токену потрібні права Code (Read).';
+      'Для pull request’ів токену потрібні права Code (Read & write).';
 
   @override
   String get noPullRequestsTitle => 'Немає pull request’ів';
@@ -585,6 +636,154 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get threadResolved => 'Вирішено';
+
+  @override
+  String get overviewTab => 'Огляд';
+
+  @override
+  String get filesTab => 'Файли';
+
+  @override
+  String filesChanged(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Змінено $count файлу',
+      many: 'Змінено $count файлів',
+      few: 'Змінено $count файли',
+      one: 'Змінено 1 файл',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get noFileChanges => 'Цей pull request не змінює файлів.';
+
+  @override
+  String get loadFilesFailed => 'Не вдалося завантажити змінені файли';
+
+  @override
+  String get loadFileFailed => 'Не вдалося завантажити цей файл';
+
+  @override
+  String get binaryFile => 'Двійковий файл';
+
+  @override
+  String get fileTooLarge => 'Завеликий для порівняння тут';
+
+  @override
+  String get noContentChanges => 'Вміст не змінився';
+
+  @override
+  String renamedFrom(String path) {
+    return 'Перейменовано з $path';
+  }
+
+  @override
+  String get voteApprove => 'Схвалити';
+
+  @override
+  String get voteApproveWithSuggestions => 'Схвалити з пропозиціями';
+
+  @override
+  String get voteWaitForAuthor => 'Чекати на автора';
+
+  @override
+  String get voteReject => 'Відхилити';
+
+  @override
+  String get voteReset => 'Скинути голос';
+
+  @override
+  String get otherVotes => 'Інші варіанти';
+
+  @override
+  String get rejectConfirmTitle => 'Відхилити цей pull request?';
+
+  @override
+  String get rejectConfirmBody =>
+      'Pull request не можна завершити, доки ваш голос — «Відхилено».';
+
+  @override
+  String get waitForAuthorConfirmTitle => 'Чекати на автора?';
+
+  @override
+  String get voteReasonHint => 'Причина (необов’язково)';
+
+  @override
+  String get voteReasonHelper => 'Публікується як коментар до pull request.';
+
+  @override
+  String get voteSaved => 'Голос збережено';
+
+  @override
+  String get cancel => 'Скасувати';
+
+  @override
+  String get actionDenied =>
+      'Azure DevOps не дозволив цю дію. Перевірте, що токен має потрібні права, а обліковий запис — дозвіл.';
+
+  @override
+  String get writeComment => 'Напишіть коментар…';
+
+  @override
+  String get send => 'Надіслати';
+
+  @override
+  String get reply => 'Відповісти';
+
+  @override
+  String get writeReply => 'Напишіть відповідь…';
+
+  @override
+  String get resolveThread => 'Вирішити';
+
+  @override
+  String get reactivateThread => 'Відкрити знову';
+
+  @override
+  String get workItemScopeHint =>
+      'Щоб коментувати тікети, токену потрібні права Work Items (Read & write).';
+
+  @override
+  String get changeAssignee => 'Змінити виконавця';
+
+  @override
+  String get searchPeopleHint => 'Пошук людей';
+
+  @override
+  String get assignToMe => 'Призначити мені';
+
+  @override
+  String assignedToName(String name) {
+    return 'Призначено: $name';
+  }
+
+  @override
+  String get ticketUnassigned => 'Виконавця знято';
+
+  @override
+  String get assignScopeHint =>
+      'Щоб призначати тікети, токену потрібні права Work Items (Read & write).';
+
+  @override
+  String get membersLoadFailed =>
+      'Не вдалося завантажити учасників команди. Для цього токену потрібні права Project and Team (Read).';
+
+  @override
+  String get noPeopleFound => 'Нікого не знайдено';
+
+  @override
+  String get copyLink => 'Копіювати посилання';
+
+  @override
+  String get shareTicket => 'Поділитися';
+
+  @override
+  String get linkCopied => 'Посилання скопійовано';
+
+  @override
+  String get undo => 'Скасувати';
 
   @override
   String get runErrors => 'Помилки';

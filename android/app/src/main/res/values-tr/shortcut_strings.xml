@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="shortcut_my_pull_requests_short">PR\'larım</string>
+    <string name="shortcut_my_pull_requests_long">Çekme isteklerim</string>
+    <string name="shortcut_active_runs_short">Etkin</string>
+    <string name="shortcut_active_runs_long">Etkin çalıştırmalar</string>
+    <string name="shortcut_tickets">Biletler</string>
+</resources>

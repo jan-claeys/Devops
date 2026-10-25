@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:logging/logging.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../l10n/l10n.dart';
 import '../models/work_item.dart';
@@ -8,6 +10,7 @@ import '../services/app_state.dart';
 import '../services/devops_api.dart';
 import '../services/home_widget_service.dart';
 import '../services/logging.dart';
+import '../widgets/assignee_picker.dart';
 import '../widgets/empty_state.dart';
 import '../widgets/error_action.dart';
 import '../widgets/work_item_visuals.dart';
@@ -37,6 +40,10 @@ class _WorkItemsScreenState extends State<WorkItemsScreen> {
   int? _selectedId;
   String? _loadedFor;
 
+  /// The signed in user; tickets already assigned to them can't be swiped
+  /// to assign them.
+  Identity? _me;
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -64,6 +71,12 @@ class _WorkItemsScreenState extends State<WorkItemsScreen> {
     setState(() {
       _loading = true;
       _error = null;
+    });
+    // The user is only needed for swipe actions, so a failure is no error.
+    api.getCurrentUser().then((me) {
+      if (mounted) setState(() => _me = me);
+    }, onError: (Object e, StackTrace st) {
+      logFailure(_log, 'Loading the current user failed', e, st);
     });
     try {
       final items =
@@ -100,9 +113,93 @@ class _WorkItemsScreenState extends State<WorkItemsScreen> {
       setState(() => _selectedId = item.id);
     } else {
       Navigator.of(context).push(MaterialPageRoute(
-        builder: (_) => WorkItemDetailScreen(id: item.id),
+        builder: (_) => WorkItemDetailScreen(id: item.id, onChanged: _load),
       ));
     }
+  }
+
+  void _replace(WorkItem updated) => setState(() => _items = [
+        for (final w in _items ?? const <WorkItem>[]) w.id == updated.id ? updated : w,
+      ]);
+
+  /// Assigns [item] to [assignee], or to no one; with undo, which assigns it
+  /// back to whom it had.
+  Future<void> _assign(WorkItem item, Identity? assignee, {bool undoable = true}) async {
+    final api = AppScope.read(context).api!;
+    final l10n = context.l10n;
+    final messenger = ScaffoldMessenger.of(context);
+    try {
+      final updated = await api.assignWorkItem(item, assignee);
+      if (!mounted) return;
+      _replace(updated);
+      messenger.showSnackBar(SnackBar(
+        content: Text(switch (assignee) {
+          final a? => l10n.assignedToName(a.displayName),
+          null => l10n.ticketUnassigned,
+        }),
+        action: undoable
+            ? SnackBarAction(
+                label: l10n.undo,
+                onPressed: () => _assign(updated, item.assignedTo, undoable: false))
+            : null,
+      ));
+    } catch (e, st) {
+      logFailure(_log, 'Assigning work item ${item.id} failed', e, st);
+      if (mounted) showActionError(context, e, scopeHint: l10n.assignScopeHint);
+    }
+  }
+
+  Future<void> _assignToMe(WorkItem item) async {
+    try {
+      final me = _me ?? await AppScope.read(context).api!.getCurrentUser();
+      if (mounted) await _assign(item, me);
+    } catch (e, st) {
+      logFailure(_log, 'Loading the current user failed', e, st);
+      if (mounted) showActionError(context, e, scopeHint: context.l10n.assignScopeHint);
+    }
+  }
+
+  /// Offers to copy the link to [item] or to share it, such as to Teams or
+  /// Slack; [origin] is where the share sheet points to on an iPad.
+  Future<void> _shareLink(WorkItem item, Rect origin) async {
+    final l10n = context.l10n;
+    final url = AppScope.read(context).api!.webUrl(item);
+    final share = await showModalBottomSheet<bool>(
+      context: context,
+      showDragHandle: true,
+      builder: (context) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              leading: const Icon(Icons.link),
+              title: Text(l10n.copyLink),
+              subtitle: Text(url, maxLines: 1, overflow: TextOverflow.ellipsis),
+              onTap: () => Navigator.of(context).pop(false),
+            ),
+            ListTile(
+              leading: const Icon(Icons.share_outlined),
+              title: Text(l10n.shareTicket),
+              onTap: () => Navigator.of(context).pop(true),
+            ),
+          ],
+        ),
+      ),
+    );
+    if (share == null || !mounted) return;
+    if (!share) {
+      await Clipboard.setData(ClipboardData(text: url));
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.linkCopied)));
+      }
+      return;
+    }
+    final title = '${item.type} ${item.id}: ${item.title}';
+    await SharePlus.instance.share(ShareParams(
+      text: '$title\n$url',
+      subject: title,
+      sharePositionOrigin: origin,
+    ));
   }
 
   @override
@@ -148,6 +245,7 @@ class _WorkItemsScreenState extends State<WorkItemsScreen> {
                             id: _selectedId!,
                             embedded: true,
                             onOpenWorkItem: (id) => setState(() => _selectedId = id),
+                            onChanged: _load,
                           ),
                   ),
                 ),
@@ -325,17 +423,116 @@ class _WorkItemsScreenState extends State<WorkItemsScreen> {
                 sliver: SliverList.separated(
                   itemCount: items.length,
                   separatorBuilder: (_, _) => const SizedBox(height: 8),
-                  itemBuilder: (context, i) => _WorkItemCard(
-                    item: items[i],
-                    showProject: state.projects.length > 1,
-                    selected: wide && items[i].id == _selectedId,
-                    onTap: () => _open(items[i], wide),
+                  itemBuilder: (context, i) => _Swipeable(
+                    key: ValueKey(items[i].id),
+                    // Already the user's: only sharing is left.
+                    canAssignToMe: !isSamePerson(items[i].assignedTo, _me),
+                    onAssignToMe: () => _assignToMe(items[i]),
+                    onShare: (origin) => _shareLink(items[i], origin),
+                    child: _WorkItemCard(
+                      item: items[i],
+                      showProject: state.projects.length > 1,
+                      selected: wide && items[i].id == _selectedId,
+                      onTap: () => _open(items[i], wide),
+                    ),
                   ),
                 ),
               ),
             ],
           ],
         ),
+      ),
+    );
+  }
+}
+
+/// A ticket that is swiped right to assign it to the user, or left to copy
+/// or share its link; it springs back either way.
+class _Swipeable extends StatelessWidget {
+  const _Swipeable({
+    super.key,
+    required this.canAssignToMe,
+    required this.onAssignToMe,
+    required this.onShare,
+    required this.child,
+  });
+
+  final bool canAssignToMe;
+  final VoidCallback onAssignToMe;
+  final ValueChanged<Rect> onShare;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final l10n = context.l10n;
+    return Dismissible(
+      key: key!,
+      direction:
+          canAssignToMe ? DismissDirection.horizontal : DismissDirection.endToStart,
+      dismissThresholds: const {
+        DismissDirection.startToEnd: 0.3,
+        DismissDirection.endToStart: 0.3,
+      },
+      confirmDismiss: (direction) async {
+        if (direction == DismissDirection.startToEnd) {
+          onAssignToMe();
+        } else {
+          final box = context.findRenderObject() as RenderBox?;
+          onShare(box == null ? Rect.zero : box.localToGlobal(Offset.zero) & box.size);
+        }
+        return false;
+      },
+      background: _SwipeBackground(
+        icon: Icons.person_add_alt_1,
+        label: l10n.assignToMe,
+        color: scheme.primaryContainer,
+        onColor: scheme.onPrimaryContainer,
+        alignment: AlignmentDirectional.centerStart,
+      ),
+      secondaryBackground: _SwipeBackground(
+        icon: Icons.share_outlined,
+        label: l10n.shareTicket,
+        color: scheme.tertiaryContainer,
+        onColor: scheme.onTertiaryContainer,
+        alignment: AlignmentDirectional.centerEnd,
+      ),
+      child: child,
+    );
+  }
+}
+
+class _SwipeBackground extends StatelessWidget {
+  const _SwipeBackground({
+    required this.icon,
+    required this.label,
+    required this.color,
+    required this.onColor,
+    required this.alignment,
+  });
+
+  final IconData icon;
+  final String label;
+  final Color color;
+  final Color onColor;
+  final AlignmentDirectional alignment;
+
+  @override
+  Widget build(BuildContext context) {
+    // Fills the card only, not the margin around it.
+    return Container(
+      margin: const EdgeInsets.all(4),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(12)),
+      alignment: alignment,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, color: onColor),
+          const SizedBox(width: 8),
+          Text(label,
+              style: Theme.of(context).textTheme.labelLarge?.copyWith(color: onColor)),
+        ],
       ),
     );
   }

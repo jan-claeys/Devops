@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:devops/models/pipeline_run.dart';
+import 'package:devops/models/pull_request.dart';
 import 'package:devops/models/work_item.dart';
 import 'package:devops/services/devops_api.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -166,6 +167,18 @@ void main() {
     final item = await api.getWorkItem(5);
     expect(item.childIds, [6]);
     expect(fake.requests.single.url.queryParameters['\$expand'], 'relations');
+  });
+
+  test('addWorkItemComment posts the text as HTML', () async {
+    final item = WorkItem.fromJson(workItemJson(42, project: 'My Project'));
+    await api.addWorkItemComment(item, 'Fixed in <b>v2</b>\nThanks & bye');
+    final request = fake.requests.single;
+    expect(request.method, 'POST');
+    expect(request.url.toString(),
+        'https://dev.azure.com/contoso/My%20Project/_apis/wit/workItems/42/comments'
+        '?api-version=7.1-preview.4');
+    expect(jsonDecode(request.body),
+        {'text': 'Fixed in &lt;b&gt;v2&lt;/b&gt;<br>Thanks &amp; bye'});
   });
 
   test('getComments reads the newest first', () async {
@@ -359,6 +372,89 @@ void main() {
       expect(fake.requests.single.url.path, '/contoso/Contoso/_apis/release/releases/3');
     });
 
+    group('run actions', () {
+      final run = PipelineRun.fromJson({
+        ...runJson(5, project: 'My Project'),
+        'sourceVersion': 'abc123',
+        'templateParameters': {'environment': 'test'},
+      });
+
+      test('cancelRun stops the build', () async {
+        await api.cancelRun(run);
+        final request = fake.requests.single;
+        expect(request.method, 'PATCH');
+        expect(request.url.toString(),
+            'https://dev.azure.com/contoso/My%20Project/_apis/build/builds/5?api-version=7.1');
+        expect(jsonDecode(request.body), {'status': 'cancelling'});
+      });
+
+      test('runAgain queues the same branch, commit and parameters', () async {
+        final started = await api.runAgain(run);
+        final request = fake.requests.single;
+        expect(request.method, 'POST');
+        expect(request.url.toString(),
+            'https://dev.azure.com/contoso/My%20Project/_apis/build/builds?api-version=7.1');
+        expect(jsonDecode(request.body), {
+          'definition': {'id': 1},
+          'sourceBranch': 'refs/heads/main',
+          'sourceVersion': 'abc123',
+          'templateParameters': {'environment': 'test'},
+        });
+        expect(started.id, 1000);
+      });
+
+      test('rerunFailedJobs retries the build', () async {
+        await api.rerunFailedJobs(run);
+        final request = fake.requests.single;
+        expect(request.method, 'PATCH');
+        expect(request.url.queryParameters['retry'], 'true');
+        expect(request.url.path, '/contoso/My%20Project/_apis/build/builds/5');
+      });
+    });
+
+    group('approvals', () {
+      test('getApprovals reads the pending approvals with their steps', () async {
+        fake.approvals.addAll([
+          {'id': 'a1', 'status': 'pending', 'steps': []},
+          {'id': 'a2', 'status': 'approved', 'steps': []},
+        ]);
+        final approvals = await api.getApprovals('Contoso', {'a1': 'Prod', 'a2': 'Test'});
+        expect(approvals.map((a) => (a.id, a.stage)), [('a1', 'Prod')]);
+        expect(fake.requests.single.url.toString(),
+            'https://dev.azure.com/contoso/Contoso/_apis/pipelines/approvals'
+            '?approvalIds=a1,a2&\$expand=steps&api-version=7.1');
+      });
+
+      test('getApprovals asks nothing without approvals', () async {
+        expect(await api.getApprovals('Contoso', {}), isEmpty);
+        expect(fake.requests, isEmpty);
+      });
+
+      test('respondToApproval updates a YAML approval', () async {
+        await api.respondToApproval(
+            'Contoso', const PendingApproval(id: 'a1', stage: 'Prod'),
+            approve: true, comment: 'Go');
+        final request = fake.requests.single;
+        expect(request.method, 'PATCH');
+        expect(request.url.toString(),
+            'https://dev.azure.com/contoso/Contoso/_apis/pipelines/approvals?api-version=7.1');
+        expect(jsonDecode(request.body), [
+          {'approvalId': 'a1', 'status': 'approved', 'comment': 'Go'},
+        ]);
+      });
+
+      test('respondToApproval updates a release approval', () async {
+        await api.respondToApproval(
+            'Contoso', const PendingApproval(id: '7', stage: 'Prod', isRelease: true),
+            approve: false);
+        final request = fake.requests.single;
+        expect(request.method, 'PATCH');
+        expect(request.url.toString(),
+            'https://vsrm.dev.azure.com/contoso/Contoso/_apis/release/approvals/7?api-version=7.1');
+        expect(jsonDecode(request.body), {'status': 'rejected', 'comments': ''});
+      });
+    });
+
     test('runWebUrl links to the results page', () {
       final run = PipelineRun.fromJson(runJson(4, project: 'My Project'));
       expect(api.runWebUrl(run),
@@ -443,6 +539,155 @@ void main() {
           .toString(), 'Boom');
       expect(DevOpsException(DevOpsError.notFound, statusCode: 404).toString(),
           'Azure DevOps error notFound (404)');
+    });
+  });
+
+  group('actions', () {
+    late PullRequest pr;
+    const prUrl =
+        'https://dev.azure.com/contoso/Contoso/_apis/git/repositories/repo-web/pullRequests/7';
+
+    setUp(() => pr = PullRequest.fromJson(pullRequestJson(7)));
+
+    test('getPullRequestChanges reads all pages of the latest iteration', () async {
+      final requests = <Uri>[];
+      final client = MockClient((request) async {
+        requests.add(request.url);
+        if (request.url.path.endsWith('/iterations')) {
+          return http.Response(
+              jsonEncode({
+                'value': [
+                  {'id': 1},
+                  {'id': 3},
+                  {'id': 2},
+                ],
+              }),
+              200);
+        }
+        final first = request.url.queryParameters[r'$skip'] == '0';
+        return http.Response(
+            jsonEncode({
+              'changeEntries': [
+                {
+                  'changeType': 'edit',
+                  'item': {'path': first ? '/z.txt' : '/a.txt', 'objectId': 'x'},
+                },
+              ],
+              'nextSkip': first ? 1 : 0,
+            }),
+            200);
+      });
+      final changes = await DevOpsApi(organization: 'contoso', pat: 'secret', client: client)
+          .getPullRequestChanges(pr);
+      expect(changes.map((c) => c.path), ['/a.txt', '/z.txt']);
+      expect(requests[1].path, endsWith('/pullRequests/7/iterations/3/changes'));
+      expect(requests[1].queryParameters[r'$compareTo'], '0');
+      expect(requests.map((u) => u.queryParameters[r'$skip']), [null, '0', '1']);
+    });
+
+    test('getBlob downloads the content of a git object', () async {
+      fake.blobs['abc'] = 'hello';
+      expect(utf8.decode(await api.getBlob(pr, 'abc')), 'hello');
+      final request = fake.requests.single;
+      expect(request.url.path, '/contoso/Contoso/_apis/git/repositories/repo-web/blobs/abc');
+      expect(request.url.queryParameters[r'$format'], 'octetstream');
+    });
+
+    test('votePullRequest puts the vote of the signed in user', () async {
+      await api.votePullRequest(pr, ReviewVote.rejected);
+      final request = fake.requests.last;
+      expect(request.method, 'PUT');
+      expect(request.url.toString(), '$prUrl/reviewers/$meId?api-version=7.1');
+      expect(jsonDecode(request.body), {'vote': -10});
+    });
+
+    test('createPullRequestThread starts an active discussion', () async {
+      await api.createPullRequestThread(pr, 'Looks *good*');
+      final request = fake.requests.last;
+      expect(request.method, 'POST');
+      expect(request.url.toString(), '$prUrl/threads?api-version=7.1');
+      expect(jsonDecode(request.body), {
+        'comments': [
+          {'parentCommentId': 0, 'content': 'Looks *good*', 'commentType': 'text'},
+        ],
+        'status': 'active',
+      });
+    });
+
+    test('replyToThread answers the first comment', () async {
+      final thread = PullRequestThread.fromJson({
+        'id': 3,
+        'comments': [
+          {'id': 1, 'content': 'Why?'},
+        ],
+      })!;
+      await api.replyToThread(pr, thread, 'Because');
+      final request = fake.requests.last;
+      expect(request.method, 'POST');
+      expect(request.url.toString(), '$prUrl/threads/3/comments?api-version=7.1');
+      expect(jsonDecode(request.body),
+          {'parentCommentId': 1, 'content': 'Because', 'commentType': 'text'});
+    });
+
+    test('resolveThread sets the status of the thread', () async {
+      final thread = PullRequestThread.fromJson({
+        'id': 3,
+        'comments': [
+          {'id': 1, 'content': 'Why?'},
+        ],
+      })!;
+      await api.resolveThread(pr, thread);
+      await api.resolveThread(pr, thread, resolved: false);
+      expect(fake.requests.map((r) => r.method), ['PATCH', 'PATCH']);
+      expect(fake.requests.first.url.toString(), '$prUrl/threads/3?api-version=7.1');
+      expect(fake.requests.map((r) => jsonDecode(r.body)), [
+        {'status': 'fixed'},
+        {'status': 'active'},
+      ]);
+    });
+  });
+
+  group('assigning', () {
+    late WorkItem item;
+
+    setUp(() {
+      fake.add(workItemJson(5, fields: {'System.AssignedTo': personJson('Piet Peeters')}));
+      item = WorkItem.fromJson(workItemJson(5));
+    });
+
+    test('assignWorkItem patches the assignee by unique name', () async {
+      final updated =
+          await api.assignWorkItem(item, Identity.fromJson(personJson('Anna Aerts')));
+      final request = fake.requests.last;
+      expect(request.method, 'PATCH');
+      expect(request.url.toString(),
+          'https://dev.azure.com/contoso/_apis/wit/workitems/5?api-version=7.1');
+      expect(request.headers['Content-Type'], startsWith('application/json-patch+json'));
+      expect(jsonDecode(request.body), [
+        {'op': 'add', 'path': '/fields/System.AssignedTo', 'value': 'anna@contoso.com'},
+      ]);
+      expect(updated.assignedTo?.displayName, 'Anna Aerts');
+    });
+
+    test('assignWorkItem clears the assignee with an empty value', () async {
+      final updated = await api.assignWorkItem(item, null);
+      expect((jsonDecode(fake.requests.last.body) as List).single['value'], '');
+      expect(updated.assignedTo, isNull);
+    });
+
+    test('getCurrentUser reads the account of the token once', () async {
+      final me = await api.getCurrentUser();
+      expect(me.id, meId);
+      expect(me.displayName, 'Me');
+      expect(me.uniqueName, 'me@contoso.com');
+      expect(await api.getCurrentUserId(), meId);
+      expect(fake.requests, hasLength(1));
+    });
+
+    test('getProjectMembers lists the people of all teams once, by name', () async {
+      final members = await api.getProjectMembers('Contoso');
+      expect(members.map((m) => m.displayName), ['Anna Aerts', 'Me', 'Piet Peeters']);
+      expect(fake.requests.first.url.path, '/contoso/_apis/projects/Contoso/teams');
     });
   });
 }

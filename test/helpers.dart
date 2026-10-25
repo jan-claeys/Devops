@@ -158,8 +158,13 @@ Map<String, dynamic> environmentJson(
       'rank': rank,
       'status': status,
       'preDeployApprovals': [
-        for (final approver in pendingApprovers)
-          {'status': 'pending', 'isAutomated': false, 'approver': {'displayName': approver}},
+        for (final (i, approver) in pendingApprovers.indexed)
+          {
+            'id': id * 100 + i,
+            'status': 'pending',
+            'isAutomated': false,
+            'approver': {'displayName': approver},
+          },
       ],
       'deploySteps': [
         if (tasks.isNotEmpty)
@@ -233,6 +238,13 @@ Map<String, dynamic> pullRequestJson(
       ],
     };
 
+/// An identity reference of a person, as on System.AssignedTo.
+Map<String, dynamic> personJson(String name) => {
+      'displayName': name,
+      'id': 'id-$name',
+      'uniqueName': '${name.split(' ').first.toLowerCase()}@contoso.com',
+    };
+
 /// In-memory stand-in for the Azure DevOps REST API.
 class FakeDevOps {
   final projects = <Map<String, dynamic>>[
@@ -261,6 +273,9 @@ class FakeDevOps {
   /// The content of attachments, by their guid.
   final attachments = <String, List<int>>{};
 
+  /// Approvals of YAML pipelines, with the ids of [timelines].
+  final approvals = <Map<String, dynamic>>[];
+
   /// Releases of classic release pipelines, by id, all in Contoso.
   final releases = <int, Map<String, dynamic>>{};
 
@@ -268,6 +283,24 @@ class FakeDevOps {
   final pullRequests = <int, Map<String, dynamic>>{};
   final threads = <int, List<Map<String, dynamic>>>{};
   final pullRequestWorkItems = <int, List<int>>{};
+
+  /// The change entries of the latest iteration of pull requests, and the
+  /// content of git objects by id.
+  final changes = <int, List<Map<String, dynamic>>>{};
+  final blobs = <String, String>{};
+
+  /// The signed in user, as an identity reference.
+  static const me = {'displayName': 'Me', 'id': meId, 'uniqueName': 'me@contoso.com'};
+
+  /// The members of the teams of every project, by team id.
+  final teams = <String, List<Map<String, dynamic>>>{
+    'team-1': [
+      personJson('Piet Peeters'),
+      personJson('Anna Aerts'),
+      {'displayName': '[Contoso]\\Contoso Team', 'id': 'group-1', 'isContainer': true},
+    ],
+    'team-2': [personJson('Anna Aerts'), me],
+  };
 
   void addPullRequest(Map<String, dynamic> pr) => pullRequests[pr['pullRequestId'] as int] = pr;
 
@@ -321,8 +354,50 @@ class FakeDevOps {
     }
     if (path.endsWith('/_apis/connectionData')) {
       return _json({
-        'authenticatedUser': {'id': meId, 'providerDisplayName': 'Me'},
+        'authenticatedUser': {
+          'id': meId,
+          'providerDisplayName': 'Me',
+          'properties': {
+            'Account': {r'$type': 'System.String', r'$value': 'me@contoso.com'},
+          },
+        },
       });
+    }
+    if (RegExp(r'/_apis/projects/[^/]+/teams$').hasMatch(path)) {
+      return _json({
+        'value': [
+          for (final team in teams.keys) {'id': team, 'name': team},
+        ],
+      });
+    }
+    final teamMembers = RegExp(r'/teams/([^/]+)/members$').firstMatch(path);
+    if (teamMembers != null) {
+      return _json({
+        'value': [
+          for (final identity in teams[teamMembers[1]!] ?? const <Map<String, dynamic>>[])
+            {'identity': identity},
+        ],
+      });
+    }
+    final patch = RegExp(r'/_apis/wit/workitems/(\d+)$').firstMatch(path);
+    if (patch != null && request.method == 'PATCH') {
+      final item = items[int.parse(patch[1]!)];
+      if (item == null) return http.Response('', 404);
+      for (final op in (jsonDecode(request.body) as List).cast<Map<String, dynamic>>()) {
+        final field = (op['path'] as String).replaceFirst('/fields/', '');
+        final value = op['value'];
+        final fields = item['fields'] as Map<String, dynamic>;
+        if (value == '') {
+          fields.remove(field);
+        } else if (field == 'System.AssignedTo') {
+          final person = [for (final m in teams.values) ...m, me]
+              .firstWhere((p) => p['uniqueName'] == value, orElse: () => {'displayName': value});
+          fields[field] = person;
+        } else {
+          fields[field] = value;
+        }
+      }
+      return _json(item);
     }
     final pullRequestList = RegExp(r'/([^/]+)/_apis/git/pullrequests$').firstMatch(path);
     if (pullRequestList != null) {
@@ -348,6 +423,31 @@ class FakeDevOps {
       final json = pullRequests[int.parse(pullRequest[1]!)];
       return json == null ? http.Response('', 404) : _json(json);
     }
+    final iterations = RegExp(r'/pullRequests/(\d+)/iterations$').firstMatch(path);
+    if (iterations != null) {
+      final known = changes.containsKey(int.parse(iterations[1]!));
+      return _json({
+        'value': [
+          if (known) ...[
+            {'id': 1},
+            {'id': 2},
+          ],
+        ],
+      });
+    }
+    final iterationChanges =
+        RegExp(r'/pullRequests/(\d+)/iterations/2/changes$').firstMatch(path);
+    if (iterationChanges != null) {
+      return _json({'changeEntries': changes[int.parse(iterationChanges[1]!)] ?? []});
+    }
+    final blob = RegExp(r'/blobs/(\w+)$').firstMatch(path);
+    if (blob != null) {
+      final text = blobs[blob[1]!];
+      return text == null
+          ? http.Response('', 404)
+          : http.Response.bytes(utf8.encode(text), 200,
+              headers: {'content-type': 'application/octet-stream'});
+    }
     final prThreads = RegExp(r'/pullRequests/(\d+)/threads$').firstMatch(path);
     if (prThreads != null) {
       return _json({'value': threads[int.parse(prThreads[1]!)] ?? []});
@@ -358,6 +458,15 @@ class FakeDevOps {
         'value': [
           for (final id in pullRequestWorkItems[int.parse(prWorkItems[1]!)] ?? const [])
             {'id': '$id', 'url': 'https://dev.azure.com/contoso/_apis/wit/workItems/$id'},
+        ],
+      });
+    }
+    if (path.endsWith('/_apis/pipelines/approvals') && request.method == 'GET') {
+      final ids = request.url.queryParameters['approvalIds']?.split(',') ?? const [];
+      return _json({
+        'value': [
+          for (final a in approvals)
+            if (ids.contains(a['id'])) a,
         ],
       });
     }
@@ -387,6 +496,16 @@ class FakeDevOps {
       });
     }
     final builds = RegExp(r'/([^/]+)/_apis/build/builds$').firstMatch(path);
+    if (builds != null && request.method == 'POST') {
+      // Queues a new run.
+      return _json({
+        'id': 1000,
+        'buildNumber': '20261021.1',
+        'status': 'notStarted',
+        'definition': (jsonDecode(request.body) as Map)['definition'],
+        'project': {'id': '1', 'name': Uri.decodeComponent(builds[1]!)},
+      });
+    }
     if (builds != null) {
       final project = Uri.decodeComponent(builds[1]!);
       final query = request.url.queryParameters;
@@ -409,7 +528,7 @@ class FakeDevOps {
       return records == null ? http.Response('', 204) : _json({'records': records});
     }
     final build = RegExp(r'/_apis/build/builds/(\d+)$').firstMatch(path);
-    if (build != null) {
+    if (build != null && request.method == 'GET') {
       final run = runs[int.parse(build[1]!)];
       return run == null ? http.Response('', 404) : _json(run);
     }
@@ -418,6 +537,8 @@ class FakeDevOps {
       final item = items[int.parse(single[1]!)];
       return item == null ? http.Response('', 404) : _json(item);
     }
+    // Actions such as votes and comments succeed.
+    if (request.method != 'GET') return _json({});
     return http.Response('', 404);
   });
 

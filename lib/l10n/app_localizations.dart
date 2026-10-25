@@ -227,7 +227,7 @@ abstract class AppLocalizations {
   /// No description provided for @tokenHelpStep3.
   ///
   /// In en, this message translates to:
-  /// **'Under Scopes, choose Custom defined and enable only the scopes listed above, each with Read.'**
+  /// **'Under Scopes, choose Custom defined and enable only the scopes listed above, each with the permission shown next to it.'**
   String get tokenHelpStep3;
 
   /// No description provided for @tokenHelpStep4.
@@ -941,7 +941,7 @@ abstract class AppLocalizations {
   /// No description provided for @releaseScopeHint.
   ///
   /// In en, this message translates to:
-  /// **'Releases need the Release (Read) scope on your token.'**
+  /// **'Releases need the Release (Read, write, & execute) scope on your token.'**
   String get releaseScopeHint;
 
   /// No description provided for @artifact.
@@ -955,6 +955,96 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Waiting for approval by {names}'**
   String waitingForApprovalBy(String names);
+
+  /// No description provided for @approvals.
+  ///
+  /// In en, this message translates to:
+  /// **'Approvals'**
+  String get approvals;
+
+  /// No description provided for @approveStage.
+  ///
+  /// In en, this message translates to:
+  /// **'Approve {stage}?'**
+  String approveStage(String stage);
+
+  /// No description provided for @rejectStage.
+  ///
+  /// In en, this message translates to:
+  /// **'Reject {stage}?'**
+  String rejectStage(String stage);
+
+  /// No description provided for @approvalCommentHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Comment (optional)'**
+  String get approvalCommentHint;
+
+  /// No description provided for @stageApproved.
+  ///
+  /// In en, this message translates to:
+  /// **'Stage approved'**
+  String get stageApproved;
+
+  /// No description provided for @stageRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Stage rejected'**
+  String get stageRejected;
+
+  /// No description provided for @buildScopeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Acting on pipeline runs needs the Build (Read & execute) scope on your token.'**
+  String get buildScopeHint;
+
+  /// No description provided for @cancelRun.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel run'**
+  String get cancelRun;
+
+  /// No description provided for @cancelRunTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel this run?'**
+  String get cancelRunTitle;
+
+  /// No description provided for @cancelRunBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Jobs that are running are stopped and the ones that haven\'t started are skipped.'**
+  String get cancelRunBody;
+
+  /// No description provided for @keepRunning.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep running'**
+  String get keepRunning;
+
+  /// No description provided for @runAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Run again'**
+  String get runAgain;
+
+  /// No description provided for @rerunFailedJobs.
+  ///
+  /// In en, this message translates to:
+  /// **'Rerun failed jobs'**
+  String get rerunFailedJobs;
+
+  /// No description provided for @runStarted.
+  ///
+  /// In en, this message translates to:
+  /// **'Run started'**
+  String get runStarted;
+
+  /// No description provided for @open.
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get open;
 
   /// No description provided for @pullRequests.
   ///
@@ -983,7 +1073,7 @@ abstract class AppLocalizations {
   /// No description provided for @codeScopeHint.
   ///
   /// In en, this message translates to:
-  /// **'Pull requests need the Code (Read) scope on your token.'**
+  /// **'Pull requests need the Code (Read & write) scope on your token.'**
   String get codeScopeHint;
 
   /// No description provided for @noPullRequestsTitle.
@@ -1111,6 +1201,264 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Resolved'**
   String get threadResolved;
+
+  /// No description provided for @overviewTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Overview'**
+  String get overviewTab;
+
+  /// No description provided for @filesTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Files'**
+  String get filesTab;
+
+  /// No description provided for @filesChanged.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 file changed} other{{count} files changed}}'**
+  String filesChanged(int count);
+
+  /// No description provided for @noFileChanges.
+  ///
+  /// In en, this message translates to:
+  /// **'This pull request doesn\'t change any files.'**
+  String get noFileChanges;
+
+  /// No description provided for @loadFilesFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load the changed files'**
+  String get loadFilesFailed;
+
+  /// No description provided for @loadFileFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load this file'**
+  String get loadFileFailed;
+
+  /// No description provided for @binaryFile.
+  ///
+  /// In en, this message translates to:
+  /// **'Binary file'**
+  String get binaryFile;
+
+  /// No description provided for @fileTooLarge.
+  ///
+  /// In en, this message translates to:
+  /// **'Too large to compare here'**
+  String get fileTooLarge;
+
+  /// No description provided for @noContentChanges.
+  ///
+  /// In en, this message translates to:
+  /// **'No changes to the content'**
+  String get noContentChanges;
+
+  /// No description provided for @renamedFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'Renamed from {path}'**
+  String renamedFrom(String path);
+
+  /// No description provided for @voteApprove.
+  ///
+  /// In en, this message translates to:
+  /// **'Approve'**
+  String get voteApprove;
+
+  /// No description provided for @voteApproveWithSuggestions.
+  ///
+  /// In en, this message translates to:
+  /// **'Approve with suggestions'**
+  String get voteApproveWithSuggestions;
+
+  /// No description provided for @voteWaitForAuthor.
+  ///
+  /// In en, this message translates to:
+  /// **'Wait for author'**
+  String get voteWaitForAuthor;
+
+  /// No description provided for @voteReject.
+  ///
+  /// In en, this message translates to:
+  /// **'Reject'**
+  String get voteReject;
+
+  /// No description provided for @voteReset.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset vote'**
+  String get voteReset;
+
+  /// No description provided for @otherVotes.
+  ///
+  /// In en, this message translates to:
+  /// **'Other votes'**
+  String get otherVotes;
+
+  /// No description provided for @rejectConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reject this pull request?'**
+  String get rejectConfirmTitle;
+
+  /// No description provided for @rejectConfirmBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The pull request can\'t be completed as long as your vote is Rejected.'**
+  String get rejectConfirmBody;
+
+  /// No description provided for @waitForAuthorConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Wait for the author?'**
+  String get waitForAuthorConfirmTitle;
+
+  /// No description provided for @voteReasonHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Reason (optional)'**
+  String get voteReasonHint;
+
+  /// No description provided for @voteReasonHelper.
+  ///
+  /// In en, this message translates to:
+  /// **'Posted as a comment on the pull request.'**
+  String get voteReasonHelper;
+
+  /// No description provided for @voteSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Vote saved'**
+  String get voteSaved;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @actionDenied.
+  ///
+  /// In en, this message translates to:
+  /// **'Azure DevOps didn\'t allow this. Check that your token has the right scope and that your account has permission.'**
+  String get actionDenied;
+
+  /// No description provided for @writeComment.
+  ///
+  /// In en, this message translates to:
+  /// **'Write a comment…'**
+  String get writeComment;
+
+  /// No description provided for @send.
+  ///
+  /// In en, this message translates to:
+  /// **'Send'**
+  String get send;
+
+  /// No description provided for @reply.
+  ///
+  /// In en, this message translates to:
+  /// **'Reply'**
+  String get reply;
+
+  /// No description provided for @writeReply.
+  ///
+  /// In en, this message translates to:
+  /// **'Write a reply…'**
+  String get writeReply;
+
+  /// No description provided for @resolveThread.
+  ///
+  /// In en, this message translates to:
+  /// **'Resolve'**
+  String get resolveThread;
+
+  /// No description provided for @reactivateThread.
+  ///
+  /// In en, this message translates to:
+  /// **'Reactivate'**
+  String get reactivateThread;
+
+  /// No description provided for @workItemScopeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Commenting on tickets needs the Work Items (Read & write) scope on your token.'**
+  String get workItemScopeHint;
+
+  /// No description provided for @changeAssignee.
+  ///
+  /// In en, this message translates to:
+  /// **'Change assignee'**
+  String get changeAssignee;
+
+  /// No description provided for @searchPeopleHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search people'**
+  String get searchPeopleHint;
+
+  /// No description provided for @assignToMe.
+  ///
+  /// In en, this message translates to:
+  /// **'Assign to me'**
+  String get assignToMe;
+
+  /// No description provided for @assignedToName.
+  ///
+  /// In en, this message translates to:
+  /// **'Assigned to {name}'**
+  String assignedToName(String name);
+
+  /// No description provided for @ticketUnassigned.
+  ///
+  /// In en, this message translates to:
+  /// **'Ticket unassigned'**
+  String get ticketUnassigned;
+
+  /// No description provided for @assignScopeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Assigning tickets needs the Work Items (Read & write) scope on your token.'**
+  String get assignScopeHint;
+
+  /// No description provided for @membersLoadFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load the team members. That needs the Project and Team (Read) scope on your token.'**
+  String get membersLoadFailed;
+
+  /// No description provided for @noPeopleFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No one found'**
+  String get noPeopleFound;
+
+  /// No description provided for @copyLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy link'**
+  String get copyLink;
+
+  /// No description provided for @shareTicket.
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get shareTicket;
+
+  /// No description provided for @linkCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Link copied'**
+  String get linkCopied;
+
+  /// No description provided for @undo.
+  ///
+  /// In en, this message translates to:
+  /// **'Undo'**
+  String get undo;
 
   /// No description provided for @runErrors.
   ///

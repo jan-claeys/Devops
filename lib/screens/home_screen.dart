@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../l10n/l10n.dart';
+import '../services/shortcuts.dart';
 import 'dashboard_screen.dart';
 import 'pipelines_screen.dart';
 import 'pull_requests_screen.dart';
@@ -21,10 +22,25 @@ class HomeScreenState extends State<HomeScreen> {
 
   int _index = 0;
   final _pullRequests = GlobalKey<PullRequestsScreenState>();
+  final _pipelines = GlobalKey<PipelinesScreenState>();
 
   /// Switches to the pipelines, as a tap on the notification of several
   /// running runs does.
   void showPipelines() => setState(() => _index = 3);
+
+  /// Shows what an app shortcut on the home screen stands for.
+  void showShortcut(AppShortcut shortcut) {
+    switch (shortcut) {
+      case AppShortcut.myPullRequests:
+        setState(() => _index = 2);
+        _pullRequests.currentState?.showMine();
+      case AppShortcut.activeRuns:
+        setState(() => _index = 3);
+        _pipelines.currentState?.showActive();
+      case AppShortcut.tickets:
+        setState(() => _index = 1);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +63,7 @@ class HomeScreenState extends State<HomeScreen> {
           ),
           const WorkItemsScreen(),
           PullRequestsScreen(key: _pullRequests),
-          const PipelinesScreen(),
+          PipelinesScreen(key: _pipelines),
         ].indexed)
           TickerMode(enabled: i == _index, child: tab),
       ],
