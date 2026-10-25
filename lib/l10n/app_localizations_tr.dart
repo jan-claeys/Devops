@@ -731,6 +731,46 @@ class AppLocalizationsTr extends AppLocalizations {
       'Biletlere yorum yapmak için belirtecinizde Work Items (Read & write) kapsamı gerekir.';
 
   @override
+  String get changeAssignee => 'Atananı değiştir';
+
+  @override
+  String get searchPeopleHint => 'Kişi ara';
+
+  @override
+  String get assignToMe => 'Bana ata';
+
+  @override
+  String assignedToName(String name) {
+    return '$name kişisine atandı';
+  }
+
+  @override
+  String get ticketUnassigned => 'Bilet ataması kaldırıldı';
+
+  @override
+  String get assignScopeHint =>
+      'Bilet atamak için belirtecinizde Work Items (Read & write) kapsamı gerekir.';
+
+  @override
+  String get membersLoadFailed =>
+      'Ekip üyeleri yüklenemedi. Bunun için belirtecinizde Project and Team (Read) kapsamı gerekir.';
+
+  @override
+  String get noPeopleFound => 'Kimse bulunamadı';
+
+  @override
+  String get copyLink => 'Bağlantıyı kopyala';
+
+  @override
+  String get shareTicket => 'Paylaş';
+
+  @override
+  String get linkCopied => 'Bağlantı kopyalandı';
+
+  @override
+  String get undo => 'Geri al';
+
+  @override
   String get runErrors => 'Hatalar';
 
   @override

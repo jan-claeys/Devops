@@ -646,4 +646,48 @@ void main() {
       ]);
     });
   });
+
+  group('assigning', () {
+    late WorkItem item;
+
+    setUp(() {
+      fake.add(workItemJson(5, fields: {'System.AssignedTo': personJson('Piet Peeters')}));
+      item = WorkItem.fromJson(workItemJson(5));
+    });
+
+    test('assignWorkItem patches the assignee by unique name', () async {
+      final updated =
+          await api.assignWorkItem(item, Identity.fromJson(personJson('Anna Aerts')));
+      final request = fake.requests.last;
+      expect(request.method, 'PATCH');
+      expect(request.url.toString(),
+          'https://dev.azure.com/contoso/_apis/wit/workitems/5?api-version=7.1');
+      expect(request.headers['Content-Type'], startsWith('application/json-patch+json'));
+      expect(jsonDecode(request.body), [
+        {'op': 'add', 'path': '/fields/System.AssignedTo', 'value': 'anna@contoso.com'},
+      ]);
+      expect(updated.assignedTo?.displayName, 'Anna Aerts');
+    });
+
+    test('assignWorkItem clears the assignee with an empty value', () async {
+      final updated = await api.assignWorkItem(item, null);
+      expect((jsonDecode(fake.requests.last.body) as List).single['value'], '');
+      expect(updated.assignedTo, isNull);
+    });
+
+    test('getCurrentUser reads the account of the token once', () async {
+      final me = await api.getCurrentUser();
+      expect(me.id, meId);
+      expect(me.displayName, 'Me');
+      expect(me.uniqueName, 'me@contoso.com');
+      expect(await api.getCurrentUserId(), meId);
+      expect(fake.requests, hasLength(1));
+    });
+
+    test('getProjectMembers lists the people of all teams once, by name', () async {
+      final members = await api.getProjectMembers('Contoso');
+      expect(members.map((m) => m.displayName), ['Anna Aerts', 'Me', 'Piet Peeters']);
+      expect(fake.requests.first.url.path, '/contoso/_apis/projects/Contoso/teams');
+    });
+  });
 }

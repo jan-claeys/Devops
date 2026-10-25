@@ -736,6 +736,46 @@ class AppLocalizationsEn extends AppLocalizations {
       'Commenting on tickets needs the Work Items (Read & write) scope on your token.';
 
   @override
+  String get changeAssignee => 'Change assignee';
+
+  @override
+  String get searchPeopleHint => 'Search people';
+
+  @override
+  String get assignToMe => 'Assign to me';
+
+  @override
+  String assignedToName(String name) {
+    return 'Assigned to $name';
+  }
+
+  @override
+  String get ticketUnassigned => 'Ticket unassigned';
+
+  @override
+  String get assignScopeHint =>
+      'Assigning tickets needs the Work Items (Read & write) scope on your token.';
+
+  @override
+  String get membersLoadFailed =>
+      'Couldn\'t load the team members. That needs the Project and Team (Read) scope on your token.';
+
+  @override
+  String get noPeopleFound => 'No one found';
+
+  @override
+  String get copyLink => 'Copy link';
+
+  @override
+  String get shareTicket => 'Share';
+
+  @override
+  String get linkCopied => 'Link copied';
+
+  @override
+  String get undo => 'Undo';
+
+  @override
   String get runErrors => 'Errors';
 
   @override

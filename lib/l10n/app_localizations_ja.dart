@@ -719,6 +719,46 @@ class AppLocalizationsJa extends AppLocalizations {
       'チケットにコメントするには、トークンの Work Items (Read & write) スコープが必要です。';
 
   @override
+  String get changeAssignee => '担当者を変更';
+
+  @override
+  String get searchPeopleHint => 'ユーザーを検索';
+
+  @override
+  String get assignToMe => '自分に割り当て';
+
+  @override
+  String assignedToName(String name) {
+    return '$name に割り当てました';
+  }
+
+  @override
+  String get ticketUnassigned => 'チケットの割り当てを解除しました';
+
+  @override
+  String get assignScopeHint =>
+      'チケットを割り当てるには、トークンの Work Items (Read & write) スコープが必要です。';
+
+  @override
+  String get membersLoadFailed =>
+      'チームメンバーを読み込めませんでした。トークンの Project and Team (Read) スコープが必要です。';
+
+  @override
+  String get noPeopleFound => '見つかりません';
+
+  @override
+  String get copyLink => 'リンクをコピー';
+
+  @override
+  String get shareTicket => '共有';
+
+  @override
+  String get linkCopied => 'リンクをコピーしました';
+
+  @override
+  String get undo => '元に戻す';
+
+  @override
   String get runErrors => 'エラー';
 
   @override

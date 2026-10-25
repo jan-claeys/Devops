@@ -281,6 +281,21 @@
   "resolveThread": "Resolve",
   "reactivateThread": "Reactivate",
   "workItemScopeHint": "Commenting on tickets needs the Work Items (Read & write) scope on your token.",
+  "changeAssignee": "Change assignee",
+  "searchPeopleHint": "Search people",
+  "assignToMe": "Assign to me",
+  "assignedToName": "Assigned to {name}",
+  "@assignedToName": {
+    "placeholders": {"name": {"type": "String"}}
+  },
+  "ticketUnassigned": "Ticket unassigned",
+  "assignScopeHint": "Assigning tickets needs the Work Items (Read & write) scope on your token.",
+  "membersLoadFailed": "Couldn't load the team members. That needs the Project and Team (Read) scope on your token.",
+  "noPeopleFound": "No one found",
+  "copyLink": "Copy link",
+  "shareTicket": "Share",
+  "linkCopied": "Link copied",
+  "undo": "Undo",
 
   "runErrors": "Errors",
   "viewLog": "View log",

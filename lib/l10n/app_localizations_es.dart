@@ -742,6 +742,46 @@ class AppLocalizationsEs extends AppLocalizations {
       'Para comentar en tickets, tu token necesita el ámbito Work Items (Read & write).';
 
   @override
+  String get changeAssignee => 'Cambiar asignación';
+
+  @override
+  String get searchPeopleHint => 'Buscar personas';
+
+  @override
+  String get assignToMe => 'Asignarme';
+
+  @override
+  String assignedToName(String name) {
+    return 'Asignado a $name';
+  }
+
+  @override
+  String get ticketUnassigned => 'Ticket sin asignar';
+
+  @override
+  String get assignScopeHint =>
+      'Para asignar tickets, tu token necesita el ámbito Work Items (Read & write).';
+
+  @override
+  String get membersLoadFailed =>
+      'No se pudieron cargar los miembros del equipo. Para ello, tu token necesita el ámbito Project and Team (Read).';
+
+  @override
+  String get noPeopleFound => 'No se encontró a nadie';
+
+  @override
+  String get copyLink => 'Copiar enlace';
+
+  @override
+  String get shareTicket => 'Compartir';
+
+  @override
+  String get linkCopied => 'Enlace copiado';
+
+  @override
+  String get undo => 'Deshacer';
+
+  @override
   String get runErrors => 'Errores';
 
   @override

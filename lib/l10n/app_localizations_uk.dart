@@ -746,6 +746,46 @@ class AppLocalizationsUk extends AppLocalizations {
       'Щоб коментувати тікети, токену потрібні права Work Items (Read & write).';
 
   @override
+  String get changeAssignee => 'Змінити виконавця';
+
+  @override
+  String get searchPeopleHint => 'Пошук людей';
+
+  @override
+  String get assignToMe => 'Призначити мені';
+
+  @override
+  String assignedToName(String name) {
+    return 'Призначено: $name';
+  }
+
+  @override
+  String get ticketUnassigned => 'Виконавця знято';
+
+  @override
+  String get assignScopeHint =>
+      'Щоб призначати тікети, токену потрібні права Work Items (Read & write).';
+
+  @override
+  String get membersLoadFailed =>
+      'Не вдалося завантажити учасників команди. Для цього токену потрібні права Project and Team (Read).';
+
+  @override
+  String get noPeopleFound => 'Нікого не знайдено';
+
+  @override
+  String get copyLink => 'Копіювати посилання';
+
+  @override
+  String get shareTicket => 'Поділитися';
+
+  @override
+  String get linkCopied => 'Посилання скопійовано';
+
+  @override
+  String get undo => 'Скасувати';
+
+  @override
   String get runErrors => 'Помилки';
 
   @override

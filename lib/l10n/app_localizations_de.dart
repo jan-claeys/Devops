@@ -744,6 +744,46 @@ class AppLocalizationsDe extends AppLocalizations {
       'Zum Kommentieren von Tickets braucht dein Token den Bereich Work Items (Read & write).';
 
   @override
+  String get changeAssignee => 'Zuweisung ändern';
+
+  @override
+  String get searchPeopleHint => 'Personen suchen';
+
+  @override
+  String get assignToMe => 'Mir zuweisen';
+
+  @override
+  String assignedToName(String name) {
+    return '$name zugewiesen';
+  }
+
+  @override
+  String get ticketUnassigned => 'Zuweisung des Tickets entfernt';
+
+  @override
+  String get assignScopeHint =>
+      'Zum Zuweisen von Tickets braucht dein Token den Bereich Work Items (Read & write).';
+
+  @override
+  String get membersLoadFailed =>
+      'Die Teammitglieder konnten nicht geladen werden. Dafür braucht dein Token den Bereich Project and Team (Read).';
+
+  @override
+  String get noPeopleFound => 'Niemand gefunden';
+
+  @override
+  String get copyLink => 'Link kopieren';
+
+  @override
+  String get shareTicket => 'Teilen';
+
+  @override
+  String get linkCopied => 'Link kopiert';
+
+  @override
+  String get undo => 'Rückgängig';
+
+  @override
   String get runErrors => 'Fehler';
 
   @override

@@ -738,6 +738,46 @@ class AppLocalizationsNl extends AppLocalizations {
       'Om op tickets te reageren heeft je token de scope Work Items (Read & write) nodig.';
 
   @override
+  String get changeAssignee => 'Toewijzing wijzigen';
+
+  @override
+  String get searchPeopleHint => 'Personen zoeken';
+
+  @override
+  String get assignToMe => 'Aan mij toewijzen';
+
+  @override
+  String assignedToName(String name) {
+    return 'Toegewezen aan $name';
+  }
+
+  @override
+  String get ticketUnassigned => 'Toewijzing van ticket verwijderd';
+
+  @override
+  String get assignScopeHint =>
+      'Om tickets toe te wijzen heeft je token de scope Work Items (Read & write) nodig.';
+
+  @override
+  String get membersLoadFailed =>
+      'De teamleden konden niet geladen worden. Daarvoor heeft je token de scope Project and Team (Read) nodig.';
+
+  @override
+  String get noPeopleFound => 'Niemand gevonden';
+
+  @override
+  String get copyLink => 'Link kopiëren';
+
+  @override
+  String get shareTicket => 'Delen';
+
+  @override
+  String get linkCopied => 'Link gekopieerd';
+
+  @override
+  String get undo => 'Ongedaan maken';
+
+  @override
   String get runErrors => 'Fouten';
 
   @override

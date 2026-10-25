@@ -238,6 +238,13 @@ Map<String, dynamic> pullRequestJson(
       ],
     };
 
+/// An identity reference of a person, as on System.AssignedTo.
+Map<String, dynamic> personJson(String name) => {
+      'displayName': name,
+      'id': 'id-$name',
+      'uniqueName': '${name.split(' ').first.toLowerCase()}@contoso.com',
+    };
+
 /// In-memory stand-in for the Azure DevOps REST API.
 class FakeDevOps {
   final projects = <Map<String, dynamic>>[
@@ -281,6 +288,19 @@ class FakeDevOps {
   /// content of git objects by id.
   final changes = <int, List<Map<String, dynamic>>>{};
   final blobs = <String, String>{};
+
+  /// The signed in user, as an identity reference.
+  static const me = {'displayName': 'Me', 'id': meId, 'uniqueName': 'me@contoso.com'};
+
+  /// The members of the teams of every project, by team id.
+  final teams = <String, List<Map<String, dynamic>>>{
+    'team-1': [
+      personJson('Piet Peeters'),
+      personJson('Anna Aerts'),
+      {'displayName': '[Contoso]\\Contoso Team', 'id': 'group-1', 'isContainer': true},
+    ],
+    'team-2': [personJson('Anna Aerts'), me],
+  };
 
   void addPullRequest(Map<String, dynamic> pr) => pullRequests[pr['pullRequestId'] as int] = pr;
 
@@ -334,8 +354,50 @@ class FakeDevOps {
     }
     if (path.endsWith('/_apis/connectionData')) {
       return _json({
-        'authenticatedUser': {'id': meId, 'providerDisplayName': 'Me'},
+        'authenticatedUser': {
+          'id': meId,
+          'providerDisplayName': 'Me',
+          'properties': {
+            'Account': {r'$type': 'System.String', r'$value': 'me@contoso.com'},
+          },
+        },
       });
+    }
+    if (RegExp(r'/_apis/projects/[^/]+/teams$').hasMatch(path)) {
+      return _json({
+        'value': [
+          for (final team in teams.keys) {'id': team, 'name': team},
+        ],
+      });
+    }
+    final teamMembers = RegExp(r'/teams/([^/]+)/members$').firstMatch(path);
+    if (teamMembers != null) {
+      return _json({
+        'value': [
+          for (final identity in teams[teamMembers[1]!] ?? const <Map<String, dynamic>>[])
+            {'identity': identity},
+        ],
+      });
+    }
+    final patch = RegExp(r'/_apis/wit/workitems/(\d+)$').firstMatch(path);
+    if (patch != null && request.method == 'PATCH') {
+      final item = items[int.parse(patch[1]!)];
+      if (item == null) return http.Response('', 404);
+      for (final op in (jsonDecode(request.body) as List).cast<Map<String, dynamic>>()) {
+        final field = (op['path'] as String).replaceFirst('/fields/', '');
+        final value = op['value'];
+        final fields = item['fields'] as Map<String, dynamic>;
+        if (value == '') {
+          fields.remove(field);
+        } else if (field == 'System.AssignedTo') {
+          final person = [for (final m in teams.values) ...m, me]
+              .firstWhere((p) => p['uniqueName'] == value, orElse: () => {'displayName': value});
+          fields[field] = person;
+        } else {
+          fields[field] = value;
+        }
+      }
+      return _json(item);
     }
     final pullRequestList = RegExp(r'/([^/]+)/_apis/git/pullrequests$').firstMatch(path);
     if (pullRequestList != null) {

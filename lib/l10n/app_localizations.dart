@@ -1388,6 +1388,78 @@ abstract class AppLocalizations {
   /// **'Commenting on tickets needs the Work Items (Read & write) scope on your token.'**
   String get workItemScopeHint;
 
+  /// No description provided for @changeAssignee.
+  ///
+  /// In en, this message translates to:
+  /// **'Change assignee'**
+  String get changeAssignee;
+
+  /// No description provided for @searchPeopleHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search people'**
+  String get searchPeopleHint;
+
+  /// No description provided for @assignToMe.
+  ///
+  /// In en, this message translates to:
+  /// **'Assign to me'**
+  String get assignToMe;
+
+  /// No description provided for @assignedToName.
+  ///
+  /// In en, this message translates to:
+  /// **'Assigned to {name}'**
+  String assignedToName(String name);
+
+  /// No description provided for @ticketUnassigned.
+  ///
+  /// In en, this message translates to:
+  /// **'Ticket unassigned'**
+  String get ticketUnassigned;
+
+  /// No description provided for @assignScopeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Assigning tickets needs the Work Items (Read & write) scope on your token.'**
+  String get assignScopeHint;
+
+  /// No description provided for @membersLoadFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load the team members. That needs the Project and Team (Read) scope on your token.'**
+  String get membersLoadFailed;
+
+  /// No description provided for @noPeopleFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No one found'**
+  String get noPeopleFound;
+
+  /// No description provided for @copyLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy link'**
+  String get copyLink;
+
+  /// No description provided for @shareTicket.
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get shareTicket;
+
+  /// No description provided for @linkCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Link copied'**
+  String get linkCopied;
+
+  /// No description provided for @undo.
+  ///
+  /// In en, this message translates to:
+  /// **'Undo'**
+  String get undo;
+
   /// No description provided for @runErrors.
   ///
   /// In en, this message translates to:

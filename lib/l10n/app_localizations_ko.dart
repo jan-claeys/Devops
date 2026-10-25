@@ -719,6 +719,46 @@ class AppLocalizationsKo extends AppLocalizations {
       '티켓에 댓글을 달려면 토큰에 Work Items (Read & write) 범위가 필요합니다.';
 
   @override
+  String get changeAssignee => '담당자 변경';
+
+  @override
+  String get searchPeopleHint => '사용자 검색';
+
+  @override
+  String get assignToMe => '나에게 할당';
+
+  @override
+  String assignedToName(String name) {
+    return '$name에게 할당됨';
+  }
+
+  @override
+  String get ticketUnassigned => '티켓 할당이 해제됨';
+
+  @override
+  String get assignScopeHint =>
+      '티켓을 할당하려면 토큰에 Work Items (Read & write) 범위가 필요합니다.';
+
+  @override
+  String get membersLoadFailed =>
+      '팀 구성원을 불러올 수 없습니다. 토큰에 Project and Team (Read) 범위가 필요합니다.';
+
+  @override
+  String get noPeopleFound => '찾을 수 없음';
+
+  @override
+  String get copyLink => '링크 복사';
+
+  @override
+  String get shareTicket => '공유';
+
+  @override
+  String get linkCopied => '링크가 복사됨';
+
+  @override
+  String get undo => '실행 취소';
+
+  @override
   String get runErrors => '오류';
 
   @override

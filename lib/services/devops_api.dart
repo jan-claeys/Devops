@@ -40,7 +40,7 @@ class DevOpsApi {
   final String releaseUrl;
   final http.Client _client;
   final String _auth;
-  String? _currentUserId;
+  Identity? _currentUser;
 
   static const _apiVersion = '7.1';
 
@@ -211,6 +211,49 @@ class DevOpsApi {
         '?api-version=7.1-preview.4',
         {'text': const HtmlEscape(HtmlEscapeMode.element).convert(text).replaceAll('\n', '<br>')},
       );
+
+  /// Assigns [item] to [assignee], or to no one when null, and returns the
+  /// updated item, without its relations.
+  Future<WorkItem> assignWorkItem(WorkItem item, Identity? assignee) async {
+    final json = await _send(
+      'PATCH',
+      '$baseUrl/_apis/wit/workitems/${item.id}?api-version=$_apiVersion',
+      [
+        {
+          'op': 'add',
+          'path': '/fields/System.AssignedTo',
+          // An empty value clears the field.
+          'value': assignee == null ? '' : assignee.uniqueName ?? assignee.displayName,
+        },
+      ],
+      contentType: 'application/json-patch+json',
+    );
+    return WorkItem.fromJson(json);
+  }
+
+  /// The people in the teams of [project], whom its tickets are usually
+  /// assigned to, sorted by name. Groups are left out.
+  Future<List<Identity>> getProjectMembers(String project) async {
+    final apis = '$baseUrl/_apis/projects/${Uri.encodeComponent(project)}/teams';
+    final teams = await _get('$apis?\$top=1000&api-version=$_apiVersion');
+    final perTeam = await Future.wait([
+      for (final team in ((teams['value'] as List?) ?? const []).cast<Map<String, dynamic>>())
+        _get('$apis/${team['id']}/members?\$top=1000&api-version=$_apiVersion'),
+    ]);
+    // Someone in several teams is listed once.
+    final byId = <String, Identity>{};
+    for (final json in perTeam) {
+      for (final member in ((json['value'] as List?) ?? const []).cast<Map<String, dynamic>>()) {
+        final identity = member['identity'];
+        if (identity is! Map<String, dynamic> || identity['isContainer'] == true) continue;
+        if (Identity.fromJson(identity) case Identity(:final id?) && final person) {
+          byId[id] = person;
+        }
+      }
+    }
+    return byId.values.toList()
+      ..sort((a, b) => a.displayName.toLowerCase().compareTo(b.displayName.toLowerCase()));
+  }
 
   /// The latest runs of the pipelines in all [projects], newest first; only
   /// those requested for the user with id [requestedFor], when given.
@@ -438,14 +481,24 @@ class DevOpsApi {
     return response;
   }
 
-  /// Id of the user the token belongs to.
-  Future<String> getCurrentUserId() async {
-    if (_currentUserId case final id?) return id;
+  /// The user the token belongs to.
+  Future<Identity> getCurrentUser() async {
+    if (_currentUser case final user?) return user;
     final json = await _get('$baseUrl/_apis/connectionData');
-    final id = (json['authenticatedUser'] as Map?)?['id'] as String?;
+    final user = json['authenticatedUser'] as Map?;
+    final id = user?['id'] as String?;
     if (id == null) throw DevOpsException(DevOpsError.unexpectedResponse);
-    return _currentUserId = id;
+    // The email address, or DOMAIN\user on a server.
+    final account = ((user!['properties'] as Map?)?['Account'] as Map?)?[r'$value'];
+    return _currentUser = Identity(
+      displayName: user['providerDisplayName'] as String? ?? '',
+      id: id,
+      uniqueName: account is String && account.isNotEmpty ? account : null,
+    );
   }
+
+  /// Id of the user the token belongs to.
+  Future<String> getCurrentUserId() async => (await getCurrentUser()).id!;
 
   /// The pull requests of all [projects], newest first.
   Future<List<PullRequest>> getPullRequests({
@@ -588,9 +641,10 @@ class DevOpsApi {
   Future<Map<String, dynamic>> _post(String url, Object body) => _send('POST', url, body);
 
   /// Sends [body] as JSON with [method].
-  Future<Map<String, dynamic>> _send(String method, String url, Object body) async {
+  Future<Map<String, dynamic>> _send(String method, String url, Object body,
+      {String contentType = 'application/json'}) async {
     final request = http.Request(method, Uri.parse(url))
-      ..headers.addAll({..._headers, 'Content-Type': 'application/json'})
+      ..headers.addAll({..._headers, 'Content-Type': contentType})
       ..body = jsonEncode(body);
     return _decode(await http.Response.fromStream(await _client.send(request)));
   }

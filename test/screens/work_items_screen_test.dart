@@ -4,6 +4,7 @@ import 'package:devops/screens/settings_screen.dart';
 import 'package:devops/screens/work_item_detail_screen.dart';
 import 'package:devops/screens/work_items_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
@@ -207,5 +208,61 @@ void main() {
     await tester.tap(find.byTooltip(en.settings));
     await tester.pumpAndSettle();
     expect(find.byType(SettingsScreen), findsOneWidget);
+  });
+
+  group('swipe actions', () {
+    List<dynamic> patchValues() => [
+          for (final r in fake.requests.where((r) => r.method == 'PATCH'))
+            ((jsonDecode(r.body) as List).single as Map)['value'],
+        ];
+
+    testWidgets('swiping right assigns the ticket to the user, with undo', (tester) async {
+      await pumpScreen(tester);
+      await tester.drag(find.text('Write docs'), const Offset(300, 0));
+      await tester.pumpAndSettle();
+
+      expect(patchValues(), ['me@contoso.com']);
+      expect(find.text(en.assignedToName('Me')), findsOneWidget);
+      // The ticket springs back, now with the user as assignee.
+      expect(find.text('Write docs'), findsOneWidget);
+      expect(find.byTooltip('Me'), findsOneWidget);
+
+      await tester.tap(find.text(en.undo));
+      await tester.pumpAndSettle();
+      expect(patchValues(), ['me@contoso.com', '']);
+      expect(find.byTooltip('Me'), findsNothing);
+    });
+
+    testWidgets('a ticket of the user can only be swiped to share', (tester) async {
+      fake.add(workItemJson(4, title: 'Mine', fields: {'System.AssignedTo': FakeDevOps.me}));
+      await pumpScreen(tester);
+      await tester.drag(find.text('Mine'), const Offset(300, 0));
+      await tester.pumpAndSettle();
+      expect(patchValues(), isEmpty);
+    });
+
+    testWidgets('swiping left copies the link', (tester) async {
+      String? copied;
+      tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(SystemChannels.platform,
+          (call) async {
+        if (call.method == 'Clipboard.setData') {
+          copied = (call.arguments as Map)['text'] as String;
+        }
+        return null;
+      });
+      addTearDown(() => tester.binding.defaultBinaryMessenger
+          .setMockMethodCallHandler(SystemChannels.platform, null));
+      await pumpScreen(tester);
+
+      await tester.drag(find.text('Write docs'), const Offset(-300, 0));
+      await tester.pumpAndSettle();
+      expect(find.widgetWithText(ListTile, en.shareTicket), findsOneWidget);
+      await tester.tap(find.text(en.copyLink));
+      await tester.pumpAndSettle();
+
+      expect(copied, 'https://dev.azure.com/contoso/Contoso/_workitems/edit/2');
+      expect(find.text(en.linkCopied), findsOneWidget);
+      expect(patchValues(), isEmpty);
+    });
   });
 }

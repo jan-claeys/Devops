@@ -746,6 +746,46 @@ class AppLocalizationsRu extends AppLocalizations {
       'Чтобы комментировать тикеты, токену нужны права Work Items (Read & write).';
 
   @override
+  String get changeAssignee => 'Изменить исполнителя';
+
+  @override
+  String get searchPeopleHint => 'Поиск людей';
+
+  @override
+  String get assignToMe => 'Назначить мне';
+
+  @override
+  String assignedToName(String name) {
+    return 'Назначено: $name';
+  }
+
+  @override
+  String get ticketUnassigned => 'Исполнитель снят';
+
+  @override
+  String get assignScopeHint =>
+      'Чтобы назначать тикеты, токену нужны права Work Items (Read & write).';
+
+  @override
+  String get membersLoadFailed =>
+      'Не удалось загрузить участников команды. Для этого токену нужны права Project and Team (Read).';
+
+  @override
+  String get noPeopleFound => 'Никого не найдено';
+
+  @override
+  String get copyLink => 'Копировать ссылку';
+
+  @override
+  String get shareTicket => 'Поделиться';
+
+  @override
+  String get linkCopied => 'Ссылка скопирована';
+
+  @override
+  String get undo => 'Отменить';
+
+  @override
   String get runErrors => 'Ошибки';
 
   @override

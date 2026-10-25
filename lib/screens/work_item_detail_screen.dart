@@ -6,6 +6,7 @@ import '../models/work_item.dart';
 import '../services/app_state.dart';
 import '../services/links.dart';
 import '../services/logging.dart';
+import '../widgets/assignee_picker.dart';
 import '../widgets/attachments.dart';
 import '../widgets/comment_composer.dart';
 import '../widgets/devops_html.dart';
@@ -22,9 +23,13 @@ class WorkItemDetailScreen extends StatefulWidget {
     required this.id,
     this.embedded = false,
     this.onOpenWorkItem,
+    this.onChanged,
   });
 
   final int id;
+
+  /// Called after the work item was changed here, such as its assignee.
+  final VoidCallback? onChanged;
 
   /// True when shown in the detail pane of the wide layout.
   final bool embedded;
@@ -38,6 +43,7 @@ class WorkItemDetailScreen extends StatefulWidget {
 
 class _WorkItemDetailScreenState extends State<WorkItemDetailScreen> {
   late Future<_Detail> _future;
+  bool _assigning = false;
 
   @override
   void didChangeDependencies() {
@@ -98,6 +104,30 @@ class _WorkItemDetailScreenState extends State<WorkItemDetailScreen> {
       logFailure(_log, 'Commenting on work item ${item.id} failed', e, st);
       if (mounted) showActionError(context, e, scopeHint: context.l10n.workItemScopeHint);
       return false;
+    }
+  }
+
+  Future<void> _changeAssignee(WorkItem item) async {
+    final choice = await showAssigneePicker(context, item);
+    if (choice == null || !mounted) return;
+    final l10n = context.l10n;
+    setState(() => _assigning = true);
+    try {
+      await AppScope.read(context).api!.assignWorkItem(item, choice.assignee);
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(switch (choice.assignee) {
+          final assignee? => l10n.assignedToName(assignee.displayName),
+          null => l10n.ticketUnassigned,
+        }),
+      ));
+      widget.onChanged?.call();
+      _reload();
+    } catch (e, st) {
+      logFailure(_log, 'Assigning work item ${item.id} failed', e, st);
+      if (mounted) showActionError(context, e, scopeHint: l10n.assignScopeHint);
+    } finally {
+      if (mounted) setState(() => _assigning = false);
     }
   }
 
@@ -241,15 +271,27 @@ class _WorkItemDetailScreenState extends State<WorkItemDetailScreen> {
       SectionCard(
         child: Column(
           children: [
-            InfoRow(
-              icon: Icons.person_outline,
-              label: l10n.assignedTo,
-              valueWidget: Row(
-                children: [
-                  PersonAvatar(item.assignedTo, radius: 12),
-                  const SizedBox(width: 8),
-                  Flexible(child: Text(item.assignedTo?.displayName ?? l10n.unassigned)),
-                ],
+            InkWell(
+              borderRadius: BorderRadius.circular(8),
+              onTap: _assigning ? null : () => _changeAssignee(item),
+              child: InfoRow(
+                icon: Icons.person_outline,
+                label: l10n.assignedTo,
+                valueWidget: Row(
+                  children: [
+                    PersonAvatar(item.assignedTo, radius: 12),
+                    const SizedBox(width: 8),
+                    Expanded(child: Text(item.assignedTo?.displayName ?? l10n.unassigned)),
+                    if (_assigning)
+                      const SizedBox.square(
+                          dimension: 18, child: CircularProgressIndicator(strokeWidth: 2))
+                    else
+                      Icon(Icons.edit_outlined,
+                          size: 18,
+                          color: theme.colorScheme.onSurfaceVariant,
+                          semanticLabel: l10n.changeAssignee),
+                  ],
+                ),
               ),
             ),
             if (item.priority != null)

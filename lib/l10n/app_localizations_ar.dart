@@ -748,6 +748,46 @@ class AppLocalizationsAr extends AppLocalizations {
       'يتطلب التعليق على التذاكر النطاق Work Items (Read & write) في الرمز المميز.';
 
   @override
+  String get changeAssignee => 'تغيير المسؤول';
+
+  @override
+  String get searchPeopleHint => 'البحث عن أشخاص';
+
+  @override
+  String get assignToMe => 'إسناد إليّ';
+
+  @override
+  String assignedToName(String name) {
+    return 'تم الإسناد إلى $name';
+  }
+
+  @override
+  String get ticketUnassigned => 'تمت إزالة إسناد التذكرة';
+
+  @override
+  String get assignScopeHint =>
+      'يتطلب إسناد التذاكر النطاق Work Items (Read & write) في الرمز المميز.';
+
+  @override
+  String get membersLoadFailed =>
+      'تعذر تحميل أعضاء الفريق. يتطلب ذلك النطاق Project and Team (Read) في الرمز المميز.';
+
+  @override
+  String get noPeopleFound => 'لم يتم العثور على أحد';
+
+  @override
+  String get copyLink => 'نسخ الرابط';
+
+  @override
+  String get shareTicket => 'مشاركة';
+
+  @override
+  String get linkCopied => 'تم نسخ الرابط';
+
+  @override
+  String get undo => 'تراجع';
+
+  @override
   String get runErrors => 'الأخطاء';
 
   @override

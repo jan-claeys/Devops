@@ -713,6 +713,45 @@ class AppLocalizationsZh extends AppLocalizations {
   String get workItemScopeHint => '评论工单需要令牌具有 Work Items (Read & write) 范围。';
 
   @override
+  String get changeAssignee => '更改负责人';
+
+  @override
+  String get searchPeopleHint => '搜索人员';
+
+  @override
+  String get assignToMe => '分配给我';
+
+  @override
+  String assignedToName(String name) {
+    return '已分配给 $name';
+  }
+
+  @override
+  String get ticketUnassigned => '已取消分配工单';
+
+  @override
+  String get assignScopeHint => '分配工单需要令牌具有 Work Items (Read & write) 范围。';
+
+  @override
+  String get membersLoadFailed =>
+      '无法加载团队成员。这需要令牌具有 Project and Team (Read) 范围。';
+
+  @override
+  String get noPeopleFound => '未找到任何人';
+
+  @override
+  String get copyLink => '复制链接';
+
+  @override
+  String get shareTicket => '分享';
+
+  @override
+  String get linkCopied => '链接已复制';
+
+  @override
+  String get undo => '撤消';
+
+  @override
   String get runErrors => '错误';
 
   @override

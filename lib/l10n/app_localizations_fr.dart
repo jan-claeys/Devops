@@ -741,6 +741,46 @@ class AppLocalizationsFr extends AppLocalizations {
       'Commenter des tickets nécessite la portée Work Items (Read & write) sur votre jeton.';
 
   @override
+  String get changeAssignee => 'Modifier l’attribution';
+
+  @override
+  String get searchPeopleHint => 'Rechercher des personnes';
+
+  @override
+  String get assignToMe => 'M’attribuer';
+
+  @override
+  String assignedToName(String name) {
+    return 'Attribué à $name';
+  }
+
+  @override
+  String get ticketUnassigned => 'Ticket non attribué';
+
+  @override
+  String get assignScopeHint =>
+      'Attribuer des tickets nécessite la portée Work Items (Read & write) sur votre jeton.';
+
+  @override
+  String get membersLoadFailed =>
+      'Impossible de charger les membres de l’équipe. Cela nécessite la portée Project and Team (Read) sur votre jeton.';
+
+  @override
+  String get noPeopleFound => 'Personne trouvé';
+
+  @override
+  String get copyLink => 'Copier le lien';
+
+  @override
+  String get shareTicket => 'Partager';
+
+  @override
+  String get linkCopied => 'Lien copié';
+
+  @override
+  String get undo => 'Annuler';
+
+  @override
   String get runErrors => 'Erreurs';
 
   @override

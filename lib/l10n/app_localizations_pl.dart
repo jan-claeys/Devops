@@ -748,6 +748,46 @@ class AppLocalizationsPl extends AppLocalizations {
       'Komentowanie zgłoszeń wymaga zakresu Work Items (Read & write) w tokenie.';
 
   @override
+  String get changeAssignee => 'Zmień osobę przypisaną';
+
+  @override
+  String get searchPeopleHint => 'Szukaj osób';
+
+  @override
+  String get assignToMe => 'Przypisz do mnie';
+
+  @override
+  String assignedToName(String name) {
+    return 'Przypisano do: $name';
+  }
+
+  @override
+  String get ticketUnassigned => 'Usunięto przypisanie zgłoszenia';
+
+  @override
+  String get assignScopeHint =>
+      'Przypisywanie zgłoszeń wymaga zakresu Work Items (Read & write) w tokenie.';
+
+  @override
+  String get membersLoadFailed =>
+      'Nie udało się wczytać członków zespołu. Wymaga to zakresu Project and Team (Read) w tokenie.';
+
+  @override
+  String get noPeopleFound => 'Nikogo nie znaleziono';
+
+  @override
+  String get copyLink => 'Kopiuj link';
+
+  @override
+  String get shareTicket => 'Udostępnij';
+
+  @override
+  String get linkCopied => 'Skopiowano link';
+
+  @override
+  String get undo => 'Cofnij';
+
+  @override
   String get runErrors => 'Błędy';
 
   @override

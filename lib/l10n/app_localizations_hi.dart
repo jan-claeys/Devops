@@ -732,6 +732,46 @@ class AppLocalizationsHi extends AppLocalizations {
       'टिकट पर टिप्पणी करने के लिए आपके टोकन में Work Items (Read & write) स्कोप चाहिए।';
 
   @override
+  String get changeAssignee => 'असाइनी बदलें';
+
+  @override
+  String get searchPeopleHint => 'लोग खोजें';
+
+  @override
+  String get assignToMe => 'मुझे असाइन करें';
+
+  @override
+  String assignedToName(String name) {
+    return '$name को असाइन किया गया';
+  }
+
+  @override
+  String get ticketUnassigned => 'टिकट का असाइनमेंट हटाया गया';
+
+  @override
+  String get assignScopeHint =>
+      'टिकट असाइन करने के लिए आपके टोकन में Work Items (Read & write) स्कोप चाहिए।';
+
+  @override
+  String get membersLoadFailed =>
+      'टीम सदस्य लोड नहीं हो सके। इसके लिए आपके टोकन में Project and Team (Read) स्कोप चाहिए।';
+
+  @override
+  String get noPeopleFound => 'कोई नहीं मिला';
+
+  @override
+  String get copyLink => 'लिंक कॉपी करें';
+
+  @override
+  String get shareTicket => 'शेयर करें';
+
+  @override
+  String get linkCopied => 'लिंक कॉपी किया गया';
+
+  @override
+  String get undo => 'पूर्ववत करें';
+
+  @override
   String get runErrors => 'त्रुटियाँ';
 
   @override

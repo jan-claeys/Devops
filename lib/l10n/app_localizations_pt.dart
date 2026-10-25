@@ -741,6 +741,46 @@ class AppLocalizationsPt extends AppLocalizations {
       'Para comentar em tickets, o seu token precisa do escopo Work Items (Read & write).';
 
   @override
+  String get changeAssignee => 'Alterar responsável';
+
+  @override
+  String get searchPeopleHint => 'Pesquisar pessoas';
+
+  @override
+  String get assignToMe => 'Atribuir a mim';
+
+  @override
+  String assignedToName(String name) {
+    return 'Atribuído a $name';
+  }
+
+  @override
+  String get ticketUnassigned => 'Ticket sem responsável';
+
+  @override
+  String get assignScopeHint =>
+      'Para atribuir tickets, o seu token precisa do escopo Work Items (Read & write).';
+
+  @override
+  String get membersLoadFailed =>
+      'Não foi possível carregar os membros da equipa. Para isso, o seu token precisa do escopo Project and Team (Read).';
+
+  @override
+  String get noPeopleFound => 'Ninguém encontrado';
+
+  @override
+  String get copyLink => 'Copiar link';
+
+  @override
+  String get shareTicket => 'Partilhar';
+
+  @override
+  String get linkCopied => 'Link copiado';
+
+  @override
+  String get undo => 'Desfazer';
+
+  @override
   String get runErrors => 'Erros';
 
   @override

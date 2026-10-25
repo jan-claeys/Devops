@@ -1,6 +1,6 @@
 # DevOps
 
-A Flutter app for viewing and commenting on your Azure DevOps work items (tickets), viewing, voting on and discussing pull requests and following, approving, re-running and canceling your pipeline runs on your phone or desktop.
+A Flutter app for viewing, commenting on and assigning your Azure DevOps work items (tickets), viewing, voting on and discussing pull requests and following, approving, re-running and canceling your pipeline runs on your phone or desktop.
 
 ## Features
 
@@ -13,8 +13,10 @@ A Flutter app for viewing and commenting on your Azure DevOps work items (ticket
   - Scope: *Assigned to me*, *Created by me* or *All*
   - Filter on open items only and on work item type (Bug, Task, User Story, ...)
   - Search by title, ID, tag or assignee; pull to refresh
+  - Swipe a ticket right to assign it to yourself (with *Undo*), or left to copy its link or share it, for example to Teams or Slack
 - **Work item details**: description (or repro steps, acceptance criteria and the other fields of the work item type), state, assignee, priority, effort, original estimate / remaining / completed work, area and iteration path, tags, parent, child and other linked items, attachments and comments (including rendered @mentions and pasted or embedded images), with a button to open the item in the browser
   - Add a comment at the top of the comments
+  - Tap the assignee to assign the item to yourself, to a member of one of the project's teams or to no one
   - Images open full screen and can be zoomed; other attachments are downloaded and opened with an app on the device (on the web, downloaded by the browser), asking first for large files
 - **Pull requests** of the selected projects with status, branches, author and reviewer votes
   - Scope: *Reviewing*, *Created by me* or *All*; filter on open pull requests and search by title, ID, branch, repository or person
@@ -87,9 +89,9 @@ Most scopes only need Read; the ones the app also acts with, such as **Code** to
 
      | Scope | Permission | Used for |
      | --- | --- | --- |
-     | **Work Items** | Read & write (`vso.work_write`) | WIQL queries, work item details, links, comments and attachments/images; commenting |
+     | **Work Items** | Read & write (`vso.work_write`) | WIQL queries, work item details, links, comments and attachments/images; commenting and assigning |
      | **Code** | Read & write (`vso.code_write`) | Pull requests, their reviewers, comment threads and linked work items; voting and commenting |
-     | **Project and Team** | Read (`vso.project`) | Listing the projects in the organization (also used to verify the connection) |
+     | **Project and Team** | Read (`vso.project`) | Listing the projects in the organization (also used to verify the connection) and the team members to assign tickets to |
      | **Build** | Read & execute (`vso.build_execute`) | Pipeline runs and their stages, jobs and tasks; approving stages of YAML pipelines, canceling and running builds again |
      | **Release** | Read, write, & execute (`vso.release_execute`) | Releases of classic release pipelines, their stages and approvals; approving release stages |
 
@@ -151,6 +153,7 @@ lib/
 │   ├── pipeline_visuals.dart     Run status icons and colours
 │   ├── pull_request_visuals.dart Pull request status and vote icons
 │   ├── pull_request_files.dart   Changed files of a pull request and their diffs
+│   ├── assignee_picker.dart      Bottom sheet to pick whom to assign a ticket to
 │   ├── attachments.dart          Attachment list and inline / full screen images
 │   ├── devops_html.dart          HTML fields and comments, with their images
 │   └── ...                       Shared cards, empty states, Markdown, project picker

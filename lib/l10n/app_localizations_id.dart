@@ -734,6 +734,46 @@ class AppLocalizationsId extends AppLocalizations {
       'Mengomentari tiket memerlukan cakupan Work Items (Read & write) pada token Anda.';
 
   @override
+  String get changeAssignee => 'Ubah penerima tugas';
+
+  @override
+  String get searchPeopleHint => 'Cari orang';
+
+  @override
+  String get assignToMe => 'Tugaskan ke saya';
+
+  @override
+  String assignedToName(String name) {
+    return 'Ditugaskan ke $name';
+  }
+
+  @override
+  String get ticketUnassigned => 'Penugasan tiket dihapus';
+
+  @override
+  String get assignScopeHint =>
+      'Menugaskan tiket memerlukan cakupan Work Items (Read & write) pada token Anda.';
+
+  @override
+  String get membersLoadFailed =>
+      'Anggota tim tidak dapat dimuat. Ini memerlukan cakupan Project and Team (Read) pada token Anda.';
+
+  @override
+  String get noPeopleFound => 'Tidak ada yang ditemukan';
+
+  @override
+  String get copyLink => 'Salin tautan';
+
+  @override
+  String get shareTicket => 'Bagikan';
+
+  @override
+  String get linkCopied => 'Tautan disalin';
+
+  @override
+  String get undo => 'Urungkan';
+
+  @override
   String get runErrors => 'Kesalahan';
 
   @override
